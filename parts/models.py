@@ -3,30 +3,32 @@ from django_hstore import hstore
 
 # Create your models here.
 
+
 class Part(models.Model):
-	part_number = models.CharField(max_length=48)
-	part_description = models.TextField()
+	number = models.CharField(max_length=48)
+	description = models.TextField()
 	company = models.CharField(max_length=48)
 	metadata = hstore.DictionaryField()
 	created_at = models.DateField(auto_now_add=True)
 	updated_at = models.DateField(auto_now=True)
 	hits = models.IntegerField()
 	approved = models.BooleanField()
-
-	meta = hstore.Manager()
+	#xrefs = models.ManyToManyField(Xref)
+	objects = hstore.Manager()
 
 	def __unicode__(self):
-		return self.part_number
+		return self.number
 
 	class Meta:
-		unique_together = ('part_number', 'company',)
+		unique_together = ('number', 'company',)
 
 class Xref(models.Model):
-	part = models.ForeignKey(Part, related_name='+')
-	xref = models.ForeignKey(Part, related_name='+')
+	origpart = models.ForeignKey(Part, related_name='+')
+	xrefpart = models.ForeignKey(Part, related_name='+')
 
 	class Meta:
-		unique_together = ('part', 'xref',)
+		unique_together = ('origpart', 'xrefpart',)
 
 	def __unicode__(self):
-		return self.part
+		return self.origpart
+
