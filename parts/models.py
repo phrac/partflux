@@ -16,7 +16,7 @@ class Part(models.Model):
 	meta = hstore.Manager()
 
 	def __unicode__(self):
-		return self.name
+		return self.part_number
 
 	class Meta:
 		unique_together = ('part_number', 'company',)
@@ -29,4 +29,4 @@ class Xref(models.Model):
 		unique_together = ('part', 'xref',)
 
 	def __unicode__(self):
-		return self.name
+		return self.part

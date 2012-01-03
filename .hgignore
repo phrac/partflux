@@ -5,4 +5,4 @@ syntax: glob
 *.out
 *.pyc
 *~
-
+*.swo
