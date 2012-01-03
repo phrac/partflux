@@ -1,13 +1,13 @@
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, get_object_or_404
 from parts.models import Part
 
 def index(request):
 	parts_list = Part.objects.all().order_by('-created_at')[:5]
 	return render_to_response('parts/index.html', {'parts_list': parts_list})
 
-
-
-def detail(request):
-	return HttpResponse("Hello, world. At index")
+def detail(request, part_id):
+	p = get_object_or_404(Part, pk=part_id)
+	xrefs = p.xrefs.all()
+	return render_to_response('parts/detail.html', {'part': p, 'xrefs': xrefs})
 
 

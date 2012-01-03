@@ -13,7 +13,7 @@ class Part(models.Model):
 	updated_at = models.DateField(auto_now=True)
 	hits = models.IntegerField()
 	approved = models.BooleanField()
-	#xrefs = models.ManyToManyField(Xref)
+	xrefs = models.ManyToManyField('Part')
 	objects = hstore.Manager()
 
 	def __unicode__(self):
@@ -21,14 +21,3 @@ class Part(models.Model):
 
 	class Meta:
 		unique_together = ('number', 'company',)
-
-class Xref(models.Model):
-	origpart = models.ForeignKey(Part, related_name='+')
-	xrefpart = models.ForeignKey(Part, related_name='+')
-
-	class Meta:
-		unique_together = ('origpart', 'xrefpart',)
-
-	def __unicode__(self):
-		return self.origpart
-

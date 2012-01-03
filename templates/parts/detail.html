@@ -1,0 +1,129 @@
+{% extends "base/base_MAIN.html" %}
+  
+  <script type="text/javascript" src="lib/js/jquery.form.js"></script>
+  
+  <script type="text/javascript">
+  $(document).ready(function() 
+  {
+    $('#metaData').ajaxForm({
+      target: '#meta',
+      success: function() {
+        $('#meta').fadeIn('slow');
+		$(':input','#metaData')
+ 			.not(':button, :submit, :reset, :hidden')
+ 			.val('')
+      }
+    });
+	var ac_config = {
+		source: "/lib/ajax/companies.php",
+		select: function(event, ui){
+			$("#part_company").val(ui.item.zip);
+		},
+		minLength:3
+	};
+	var pc_config = {
+		source: "/lib/ajax/parts.php",
+		select: function(event, ui){
+			$("#part_number").val(ui.item.zip);
+		},
+		minLength:3
+	};
+	$("#part_company").autocomplete(ac_config);
+	$("#part_number").autocomplete(pc_config);
+  });
+  </script>
+
+{% block content %}  
+<div class="left">
+	&nbsp;
+		<h2>Details for {{ part.number }} by {{ part.company }}</h2>
+			<table style="margin-left:25px" class="results" border="0" cellpadding="0"  cellspacing="0" width="100%">
+				<tr>
+					<td>
+						<p>
+						</p>
+					</td>
+					<td>
+						<p>
+							<b>{{ part.description }}</b>
+						</p>
+					</td>
+				</tr>
+			<tr>
+				<td colspan="2">
+					<div id="meta">
+						<table class="metadata" border="0" cellspacing="5" cellpadding="5">
+						{% for k, v in part.metadata.iteritems %}
+							<tr>
+								<td>
+									<p>
+										{{ k }}	
+									</p>
+								</td>
+								<td class="metadata">
+									<p>
+										{{ v }}
+									</p>
+								</td>
+							</tr>
+						{% endfor %}
+						</table>
+					</div>
+				</td>
+			</tr>
+			</table>
+			<h2 style="margin-top: 20px" class="clear">Cross referenced part numbers</h2>
+			<table class="results" border="0" cellpadding="0"  cellspacing="0" width="100%">
+			{% if xrefs %}
+			{% for xref in xrefs %}
+				<tr>
+					<td class="part_number">
+						<a href="/parts/{{ xref.id}}/">{{ xref.number }}</a>
+					</td>
+					<td class="part_desc">
+						{{ xref.description }}
+					</td>
+					<td class="part_desc">
+						{{ xref.company }}
+					</td>
+				</tr>
+			{% endfor %}
+			{% else %}
+				<h3 class="add">No part number cross references. Add one using the form on the right.</h3>
+			{% endif %}
+			</table>
+
+	
+</div>
+
+<div class="right">
+			<h3>Part Metainfo</h3>
+			<div class="right_articles">
+			<p> Date added: {{ part.created_at }} </p>
+			<p> Last updated: {{ part.updated_at }} </p> 
+			<p> Hits: {{ part.hits }} </p>
+			</div>
+</div>
+
+
+<div class="right">
+			<h3>Add a cross reference</h3>
+			<div class="right_articles">
+			<form action="/part.php?a=xref" method="post">
+			<p><input type="hidden" name="orig_id" value="<?= $part['id'] ?>" /></p>
+			<? 
+				include('partials/_add.html');
+			?>
+			</div>
+</div>
+
+<div class="right">
+			<h3>Add metadata</h3>
+			<div class="right_articles">
+			<form id="metaData" action="/part.php?a=meta" method="post" >
+			<p><input type="hidden" name="part_number" value="<?= $part['id'] ?>" /></p>
+			<? include('partials/_meta.html'); ?>
+			</div>
+</div>
+{% endblock %}
+
