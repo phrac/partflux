@@ -7,6 +7,11 @@ ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
 
+INTERNAL_IPS = {
+	'192.168.2.2',
+	'127.0.0.1',
+}
+
 MANAGERS = ADMINS
 
 DATABASES = {
@@ -91,6 +96,16 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
 #     'django.template.loaders.eggs.Loader',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+	"partfindr.context_processors.part_count",
+	"django.contrib.auth.context_processors.auth",
+	"django.core.context_processors.debug",
+	"django.core.context_processors.i18n",
+	"django.core.context_processors.media",
+	"django.core.context_processors.static",
+	"django.contrib.messages.context_processors.messages"
 )
 
 MIDDLEWARE_CLASSES = (
