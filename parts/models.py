@@ -18,9 +18,7 @@ class Part(models.Model):
 	xrefs = models.ManyToManyField('Part')
 	tsv = VectorField()
 	
-	objects = hstore.HStoreManager()
-	
-	ft = SearchManager(
+	objects = SearchManager(
 			search_field = 'tsv',
 			fields = 'description',
 	)

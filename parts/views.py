@@ -22,12 +22,12 @@ def search(request):
 		#partresults = Part.ft.filter(number__istartswith=q).defer("metadata", "tsv")[:25]
 		#ftresults = Part.ft.search(q).defer("metadata", "tsv")[:25]
 		
-		results = Part.ft.filter(
+		results = Part.objects.filter(
 								Q(number__istartswith=q) |
 								Q(tsv__query=q)
 							)[:25]
 		
-		numresults = Part.ft.filter(
+		numresults = Part.objects.filter(
 								Q(number__istartswith=q) |
 								Q(tsv__query=q)
 							).count()
