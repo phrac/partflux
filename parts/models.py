@@ -6,7 +6,6 @@ from django_orm.manager import FtsManager as SearchManager
 """
 Stores a single part number
 Many to many relationship with itself
-
 """
 
 class Part(models.Model):
