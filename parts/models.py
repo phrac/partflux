@@ -19,7 +19,7 @@ class Part(models.Model):
 	tsv = VectorField()
 	
 	objects = SearchManager(
-			search_field = 'tsv',
+          	search_field = 'tsv',
 			fields = 'description',
 	)
 
