@@ -17,7 +17,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django_hstore.postgresql_psycopg2', 		# Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'partfindr_django',                     	# Or path to database file if using sqlite3.
+        'NAME': 'partfindr_dev',                     	# Or path to database file if using sqlite3.
         'USER': 'derek',                      				# Not used with sqlite3.
         'PASSWORD': 'gL7.bT#!',                  			# Not used with sqlite3.
         'HOST': 'prime.disflux.org',                      	# Set to empty string for localhost. Not used with sqlite3.
