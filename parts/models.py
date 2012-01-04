@@ -3,8 +3,11 @@ from django_orm.postgresql import hstore
 from django_orm.postgresql.fts.fields import VectorField
 from django_orm.manager import FtsManager as SearchManager
 
-# Create your models here.
+"""
+Stores a single part number
+Many to many relationship with itself
 
+"""
 
 class Part(models.Model):
 	number = models.CharField(max_length=48)
