@@ -16,7 +16,7 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django_hstore.postgresql_psycopg2', 		# Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django_orm.backends.postgresql_psycopg2', 		# Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'partfindr_dev',                     	# Or path to database file if using sqlite3.
         'USER': 'derek',                      				# Not used with sqlite3.
         'PASSWORD': 'gL7.bT#!',                  			# Not used with sqlite3.

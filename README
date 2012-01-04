@@ -1,1 +1,13 @@
 Complete rewrite of the basic partfindr application in Python + Django
+
+
+Modules needed to work
+
+--- PYTHON ---
+* Django 1.3
+* django-orm 2.0+ (https://github.com/niwibe/django-orm)
+
+--- POSTGRESQL ----
+* PostgreSQL 9.0+
+* hstore contrib module
+

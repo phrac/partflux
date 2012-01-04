@@ -2,7 +2,7 @@
 {% block content %}
 <div class="center_content">
 	&nbsp;
-		<h2 class="clear">part numbers partially or fully match "<i></i>"</h2>
+		<h2 class="clear">{{ numresults }} part numbers match "<i>{{ searchterm }}</i>"</h2>
 			<table class="results" border="0" cellpadding="0"  cellspacing="0" width="100%"><tr><td></td></tr>
 			<tr>
 				<td colspan="3">
@@ -13,7 +13,7 @@
 							<a href="/parts/{{ part.id}}/">{{ part.number }}</a>
 						</td>
 						<td class="part_desc">
-							{{ part.description }}
+							{{ part.description|truncatewords:12 }}
 						</td>
 						<td class="part_desc">
 							{{ part.company }}
@@ -22,40 +22,12 @@
 				{% endfor %}
 			</tr>
 	 		</table>
+			<h2 class="viewall" style="float:right"><a href="#">View All</a></h2>
+			<br />
+			<br />
 			<h3 class="add">Don't see your part? You can <a href="/part.php?a=add&amp;q=<?= $_GET['q'] ?>">add</a> it to the database.</h3>
-			<h2 class="clear"><?= $frowCount ?> part descriptions contain "<i><?= $_GET['q'] ?></i>" -- Showing top 15 matches</h2>
-			<table class="results" border="0" cellpadding="0"  cellspacing="0" width="100%">
-			<?
-				foreach ($ftresults as $r) 
-				{
-					echo "\n" .	'<tr>
-									<td style="width:20%" class="part_number">
-										<a href="/part.php?a=view&amp;p=' . $r['id'] . '">' . $r['part_number'] . '</a>
-									</td>
-									<td class="part_desc">' 
-										. htmlentities($r['part_description']) . 
-									'</td>
-									<td class="part_desc">' 
-									. htmlentities($r['company']) . '
-									</td>
-								</tr>';
-				}?>
-				<tr><td colspan="3" align="right"><h2 class="viewall"><a href="#">View All</a></h2></td></tr>
+
 	 		</table>
-			<?
-
-
-		}
-	
-	else 
-	{
-		echo '<h1>Sorry, there was an error with your query</h1>';
-		echo '<ul>';
-		foreach ($errors as $error) {
-			echo '<li>' . $error . '</li>';
-		}
-		echo '</ul>';
-	} ?>
 </div>
 {% endblock %}
 
