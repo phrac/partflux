@@ -11,23 +11,8 @@
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
 </head>
 <body>
-	<div class="content">
-		<div class="header">
-			<div class="top_info">
-				<div class="top_info_right">
-					<p><b>partfindr</b> is indexing <b>{{ part_count }}</b> part numbers!</p><br />
-				</div>		
-				<div class="top_info_left">
-					<p><b></b><br />
-					</p>
-				</div>
-			</div>
-			<div class="logo">
-				<h1><a href="/" title="partfindr.net">part<span class="orange">findr</span></a><sup>beta</sup></h1>
-			</div>
-		</div>
-		
-		<div class="bar">
+	<div class="bar" style="border-bottom:1px solid #666;" >
+		<div class="content" style="padding:0px;">
 			<ul>
 				<li class="browse_category">&nbsp;</li>
 				<li><b><a href="/part.php?a=add">Add a part</a></b></li>
@@ -36,21 +21,53 @@
 
 			</ul>
 		</div>
-				<div class="search_field">
-					<form method="get" action="/parts/search/">
-						<div class="search_form">
-							<p>Search parts:  <input value="" type="text" name="q" class="search" /> <input type="submit" value="Search" class="submit" /> <a class="grey" href="#">Advanced</a></p>
-						</div>
-					</form>
-					<p>Please <a href="#">Sign in</a> or <a href="#">Register</a></p>
-				</div>
-
-	{% block content %}{% endblock %}
-	<div class="footer">
-			<p><a href="#">RSS Feed</a> | <a href="#">Contact</a> | <a href="#">Accessibility</a> | <a href="#">Products</a> | <a href="#">Disclaimer</a> | <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> and <a href="http://validator.w3.org/check?uri=referer">XHTML</a><br />
-			&copy; Copyright 2011 partfindr.net, a disflux, inc. production.</p><br />
-			{{ sql_queries }}
+	</div>
+	<div class="content">
+		<div class="header">
+			<div class="top_info">
+				<div class="top_info_right">
+					<p>
+						<b>partfindr</b> is indexing <b>{{ part_count }}</b> part numbers!
+					</p>
+					<br />
+				</div>		
+			</div>
+			<div class="logo">
+				<h1>
+					<a href="/" title="partfindr.net">part<span class="orange">findr</span></a><sup>beta</sup>
+				</h1>
+			</div>
 		</div>
+		
+		{% block sitesearch %}
+			<div class="search_field">
+				<form method="get" action="/parts/search/">
+					<div class="search_form">
+						<p>
+							Search parts:  
+							<input value="" type="text" name="q" class="search" value="{{ searchterm }}" /> 
+							<input type="submit" value="Search" class="submit" /> <a class="grey" href="#">Advanced</a>
+						</p>
+					</div>
+				</form>
+				<p>Please <a href="#">Sign in</a> or <a href="#">Register</a></p>
+			</div>
+		{% endblock %}
+
+		{% block content %}{% endblock %}
+		<div class="push"></div>	
+	</div>
+	
+	<div class="footer">
+		<p>
+			<a href="#">RSS Feed</a> | <a href="#">Contact</a> | <a href="#">Accessibility</a> | 
+			<a href="#">Products</a> | <a href="#">Disclaimer</a> | 
+			<a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> and <a href="http://validator.w3.org/check?uri=referer">XHTML</a>
+			<br />
+			&copy; Copyright 2011 partfindr.net, a disflux, inc. production.
+		</p>
+		<br />
+		{{ sql_queries }}
 	</div>
 </body>
 </html>

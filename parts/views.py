@@ -5,9 +5,9 @@ from django.db.models import Q
 
 def index(request):
 	parts_list = Part.objects.all().order_by('created_at')[:5]
-	return render_to_response('parts/index.html', 
-								 {'parts_list': parts_list},
-								 context_instance=RequestContext(request))
+	return render_to_response('parts/index.html',
+                           {'parts_list': parts_list},
+                           context_instance=RequestContext(request))
 
 def detail(request, part_id):
 	p = get_object_or_404(Part, pk=part_id)

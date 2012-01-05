@@ -6,6 +6,7 @@ from django_orm.manager import FtsManager as SearchManager
 """
 Stores a single part number
 Many to many relationship with itself
+
 """
 
 class Part(models.Model):
@@ -21,8 +22,8 @@ class Part(models.Model):
 	tsv = VectorField()
 	
 	objects = SearchManager(
-          	search_field = 'tsv',
-			fields = 'description',
+        search_field = 'tsv',
+        fields = 'description',
 	)
 
 	def __unicode__(self):

@@ -11,7 +11,10 @@ body {
 	font: .7em Arial, sans-serif; 
 	line-height: 1.6em;
 	background: #fff; 
-	color: #444; 
+	color: #444;
+}
+html, body {
+	height: 100%;
 }
 
 a {	color: #E0691A;	background: inherit;}
@@ -33,17 +36,23 @@ ul { list-style : none; }
    ------ */
 
 .content { 
-	margin: 0 auto;
+	margin: 0 auto -142px;
 	width: 980px;
-	padding: 10px; 
+	padding: 10px;
+	padding-bottom:0px;
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+
 }
 
 .header { 
 	height: 70px;
-	background: #fff url(/images/headerbg.gif) repeat-x bottom;
+	background: #fff;
 	color: #808080;
 	margin: 3px 0;
 	padding: 10px 0 0 0;
+	border-bottom: 2px solid #999;
 }
 
 .top_info {
@@ -66,7 +75,6 @@ ul { list-style : none; }
 	}
 
 .browse_category  {
-	width: 390px;
 	color: #FFF;
 	background: inherit;
 }
@@ -77,17 +85,17 @@ ul { list-style : none; }
 	font-weight: bold;
 	height: 30px; 
 	color: #FFF;
-	background: #FF9148 url(/images/menubg.gif) repeat-x;
+	background: #FF9148;
 }
 
 	.bar li { 
 		padding: 6px 12px 6px 12px;
 		color: #FFEADC;
-		float: left; 
+		float: right; 
 	}
 	
 	.bar li.active { 
-		background: #E0691A url(/images/bar.gif) repeat-x; 
+		background: #E0691A; 
 		color: #fff;
 		font-weight: bold; 
 		
@@ -112,7 +120,7 @@ h2.viewall {
 }
 /* search form */
 .search_field { 
-	background: #fff url(/images/searchbg.gif) no-repeat right; 
+	background: #fff; 
 	color: #808080;
 	clear: both;
 	font-weight: bold;
@@ -128,18 +136,17 @@ h2.viewall {
 		margin: 0 0 0 3px;
 	}
 	input.bigsearch { 
-		width: 745px; 
+		width: 600px; 
 		height:45px;
-		border: 0;
-		background: #FFF url(/images/inputbig.gif) no-repeat;
+		border: 2px solid #ddd;
 		padding: 0px; 
-		color: #000;
-		font: bold 1.8em Arial, Sans-Serif;
+		color: #666;
+		font: bold 2.0em Arial, Sans-Serif;
 		margin: 0 0 0 0px;
 	}
 
 	input.submit {
-		background: #E0691A url(/images/submit.gif) no-repeat;
+		background: #E0691A;
 		border: 0;
 		padding: 5px 0;
 		width: 65px;
@@ -165,7 +172,7 @@ h2.viewall {
 
 h2 {
 	clear: both;
-	background: #E8E8E8 url(/images/h2bg.gif) no-repeat center left;
+	background: #E8E8E8;
 	color: #444;
 	padding: 3px 0 4px 43px;
 	font: bold 1.4em Arial, Sans-Serif;
@@ -221,7 +228,7 @@ h3.add {
 
 .left h2 {
 	clear: both;
-	background: #E8E8E8 url(/images/h2bg.gif) no-repeat center left;
+	background: #E8E8E8;
 	color: #444;
 	padding: 3px 0 4px 43px;
 	font: bold 1.4em "Trebuchet MS", Arial, Sans-Serif;
@@ -239,7 +246,7 @@ h3.add {
 	.right_side {
 		float: right;
 		width: 280px;
-		background: #FFF url(/images/dotted.gif) repeat-y;
+		background: #FFF;
 		color: #414141;
 		padding: 0 0 0 70px;
 		margin: 10px 0;
@@ -264,7 +271,7 @@ h3.add {
 	/*margin-left:644px;*/
 }
 	.right h3 {
-		background: #BDBDBD  url(/images/h3bg.gif) no-repeat center right;
+		background: #BDBDBD;
 		color: #FFF;
 		padding: 7px 0 8px 5px;
 		font: bold 1em Tahoma, Arial, Sans-Serif;
@@ -296,7 +303,10 @@ h3.add {
 	clear: both;
 	text-align: center;
 	padding: 10px 0;
-	border-top: 1px solid #ccc;
-	line-height: 2em;
+	border-top: 3px solid #666;
+	background-color:#ddd;
 }
-	.footer a { color: #808080; background: #fff; }
+.footer a { color: #808080; }
+.footer, .push {
+	height: 142px; /* .push must be the same height as .footer */
+}
