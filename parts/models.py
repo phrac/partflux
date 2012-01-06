@@ -3,11 +3,6 @@ from django_orm.postgresql import hstore
 from django_orm.postgresql.fts.fields import VectorField
 from django_orm.manager import FtsManager as SearchManager
 
-"""
-Stores a single part number
-Many to many relationship with itself
-
-"""
 
 class Part(models.Model):
 	number = models.CharField(max_length=48)
@@ -41,6 +36,15 @@ class Metadata(models.Model):
 
 class Xref(models.Model):
     part = models.ForeignKey('Part')
+    xrefpart = models.ForeignKey('Part', related_name='xrefpart')
+    created_at = models.DateField(auto_now_add=True)
+    updated_at = models.DateField(auto_now=True)
+    upvotes = models.IntegerField(default=0)
+    downvotes = models.IntegerField(default=0)
+
+    class Meta:
+        unique_together = ('part', 'xrefpart',)
+
 
 class Comments(models.Model):
     part = models.ForeignKey('Part')
