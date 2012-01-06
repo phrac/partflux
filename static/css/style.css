@@ -20,7 +20,7 @@ html, body {
 a {	color: #E0691A;	background: inherit;}
 a:hover { color: #6C757A; background: inherit; }
 
-h1 { font: normal 2.4em "Trebuchet MS", Arial, Sans-Serif; padding: 7px 0 0 8px; margin: 0; }
+h1 { font: normal 2.6em Arial, Sans-Serif; padding: 7px 0 0 8px; margin: 0; }
 h1 a { color: #737373; background: inherit; }
 .orange { color: #E0692A; }
 sup { font-size: .5em; }
@@ -108,7 +108,7 @@ ul { list-style : none; }
 		text-decoration: none;
 	} 
 
-table input {
+table.input {
 	margin-left:auto;
 	margin-right:auto;
 }
@@ -127,12 +127,12 @@ h2.viewall {
 	padding: 7px 12px 10px 10px;
 	margin: 5px 0;
 }
-	input.search { 
+	input.search, table input { 
 		border: 1px solid #ddd;
 		/*background: #FFF url(/images/input.gif) no-repeat;*/
 		padding: 4px; 
-		color: #E0691A;
-		font-weight: bold;
+		color: #333;
+		font-weight: normal;
 		margin: 0 0 0 3px;
 	}
 	input.bigsearch { 
@@ -172,7 +172,7 @@ h2.viewall {
 
 h2 {
 	clear: both;
-	background: #E8E8E8;
+	border-bottom: 1px solid #999;
 	color: #444;
 	padding: 3px 0 4px 43px;
 	font: bold 1.4em Arial, Sans-Serif;
@@ -183,12 +183,8 @@ table.results {
 	font: normal 1.1em Arial;
 }
 
-td.part_number {
+td.part_number, td.part_desc {
 	font: normal 1.2em Arial;
-	padding:6px;
-	border-bottom: 1px solid #ccc;
-}
-td.part_desc {
 	padding:6px;
 	border-bottom: 1px solid #ccc;
 }
@@ -228,10 +224,9 @@ h3.add {
 
 .left h2 {
 	clear: both;
-	background: #E8E8E8;
 	color: #444;
-	padding: 3px 0 4px 43px;
-	font: bold 1.4em "Trebuchet MS", Arial, Sans-Serif;
+	padding: 3px 0 4px 4px;
+	font: bold 1.6em Arial, Sans-Serif;
 	margin: 0 0 10px 0;
 }
 	.left_side {
@@ -274,7 +269,7 @@ h3.add {
 		background: #BDBDBD;
 		color: #FFF;
 		padding: 7px 0 8px 5px;
-		font: bold 1em Tahoma, Arial, Sans-Serif;
+		font: bold 1em Arial, Sans-Serif;
 		margin: 8 0 3px 0;
 		clear:both;
 	}

@@ -13,12 +13,10 @@ class Part(models.Model):
 	number = models.CharField(max_length=48)
 	description = models.TextField()
 	company = models.CharField(max_length=48)
-	metadata = hstore.DictionaryField()
 	created_at = models.DateField(auto_now_add=True)
 	updated_at = models.DateField(auto_now=True)
 	hits = models.IntegerField()
 	approved = models.BooleanField()
-	xrefs = models.ManyToManyField('Part')
 	tsv = VectorField()
 	
 	objects = SearchManager(
@@ -31,8 +29,19 @@ class Part(models.Model):
 
 	class Meta:
 		unique_together = ('number', 'company',)
-	
-	def save(self):
-		super(Part, self).save()
-		if hasattr(self, '_orm_manager'):
-			self._orm_manager.update_index(pk=self.pk)
+
+class Metadata(models.Model):
+    part = models.ForeignKey('Part')
+    key = models.CharField(max_length=48)
+    value = models.CharField(max_length='128')
+    created_at = models.DateField(auto_now_add=True)
+    updated_at = models.DateField(auto_now=True)
+    upvotes = models.IntegerField(default=0)
+    downvotes = models.IntegerField(default=0)
+
+class Xref(models.Model):
+    part = models.ForeignKey('Part')
+
+class Comments(models.Model):
+    part = models.ForeignKey('Part')
+

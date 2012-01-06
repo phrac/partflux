@@ -109,21 +109,19 @@
 <div class="right">
 			<h3>Add a cross reference</h3>
 			<div class="right_articles">
-			<form action="/part.php?a=xref" method="post">
-			<p><input type="hidden" name="orig_id" value="<?= $part['id'] ?>" /></p>
-			<? 
-				include('partials/_add.html');
-			?>
 			</div>
 </div>
 
 <div class="right">
-			<h3>Add metadata</h3>
-			<div class="right_articles">
-			<form id="metaData" action="/part.php?a=meta" method="post" >
-			<p><input type="hidden" name="part_number" value="<?= $part['id'] ?>" /></p>
-			<? include('partials/_meta.html'); ?>
-			</div>
+	<h3>Add metadata</h3>
+	<div class="right_articles">
+		<form action="" method="post">
+			{% csrf_token %}
+			<table>
+				{{ metadata_form.as_p }}
+			</table>
+			<input type="submit" value="Save" />
+		</form>
 </div>
 {% endblock %}
 
