@@ -184,7 +184,7 @@ table.results {
 }
 
 td.part_number, td.part_desc {
-	font: normal 1.2em Arial;
+	font: normal 1.0em Arial;
 	padding:6px;
 	border-bottom: 1px solid #ccc;
 }
@@ -222,7 +222,7 @@ h3.add {
 }
 
 
-.left h2 {
+.left h2, .center_content h2 {
 	clear: both;
 	color: #444;
 	padding: 3px 0 4px 4px;

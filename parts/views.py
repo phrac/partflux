@@ -3,15 +3,28 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.db.models import Q
+from django.core.paginator import Paginator, InvalidPage, EmptyPage
 
 from parts.models import Part, Metadata, Xref
 from parts.forms import MetadataForm, XrefForm
 
 
 def index(request):
-	parts_list = Part.objects.all().order_by('created_at')[:5]
-	return render_to_response('parts/index.html',
-                           {'parts_list': parts_list},
+    parts_list = Part.objects.all().order_by('created_at')
+    paginator = Paginator(parts_list, 20)
+
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+
+    try:
+        parts = paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        parts = paginator.page(paginator.num_pages)
+
+    return render_to_response('parts/index.html',
+                           {'parts_list': parts},
                            context_instance=RequestContext(request))
 
 def detail(request, part_id):
@@ -52,16 +65,27 @@ def detail(request, part_id):
 def search(request):
     q = request.GET.get('q', '')
     if q:
-        results = Part.objects.filter(Q(number__istartswith=q) | Q(tsv__query=q))[:25]
-        numresults = Part.objects.filter(Q(number__istartswith=q) | Q(tsv__query=q)).count()
+        results = Part.objects.filter(Q(number__istartswith=q) | Q(tsv__query=q))
     else:
-        partresults = []
+        results = []
+    
+    paginator = Paginator(results, 20)
+
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+
+    try:
+        parts = paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        parts = paginator.page(paginator.num_pages)
+
     
     return render_to_response('parts/index.html',
                               { 
-                                  'parts_list': results, 
+                                  'parts_list': parts, 
                                   'searchterm': q,
-                                  'numresults': numresults
                               },
                               context_instance=RequestContext(request))
 
