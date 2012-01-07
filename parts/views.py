@@ -66,9 +66,13 @@ def detail(request, part_id):
 
 
     return render_to_response('parts/detail.html', 
-                              {'part': p, 'metadata': metadata, 'xrefs': xrefs, 'reverse_xrefs':
-                               reverse_xrefs, 'metadata_form': metaform, 'xref_form' : xrefform},
-							  	context_instance=RequestContext(request))
+                              {'part': p, 
+                               'metadata': metadata, 
+                               'xrefs': xrefs, 
+                               'reverse_xrefs': reverse_xrefs, 
+                               'metadata_form': metaform, 
+                               'xref_form' : xrefform},
+                              context_instance=RequestContext(request))
 
 def search(request):
     q = request.GET.get('q', '')
