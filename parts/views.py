@@ -16,9 +16,12 @@ def index(request):
 
 def detail(request, part_id):
     p = get_object_or_404(Part, pk=part_id)
-    xrefs = Xref.objects.filter(id=part_id)
+    
+    xrefs = Xref.objects.filter(part=part_id).exclude(xrefpart=part_id)
+    reverse_xrefs = Xref.objects.filter(xrefpart=part_id).exclude(part=part_id)
+
     metadata = Metadata.objects.filter(id=part_id)
-    metaform = MetadataForm(request.POST or None, instance=p)
+    metaform = MetadataForm(request.POST or None)
     if metaform.is_valid():
         p = metaform.save()
         p.save()
@@ -26,19 +29,24 @@ def detail(request, part_id):
     
     xrefform = XrefForm(request.POST or None)
     if xrefform.is_valid():
-        part_number = xrefform.cleaned_data['part']
-        desc = xrefform.cleaned_data['desc']
-        company = xrefform.cleaned_data['desc']
+        part_number = xrefform.cleaned_data['part'].upper()
+        desc = xrefform.cleaned_data['desc'].upper()
+        company = xrefform.cleaned_data['company'].upper()
         
-        newpart = Part(number=part_number, desc=desc, company=company)
-        newpart.xrefs.append(Xref(part=p))
+        newpart, created = Part.objects.get_or_create(number=part_number, company=company)
+        if created == True:
+            newpart.desc = desc
+            newpart.hits = 0
         newpart.save()
-
-        p.save()
+         
+        xr1, created = Xref.objects.get_or_create(part=p, xrefpart=newpart)
+        
+        return HttpResponseRedirect(reverse("parts.views.detail", args=[part_id]))
 
 
     return render_to_response('parts/detail.html', 
-								{'part': p, 'xrefs': xrefs, 'metadata_form': metaform, 'xref_form' : xrefform},
+                              {'part': p, 'xrefs': xrefs, 'reverse_xrefs':
+                               reverse_xrefs, 'metadata_form': metaform, 'xref_form' : xrefform},
 							  	context_instance=RequestContext(request))
 
 def search(request):

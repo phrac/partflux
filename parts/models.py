@@ -10,8 +10,8 @@ class Part(models.Model):
 	company = models.CharField(max_length=48)
 	created_at = models.DateField(auto_now_add=True)
 	updated_at = models.DateField(auto_now=True)
-	hits = models.IntegerField()
-	approved = models.BooleanField()
+	hits = models.IntegerField(default=0, editable=False)
+	approved = models.BooleanField(default=True)
 	tsv = VectorField()
 	
 	objects = SearchManager(
@@ -28,7 +28,7 @@ class Part(models.Model):
 class Metadata(models.Model):
     part = models.ForeignKey('Part')
     key = models.CharField(max_length=48)
-    value = models.CharField(max_length='128')
+    value = models.CharField(max_length=128)
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
     upvotes = models.IntegerField(default=0)
