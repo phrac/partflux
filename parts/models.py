@@ -3,6 +3,7 @@ from django_orm.postgresql import hstore
 from django_orm.postgresql.fts.fields import VectorField
 from django_orm.manager import FtsManager as SearchManager
 
+from partfindr.custom_fields import ListField
 
 class Part(models.Model):
     number = models.CharField(max_length=48)
@@ -28,12 +29,14 @@ class Part(models.Model):
 class Metadata(models.Model):
     part = models.ForeignKey('Part')
     key = models.CharField(max_length=48)
-    value = models.CharField(max_length=128)
+    value = ListField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     upvotes = models.IntegerField(default=0)
     downvotes = models.IntegerField(default=0)
 
+    objects = hstore.HStoreManager()
+    
     class Meta:
         unique_together = ('part', 'key',)
 
