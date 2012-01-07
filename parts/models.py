@@ -34,6 +34,9 @@ class Metadata(models.Model):
     upvotes = models.IntegerField(default=0)
     downvotes = models.IntegerField(default=0)
 
+    class Meta:
+        unique_together = ('part', 'key',)
+
 class Xref(models.Model):
     part = models.ForeignKey('Part')
     xrefpart = models.ForeignKey('Part', related_name='xrefpart')
