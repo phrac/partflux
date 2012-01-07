@@ -1,11 +1,9 @@
 from django import forms
-from django.forms import ModelForm
 from parts.models import Part, Metadata
 
-class MetadataForm(ModelForm):
-    class Meta:
-        model = Metadata
-        fields = ('key', 'value',)
+class MetadataForm(forms.Form):
+    key = forms.CharField(max_length=48)
+    value = forms.CharField(max_length=96)
 
 class XrefForm(forms.Form):
     part = forms.CharField(max_length=48)

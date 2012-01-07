@@ -33,11 +33,19 @@ def detail(request, part_id):
     xrefs = Xref.objects.filter(part=part_id).exclude(xrefpart=part_id)
     reverse_xrefs = Xref.objects.filter(xrefpart=part_id).exclude(part=part_id)
 
-    metadata = Metadata.objects.filter(id=part_id)
+    metadata = Metadata.objects.filter(part=part_id)
+    
     metaform = MetadataForm(request.POST or None)
     if metaform.is_valid():
-        p = metaform.save()
-        p.save()
+        key = metaform.cleaned_data['key'].upper()
+        value = metaform.cleaned_data['value'].upper()
+        meta, _created = Metadata.objects.get_or_create(part=p, key=key)
+        if _created == True:
+            meta.values.append(value)
+        else:
+            if meta.values.count(value) == 0:
+                meta.values.append(value)
+        meta.save()
         return HttpResponseRedirect(reverse("parts.views.detail", args=[part_id]))
     
     xrefform = XrefForm(request.POST or None)
@@ -58,14 +66,15 @@ def detail(request, part_id):
 
 
     return render_to_response('parts/detail.html', 
-                              {'part': p, 'xrefs': xrefs, 'reverse_xrefs':
+                              {'part': p, 'metadata': metadata, 'xrefs': xrefs, 'reverse_xrefs':
                                reverse_xrefs, 'metadata_form': metaform, 'xref_form' : xrefform},
 							  	context_instance=RequestContext(request))
 
 def search(request):
     q = request.GET.get('q', '')
     if q:
-        results = Part.objects.filter(Q(number__istartswith=q) | Q(tsv__query=q))
+        results = Part.objects.filter(Q(number__istartswith=q) |
+                                      Q(tsv__query=q)).distinct()
     else:
         results = []
     

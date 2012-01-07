@@ -29,14 +29,12 @@ class Part(models.Model):
 class Metadata(models.Model):
     part = models.ForeignKey('Part')
     key = models.CharField(max_length=48)
-    value = ListField()
+    values = ListField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     upvotes = models.IntegerField(default=0)
     downvotes = models.IntegerField(default=0)
 
-    objects = hstore.HStoreManager()
-    
     class Meta:
         unique_together = ('part', 'key',)
 
@@ -50,8 +48,4 @@ class Xref(models.Model):
 
     class Meta:
         unique_together = ('part', 'xrefpart',)
-
-
-class Comments(models.Model):
-    part = models.ForeignKey('Part')
 
