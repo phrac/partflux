@@ -5,25 +5,25 @@ from django_orm.manager import FtsManager as SearchManager
 
 
 class Part(models.Model):
-	number = models.CharField(max_length=48)
-	description = models.TextField()
-	company = models.CharField(max_length=48)
-	created_at = models.DateField(auto_now_add=True)
-	updated_at = models.DateField(auto_now=True)
-	hits = models.IntegerField(default=0, editable=False)
-	approved = models.BooleanField(default=True)
-	tsv = VectorField()
-	
-	objects = SearchManager(
+    number = models.CharField(max_length=48)
+    description = models.TextField()
+    company = models.CharField(max_length=48)
+    created_at = models.DateField(auto_now_add=True)
+    updated_at = models.DateField(auto_now=True)
+    hits = models.IntegerField(default=0, editable=False)
+    approved = models.BooleanField(default=True)
+    tsv = VectorField()
+    
+    objects = SearchManager(
         search_field = 'tsv',
         fields = 'description',
-	)
-
-	def __unicode__(self):
-		return self.number
-
-	class Meta:
-		unique_together = ('number', 'company',)
+    )
+    
+    def __unicode__(self):
+        return self.number
+    
+    class Meta:
+        unique_together = ('number', 'company',)
 
 class Metadata(models.Model):
     part = models.ForeignKey('Part')
