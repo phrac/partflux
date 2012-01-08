@@ -28,6 +28,7 @@ class Part(models.Model):
 
 class Metadata(models.Model):
     part = models.ForeignKey('Part')
+    #user
     key = models.CharField(max_length=48)
     values = ListField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -40,6 +41,7 @@ class Metadata(models.Model):
 
 class Xref(models.Model):
     part = models.ForeignKey('Part')
+    #user
     xrefpart = models.ForeignKey('Part', related_name='xrefpart')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -48,4 +50,16 @@ class Xref(models.Model):
 
     class Meta:
         unique_together = ('part', 'xrefpart',)
+
+class PartComment(models.Model):
+    part = models.ForeignKey('Part')
+    #user
+    parent_comment = models.ForeignKey('PartComment')
+    comment = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    last_edit = models.DateTimeField(auto_now=True)
+    
+    def __unicode__(self):
+        return self.comment
+
 
