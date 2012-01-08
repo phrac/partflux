@@ -50,7 +50,11 @@
 						</p>
 					</div>
 				</form>
-				<p>Please <a href="#">Sign in</a> or <a href="#">Register</a></p>
+				{% if is_logged_in %}
+				<p>Welcome Name!</p>
+				{% else %}
+					<p>Please <a href="/users/login/">Log in</a> or <a href="#">Register</a></p>
+				{% endif %}
 			</div>
 		{% endblock %}
 

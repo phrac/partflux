@@ -2,6 +2,7 @@ from django.db import models
 from django_orm.postgresql import hstore
 from django_orm.postgresql.fts.fields import VectorField
 from django_orm.manager import FtsManager as SearchManager
+from django.contrib.auth.models import User
 
 from partfindr.custom_fields import ListField
 
@@ -11,6 +12,7 @@ class Part(models.Model):
     company = models.CharField(max_length=48)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    added_by = models.ForeignKey(User)
     hits = models.IntegerField(default=0, editable=False)
     approved = models.BooleanField(default=True)
     tsv = VectorField()
@@ -28,7 +30,7 @@ class Part(models.Model):
 
 class Metadata(models.Model):
     part = models.ForeignKey('Part')
-    #user
+    user = models.ForeignKey(User)
     key = models.CharField(max_length=48)
     values = ListField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -41,7 +43,7 @@ class Metadata(models.Model):
 
 class Xref(models.Model):
     part = models.ForeignKey('Part')
-    #user
+    user = models.ForeignKey(User)
     xrefpart = models.ForeignKey('Part', related_name='xrefpart')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -53,7 +55,7 @@ class Xref(models.Model):
 
 class PartComment(models.Model):
     part = models.ForeignKey('Part')
-    #user
+    user = models.ForeignKey(User)
     parent_comment = models.ForeignKey('PartComment')
     comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
