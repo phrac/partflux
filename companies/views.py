@@ -23,9 +23,9 @@ def index(request):
                               context_instance=RequestContext(request))
 
 def detail(request, company_id):
-     c = get_object_or_404(Part, pk=part_id)
+     c = get_object_or_404(Company, pk=company_id)
      
-     return render_to_response('parts/detail.html',
-                                {'company': c,}
+     return render_to_response('companies/detail.html',
+                                {'company': c},
                                 context_instance=RequestContext(request))
 

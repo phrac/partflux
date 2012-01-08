@@ -13,7 +13,7 @@ class Part(models.Model):
     company = models.ForeignKey(Company)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, null=True)
     hits = models.IntegerField(default=0, editable=False)
     approved = models.BooleanField(default=True)
     tsv = VectorField()
@@ -31,7 +31,7 @@ class Part(models.Model):
 
 class Metadata(models.Model):
     part = models.ForeignKey('Part')
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, null=True)
     key = models.CharField(max_length=48)
     values = ListField() # store multiple related values together: (key: weight, value: 10 LBS, 6 KG)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -44,7 +44,7 @@ class Metadata(models.Model):
 
 class Xref(models.Model):
     part = models.ForeignKey('Part')
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, null=True)
     xrefpart = models.ForeignKey('Part', related_name='xrefpart')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -56,7 +56,7 @@ class Xref(models.Model):
 
 class PartComment(models.Model):
     part = models.ForeignKey('Part')
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, null=True)
     parent_comment = models.ForeignKey('PartComment')
     comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)

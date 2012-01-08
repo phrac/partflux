@@ -4,8 +4,11 @@ from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.db.models import Q
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
+from django.contrib.auth.models import User
+
 
 from parts.models import Part, Metadata, Xref
+from companies.models import Company
 from parts.forms import MetadataForm, XrefForm
 
 
@@ -54,11 +57,14 @@ def detail(request, part_id):
         desc = xrefform.cleaned_data['desc'].upper()
         company = xrefform.cleaned_data['company'].upper()
         
-        newpart, created = Part.objects.get_or_create(number=part_number, company=company)
-        if created == True:
+        # first we need to get the company or create it if it doesn't exist
+        c, _created = Company.objects.get_or_create(name=company)
+         
+        # next, check if the cross referenced part exists and create it if it does not
+        newpart, _created = Part.objects.get_or_create(number=part_number, company=c)
+        if _created == True:
             newpart.desc = desc
-            newpart.hits = 0
-        newpart.save()
+            newpart.save()
          
         xr1, created = Xref.objects.get_or_create(part=p, xrefpart=newpart)
         
