@@ -12,7 +12,7 @@ class Part(models.Model):
     company = models.CharField(max_length=48)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    added_by = models.ForeignKey(User)
+    user = models.ForeignKey(User)
     hits = models.IntegerField(default=0, editable=False)
     approved = models.BooleanField(default=True)
     tsv = VectorField()

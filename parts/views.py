@@ -78,7 +78,7 @@ def search(request):
     q = request.GET.get('q', '')
     if q:
         results = Part.objects.filter(Q(number__istartswith=q) |
-                                      Q(tsv__query=q)).distinct()
+                                      Q(tsv__query=q)).distinct().defer('tsv')
     else:
         results = []
     
