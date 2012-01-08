@@ -10,8 +10,7 @@ urlpatterns = patterns('',
     url(r'^parts/(?P<part_id>\d+)/$', 'parts.views.detail'),
     url(r'^parts/search/$', 'parts.views.search'),
 
-    url(r'^users/login/$', 'django.contrib.auth.views.login',
-        {'template_name': 'users/login.html'}),
+    (r'^users/', include('registration.backends.default.urls')),
 
     # activate admin stuff
     url(r'^admin/', include(admin.site.urls)),

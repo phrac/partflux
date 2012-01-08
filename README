@@ -9,7 +9,7 @@ Modules needed to work
 
 * django-orm 2.0+ (https://github.com/niwibe/django-orm)
 
-* django-registration (pip install django-registration)
+* django-registration (hg clone http://bitbucket.org/ubernostrum/django-registration/)
 
 
 
