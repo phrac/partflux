@@ -17,7 +17,7 @@
 						{{ part.description|truncatewords:12 }}
 					</td>
 					<td class="part_desc">
-						{{ part.company }}
+						<a href="/companies/{{ part.company.id }}/">{{ part.company.name }}</a>
 					</td>
 				</tr>
 				{% endfor %}
