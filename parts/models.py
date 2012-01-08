@@ -4,12 +4,13 @@ from django_orm.postgresql.fts.fields import VectorField
 from django_orm.manager import FtsManager as SearchManager
 from django.contrib.auth.models import User
 
+from companies.models import Company
 from partfindr.custom_fields import ListField
 
 class Part(models.Model):
     number = models.CharField(max_length=48)
     description = models.TextField()
-    company = models.CharField(max_length=48)
+    company = models.ForeignKey(Company)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User)
