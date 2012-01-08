@@ -32,7 +32,7 @@ class Metadata(models.Model):
     part = models.ForeignKey('Part')
     user = models.ForeignKey(User)
     key = models.CharField(max_length=48)
-    values = ListField()
+    values = ListField() # store multiple related values together: (key: weight, value: 10 LBS, 6 KG)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     upvotes = models.IntegerField(default=0)
