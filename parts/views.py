@@ -43,8 +43,8 @@ def detail(request, part_id):
 
     if request.user.is_authenticated():
         if metaform.is_valid():
-            key = metaform.cleaned_data['key'].upper()
-            value = metaform.cleaned_data['value'].upper()
+            key = metaform.cleaned_data['key']
+            value = metaform.cleaned_data['value']
             meta, _created = Metadata.objects.get_or_create(part=p, key=key)
             if _created == True:
                 meta.user = request.user
@@ -57,9 +57,9 @@ def detail(request, part_id):
     
     if request.user.is_authenticated():
         if xrefform.is_valid():
-            part_number = xrefform.cleaned_data['part'].upper()
-            desc = xrefform.cleaned_data['desc'].upper()
-            company = xrefform.cleaned_data['company'].upper()
+            part_number = xrefform.cleaned_data['part']
+            desc = xrefform.cleaned_data['desc']
+            company = xrefform.cleaned_data['company']
             # first we need to get the company or create it if it doesn't exist
             c, _created = Company.objects.get_or_create(name=company)
             # next, check if the cross referenced part exists and create it if it does not

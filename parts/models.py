@@ -28,6 +28,11 @@ class Part(models.Model):
     class Meta:
         unique_together = ('number', 'company',)
 
+    def save(self, *args, **kwargs):
+        self.number = self.number.strip().upper()
+        self.description = self.description.strip().upper()
+        super(Part, self).save(*args, **kwargs)
+
 class Metadata(models.Model):
     part = models.ForeignKey('Part')
     user = models.ForeignKey(User, null=True)
@@ -40,6 +45,11 @@ class Metadata(models.Model):
 
     class Meta:
         unique_together = ('part', 'key',)
+        
+    def save(self, *args, **kwargs):
+        self.key = self.key.strip().upper()
+        self.values = self.values.strip().upper()
+        super(Metadata, self).save(*args, **kwargs)
 
 class Xref(models.Model):
     user = models.ForeignKey(User, null=True)
