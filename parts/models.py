@@ -1,5 +1,4 @@
 from django.db import models
-from django_orm.postgresql import hstore
 from django_orm.postgresql.fts.fields import VectorField
 from django_orm.manager import FtsManager as SearchManager
 from django.contrib.auth.models import User
@@ -43,8 +42,8 @@ class Metadata(models.Model):
         unique_together = ('part', 'key',)
 
 class Xref(models.Model):
-    part = models.ForeignKey('Part')
     user = models.ForeignKey(User, null=True)
+    part = models.ForeignKey('Part')
     xrefpart = models.ForeignKey('Part', related_name='xrefpart')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -127,6 +127,7 @@
 <div class="right">
 	<h3>Add a cross reference</h3>
 	<div class="right_articles">
+		{% if user.is_authenticated %}
 		<form action="" method="post">
 			{% csrf_token %}
 			<table class="input">
@@ -135,6 +136,9 @@
 
 			</table>
 		</form>
+		{% else %}
+		<h2 class="signin">Please <a href="/users/login/">Sign in</a> or <a href="#">Register</a> to add a cross reference.</h2>
+		{% endif %}
 	</div>
 </div>
 
@@ -142,6 +146,7 @@
 <div class="right">
 	<h3>Add metadata</h3>
 	<div class="right_articles">
+		{% if user.is_authenticated %}
 		<form action="" method="post">
 			{% csrf_token %}
 			<table class="input">
@@ -149,6 +154,9 @@
 				<tr><td><input type="submit" value="Save" class="submit" /></td></tr>
 			</table>
 		</form>
+		{% else %}
+		<h2 class="signin">Please <a href="/users/login/">Sign in</a> or <a href="#">Register</a> to add metadata.</h2>
+		{% endif %}
 	</div>
 </div>
 {% endblock %}
