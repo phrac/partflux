@@ -128,7 +128,7 @@
 	<h3>Add a cross reference</h3>
 	<div class="right_articles">
 		{% if user.is_authenticated %}
-		<form action="/parts/addxref/{{ part.id }}/" method="post">
+		<form action="" method="post">
 			{% csrf_token %}
 			<table class="input">
 				{{ xref_form.as_table }}
@@ -147,7 +147,7 @@
 	<h3>Add metadata</h3>
 	<div class="right_articles">
 		{% if user.is_authenticated %}
-		<form action="/parts/addmeta/{{ part.id }}/" method="post">
+		<form action="" method="post">
 			{% csrf_token %}
 			<table class="input">
 				{{ metadata_form.as_table }}

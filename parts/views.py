@@ -35,21 +35,25 @@ def detail(request, part_id):
     
     xrefs = Xref.objects.filter(part=part_id).exclude(xrefpart=part_id)
     reverse_xrefs = Xref.objects.filter(xrefpart=part_id).exclude(part=part_id)
-
     metadata = Metadata.objects.filter(part=part_id)
     
     metaform = MetadataForm(request.POST or None)
     xrefform = XrefForm(request.POST or None)
 
-    # default response (do we need to clean this up so that forms aren't sent
-    # for unauthenticated users?
+    if metaform.is_valid:
+        addmeta(request, part_id)
+
+    if xrefform.is_valid:
+        addmeta(request, part_id)
+
     return render_to_response('parts/detail.html', 
                               {'part': p, 
                                'metadata': metadata, 
                                'xrefs': xrefs, 
                                'reverse_xrefs': reverse_xrefs, 
                                'metadata_form': metaform, 
-                               'xref_form' : xrefform},
+                               'xref_form' : xrefform
+                              },
                               context_instance=RequestContext(request))
 
 def addmeta(request, part_id):
