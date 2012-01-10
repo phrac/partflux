@@ -37,14 +37,18 @@ def detail(request, part_id):
     reverse_xrefs = Xref.objects.filter(xrefpart=part_id).exclude(part=part_id)
     metadata = Metadata.objects.filter(part=part_id)
     
-    metaform = MetadataForm(request.POST or None)
-    xrefform = XrefForm(request.POST or None)
+    metaform = MetadataForm(None)
+    xrefform = XrefForm(None)
 
-    if metaform.is_valid:
-        addmeta(request, part_id)
+    if  'metadata_button' in request.POST:
+        metaform = MetadataForm(request.POST)
+        if metaform.is_valid:
+            addmeta(request, part_id)
 
-    if xrefform.is_valid:
-        addxref(request, part_id)
+    if 'xref_button' in request.POST:
+        xrefform = XrefForm(request.POST)
+        if xrefform.is_valid:
+            addxref(request, part_id)
 
     return render_to_response('parts/detail.html', 
                               {'part': p, 

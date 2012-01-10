@@ -132,7 +132,7 @@
 			{% csrf_token %}
 			<table class="input">
 				{{ xref_form.as_table }}
-				<tr><td><input type="submit" value="Save" class="submit" name="xref"/></td></tr>
+				<tr><td><input type="submit" value="Save" class="submit" name="xref_button"/></td></tr>
 
 			</table>
 		</form>
@@ -151,7 +151,7 @@
 			{% csrf_token %}
 			<table class="input">
 				{{ metadata_form.as_table }}
-				<tr><td><input type="submit" value="Save" class="submit" name="metadata" /></td></tr>
+				<tr><td><input type="submit" value="Save" class="submit" name="metadata_button" /></td></tr>
 			</table>
 		</form>
 		{% else %}
