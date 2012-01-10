@@ -83,9 +83,9 @@ def addxref(request, part_id):
     xrefform = XrefForm(request.POST)
     
     if xrefform.is_valid():
-        part_number = xrefform.cleaned_data['part']
-        desc = xrefform.cleaned_data['desc']
-        company = xrefform.cleaned_data['company']
+        part_number = xrefform.cleaned_data['part'].upper()
+        desc = xrefform.cleaned_data['desc'].upper()
+        company = xrefform.cleaned_data['company'].upper()
         # first we need to get the company or create it if it doesn't exist
         c, _created = Company.objects.get_or_create(name=company)
         # next, check if the cross referenced part exists and create it if it does not
