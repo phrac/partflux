@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 
 from parts.models import Part, Metadata, Xref
 from companies.models import Company
-from parts.forms import MetadataForm, XrefForm
+from parts.forms import MetadataForm, XrefForm, SearchForm
 
 
 def index(request):
@@ -60,6 +60,7 @@ def detail(request, part_id):
                               },
                               context_instance=RequestContext(request))
 
+
 def addmeta(request, part_id):
     p = get_object_or_404(Part, pk=part_id)
     metaform = MetadataForm(request.POST)
@@ -108,24 +109,27 @@ process and display search results for users
 
 """
 def search(request):
-    q = request.GET.get('q', '')
-    if q:
-        results = Part.objects.filter(Q(number__istartswith=q) |
-                                      Q(tsv__query=q)).distinct().defer('tsv')
-    else:
-        results = []
+    searchform = SearchForm(request.GET)
     
-    paginator = Paginator(results, 20)
+    if searchform.is_valid():
+        q = searchform.cleaned_data['q']
+        if q:
+            results = Part.objects.filter(Q(number__istartswith=q) |
+                                      Q(tsv__query=q)).distinct().defer('tsv')
+        else:
+            results = []
+    
+        paginator = Paginator(results, 20)
 
-    try:
-        page = int(request.GET.get('page', '1'))
-    except ValueError:
-        page = 1
+        try:
+            page = int(request.GET.get('page', '1'))
+        except ValueError:
+            page = 1
 
-    try:
-        parts = paginator.page(page)
-    except (EmptyPage, InvalidPage):
-        parts = paginator.page(paginator.num_pages)
+        try:
+            parts = paginator.page(page)
+        except (EmptyPage, InvalidPage):
+            parts = paginator.page(paginator.num_pages)
 
     
     return render_to_response('parts/index.html',
