@@ -6,3 +6,7 @@ def home(request):
                               {},
                               context_instance=RequestContext(request))
 
+def comingsoon(request):
+    return render_to_response('main/comingsoon.html',
+                              {},
+                              context_instance=RequestContext(request))

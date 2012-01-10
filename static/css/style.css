@@ -309,7 +309,8 @@ h3.add {
 	text-align: center;
 	padding: 10px 0;
 	border-top: 3px solid #666;
-	background-color:#ddd;
+	background-color:#999;
+	color: #ccc;
 }
 .footer a { color: #808080; }
 .footer, .push {
