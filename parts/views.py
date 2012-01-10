@@ -44,7 +44,7 @@ def detail(request, part_id):
         addmeta(request, part_id)
 
     if xrefform.is_valid:
-        addmeta(request, part_id)
+        addxref(request, part_id)
 
     return render_to_response('parts/detail.html', 
                               {'part': p, 
