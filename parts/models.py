@@ -48,7 +48,7 @@ class Metadata(models.Model):
         
     def save(self, *args, **kwargs):
         self.key = self.key.strip().upper()
-        self.values = self.values.strip().upper()
+        self.values = [v.strip().upper() for v in self.values]
         super(Metadata, self).save(*args, **kwargs)
 
 class Xref(models.Model):

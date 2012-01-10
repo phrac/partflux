@@ -41,41 +41,6 @@ def detail(request, part_id):
     metaform = MetadataForm(request.POST or None)
     xrefform = XrefForm(request.POST or None)
 
-    if request.user.is_authenticated():
-        if metaform.is_valid():
-            key = metaform.cleaned_data['key']
-            value = metaform.cleaned_data['value']
-            meta, _created = Metadata.objects.get_or_create(part=p, key=key)
-            if _created == True:
-                meta.user = request.user
-                meta.values.append(value)
-            else:
-                if meta.values.count(value) == 0:
-                    meta.values.append(value)
-            meta.save()
-            return HttpResponseRedirect(reverse("parts.views.detail", args=[part_id]))
-    
-    if request.user.is_authenticated():
-        if xrefform.is_valid():
-            part_number = xrefform.cleaned_data['part']
-            desc = xrefform.cleaned_data['desc']
-            company = xrefform.cleaned_data['company']
-            # first we need to get the company or create it if it doesn't exist
-            c, _created = Company.objects.get_or_create(name=company)
-            # next, check if the cross referenced part exists and create it if it does not
-            newpart, _created = Part.objects.get_or_create(number=part_number, company=c)
-            if _created == True:
-                newpart.user = request.user
-                newpart.desc = desc
-                newpart.hits = 0
-                newpart.save()
-         
-            xr1, _created = Xref.objects.get_or_create(part=p, xrefpart=newpart)
-            if _created == True:
-                xr1.user = request.user
-                xr1.save()
-            return HttpResponseRedirect(reverse("parts.views.detail", args=[part_id]))
-
     # default response (do we need to clean this up so that forms aren't sent
     # for unauthenticated users?
     return render_to_response('parts/detail.html', 
@@ -87,6 +52,48 @@ def detail(request, part_id):
                                'xref_form' : xrefform},
                               context_instance=RequestContext(request))
 
+def addmeta(request, part_id):
+    p = get_object_or_404(Part, pk=part_id)
+    metaform = MetadataForm(request.POST)
+    if metaform.is_valid():
+        key = metaform.cleaned_data['key']
+        value = metaform.cleaned_data['value'].upper()
+        meta, _created = Metadata.objects.get_or_create(part=p, key=key)
+        if _created == True:
+            meta.user = request.user
+            meta.values.append(value)
+        else:
+           if meta.values.count(value) == 0:
+               meta.values.append(value)
+        meta.save()
+    return HttpResponseRedirect(reverse("parts.views.detail", args=[part_id]))
+
+
+
+def addxref(request, part_id):
+    p = get_object_or_404(Part, pk=part_id)
+    xrefform = XrefForm(request.POST)
+    
+    if xrefform.is_valid():
+        part_number = xrefform.cleaned_data['part']
+        desc = xrefform.cleaned_data['desc']
+        company = xrefform.cleaned_data['company']
+        # first we need to get the company or create it if it doesn't exist
+        c, _created = Company.objects.get_or_create(name=company)
+        # next, check if the cross referenced part exists and create it if it does not
+        newpart, _created = Part.objects.get_or_create(number=part_number, company=c)
+        if _created == True:
+            newpart.user = request.user
+            newpart.desc = desc
+            newpart.hits = 0
+            newpart.save()
+         
+        xr1, _created = Xref.objects.get_or_create(part=p, xrefpart=newpart)
+        if _created == True:
+            xr1.user = request.user
+            xr1.save()
+    return HttpResponseRedirect(reverse("parts.views.detail", args=[part_id]))
+    
 
 """
 process and display search results for users
