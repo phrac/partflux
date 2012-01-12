@@ -112,7 +112,7 @@ def search(request):
         q = searchform.cleaned_data['q']
         if q:
             results = Part.objects.filter(Q(number__istartswith=q) |
-                                      Q(tsv__query=q)).distinct().defer('tsv')
+                                      Q(tsv__query=q)).distinct().only('number', 'description', 'company')
         else:
             results = []
     
