@@ -36,13 +36,16 @@ def detail(request, part_id):
     xrefs = Xref.objects.filter(part=part_id).exclude(xrefpart=part_id)
     reverse_xrefs = Xref.objects.filter(xrefpart=part_id).exclude(part=part_id)
     
-    metaform = MetadataForm(None)
-    xrefform = XrefForm(None)
+    metaform = MetadataForm(request.POST or None)
+    xrefform = XrefForm(request.POST or None)
 
-    if  'metadata_button' in request.POST:
-        metaform = MetadataForm(request.POST)
-        if metaform.is_valid:
-            addmeta(request, part_id)
+    if 'metadata_button' in request.POST:
+        if metaform.is_valid():
+            key = metaform.cleaned_data['key'].upper()
+            value = metaform.cleaned_data['value'].upper()
+            p.metadata[key] = value
+            p.save()
+            return HttpResponseRedirect(reverse("parts.views.detail", args=[part_id]))
 
     if 'xref_button' in request.POST:
         xrefform = XrefForm(request.POST)
@@ -51,30 +54,13 @@ def detail(request, part_id):
 
     return render_to_response('parts/detail.html', 
                               {'part': p, 
+                               'metadata': sorted(p.metadata.iteritems()),
                                'xrefs': xrefs, 
                                'reverse_xrefs': reverse_xrefs, 
                                'metadata_form': metaform, 
                                'xref_form' : xrefform
                               },
                               context_instance=RequestContext(request))
-
-
-def addmeta(request, part_id):
-    p = get_object_or_404(Part, pk=part_id)
-    metaform = MetadataForm(request.POST)
-    if metaform.is_valid():
-        key = metaform.cleaned_data['key'].upper()
-        value = metaform.cleaned_data['value'].upper()
-        if _created == True:
-            meta.user = request.user
-            meta.values.append(value)
-        else:
-           if meta.values.count(value) == 0:
-               meta.values.append(value)
-        meta.save()
-    return HttpResponseRedirect(reverse("parts.views.detail", args=[part_id]))
-
-
 
 def addxref(request, part_id):
     p = get_object_or_404(Part, pk=part_id)
@@ -118,7 +104,7 @@ def search(request):
     
         paginator = Paginator(results, 20)
 
-        try:
+        try:                                                                    
             page = int(request.GET.get('page', '1'))
         except ValueError:
             page = 1
