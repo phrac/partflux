@@ -49,18 +49,16 @@
 				<td colspan="2">
 					<div id="meta">
 						<table class="metadata" border="0" cellspacing="5" cellpadding="5">
-						{% for meta in part.metadata %}
+						{% for k, v in part.metadata.items %}
 							<tr>
 								<td>
 									<p>
-										{{ meta.key }}	
+										{{ k }}	
 									</p>
 								</td>
 								<td class="metadata">
 									<p>
-										{% for value in meta.values %}
-											{{ value }}<br />
-										{% endfor %}
+										{{ v }}<br />
 									</p>
 								</td>
 							</tr>
