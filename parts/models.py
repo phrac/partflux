@@ -2,6 +2,7 @@ from django.db import models
 from django_orm.postgresql.fts.fields import VectorField
 from django_orm.manager import FtsManager as SearchManager
 from django.contrib.auth.models import User
+from django_orm.postgresql import hstore
 
 from companies.models import Company
 from partfindr.custom_fields import ListField
@@ -16,7 +17,7 @@ class Part(models.Model):
     hits = models.IntegerField(default=0, editable=False)
     approved = models.BooleanField(default=True)
     tsv = VectorField()
-    
+    metadata = hstore.DictionaryField(db_index=True) 
     objects = SearchManager(
         search_field = 'tsv',
         fields = 'description',
@@ -32,24 +33,6 @@ class Part(models.Model):
         self.number = self.number.strip().upper()
         self.description = self.description.strip().upper()
         super(Part, self).save(*args, **kwargs)
-
-class Metadata(models.Model):
-    part = models.ForeignKey('Part')
-    user = models.ForeignKey(User, null=True)
-    key = models.CharField(max_length=48)
-    values = ListField() # store multiple related values together: (key: weight, value: 10 LBS, 6 KG)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    upvotes = models.IntegerField(default=0)
-    downvotes = models.IntegerField(default=0)
-
-    class Meta:
-        unique_together = ('part', 'key',)
-        
-    def save(self, *args, **kwargs):
-        self.key = self.key.strip().upper()
-        self.values = [v.strip().upper() for v in self.values]
-        super(Metadata, self).save(*args, **kwargs)
 
 class Xref(models.Model):
     user = models.ForeignKey(User, null=True)
