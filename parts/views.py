@@ -7,7 +7,7 @@ from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.contrib.auth.models import User
 
 
-from parts.models import Part, Metadata, Xref
+from parts.models import Part, Xref
 from companies.models import Company
 from parts.forms import MetadataForm, XrefForm, SearchForm
 
@@ -35,7 +35,6 @@ def detail(request, part_id):
     
     xrefs = Xref.objects.filter(part=part_id).exclude(xrefpart=part_id)
     reverse_xrefs = Xref.objects.filter(xrefpart=part_id).exclude(part=part_id)
-    metadata = Metadata.objects.filter(part=part_id)
     
     metaform = MetadataForm(None)
     xrefform = XrefForm(None)
@@ -52,7 +51,6 @@ def detail(request, part_id):
 
     return render_to_response('parts/detail.html', 
                               {'part': p, 
-                               'metadata': metadata, 
                                'xrefs': xrefs, 
                                'reverse_xrefs': reverse_xrefs, 
                                'metadata_form': metaform, 
@@ -67,7 +65,6 @@ def addmeta(request, part_id):
     if metaform.is_valid():
         key = metaform.cleaned_data['key'].upper()
         value = metaform.cleaned_data['value'].upper()
-        meta, _created = Metadata.objects.get_or_create(part=p, key=key)
         if _created == True:
             meta.user = request.user
             meta.values.append(value)

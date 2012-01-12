@@ -1,5 +1,5 @@
 from django import forms
-from parts.models import Part, Metadata
+from parts.models import Part
 
 class MetadataForm(forms.Form):
     key = forms.CharField(max_length=48)
