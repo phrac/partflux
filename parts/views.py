@@ -45,6 +45,7 @@ def detail(request, part_id):
             addmeta(request, part_id)
 
     if 'xref_button' in request.POST:
+        xrefform = XrefForm(request.POST)
         if xrefform.is_valid:
             addxref(request, part_id)
 
