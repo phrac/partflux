@@ -27,8 +27,8 @@ def index(request):
         parts = paginator.page(paginator.num_pages)
 
     return render_to_response('parts/index.html',
-                           {'parts_list': parts},
-                           context_instance=RequestContext(request))
+                              {'parts_list': parts},
+                              context_instance=RequestContext(request))
 
 def detail(request, part_id):
     p = get_object_or_404(Part, pk=part_id)
