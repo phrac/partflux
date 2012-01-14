@@ -2,8 +2,7 @@
 
 {% block content %}
 	<div class="center_content">
-		&nbsp;
-		<h2>{{ parts_list.paginator.count }} part numbers match "<i>{{ searchterm }}</i>"</h2>
+		<h2>{% block searchstats %}{{ parts_list.paginator.count }} part numbers match "<i>{{ searchterm }}</i>"{% endblock %}</h2>
 		<table class="results" border="0" cellpadding="0"  cellspacing="0" width="100%">
 			
 				{% for part in parts_list.object_list %}
@@ -12,7 +11,7 @@
 						<a href="/parts/{{ part.id}}/">{{ part.number }}</a>
 					</td>
 					<td class="part_desc">
-						{{ part.description|truncatewords:12 }}
+						{{ part.description|truncatewords:10 }}
 					</td>
 					<td class="part_desc">
 						<a href="/companies/{{ part.company.id }}/">{{ part.company.name }}</a>

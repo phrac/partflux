@@ -13,7 +13,7 @@ from parts.forms import MetadataForm, XrefForm, SearchForm
 
 
 def index(request):
-    parts_list = Part.objects.all().order_by('created_at')
+    parts_list = Part.objects.all().order_by('-created_at')[:20]
     paginator = Paginator(parts_list, 20)
 
     try:
@@ -45,7 +45,6 @@ def detail(request, part_id):
             addmeta(request, part_id)
 
     if 'xref_button' in request.POST:
-        xrefform = XrefForm(request.POST)
         if xrefform.is_valid:
             addxref(request, part_id)
 
