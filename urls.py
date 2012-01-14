@@ -6,15 +6,19 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^$', 'main.views.comingsoon'),
     
+    # URLs for parts
     url(r'^parts/$', 'parts.views.index'),
     url(r'^parts/(?P<part_id>\d+)/$', 'parts.views.detail'),
-    url(r'^parts/search/$', 'parts.views.search'),
-    url(r'^parts/addmeta/(?P<part_id>\d+)/$', 'parts.views.addmeta'),
-    url(r'^parts/addxref/(?P<part_id>\d+)/$', 'parts.views.addxref'),
+    
+    # URLs for search
+    url(r'^search/$', 'search.views.index'),
+    url(r'^search/results/$', 'search.views.results'),
 
+    # URLs for companies
     url(r'^companies/$', 'companies.views.index'),
     url(r'^companies/(?P<company_id>\d+)/$', 'companies.views.detail'),
 
+    # URLs for users
     (r'^users/', include('registration.backends.default.urls')),
 
     # activate admin stuff

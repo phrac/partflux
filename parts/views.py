@@ -95,39 +95,4 @@ def addxref(request, part_id):
     return HttpResponseRedirect(reverse("parts.views.detail", args=[part_id]))
     
 
-"""
-process and display search results for users
-
-"""
-def search(request):
-    searchform = SearchForm(request.GET)
-    
-    if searchform.is_valid():
-        q = searchform.cleaned_data['q']
-        if q:
-            results = Part.objects.filter(Q(number__istartswith=q) |
-                                      Q(tsv__query=q)).distinct().only('number', 'description', 'company')
-        else:
-            results = []
-    
-        paginator = Paginator(results, 20)
-
-        try:                                                                    
-            page = int(request.GET.get('page', '1'))
-        except ValueError:
-            page = 1
-
-        try:
-            parts = paginator.page(page)
-        except (EmptyPage, InvalidPage):
-            parts = paginator.page(paginator.num_pages)
-
-    
-    return render_to_response('parts/index.html',
-                              { 
-                                  'parts_list': parts, 
-                                  'searchterm': q,
-                              },
-                              context_instance=RequestContext(request))
-
 
