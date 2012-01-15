@@ -16,6 +16,7 @@ Dependencies
 	* PostgreSQL 9.0+
 	* hstore contrib module (contrib/hstore.sql)
 
-	*Custom FTS trigger needed on updates:
-		::CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON parts_part FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('tsv', 'pg_catalog.english', 'number', 'description')	
+	* Custom FTS trigger needed on updates::
+		
+        CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON parts_part FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger('tsv', 'pg_catalog.english', 'number', 'description')	
 
