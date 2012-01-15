@@ -11,6 +11,8 @@ Modules needed to work
 
 * django-registration 0.8+: (hg clone http://bitbucket.org/ubernostrum/django-registration/)
 
+* pure pagination (http://pypi.python.org/pypi/django-pure-pagination/)
+
 
 
 --- POSTGRESQL ----

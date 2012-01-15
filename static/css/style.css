@@ -170,17 +170,18 @@ h2.viewall {
 	.grey { color: #808080; background: inherit; font-weight: normal; }
 	.search_form { float: right; }
 
-
-#idxsubmit{
-    color:#fff;
-	border:3px solid #808080;
-    background:#E0691A;
-    font-size:15px;
-    text-decoration: none;
-    font-weight:bold;
-    margin: 10px 5px 10px 5px;
-    padding:5px 10px 5px 10px;
-    line-height: 15px;
+.pagination {
+	margin-top:10px;
+	font: bold 1.0em Arial, Sans-Serif;
+}
+.page {
+	border: 1px solid #999;
+	padding:4px;
+	margin:4px;
+}
+.page:hover {
+	background-color:#E0691A;
+	color: #fff;
 }
 
 h2 {

@@ -21,17 +21,7 @@
 		</table>
 		
 		<div class="pagination">
-			<span class="step-links">
-				{% if parts_list.has_previous %}
-				<a href="?q={{ searchterm }}&page={{ parts_list.previous_page_number }}">previous</a>
-				{% endif %}
-				<span class="current">
-					Page {{ parts_list.number }} of {{ parts_list.paginator.num_pages }}.
-				</span>
-				{% if parts_list.has_next %}
-				<a href="?q={{ searchterm }}&page={{ parts_list.next_page_number }}">next</a>
-				{% endif %}
-			</span>
+			{{ parts_list.render }}
 		</div>
 		<br />
 		<br />

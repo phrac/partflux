@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.db.models import Q
-from django.core.paginator import Paginator, InvalidPage, EmptyPage
+from pure_pagination import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib.auth.models import User
 
 
@@ -42,22 +42,17 @@ def results(request):
         else:
             results = []
     
-        paginator = Paginator(results, 20)
-
         try:                                                                    
-            page = int(request.GET.get('page', '1'))
-        except ValueError:
+            page = request.GET.get('page', 1)
+        except PageNotAnInteger:
             page = 1
 
-        try:
-            parts = paginator.page(page)
-        except (EmptyPage, InvalidPage):
-            parts = paginator.page(paginator.num_pages)
-
+        p = Paginator(results, 20, request=request)
+        parts_list = p.page(page)
     
     return render_to_response('search/results.html',
                               { 
-                                  'parts_list': parts, 
+                                  'parts_list': parts_list, 
                                   'searchterm': q,
                               },
                               context_instance=RequestContext(request))
