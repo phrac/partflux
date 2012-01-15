@@ -3,9 +3,9 @@ Complete rewrite of the basic partfindr application in Python + Django
 
 Modules needed to work
 
---- PYTHON ---
+@section{Python/Django}
 
-* Django 1.3
+* Django 1.3.1
 
 * django-orm 2.0+ (https://github.com/niwibe/django-orm)
 
@@ -15,7 +15,7 @@ Modules needed to work
 
 
 
---- POSTGRESQL ----
+@section{PostgreSQL}
 
 * PostgreSQL 9.0+
 
