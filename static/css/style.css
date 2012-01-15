@@ -35,6 +35,28 @@ ul { list-style : none; }
 /* layout
    ------ */
 
+.clearfix:after {
+	clear: both;
+	display: block;
+	content: " ";
+	height: 0px;
+	visibility: hidden;
+}
+.clearfix {
+	display: inline-block;
+}
+/* Hide these rules from IE-mac \*/
+* html .clearfix {
+	height: 1%;
+}
+.clearfix {
+	display: block;
+}
+li.clearfix {
+	display: list-item;
+}
+
+
 .content { 
 	margin: 0 auto -142px;
 	width: 980px;

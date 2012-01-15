@@ -139,7 +139,11 @@
 				<tr><td><input type="submit" value="Save" class="submit" name="xref_button"/></td></tr>
 
 			</table>
-		</form>
+		</form><br />
+		<p>
+		A part cross reference is a part by a different manufacturer that has the same application. For example, a
+		<b>Purolator PL14162</b> oil filter has the same characteristics of a <b>FRAM PH6607</b> oil filter so those
+		parts would be cross reference parts.</p>
 		{% else %}
 		<h2 class="signin">Please <a href="/users/login/">Sign in</a> or <a href="#">Register</a> to add a cross reference.</h2>
 		{% endif %}
@@ -148,7 +152,7 @@
 
 
 <div class="right">
-	<h3>Add metadata</h3>
+	<h3>Add a part characteristic</h3>
 	<div class="right_articles">
 		{% if user.is_authenticated %}
 		<form action="" method="post">
@@ -157,7 +161,16 @@
 				{{ metadata_form.as_table }}
 				<tr><td><input type="submit" value="Save" class="submit" name="metadata_button" /></td></tr>
 			</table>
-		</form>
+		</form><br />
+		<p>
+		Part characteristics are pieces of information that describe a part in greater detail. Example part characteristics
+		may be <b>weight</b>, <b>length</b>, <b>width</b>, <b>recommended application</b> or any other piece of
+		information that describes characteristics of a part.
+		</p>
+		<p>
+		To enter a property, you need a key and value. An example key would be "<b>WEIGHT</b>" with a corresponding
+		value of "<b>100 LBS</b>".
+		<p>
 		{% else %}
 		<h2 class="signin">Please <a href="/users/login/">Sign in</a> or <a href="#">Register</a> to add metadata.</h2>
 		{% endif %}
