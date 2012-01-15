@@ -106,6 +106,17 @@ h2.signin {
 	background: inherit;
 }
 
+.tooltip {
+	display:none;
+	background: url(../img/tooltip/white_big.png);
+	font-size:13px;
+	font-weight:bold;
+	height:145px;
+	width:320px;
+	padding:25px;
+	color:#606060;	
+}
+
 .bar { 
 	clear: both;
 	font-size: 1.1em;
