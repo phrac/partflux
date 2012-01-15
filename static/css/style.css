@@ -116,7 +116,10 @@ h2.signin {
 		color: #FFF; 
 		background: inherit;
 		text-decoration: none;
-	} 
+	}
+	.bar li a:hover {
+		text-decoration: underline;
+	}
 
 table.input {
 	margin-left:auto;
