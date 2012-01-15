@@ -30,7 +30,11 @@
 					<p>
 						<b>partfindr</b> is indexing <b>{{ part_count }}</b> part numbers!
 					</p>
-					<br />
+					{% if user.is_authenticated %}
+					<p>Welcome {{ user.username }} (<a href="/users/logout/">Log out</a>)</p>
+					{% else %}
+					<p>Please <a href="/users/login/">Sign in</a> or <a href="/users/register/">Register</a></p>
+					{% endif %}
 				</div>		
 			</div>
 			<div class="logo">
@@ -51,11 +55,6 @@
 						</p>
 					</div>
 				</form>
-				{% if user.is_authenticated %}
-				<p>Welcome {{ user.username }} (<a href="/users/logout/">Log out</a>)</p>
-				{% else %}
-					<p>Please <a href="/users/login/">Sign in</a> or <a href="#">Register</a></p>
-				{% endif %}
 			</div>
 		{% endblock %}
 
