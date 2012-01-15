@@ -27,7 +27,7 @@ Custom FTS trigger needed on updates and inserts::
     CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON parts_part FOR EACH ROW EXECUTE PROCEDURE 
     tsvector_update_trigger('tsv', 'pg_catalog.english', 'number', 'description')	
 
-Unaccent function::
+Unaccent function (http://readthedocs.org/docs/django-orm/en/latest/postgresql/fts.html)::
 
     CREATE OR REPLACE FUNCTION unaccent(text) RETURNS text AS $$
     DECLARE input_string text := $1;
