@@ -19,9 +19,27 @@ Database
 	* PostgreSQL 9.0+
 	* hstore contrib module (contrib/hstore.sql)
 	 
-Custom FTS trigger needed on updates::
 
-        CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON parts_part FOR EACH ROW EXECUTE PROCEDURE 
-        tsvector_update_trigger('tsv', 'pg_catalog.english', 'number', 'description')	
+Database indexes, triggers, functions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Custom FTS trigger needed on updates and inserts::
 
-Also need unindent custom function
+    CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON parts_part FOR EACH ROW EXECUTE PROCEDURE 
+    tsvector_update_trigger('tsv', 'pg_catalog.english', 'number', 'description')	
+
+Unaccent function::
+
+    CREATE OR REPLACE FUNCTION unaccent(text) RETURNS text AS $$
+    DECLARE input_string text := $1;
+    BEGIN
+        input_string := translate(input_string, '??????????????????', 'aaaaaaaaaaaaaaaaaa');
+        input_string := translate(input_string, '???????????????????', 'eeeeeeeeeeeeeeeeeee');
+        input_string := translate(input_string, '??????????????', 'iiiiiiiiiiiiii');
+        input_string := translate(input_string, '????????????????', 'oooooooooooooooo');
+        input_string := translate(input_string, '????????????????', 'uuuuuuuuuuuuuuuu');
+        input_string := translate(input_string, '????', 'nncc');
+        return input_string;
+    END; $$ LANGUAGE plpgsql IMMUTABLE;
+
+
+
