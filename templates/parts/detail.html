@@ -3,7 +3,7 @@
   <script src="http://cdn.jquerytools.org/1.2.6/full/jquery.tools.min.js"></script> 
   <script type="text/javascript">
 	$(document).ready(function() {
-			$("a[title]").tooltip({ relative: 'true'}).dynamic({ bottom: { direction: 'down', bounce: true } });;
+			$("a[title]").tooltip({ relative: 'true', predelay: 500}).dynamic({ bottom: { direction: 'down', bounce: true } });;
 	});
   </script>
 
@@ -102,8 +102,8 @@
 </div>
 
 <div class="right" id="addxref">
-	<h3>Add a cross reference &nbsp;&nbsp;&nbsp;
-		<a title="A part cross reference is a part by a different manufacturer that has the same application. For example, a Purolator PL14162 oil filter has the same characteristics of a FRAM PH6607 oil filter so those parts would be cross reference parts.">What's this?</a></h3>
+	<h3>Add a cross reference
+		<a style="float:right; margin-right:8px;" title="A part cross reference is a part by a different manufacturer that has the same application. For example, a Purolator PL14162 oil filter has the same characteristics of a FRAM PH6607 oil filter so those parts would be cross reference parts.">What's this?</a></h3>
 	<div class="right_articles">
 		{% if user.is_authenticated %}
 		<form action="" method="post">
@@ -122,7 +122,8 @@
 
 
 <div class="right">
-	<h3>Add a part characteristic &nbsp; &nbsp; &nbsp; <a title="Part characteristics are pieces of information that describe a part in greater detail. Example part characteristics may be weight, length, width, recommended application or any other piece of information that describes characteristics of a part.">What's this?</a></h3>
+	<h3>Add a part characteristic 
+		<a style="float:right; margin-right:8px;" title="Part characteristics are pieces of information that describe a part in greater detail. Example part characteristics may be weight, length, width, recommended application or any other piece of information that describes characteristics of a part.">What's this?</a></h3>
 	<div class="right_articles">
 		{% if user.is_authenticated %}
 		<form action="" method="post">
