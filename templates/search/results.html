@@ -1,5 +1,9 @@
 {% extends "base/base_MAIN.html" %}
 
+{% block breadcrumbs %}
+> <a href="/search/">Search</a> > <a href="/search/results/?q={{ searchterm }}">Results</a> > "{{ searchterm }}"
+{% endblock %}
+
 {% block content %}
 	<div class="center_content">
 		<h2>{% block searchstats %}{{ parts_list.paginator.count }} part numbers match "<i>{{ searchterm }}</i>" - showing {{ parts_list.start_index }}-{{ parts_list.end_index }}{% endblock %}</h2>
@@ -23,9 +27,7 @@
 		<div class="pagination">
 			{{ parts_list.render }}
 		</div>
-		<br />
-		<br />
-		<h3 class="add">Don't see the part you're looking for? You can <a href="/parts/add/">add</a> it to the database.</h3>
+		{% include "partials/add_part_to_db.html" %}
 	</div>
 {% endblock %}
 

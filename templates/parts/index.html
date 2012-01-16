@@ -1,5 +1,9 @@
 {% extends "base/base_MAIN.html" %}
 
+{% block breadcrumbs %}
+> <a href="/parts/">Parts</a> > {{ parts_list.paginator.count }} newest parts
+{% endblock %}
+
 {% block content %}
 	<div class="center_content">
 		<h2>{{ parts_list.paginator.count }} newest parts added to the database</h2>
@@ -33,9 +37,7 @@
 				{% endif %}
 			</span>
 		</div>
-		<br />
-		<br />
-		<h3 class="add">Don't see your part? You can add it to the database.</h3>
+		{% include "partials/add_part_to_db.html" %}
 	</div>
 {% endblock %}
 

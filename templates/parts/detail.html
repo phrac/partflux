@@ -1,7 +1,13 @@
 {% extends "base/base_MAIN.html" %}
 
+{% load humanize %}
+
 {% block title %}
 {{ part.number }} by {{ part.company }} | partfindr
+{% endblock %}
+
+{% block breadcrumbs %}
+> <a href="/parts/">Parts</a> > <a href="/companies/{{ part.company.id }}/">{{ part.company.name }}</a> > {{ part.number }}
 {% endblock %}
 
  {% block content %}  
@@ -110,8 +116,8 @@
 <div class="right">
 	<h3>Part Metainfo</h3>
 	<div class="right_articles">
-		<p> Date added: {{ part.created_at }} </p>
-		<p> Last updated: {{ part.updated_at }} </p> 
+		<p> Date added: {{ part.created_at|naturalday }} </p>
+		<p> Last updated: {{ part.updated_at|naturalday }} </p> 
 		<p> Hits: {{ part.hits }} </p>
 		<p> Added by: {{ part.user.username }} </p>
 	</div>
