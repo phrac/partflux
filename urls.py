@@ -8,7 +8,8 @@ urlpatterns = patterns('',
     
     # URLs for parts
     url(r'^parts/$', 'parts.views.index'),
-    url(r'^parts/(?P<part_id>\d+)/$', 'parts.views.detail'),
+    url(r'^parts/(?P<part_id>\d+)/.+/$', 'parts.views.detail'),
+    url(r'^parts/(?P<part_id>\d+)/$', 'parts.views.detail'), #fallback URL
     
     # URLs for search
     url(r'^search/$', 'search.views.index'),
