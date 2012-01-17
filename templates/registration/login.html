@@ -1,28 +1,42 @@
 {% extends "base/base_MAIN.html" %}
 {% load url from future %}
 
+{% block breadcrumbs %}
+> <a href="/users/">Users</a> > Register/Sign In
+{% endblock %}
+
 {% block content %}
+<div class="left">
+	<h2>Sign in or register for a partfindr account</h2>
+	{% include "registration/partials/registration_form.html" %}
+</div>
 
-{% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
-{% endif %}
+<div class="right">
+	<h3>Already a member?</h3>
+	{% if form.errors %}
+	{% endif %}
+	<div class="right_articles">
+		<p>Your username and password didn't match. Please try again.</p>
+	<form method="post" action="{% url 'django.contrib.auth.views.login' %}">
+		{% csrf_token %}
+		<table class="input">
+			<tr>
+				<td class="input_big">{{ form.username.label_tag }}</td>
+				<td class="input_big">{{ form.username }}</td>
+			</tr>
+			<tr>
+				<td class="input_big">{{ form.password.label_tag }}</td>
+				<td class="input_big">{{ form.password }}</td>
+			</tr>
 
-<form method="post" action="{% url 'django.contrib.auth.views.login' %}">
-{% csrf_token %}
-<table>
-<tr>
-    <td>{{ form.username.label_tag }}</td>
-    <td>{{ form.username }}</td>
-</tr>
-<tr>
-    <td>{{ form.password.label_tag }}</td>
-    <td>{{ form.password }}</td>
-</tr>
-</table>
-
-<input type="submit" value="login" />
-<input type="hidden" name="next" value="{{ next }}" />
-</form>
-
+			<tr>
+				<td><input class="submit" type="submit" value="Sign in" /></td>
+			</tr>
+		</table>
+		
+		<input type="hidden" name="next" value="{{ next }}" />
+	</form>
+</div>
+</div>
 {% endblock %}
 

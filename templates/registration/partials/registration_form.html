@@ -1,0 +1,60 @@
+<p style="font-size:1.3em;">
+Registration is 100% free and gives you access to millions of part numbers. Registration also allows you to enter metadata, cross references, and part comments.
+</p>
+<br /><br />
+
+<table class="input">
+	<form method="post" action"/users/register/">
+		{% csrf_token %}
+		<tr>
+			<td class="input_big">
+				<label for="id_username">Username:</label>
+			</td>
+			<td class="input_big">
+				{% if form.username.errors %}
+            	<p class="errors">{{ form.username.errors.as_text }}</p>
+          		{% endif %}
+				<input id="id_username" type="text" class="required" name="username" maxlength="30" />
+			</td>
+		</tr>
+		<tr>
+			<td class="input_big">
+				<label for="id_email">E-mail:</label>
+			</td>
+			<td class="input_big">
+				{% if form.email.errors %}
+            	<p class="errors">{{ form.email.errors.as_text }}</p>
+          		{% endif %}
+				<input id="id_email" type="text" class="required" name="email" maxlength="75" />
+			</td>
+		</tr>
+		<tr>
+			<td class="input_big">
+				<label for="id_password1">Password:</label>
+			</td class="input_big">
+			<td class="input_big">
+				{% if form.password1.errors %}
+            	<p class="errors">{{ form.password1.errors.as_text }}</p>
+          		{% endif %}
+				<input id="id_password1" type="password" class="required" name="password1" />
+			</td>
+		</tr>
+		<tr>
+			<td class="input_big">
+				<label for="id_password2">Password (again):</label>
+			</td class="input_big">
+			<td class="input_big">
+				{% if form.password2.errors %}
+            	<p class="errors">{{ form.password2.errors.as_text }}</p>
+          		{% endif %}
+				<input id="id_password2" type="password" class="required" name="password2" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<input class="submit" type="submit" value="Register" />
+			</td>
+		</tr>
+	</form>
+</table>
+

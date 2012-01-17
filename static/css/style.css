@@ -153,6 +153,22 @@ table.input {
 	margin-left:auto;
 	margin-right:auto;
 }
+
+td.input_big {
+	font: normal 1.2em Arial, Sans-Serif;
+	padding: 10px;
+}
+td.input_big input {
+		width: 160px; 
+		height:25px;
+		border: 2px solid #ddd;
+		padding: 0px; 
+		color: #666;
+		font: bold 1.2em Arial, Sans-Serif;
+		margin: 0 0 0 0px;
+	}
+
+
 h2.viewall {
 	padding:5px;
 	margin-right:20px;
