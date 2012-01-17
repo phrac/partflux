@@ -18,21 +18,29 @@
 				<li><b><a href="/parts/add/">Add a part</a></b></li>
 				<li><a href="/about/">About</a></li>
 				<li><a href="/search/">Advanced Search</a></li>
-
 			</ul>
+			<p style="padding-top:5px;">Indexing <b>{{ part_count }}</b> parts</p>
+
 		</div>
 	</div>
 	<div class="content">
 		<div class="header">
 			<div class="top_info">
 				<div class="top_info_right">
-					<p>
-						<b>partfindr</b> is indexing <b>{{ part_count }}</b> part numbers!
-					</p>
 					{% if user.is_authenticated %}
 					<p>Welcome {{ user.username }} (<a href="/users/logout/">Log out</a>)</p>
 					{% else %}
 					<p>Please <a href="/users/login/">Sign in</a> or <a href="/users/register/">Register</a></p>
+					<form method="post" action="/users/login/">
+						{% csrf_token %}
+						<table>
+							<tr >
+								<td>user</td><td class="small_login"><input id="id_username" type="text" class="required" name="username" maxlength="30" /></td>
+								<td>pass</td><td class="small_login"><input id="id_password" type="password" class="required" name="password" /></td>
+								<td><input class="submit_small" type="submit" value="Sign In" /></td>
+							</tr>
+						</table>
+
 					{% endif %}
 				</div>		
 			</div>
