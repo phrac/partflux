@@ -29,6 +29,7 @@
 				<div class="top_info_right">
 					{% if user.is_authenticated %}
 					<p>Welcome {{ user.username }} (<a href="/users/logout/">Log out</a>)</p>
+					<p>Profile - Messages - Karma - Part Scores</p>
 					{% else %}
 					<p>Please <a href="/users/login/">Sign in</a> or <a href="/users/register/">Register</a></p>
 					<form method="post" action="/users/login/">
@@ -40,6 +41,8 @@
 								<td><input class="submit_small" type="submit" value="Sign In" /></td>
 							</tr>
 						</table>
+						<input type="hidden" name="next" value="{{ current_path }}" />
+					</form>
 
 					{% endif %}
 				</div>		
