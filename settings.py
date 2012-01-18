@@ -16,12 +16,12 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django_orm.backends.postgresql_psycopg2', 		# Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'partfindr',                     	# Or path to database file if using sqlite3.
-        'USER': 'derek',                      				# Not used with sqlite3.
-        'PASSWORD': '',                  			# Not used with sqlite3.
-        'HOST': 'prime.disflux.org',                      	# Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      					# Set to empty string for default. Not used with sqlite3.
+        'ENGINE': 'django_orm.backends.postgresql_psycopg2',    # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'partfindr',                     	            # Or path to database file if using sqlite3.
+        'USER': 'derek',                      				    # Not used with sqlite3.
+        'PASSWORD': '',                  			            # Not used with sqlite3.
+        'HOST': 'prime.disflux.org',                      	    # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',                      					    # Set to empty string for default. Not used with sqlite3.
         'OPTIONS': {
             'POOL_ENABLED': True,
         }
@@ -81,7 +81,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-	"/home/derek/web/partfindr/static", # development
+    "/home/derek/web/partfindr/static", # development
     #"/home/derek/partfindr/static",     # production
 )
 
@@ -104,14 +104,14 @@ TEMPLATE_LOADERS = (
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
-	"partfindr.context_processors.part_count",
+    "partfindr.context_processors.part_count",
     "partfindr.context_processors.get_current_path",
-	"django.contrib.auth.context_processors.auth",
-	"django.core.context_processors.debug",
-	"django.core.context_processors.i18n",
-	"django.core.context_processors.media",
-	"django.core.context_processors.static",
-	"django.contrib.messages.context_processors.messages"
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.contrib.messages.context_processors.messages"
 )
 
 MIDDLEWARE_CLASSES = (
@@ -128,7 +128,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-	"/home/derek/web/partfindr/templates"
+    "/home/derek/web/partfindr/templates"
 )
 
 INSTALLED_APPS = (
