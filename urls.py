@@ -8,6 +8,18 @@ urlpatterns = patterns('',
                        #GENERIC VIEWS
                        url(r'^$', 'django.views.generic.simple.direct_to_template', {'template': 'main/comingsoon.html'}),
                        #url(r'^$', 'django.views.generic.simple.direct_to_template', {'template': 'main/index.html'}), 
+                       
+                       url(r'^partbot/$',
+                           'django.views.generic.simple.direct_to_template',
+                           {'template': 'main/partbot.html'}),
+                       
+                       url(r'^about/$', 
+                           'django.views.generic.simple.direct_to_template', 
+                           {'template': 'main/about.html'}),
+
+                       url(r'^contact/$',
+                           'django.views.generic.simple.direct_to_template',
+                           {'template': 'main/contact.html'}),
                       
                        # URLs for parts
                        url(r'^parts/$', 'parts.views.index'),
