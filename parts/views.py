@@ -43,6 +43,7 @@ def detail(request, part_id):
         metaform = MetadataForm(request.POST)
         if metaform.is_valid:
             addmeta(request, part_id)
+            return HttpResponseRedirect(reverse('parts.views.detail', args=[part_id]))
 
     if 'xref_button' in request.POST:
         xrefform = XrefForm(request.POST)
@@ -60,6 +61,7 @@ def detail(request, part_id):
                               context_instance=RequestContext(request))
 
 def addmeta(request, part_id):
+    print 'in addmeta'
     p = get_object_or_404(Part, pk=part_id)
     metaform = MetadataForm(request.POST)
     if metaform.is_valid():
@@ -67,7 +69,6 @@ def addmeta(request, part_id):
         value = metaform.cleaned_data['value'].upper()
         p.metadata[key] = value
         p.save()
-    return HttpResponseRedirect(reverse("parts.views.detail", args=[part_id]))
 
 
 def addxref(request, part_id):
