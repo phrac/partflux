@@ -1,5 +1,5 @@
 from django.conf.urls.defaults import patterns, include, url
-
+from django.contrib.auth import views as auth_views
 from django.contrib import admin
 admin.autodiscover()
 
@@ -34,6 +34,15 @@ urlpatterns = patterns('',
                        url(r'^companies/(?P<company_id>\d+)/$', 'companies.views.detail'),
                        
                        # URLs for users
+                       url(r'^users/logout/$',
+                           auth_views.logout,
+                           {'template_name': 'main/comingsoon.html'}),
+                       
+                       url(r'^users/password/reset/$',
+                           auth_views.password_reset,
+                           {'template_name': 'registration/pwreset.html'}
+                          ),
+
                        (r'^users/', include('registration.backends.default.urls')),
                        
                        # activate admin stuff
