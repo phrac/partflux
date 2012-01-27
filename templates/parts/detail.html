@@ -46,7 +46,7 @@
 										{% if "SOURCE" in k %}
 											{{ v|urlizetrunc:55 }}<br />
 										{% else %}
-											{{ v }}<br />
+											{{ v|linebreaksbr }}<br />
 										{% endif %}
 									</p>
 								</td>
