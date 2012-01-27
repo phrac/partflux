@@ -378,5 +378,6 @@ h3.add {
 }
 .footer a { color: #fff; }
 .footer, .push {
+	clear:both;
 	height: 142px; /* .push must be the same height as .footer */
 }
