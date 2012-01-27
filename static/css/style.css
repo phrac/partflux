@@ -91,9 +91,10 @@ li.clearfix {
 	}
 
 	.top_info_right {
+		margin-top:-15px;
 		float: right;
 		width: 290px;
-		padding: 0 0 0 35px;
+		padding: 0 0 0 15px;
 		border-left: 1px solid #eee;
 	}
 h2.signin {
@@ -167,7 +168,12 @@ td.input_big input {
 		font: bold 1.2em Arial, Sans-Serif;
 		margin: 0 0 0 0px;
 	}
-
+td.small_login input {
+	display:inline;
+	height:10px;
+	width:65px;
+	font normal .5em Ariel, Sans-Serif;
+}
 
 h2.viewall {
 	padding:5px;
@@ -208,6 +214,16 @@ h2.viewall {
 		padding: 5px 0;
 		width: 65px;
 		margin: 0 15px 1px 0;
+		color: #FFF;
+		font: bold 1em Arial, Sans-Serif;
+	}
+	input.submit_small {
+		background: #E0691A;
+		padding: 5px;
+		margin: 5px;
+		padding-top:3px;
+		border: 0;
+		height:20px;
 		color: #FFF;
 		font: bold 1em Arial, Sans-Serif;
 	}

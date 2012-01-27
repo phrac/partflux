@@ -12,3 +12,5 @@ class XrefForm(forms.Form):
 
 class SearchForm(forms.Form):
     q = forms.CharField(max_length=128)
+
+

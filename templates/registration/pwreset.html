@@ -1,0 +1,31 @@
+{% extends "base/base_MAIN.html" %}
+{% load url from future %}
+
+{% block breadcrumbs %}
+> <a href="/users/">Users</a> > Reset password
+{% endblock %}
+
+{% block content %}
+<div class="center_content">
+	<h2>Reset forgotten password</h2>
+	<p>Enter your email address and we'll send you instructions on how to reset your password</p>
+	{% if form.errors %}
+	<p><b>You must enter your email address</b></p>
+	{% endif %}
+			<form method="post" action="">
+		{% csrf_token %}
+		<table class="input">
+			<tr>
+				<td class="input_big">{{ form.email.label_tag }}</td>
+				<td class="input_big">{{ form.email }}</td>
+			</tr>
+			<tr>
+				<td><input class="submit" type="submit" value="Reset" /></td>
+			</tr>
+		</table>
+		
+		<input type="hidden" name="next" value="/" />
+	</form>
+</div>
+{% endblock %}
+
