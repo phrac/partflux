@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django_orm.postgresql import hstore
 
 from companies.models import Company
-from partfindr.custom_fields import ListField
+from nsn.models import Nsn
 
 class Part(models.Model):
     number = models.CharField(max_length=48)
@@ -18,10 +18,12 @@ class Part(models.Model):
     approved = models.BooleanField(default=True)
     tsv = VectorField()
     metadata = hstore.DictionaryField(db_index=True) 
+    nsn = models.ForeignKey(Nsn, null=True)
     objects = SearchManager(
         search_field = 'tsv',
         fields = 'description',
     )
+
     
     def __unicode__(self):
         return self.number

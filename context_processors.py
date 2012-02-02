@@ -1,7 +1,10 @@
 def part_count(request):
-	from parts.models import Part
-	return {
-        'part_count': Part.objects.count()
+    from django.db import connection, transaction
+    cursor = connection.cursor()
+    cursor.execute("SELECT reltuples FROM pg_class WHERE relname = 'parts_part'")
+    row = cursor.fetchone()
+    return {
+        'part_count': int(row[0])
     }
 
 def get_current_path(request):
