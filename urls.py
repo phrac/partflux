@@ -27,9 +27,11 @@ urlpatterns = patterns('',
                        url(r'^parts/add/$', 'parts.views.addpart'),
                        
                        # URLs for search
-                       url(r'^search/$', 'search.views.index'),
-                       url(r'^search/results/$', 'search.views.results'),
-                       
+                       #url(r'^search/$', 'search.views.index'),
+                       #url(r'^search/results/$', 'search.views.results'),
+                       (r'^search/', include('haystack.urls')),
+
+
                        # URLs for companies
                        url(r'^companies/$', 'companies.views.index'),
                        url(r'^companies/(?P<company_id>\d+)/$', 'companies.views.detail'),
