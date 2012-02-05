@@ -1,11 +1,11 @@
-from haystack import indexes
-from partfindr.models import Part
+from haystack.indexes import *
+from haystack import site
+from parts.models import Part
 
 
-class PartIndex(indexes.SearchIndex, indexes.Indexable):
-    text = indexes.CharField(document=True, use_template=True)
-    description = indexes.CharField(model_attr='description')
-    company = indexes.DateTimeField(model_attr='company')
+class PartIndex(SearchIndex):
+    text = CharField(document=True, use_template=True)
+    description = CharField(model_attr='description')
+    company = DateTimeField(model_attr='company')
 
-    def get_model(self):
-        return Part
+site.register(Part, PartIndex)
