@@ -39,8 +39,9 @@ def results(request):
         if q:
             #results = Part.objects.filter(Q(number__istartswith=q) |
             #                             Q(tsv__query=q)).distinct().only('number', 'description', 'company')
-            results = SearchQuerySet().filter(content=q)
+            sqs = SearchQuerySet()
 
+            results = sqs.filter(content=sqs.query.clean(q))
         else:
             results = []
     
@@ -52,7 +53,7 @@ def results(request):
         p = Paginator(results, 20, request=request)
         parts_list = p.page(page)
     
-    return render_to_response('search/results.html',
+    return render_to_response('search/search.html',
                               { 
                                   'parts_list': parts_list, 
                                   'searchterm': q,
