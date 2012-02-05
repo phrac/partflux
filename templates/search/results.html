@@ -15,10 +15,10 @@
 						<a href="/parts/{{ part.object.id}}/{{ part.object.number|slugify|upper }}/">{{ part.object.number }}</a>
 					</td>
 					<td class="part_desc">
-						{{ part.description|truncatewords:10 }}
+						{{ part.object.description|truncatewords:10 }}
 					</td>
 					<td class="part_desc">
-						<a href="/companies/{{ part.company.id }}/">{{ part.company.name }}</a>
+						<a href="/companies/{{ part.object.company.id }}/">{{ part.object.company.name }}</a>
 					</td>
 				</tr>
 				{% endfor %}

@@ -6,6 +6,7 @@ from django.db.models import Q
 from pure_pagination import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib.auth.models import User
 from haystack.query import SearchQuerySet
+from haystack.inputs import AutoQuery
 
 from parts.models import Part, Xref
 from companies.models import Company
@@ -41,7 +42,7 @@ def results(request):
             #                             Q(tsv__query=q)).distinct().only('number', 'description', 'company')
             sqs = SearchQuerySet()
 
-            results = sqs.auto_query(sqs.query.clean(q))
+            results = sqs.filter(content=AutoQuery(q))
         else:
             results = []
     
