@@ -41,7 +41,7 @@ def results(request):
             #                             Q(tsv__query=q)).distinct().only('number', 'description', 'company')
             sqs = SearchQuerySet()
 
-            results = sqs.filter(content=sqs.query.clean(q))
+            results = sqs.auto_query(sqs.query.clean(q))
         else:
             results = []
     
