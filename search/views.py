@@ -5,7 +5,7 @@ from django.template import RequestContext
 from django.db.models import Q
 from pure_pagination import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib.auth.models import User
-
+from haystack.query import SearchQuerySet
 
 from parts.models import Part, Xref
 from companies.models import Company
@@ -37,8 +37,10 @@ def results(request):
     if searchform.is_valid():
         q = searchform.cleaned_data['q']
         if q:
-            results = Part.objects.filter(Q(number__istartswith=q) |
-                                          Q(tsv__query=q)).distinct().only('number', 'description', 'company')
+            #results = Part.objects.filter(Q(number__istartswith=q) |
+            #                             Q(tsv__query=q)).distinct().only('number', 'description', 'company')
+            results = SearchQuerySet().filter(content=q)
+
         else:
             results = []
     
