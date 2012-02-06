@@ -13,20 +13,20 @@ Python
 	* django-orm 2.0+ (https://github.com/niwibe/django-orm)
 	* django-registration 0.8+: (hg clone http://bitbucket.org/ubernostrum/django-registration/)
 	* pure pagination (http://pypi.python.org/pypi/django-pure-pagination/)
+    * django-haystack 2.0+ (http://haystacksearch.org/)
 
 Database
 --------
 	* PostgreSQL 9.0+
 	* hstore contrib module (contrib/hstore.sql)
+
+Search
+------
+    * Apache Solr (http://lucene.apache.org/solr/)
 	 
 
 Database indexes, triggers, functions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Custom FTS trigger needed on updates and inserts::
-
-    CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON parts_part FOR EACH ROW EXECUTE PROCEDURE 
-    tsvector_update_trigger('tsv', 'pg_catalog.english', 'number', 'description')	
-
 Unaccent function (http://readthedocs.org/docs/django-orm/en/latest/postgresql/fts.html)::
 
     CREATE OR REPLACE FUNCTION unaccent(text) RETURNS text AS $$

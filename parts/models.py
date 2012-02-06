@@ -16,13 +16,13 @@ class Part(models.Model):
     user = models.ForeignKey(User, null=True)
     hits = models.IntegerField(default=0, editable=False)
     approved = models.BooleanField(default=True)
-    tsv = VectorField()
+    #tsv = VectorField()
     metadata = hstore.DictionaryField(db_index=True) 
     nsn = models.ForeignKey(Nsn, null=True)
-    objects = SearchManager(
-        search_field = 'tsv',
-        fields = 'description',
-    )
+    #objects = SearchManager(
+    #    search_field = 'tsv',
+    #    fields = 'description',
+    #)
 
     
     def __unicode__(self):
