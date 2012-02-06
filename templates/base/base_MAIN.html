@@ -1,3 +1,4 @@
+{% load humanize %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -19,7 +20,7 @@
 				<li><a href="/about/">About</a></li>
 				<li><a href="/search/">Advanced Search</a></li>
 			</ul>
-			<p style="padding-top:5px;">Indexing <b>{{ part_count }}</b> parts</p>
+			<p style="padding-top:5px;">Indexing <b>{{ part_count|intcomma }} </b>parts, <b>{{ nsn_count|intcomma}} </b>NSNs</p>
 
 		</div>
 	</div>

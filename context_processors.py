@@ -7,6 +7,15 @@ def part_count(request):
         'part_count': int(row[0])
     }
 
+def nsn_count(request):
+    from django.db import connection, transaction
+    cursor = connection.cursor()
+    cursor.execute("SELECT reltuples FROM pg_class WHERE relname = 'nsn_nsn'")
+    row = cursor.fetchone()
+    return {
+        'nsn_count': int(row[0])
+    }
+
 def get_current_path(request):
     return {
         'current_path': request.get_full_path()
