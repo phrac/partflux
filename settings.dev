@@ -112,6 +112,7 @@ TEMPLATE_LOADERS = (
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
+	"partfindr.context_processors.xref_count",
     "partfindr.context_processors.part_count",
     "partfindr.context_processors.get_current_path",
     "django.contrib.auth.context_processors.auth",

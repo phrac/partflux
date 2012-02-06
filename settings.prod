@@ -19,7 +19,7 @@ DATABASES = {
         'ENGINE': 'django_orm.backends.postgresql_psycopg2', 		# Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'partfindr',                     	# Or path to database file if using sqlite3.
         'USER': 'derek',                      				# Not used with sqlite3.
-        'PASSWORD': 'gL7.bT#!',                  			# Not used with sqlite3.
+        'PASSWORD': '',                  			# Not used with sqlite3.
         'HOST': 'localhost',                      	# Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      					# Set to empty string for default. Not used with sqlite3.
 		'OPTIONS': {
@@ -115,6 +115,7 @@ TEMPLATE_LOADERS = (
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
+	"partfindr.context_processors.xref_count",
 	"partfindr.context_processors.get_current_path",
 	"partfindr.context_processors.part_count",
 	"partfindr.context_processors.nsn_count",
