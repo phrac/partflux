@@ -27,8 +27,8 @@ urlpatterns = patterns('',
                        url(r'^parts/add/$', 'parts.views.addpart'),
                        
                        # URLs for search
-                       url(r'^search/', 'search.views.index'),
-                       url(r'^search/results/$', 'search.views.results'),
+                       url(r'^search/$', 'search.views.index'),
+                       url(r'^search/results/', 'search.views.results'),
                        #(r'^search/', include('haystack.urls')),
 
 
