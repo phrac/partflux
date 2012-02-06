@@ -17,12 +17,12 @@ html, body {
 	height: 100%;
 }
 
-a {	color: #E0691A;	background: inherit;}
+a {	color: #336699;	background: inherit;}
 a:hover { color: #6C757A; background: inherit; }
 
 h1 { font: normal 2.6em Arial, Sans-Serif; padding: 7px 0 0 8px; margin: 0; }
 h1 a { color: #737373; background: inherit; }
-.orange { color: #E0692A; }
+.orange { color: #336699; }
 sup { font-size: .5em; }
 
 h1 a, h2 a { text-decoration: none; }
