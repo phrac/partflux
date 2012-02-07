@@ -45,6 +45,8 @@ def results(request):
 
             results = sqs.filter(content=AutoQuery(q))
             
+            
+            # drill down
             for facet in selected_facets:
                 if ":" not in facet:
                     continue
