@@ -29,5 +29,14 @@
 		</div>
 		{% include "partials/add_part_to_db.html" %}
 	</div>
+
+	<div class="right">
+	<h3>Companies</h3>
+	<div class="right_articles">
+		{% if facets.fields.company %}
+		have facets available
+		{% endif %}
+	</div>
+</div>
 {% endblock %}
 
