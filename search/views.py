@@ -42,7 +42,7 @@ def results(request):
             #                             Q(tsv__query=q)).distinct().only('number', 'description', 'company')
             sqs = SearchQuerySet()
 
-            results = sqs.filter(content=AutoQuery(q))
+            results = sqs.filter(content=AutoQuery(q)).facet('company')
         else:
             results = []
     
