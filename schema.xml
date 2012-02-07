@@ -150,13 +150,9 @@
 
     <field name="company" type="text_en" indexed="true" stored="true" multiValued="false" />
 
-    <field name="metadata_exact" type="string" indexed="true" stored="true" multiValued="false" />
-
-    <field name="number" type="ngram" indexed="true" stored="true" multiValued="false" />
-
     <field name="company_exact" type="string" indexed="true" stored="true" multiValued="false" />
 
-    <field name="metadata" type="text_en" indexed="true" stored="true" multiValued="false" />
+    <field name="number" type="ngram" indexed="true" stored="true" multiValued="false" />
 
   </fields>
 
