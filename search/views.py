@@ -44,14 +44,14 @@ def results(request):
             sqs = SearchQuerySet().facet('company')
 
             results = sqs.filter(content=AutoQuery(q))
-
-			for facet in selected_facets:
-				if ":" not in facet:
-					continue
-				field, value = facet.split(":", 1)
-
-				if value:
-					results = results.narrow(u'%s:"%s"' % (field, sqs.query.clean(value)))
+            
+            for facet in selected_facets:
+                if ":" not in facet:
+                    continue
+                field, value = facet.split(":", 1)
+                
+                if value:
+                    results = results.narrow(u'%s:"%s"' % (field, sqs.query.clean(value)))
         else:
             results = []
     
