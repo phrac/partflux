@@ -38,7 +38,7 @@ def results(request):
     if searchform.is_valid():
         q = searchform.cleaned_data['q']
         selected_facets = request.GET.getlist("selected_facets")
-		if q:
+        if q:
             #results = Part.objects.filter(Q(number__istartswith=q) |
             #                             Q(tsv__query=q)).distinct().only('number', 'description', 'company')
             sqs = SearchQuerySet().facet('company')
