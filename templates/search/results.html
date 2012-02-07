@@ -37,7 +37,7 @@
 		{% if facets.fields.company %}
 			{% for company in facets.fields.company|slice:":30" %}
 			{% if company.1 > 0 %}
-	 	       <dd><a href="{{ request.get_full_path }}?q={{ searchterm }}&amp;selected_facets=company_exact:{{ company.0|urlencode }}">{{ company.0 }}</a> ({{ company.1 }})</dd>
+	 	       <dd><a href="{{ request.get_full_path }}&amp;selected_facets=company_exact:{{ company.0|urlencode }}">{{ company.0 }}</a> ({{ company.1 }})</dd>
 			   {% endif %}
 	        {% endfor %}
 		{% endif %}
