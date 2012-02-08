@@ -11,9 +11,11 @@ class PartGroup(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, null=True)
     private = models.BooleanField(default=False)
-    objects = hstore.HStoreManager()
     
     def __unicode__(self):
         return self.name
-    
+
+class PartGroupItem(models.Model):
+    partgroup = models.ForeignKey('PartGroup')
+    part = models.ForeignKey(Part)
 
