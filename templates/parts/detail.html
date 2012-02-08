@@ -96,7 +96,7 @@
 			{% else %}
 			<tr>
 				<td>
-					<h3 class="add">no part number cross references. add one using the form on the right.</h3>
+					<h3 class="add">No part number cross references. add one using the form on the right.</h3>
 				</td>
 			</tr>
 			{% endif %}
@@ -104,7 +104,7 @@
 		
 		<br /><br />
 		
-		<h2 style="margin-top: 20px" class="clear">parts that cross reference this part</h2>
+		<h2 style="margin-top: 20px" class="clear">Parts that cross reference this part</h2>
 			<table class="results" border="0" cellpadding="0"  cellspacing="0" width="100%">
 			{% if reverse_xrefs %}
 			{% for rxref in reverse_xrefs %}
@@ -123,7 +123,7 @@
 				{% else %}
 					<tr>
 						<td>
-							<h3 class="add">no reverse cross references. </h3>
+							<h3 class="add">No reverse cross references. </h3>
 						</td>
 					</tr>
 			{% endif %}
@@ -134,25 +134,25 @@
 </div>
 
 <div class="right">
-	<h3>part metainfo</h3>
+	<h3>Part metadata</h3>
 	<div class="right_articles">
-		<p> date added: {{ part.created_at|naturalday }} </p>
-		<p> last updated: {{ part.updated_at|naturalday }} </p> 
-		<p> hits: {{ part.hits }} </p>
-		<p> added by: {{ part.user.username }} </p>
+		<p> Date added: {{ part.created_at|naturalday }} </p>
+		<p> Last updated: {{ part.updated_at|naturalday }} </p> 
+		<p> Hits: {{ part.hits }} </p>
+		<p> Added by: {{ part.user.username }} </p>
 	</div>
 </div>
 
 <div class="right">
-	<h3>about {{ part.company.name }}</h3>
+	<h3>About {{ part.company.name }}</h3>
 	<div class="right_articles">
 	</div>
 </div>
 
 
 <div class="right" id="addxref">
-	<h3>add a cross reference
-		<a style="float:right; margin-right:8px;" title="a part cross reference is a part by a different manufacturer that has the same application. for example, a purolator pl14162 oil filter has the same characteristics of a fram ph6607 oil filter so those parts would be cross reference parts.">what's this?</a></h3>
+	<h3>Add a cross reference
+		<a style="float:right; margin-right:8px;" title="a part cross reference is a part by a different manufacturer that has the same application. for example, a Purolator PL14162 oil filter has the same characteristics of a Fram PH6607 oil filter so those parts would be cross reference parts.">What's this?</a></h3>
 	<div class="right_articles">
 		{% if user.is_authenticated %}
 			<form action="" method="post">
@@ -167,7 +167,7 @@
 				</table>
 			</form>
 		{% else %}
-			<h4 class="signin">please <a href="/users/login/">sign in</a> or <a href="/users/register/">register</a> to add a cross reference.</h4>
+			<h4 class="signin">Please <a href="/users/login/">sign in</a> or <a href="/users/register/">register</a> to add a cross reference.</h4>
 		{% endif %}
 	</div>
 </div>
