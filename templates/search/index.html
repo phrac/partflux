@@ -2,40 +2,7 @@
 
 {% block content %}
 	<div class="center_content">
-		<h2>{% block searchstats %}{{ object_list.paginator.count }} part numberS match "<i>{{ searchterm }}</i>"{% endblock %}</h2>
-		<table class="results" border="0" cellpadding="0"  cellspacing="0" width="100%">
-			
-				{% for part in page.object_list %}
-				<tr>
-					<td style="width:20%" class="part_number">
-						<a href="/parts/{{ part.object.id}}/">{{ part.object.number }}</a>
-					</td>
-					<td class="part_desc">
-						{{ part.object.description|truncatewords:10 }}
-					</td>
-					<td class="part_desc">
-						<a href="/companies/{{ part.object.company.id }}/">{{ part.object.company.name }}</a>
-					</td>
-				</tr>
-				{% endfor %}
-		</table>
-		
-		<div class="pagination">
-			<span class="step-links">
-				{% if object_list.has_previous %}
-				<a href="?q={{ searchterm }}&page={{ object_list.previous_page_number }}">previous</a>
-				{% endif %}
-				<span class="current">
-					Page {{ object_list.number }} of {{ parts_list.paginator.num_pages }}.
-				</span>
-				{% if parts_list.has_next %}
-				<a href="?q={{ searchterm }}&page={{ object_list.next_page_number }}">next</a>
-				{% endif %}
-			</span>
-		</div>
-		<br />
-		<br />
-		<h3 class="add">Don't see your part? You can add it to the database.</h3>
+		<h2>Advanced part search</h2>
 	</div>
 {% endblock %}
 
