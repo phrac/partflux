@@ -1,6 +1,4 @@
 from django.db import models
-from django_orm.postgresql.fts.fields import VectorField
-from django_orm.manager import FtsManager as SearchManager
 from django.contrib.auth.models import User
 from django_orm.postgresql import hstore
 
