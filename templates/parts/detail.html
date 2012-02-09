@@ -71,6 +71,13 @@
 								</td>
 							</tr>
 						</form>
+						{% else %}
+						<tr>
+							<td colspan="2">
+								<h4 class="signin">Please <a href="/users/login/">sign in</a> or <a href="/users/register/">register</a> to add part characteristics.</h4>
+							</td>
+						</tr>
+
 						{% endif %}
 						</table>
 					</div>
@@ -119,7 +126,11 @@
 							</tr>
 						</form>
 						{% else %}
-						<h4 class="signin">Please <a href="/users/login/">sign in</a> or <a href="/users/register/">register</a> to add a cross reference.</h4>
+						<tr>
+							<td colspan="3">
+								<h4 class="signin">Please <a href="/users/login/">sign in</a> or <a href="/users/register/">register</a> to add a cross reference.</h4>
+							</td>
+						</tr>
 						{% endif %}
 
 		</table>
