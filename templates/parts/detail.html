@@ -83,7 +83,7 @@
 			{% for xref in xrefs %}
 				<tr>
 					<td class="part_number">
-						<a href="/parts/{{ xref.xrefpart.id}}/{{ xref.xrefpart.number|slugify|upper }}/"">{{ xref.xrefpart.number }}</a>
+						<a href="/parts/{{ xref.xrefpart.id}}/{{ xref.xrefpart.number|slugify|upper }}/">{{ xref.xrefpart.number }}</a>
 					</td>
 					<td class="part_desc">
 						{{ xref.xrefpart.description }}
