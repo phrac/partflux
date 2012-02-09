@@ -28,12 +28,11 @@ DATABASES = {
     }
 }
 
-import os
 HAYSTACK_CONNECTIONS = {
-    'default': {
-        'ENGINE': 'haystack.backends.xapian_backend.XapianEngine',
-        'PATH': os.path.join(os.path.dirname(__file__), 'xapian_index'),
-    },
+        'default': {
+                'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
+                'URL': 'http://127.0.0.1:8983/solr',
+                }
 }
 
 # Local time zone for this installation. Choices can be found here:
@@ -157,7 +156,7 @@ INSTALLED_APPS = (
     'pure_pagination',
     'nsn',
 	'partgroups',
-	'google_analytics',
+    'google_analytics',
 )
 
 PAGINATION_SETTINGS = {

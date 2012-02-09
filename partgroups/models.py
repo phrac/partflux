@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from parts.models import Part
 
 class PartGroup(models.Model):
-    name = models.CharField(max_length=48)
+    name = models.CharField(max_length=128)
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

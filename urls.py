@@ -31,6 +31,10 @@ urlpatterns = patterns('',
                        url(r'^search/results/', 'search.views.results'),
                        #(r'^search/', include('haystack.urls')),
 
+                       # URLs for part groups
+                       url(r'^partgroups/$',
+                           'django.views.generic.simple.direct_to_template',
+                           {'template': 'partgroups/index.html'}),
 
                        # URLs for companies
                        url(r'^companies/$', 'companies.views.index'),
