@@ -157,6 +157,7 @@ INSTALLED_APPS = (
     'pure_pagination',
     'nsn',
 	'partgroups',
+	'google_analytics',
 )
 
 PAGINATION_SETTINGS = {

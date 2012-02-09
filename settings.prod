@@ -164,6 +164,7 @@ INSTALLED_APPS = (
 	'pure_pagination',
 	'nsn',
 	'partgroups',
+	'google_analytics',
 )
 ACCOUNT_ACTIVATION_DAYS = 7
 # A sample logging configuration. The only tangible logging
