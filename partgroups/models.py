@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django_orm.postgresql import hstore
 
 from parts.models import Part
 
