@@ -10,6 +10,7 @@ class PartGroup(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, null=True)
     private = models.BooleanField(default=False)
+    parent_group = models.ForeignKey('PartGroup', null=True)
     
     def __unicode__(self):
         return self.name
