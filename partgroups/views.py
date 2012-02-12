@@ -15,8 +15,22 @@ from partgroups.forms import PartGroupForm
 
 def index(request):
 
-    partgroupform = PartGroupForm(None)
+    
+    if request.method == 'POST':
+        partgroupform = PartGroupForm(request.POST)
+        if partgroupform.is_valid():
+            name = partgroupform.cleaned_data['name']
+            desc = partgroupform.cleaned_data['description']
+            private = partgroupform.cleaned_data['private']
+            newgroup, _created = PartGroup.objects.get_or_create(name=name,
+                                                             user=request.user)
+            if _created == True:
+                newgroup.description = desc
+                newgroup.private = private
+                newgroup.save()
 
+    else:
+        partgroupform = PartGroupForm()
     return render_to_response('partgroups/index.html',
                               {'partgroup_form': partgroupform},
                               context_instance=RequestContext(request))
