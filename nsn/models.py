@@ -1,8 +1,8 @@
 from django.db import models
 
 class Nsn(models.Model):
-    number = models.CharField(max_length=13, unique=True)
-    fsc = models.ForeignKey('Fsc')
+    number = models.CharField(max_length=16, unique=True)
+    fsc = models.ForeignKey('Fsc', null=True)
     description = models.TextField()
      
     def __unicode__(self):
