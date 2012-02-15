@@ -49,6 +49,7 @@ def detail(request, part_id):
         xrefform = XrefForm(request.POST)
         if xrefform.is_valid:
             addxref(request, part_id)
+            return HttpResponseRedirect(reverse('parts.views.detail', args=[part_id]))
 
     return render_to_response('parts/detail.html', 
                               {'part': p, 
@@ -97,10 +98,10 @@ def addpart(request):
 def addxref(request, part_id):
     p = get_object_or_404(Part, pk=part_id)
     xrefform = XrefForm(request.POST)
-    
+    print 'adding xref' 
     if xrefform.is_valid():
         part_number = xrefform.cleaned_data['part'].upper()
-        desc = xrefform.cleaned_data['desc'].upper()
+        #desc = xrefform.cleaned_data['desc'].upper()
         company = xrefform.cleaned_data['company'].upper()
         # first we need to get the company or create it if it doesn't exist
         c, _created = Company.objects.get_or_create(name=company)
@@ -108,7 +109,7 @@ def addxref(request, part_id):
         newpart, _created = Part.objects.get_or_create(number=part_number, company=c)
         if _created == True:
             newpart.user = request.user
-            newpart.description = desc
+            #newpart.description = desc
             newpart.hits = 0
             newpart.save()
          
@@ -116,7 +117,6 @@ def addxref(request, part_id):
         if _created == True:
             xr1.user = request.user
             xr1.save()
-    return HttpResponseRedirect(reverse("parts.views.detail", args=[part_id]))
     
 
 
