@@ -1,6 +1,7 @@
 {% extends "base/base_MAIN.html" %}
 
 {% load humanize %}
+{% load parttags %}
 
 {% block title %}
 {{ part.number }} by {{ part.company }} | partfindr
@@ -46,7 +47,7 @@
 										{% if "SOURCE" in k %}
 											{{ v|urlizetrunc:55 }}<br />
 										{% else %}
-											{{ v|linebreaksbr }}<br />
+											{{ v|usernl2nl|linebreaksbr }}<br />
 										{% endif %}
 									</p>
 								</td>
