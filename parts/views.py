@@ -65,8 +65,8 @@ def addmeta(request, part_id):
     p = get_object_or_404(Part, pk=part_id)
     metaform = MetadataForm(request.POST)
     if metaform.is_valid():
-        key = metaform.cleaned_data['key'].upper()
-        value = metaform.cleaned_data['value'].upper()
+        key = metaform.cleaned_data['key'].strip().upper()
+        value = metaform.cleaned_data['value'].strip().upper()
         p.metadata[key] = value
         p.save()
         
