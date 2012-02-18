@@ -23,7 +23,7 @@
 <div class="left">
 	&nbsp;
 		<h2>Details for {{ part.number }} by {{ part.company }}</h2>
-			<table style="margin-left:25px" class="results" border="0" cellpadding="0"  cellspacing="0" width="100%">
+			<table class="results" border="0" cellpadding="0"  cellspacing="0" width="100%">
 				<tr>
 					<td colspan="2">
 						<p>
@@ -59,17 +59,17 @@
 								{% csrf_token %}
 							<tr>
 								<td style="padding-left:-10px">
-									<p><b>ADD CHARACTERISTIC:</b><a style="float:right; margin-right:8px;" title="Part characteristics are pieces of information that describe a part in greater detail. Example part characteristics may be weight, length, width, recommended application or any other piece of information that describes characteristics of a part.">?</a></p>
+									<p><b>ADD CHARACTERISTIC:</b>&nbsp;&nbsp;<a title="Part characteristics are pieces of information that describe a part in greater detail. Example part characteristics may be weight, length, width, recommended application or any other piece of information that describes characteristics of a part.">?</a></p>
 									{{ metadata_form.key }}
-									<p>Example: weight</p>
+									<p><i>Example: Weight</i></p>
 								</td>
 								<td style="padding-left:30px">
 									<p><br /></p>
 									{{ metadata_form.value }}
-									<p>Example: 10 LBS</p>
+									<p><i>Example: 10 LBS</i></p>
 								</td>
 								<td>
-									<p><br /></p>
+									<p></p>
 									<input type="submit" value="Save" class="submit" name="metadata_button" />
 								</td>
 							</tr>
@@ -115,16 +115,18 @@
 								{% csrf_token %}
 							<tr>
 								<td style="padding-left:-10px">
-									<p><br /><br /><b>ADD CROSS REFERENCE:</b><a style="float:right; margin-right:8px;" title="A part cross reference is a part by a different manufacturer that has the same application. for example, a Purolator PL14162 oil filter has the same characteristics of a Fram PH6607 oil filter so those parts would be cross reference parts.">?</a><br />Part #</p>
+									<p><br /><b>ADD CROSS REFERENCE:</b>&nbsp;&nbsp;<a title="A part cross reference is a part by a different manufacturer that has the same application. for example, a Purolator PL14162 oil filter has the same characteristics of a Fram PH6607 oil filter so those parts would be cross reference parts.">?</a></p>
 									{{ xref_form.part }}
+									<p>Part #</p>
 								</td>
 								<td style="padding-left:30px">
-									<p><br /><br /><br />Company<br /></p>
+									<p><br /><br /></p>	
 									{{ xref_form.company }}
+									<p>Company</p>
 								</td>
 								<td>
-									<p><br /><br /><br /><br />
-									<input type="submit" value="Save" class="submit" name="xref_button" /></p>
+									
+									<input type="submit" value="Save" class="submit" name="xref_button" />
 								</td>
 							</tr>
 						</form>
@@ -182,6 +184,10 @@
 <div class="right">
 	<h3>Part Actions</h3>
 	<div class="right_articles">
+		<ul>
+			<li>Add to my part group:</li>
+			<li>Add to an assembly:</li>
+		</ul>
 	</div>
 </div>
 
