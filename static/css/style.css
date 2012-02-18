@@ -66,6 +66,8 @@ li.clearfix {
 	height: auto !important;
 	height: 100%;
 	background: #fff;
+	border-left:1px #000;
+	border-right:1px #000;
 
 }
 
@@ -125,9 +127,7 @@ h2.signin {
 	font-weight: bold;
 	height: 30px; 
 	color: #FFF;
-	background: #369;
-	width:980px;
-	margin: auto;
+	background: url(../img/head_mid.png) 0 0 repeat-x; 
 	padding-left:10px;
 	padding-right:10px;
 }
@@ -251,10 +251,10 @@ h2.viewall {
 
 h2 {
 	clear: both;
-	border: 2px solid #369;
-	-moz-border-radius:5px;
-	border-radius:5px;
-	background-color:#ddd;
+	border: 1px solid #333;
+	-moz-border-radius:3px;
+	border-radius:3px;
+	background: #369 url(../img/head_mid.png) 0 0 repeat-x;
 	color: #444;
 	padding: 3px 0 4px 43px;
 	font: bold 1.4em Arial, Sans-Serif;
@@ -299,14 +299,14 @@ h3.add {
 
 .left {
 	float: left;
-	width: 680px;
+	width: 70%;
 	margin: 0 0 10px 0;
 }
 
 
 .left h2, .center_content h2 {
 	clear: both;
-	color: #000;
+	color: #ddd;
 	padding: 3px 0 4px 4px;
 	font: bold 1.6em Arial, Sans-Serif;
 	margin: 0 0 10px 0;
@@ -341,7 +341,7 @@ h3.add {
 		
 .right {
 	float: right;
-	width: 275px;
+	width: 29%;
 	margin-bottom:5px;
 	margin-top:5px;
 	clear:right;

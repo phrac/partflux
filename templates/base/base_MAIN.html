@@ -13,7 +13,8 @@
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
 </head>
 <body>
-	<div class="bar" style="border-bottom:1px solid #666;" >
+	<div class="bar" style="border-bottom:1px solid #000;" >
+		<div style="padding:0px;width:980px;margin:0 auto;">
 			<ul>
 				<li class="browse_category">&nbsp;</li>
 				<li><a href="/partgroups/">Part Groups</a></li>
@@ -23,6 +24,7 @@
 			</ul>
 			<p style="padding-top:5px;">Indexing <b>{{ part_count|intcomma }} </b>parts | <b>{{ xref_count|intcomma }}</b> xrefs | <b>{{ nsn_count|intcomma}} </b>NSNs</p>
 
+		</div>
 	</div>
 	<div class="content">
 		<div class="header">
