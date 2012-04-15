@@ -253,8 +253,9 @@ h2.viewall {
 h2 {
 	clear: both;
 	border: 1px solid #333;
-	-moz-border-radius:3px;
-	border-radius:3px;
+	-moz-border-radius:2px;
+	border-top-right-radius:3px;
+	border-top-left-radius:3px;
 	background: #369 url(../img/head_mid.png) 0 0 repeat-x;
 	color: #444;
 	padding: 3px 0 4px 43px;
