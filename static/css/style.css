@@ -255,7 +255,7 @@ h2 {
 	-moz-border-radius:2px;
 	border-top-right-radius:3px;
 	border-top-left-radius:3px;
-	background: #369 url(../img/head_mid.png) 0 0 repeat-x;
+	background-color:#ddd;
 	color: #444;
 	padding: 3px 0 4px 43px;
 	font: bold 1.4em Arial, Sans-Serif;
