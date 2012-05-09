@@ -255,8 +255,8 @@ h2 {
 	-moz-border-radius:2px;
 	border-top-right-radius:3px;
 	border-top-left-radius:3px;
-	background-color:#ccc;
-	color: #111;
+	background-color:#bbb;
+	color: #000;
 	padding: 3px 0 4px 43px;
 	font: bold 1.4em Arial, Sans-Serif;
 	margin: 0 0 10px 0;
@@ -307,7 +307,7 @@ h3.add {
 
 .left h2, .center_content h2 {
 	clear: both;
-	color: #ddd;
+	color: #444;
 	padding: 3px 0 4px 4px;
 	font: bold 1.6em Arial, Sans-Serif;
 	margin: 0 0 10px 0;
