@@ -119,17 +119,17 @@
 								{% csrf_token %}
 							<tr>
 								<td>
-									<p><br /><b>ADD CROSS REFERENCE:</b>&nbsp;&nbsp;<a title="A part cross reference is a part by a different manufacturer that has the same application. for example, a Purolator PL14162 oil filter has the same characteristics of a Fram PH6607 oil filter so those parts would be cross reference parts.">?</a></p>
+									<p><b>ADD CROSS REFERENCE:</b>&nbsp;&nbsp;<a title="A part cross reference is a part by a different manufacturer that has the same application. for example, a Purolator PL14162 oil filter has the same characteristics of a Fram PH6607 oil filter so those parts would be cross reference parts.">?</a></p>
 									{{ xref_form.part }}
 									<p>Part #</p>
 								</td>
 								<td>
-									<p><br /><br /></p>	
+									<p><br /></p>	
 									{{ xref_form.company }}
 									<p>Company</p>
 								</td>
 								<td>
-									
+									<p></p>	
 									<input type="submit" value="Save" class="submit" name="xref_button" />
 								</td>
 							</tr>
