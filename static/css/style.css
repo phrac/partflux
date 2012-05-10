@@ -215,7 +215,9 @@ h2.viewall {
 
 	input.submit {
 		background: #336699;
-		border: 2px solid #ccc;
+		border: 1px solid #ccc;
+		-moz-border-radius:3px;
+		border-radius:3px;
 		padding: 5px 0;
 		width: 65px;
 		margin: 0 15px 1px 0;
