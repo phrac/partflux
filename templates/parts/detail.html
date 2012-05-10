@@ -52,13 +52,14 @@
 									</p>
 								</td>
 							</tr>
-
 							{% endfor %}
 							{% if user.is_authenticated %}
+						</table>
+						<table style="border:1px solid #ddd;">
 							<form action="" method="post">
 								{% csrf_token %}
 							<tr>
-								<td style="padding-left:-10px;border:1px solid #ddd;">
+								<td>
 									<p><b>ADD CHARACTERISTIC:</b>&nbsp;&nbsp;<a title="Part characteristics are pieces of information that describe a part in greater detail. Example part characteristics may be weight, length, width, recommended application or any other piece of information that describes characteristics of a part.">?</a></p>
 									{{ metadata_form.key }}
 									<p><i>Example: Weight</i></p>
