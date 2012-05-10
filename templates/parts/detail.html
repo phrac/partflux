@@ -55,7 +55,7 @@
 							{% endfor %}
 							{% if user.is_authenticated %}
 						</table>
-						<table style="border:1px solid #ddd;">
+						<table width="100%" style="border:1px solid #ddd;">
 							<form action="" method="post">
 								{% csrf_token %}
 							<tr>
@@ -64,7 +64,7 @@
 									{{ metadata_form.key }}
 									<p><i>Example: Weight</i></p>
 								</td>
-								<td style="padding-left:30px">
+								<td>
 									<p><br /></p>
 									{{ metadata_form.value }}
 									<p><i>Example: 10 LBS</i></p>
