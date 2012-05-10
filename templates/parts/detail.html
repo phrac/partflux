@@ -58,9 +58,7 @@
 						<table width="100%" style="border:1px solid #ddd;">
 							<form action="" method="post">
 								{% csrf_token %}
-								<tr>
-									<fieldset>
-										<legend>ADD CHARACTERISTIC</legend>
+							<tr>
 								<td>
 									<p><b>ADD CHARACTERISTIC:</b>&nbsp;&nbsp;<a title="Part characteristics are pieces of information that describe a part in greater detail. Example part characteristics may be weight, length, width, recommended application or any other piece of information that describes characteristics of a part.">?</a></p>
 									{{ metadata_form.key }}
@@ -75,7 +73,6 @@
 									<p></p>
 									<input type="submit" value="Save" class="submit" name="metadata_button" />
 								</td>
-									</fieldset>
 							</tr>
 						</form>
 						{% else %}
@@ -90,7 +87,8 @@
 					</div>
 				</td>
 			</tr>
-			</table>
+		</table>
+
 			<h2 style="margin-top: 20px" class="clear">Cross referenced part numbers</h2>
 			<table class="results" border="0" cellpadding="0"  cellspacing="0" width="100%">
 			{% if xrefs %}
@@ -114,16 +112,18 @@
 				</td>
 			</tr>
 			{% endif %}
+		</table>
+		<table width="100%" style="border:1px solid #ddd;">
 			{% if user.is_authenticated %}
 							<form action="" method="post">
 								{% csrf_token %}
 							<tr>
-								<td style="padding-left:-10px">
+								<td>
 									<p><br /><b>ADD CROSS REFERENCE:</b>&nbsp;&nbsp;<a title="A part cross reference is a part by a different manufacturer that has the same application. for example, a Purolator PL14162 oil filter has the same characteristics of a Fram PH6607 oil filter so those parts would be cross reference parts.">?</a></p>
 									{{ xref_form.part }}
 									<p>Part #</p>
 								</td>
-								<td style="padding-left:30px">
+								<td>
 									<p><br /><br /></p>	
 									{{ xref_form.company }}
 									<p>Company</p>
