@@ -58,7 +58,9 @@
 						<table width="100%" style="border:1px solid #ddd;">
 							<form action="" method="post">
 								{% csrf_token %}
-							<tr>
+								<tr>
+									<fieldset>
+										<legend>ADD CHARACTERISTIC</legend>
 								<td>
 									<p><b>ADD CHARACTERISTIC:</b>&nbsp;&nbsp;<a title="Part characteristics are pieces of information that describe a part in greater detail. Example part characteristics may be weight, length, width, recommended application or any other piece of information that describes characteristics of a part.">?</a></p>
 									{{ metadata_form.key }}
@@ -73,6 +75,7 @@
 									<p></p>
 									<input type="submit" value="Save" class="submit" name="metadata_button" />
 								</td>
+									</fieldset>
 							</tr>
 						</form>
 						{% else %}
