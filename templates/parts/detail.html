@@ -35,7 +35,7 @@
 				<td colspan="2">
 					<div id="meta">
 						<table class="metadata" border="0" cellspacing="5" cellpadding="5">
-						{% for k, v in metadata %}
+							{% for k, v in metadata %}
 							<tr>
 								<td style="font-weight:bold" valign="top">
 									<p>
@@ -55,12 +55,15 @@
 							{% endfor %}
 							{% if user.is_authenticated %}
 						</table>
+						
 						<table width="100%" style="border:1px solid #ddd;">
 							<form action="" method="post">
 								{% csrf_token %}
 							<tr>
 								<td>
-									<p><b>ADD CHARACTERISTIC:</b>&nbsp;&nbsp;<a title="Part characteristics are pieces of information that describe a part in greater detail. Example part characteristics may be weight, length, width, recommended application or any other piece of information that describes characteristics of a part.">?</a></p>
+									<p><b>ADD CHARACTERISTIC:</b>&nbsp;&nbsp;<a title="Part characteristics are pieces of information that
+										describe a part in greater detail. Example part characteristics may be weight, length, width, 
+										recommended application or any other piece of information that describes characteristics of a part.">?</a></p>
 									{{ metadata_form.key }}
 									<p><i>Example: Weight</i></p>
 								</td>
@@ -74,11 +77,18 @@
 									<input type="submit" value="Save" class="submit" name="metadata_button" />
 								</td>
 							</tr>
+							<tr>
+								<td colspan="3">
+									<p><b>Tip:</b> You can add multiple values by separating each value with "\n"</p>
+								</td>
+							</tr>
 						</form>
 						{% else %}
 						<tr>
 							<td colspan="2">
-								<h4 class="signin">Please <a href="/users/login/">sign in</a> or <a href="/users/register/">register</a> to add part characteristics.</h4>
+								<h4 class="signin">
+									Please <a href="/users/login/">sign in</a> or <a href="/users/register/">register</a> to add part characteristics.
+								</h4>
 							</td>
 						</tr>
 
@@ -89,59 +99,64 @@
 			</tr>
 		</table>
 
-			<h2 style="margin-top: 20px" class="clear">Cross referenced part numbers</h2>
-			<table class="results" border="0" cellpadding="0"  cellspacing="0" width="100%">
+		<h2 style="margin-top: 20px" class="clear">Cross referenced part numbers</h2>
+		<table class="results" border="0" cellpadding="0"  cellspacing="0" width="100%">
 			{% if xrefs %}
-			{% for xref in xrefs %}
+				{% for xref in xrefs %}
+					<tr>
+						<td class="part_number">
+							<a href="/parts/{{ xref.xrefpart.id}}/{{ xref.xrefpart.number|slugify|upper }}/">{{ xref.xrefpart.number }}</a>
+						</td>
+						<td class="part_desc">
+							{{ xref.xrefpart.description }}
+						</td>
+						<td class="part_desc">
+							{{ xref.xrefpart.company }}
+						</td>
+					</tr>
+				{% endfor %}
+			{% else %}
 				<tr>
-					<td class="part_number">
-						<a href="/parts/{{ xref.xrefpart.id}}/{{ xref.xrefpart.number|slugify|upper }}/">{{ xref.xrefpart.number }}</a>
-					</td>
-					<td class="part_desc">
-						{{ xref.xrefpart.description }}
-					</td>
-					<td class="part_desc">
-						{{ xref.xrefpart.company }}
+					<td colspan="3">
+						<h3 class="add">No part number cross references. Add one using the form below.</h3>
 					</td>
 				</tr>
-			{% endfor %}
-			{% else %}
-			<tr>
-				<td colspan="3">
-					<h3 class="add">No part number cross references. Add one using the form below.</h3>
-				</td>
-			</tr>
 			{% endif %}
 		</table>
+		
 		<table width="100%" style="border:1px solid #ddd;">
 			{% if user.is_authenticated %}
-							<form action="" method="post">
-								{% csrf_token %}
-							<tr>
-								<td>
-									<p><b>ADD CROSS REFERENCE:</b>&nbsp;&nbsp;<a title="A part cross reference is a part by a different manufacturer that has the same application. for example, a Purolator PL14162 oil filter has the same characteristics of a Fram PH6607 oil filter so those parts would be cross reference parts.">?</a></p>
-									{{ xref_form.part }}
-									<p>Part #</p>
-								</td>
-								<td>
-									<p><br /></p>	
-									{{ xref_form.company }}
-									<p>Company</p>
-								</td>
-								<td>
-									<p></p>	
-									<input type="submit" value="Save" class="submit" name="xref_button" />
-								</td>
-							</tr>
-						</form>
-						{% else %}
-						<tr>
-							<td colspan="3">
-								<h4 class="signin">Please <a href="/users/login/">sign in</a> or <a href="/users/register/">register</a> to add a cross reference.</h4>
+				<form action="" method="post">
+					{% csrf_token %}
+					<tr>
+						<td>
+							<p>
+								<b>ADD CROSS REFERENCE:</b>&nbsp;&nbsp;<a title="A part cross reference is a part by a different manufacturer 
+								that has the same application. for example, a Purolator PL14162 oil filter has the same characteristics of a
+								Fram PH6607 oil filter so those parts would be cross reference parts.">?</a>
+							</p>
+							{{ xref_form.part }}
+								<p>Part #</p>
 							</td>
-						</tr>
-						{% endif %}
-
+							<td>
+								<p><br /></p>	
+								{{ xref_form.company }}
+								<p>Company</p>
+							</td>
+							<td>
+								<p></p>	
+								<input type="submit" value="Save" class="submit" name="xref_button" />
+							</td>
+						</td>
+					</tr>
+				</form>
+			{% else %}
+				<tr>
+					<td colspan="3">
+						<h4 class="signin">Please <a href="/users/login/">sign in</a> or <a href="/users/register/">register</a> to add a cross reference.</h4>
+					</td>
+				</tr>
+			{% endif %}
 		</table>
 		
 		<br /><br />
