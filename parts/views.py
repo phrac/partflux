@@ -14,20 +14,9 @@ from parts.forms import MetadataForm, XrefForm, SearchForm
 
 def index(request):
     parts_list = Part.objects.all().order_by('-created_at')[:25]
-    paginator = Paginator(parts_list, 25)
-
-    try:
-        page = int(request.GET.get('page', '1'))
-    except ValueError:
-        page = 1
-
-    try:
-        parts = paginator.page(page)
-    except (EmptyPage, InvalidPage):
-        parts = paginator.page(paginator.num_pages)
-
+    
     return render_to_response('parts/index.html',
-                              {'parts_list': parts},
+                              {'parts_list': parts_list},
                               context_instance=RequestContext(request))
 
 def detail(request, part_id):

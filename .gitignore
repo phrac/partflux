@@ -1,0 +1,10 @@
+syntax: glob
+
+*.swp
+*.lock
+*.out
+*.pyc
+*~
+*.swo
+settings.py
+
