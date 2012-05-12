@@ -8,15 +8,16 @@
    -------------- */
 *{ margin: 0; padding: 0; }* 
 body { 
-	font: .7em Arial, sans-serif; 
-	line-height: 1.6em;
-	color: #444;
-}
-html, body {
-	height: 100%;
+    font: .7em Arial, sans-serif; 
+    line-height: 1.6em;
+    color: #444;
 }
 
-a {	color: #336699;	background: inherit;}
+html, body {
+    height: 100%;
+}
+
+a { color: #336699; background: inherit;}
 a:hover { color: #6C757A; background: inherit; }
 
 h1 { font: normal 2.6em Arial, Sans-Serif; padding: 7px 0 0 8px; margin: 0; }
@@ -34,15 +35,15 @@ ul { list-style : none; }
 /* layout
    ------ */
 .horizontal-line {
-	border-bottom: 1px solid #eee;
-	margin-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 10px;
 }
 .clearfix:after {
-	clear: both;
-	display: block;
-	content: " ";
-	height: 0px;
-	visibility: hidden;
+    clear: both;
+    display: block;
+    content: " ";
+    height: 0px;
+    visibility: hidden;
 }
 .clearfix {
 	display: inline-block;
