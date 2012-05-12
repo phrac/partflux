@@ -5,8 +5,8 @@ from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from companies.models import Company
 
 def index(request):
-    companies_list = Part.objects.all().order_by('created_at')
-    paginator = Paginator(parts_list, 20)
+    companies_list = Company.objects.all().order_by('-created_at')
+    paginator = Paginator(companies_list, 20)
 
     try:
         page = int(request.GET.get('page', '1'))
