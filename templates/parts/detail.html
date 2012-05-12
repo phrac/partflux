@@ -18,226 +18,226 @@
     $(document).ready(function() {
             $("a[title]").tooltip({ relative: 'true', predelay: 500}).dynamic({ bottom: { direction: 'down', bounce: true } });;
             });
-</script>
+        </script>
 
-<div class="left">
-    <h2>Details for {{ part.number }} by {{ part.company }}</h2>
-    <table class="results" border="0" cellpadding="0"  cellspacing="0" width="100%">
-        <tr>
-            <td colspan="2">
-                <p>
-                <b>{{ part.description }}</b>
-                </p>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <div id="meta">
-                    <table class="metadata" border="0" cellspacing="5" cellpadding="5">
-                        {% for k, v in metadata %}
-                        <tr>
-                            <td style="font-weight:bold" valign="top">
-                                <p>
-                                {{ k }}	
-                                </p>
-                            </td>
-                            <td class="metadata" colspan="2">
-                                <p>
-                                {% if "SOURCE" in k %}
-                                {{ v|urlizetrunc:55 }}<br />
+        <div class="left">
+            <h2>Details for {{ part.number }} by {{ part.company }}</h2>
+            <table class="results" border="0" cellpadding="0"  cellspacing="0" width="100%">
+                <tr>
+                    <td colspan="2">
+                        <p>
+                        <b>{{ part.description }}</b>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div id="meta">
+                            <table class="metadata" border="0" cellspacing="5" cellpadding="5">
+                                {% for k, v in metadata %}
+                                <tr>
+                                    <td style="font-weight:bold" valign="top">
+                                        <p>
+                                        {{ k }}	
+                                        </p>
+                                    </td>
+                                    <td class="metadata" colspan="2">
+                                        <p>
+                                        {% if "SOURCE" in k %}
+                                        {{ v|urlizetrunc:55 }}<br />
+                                        {% else %}
+                                        {{ v|usernl2nl|linebreaksbr }}<br />
+                                        {% endif %}
+                                        </p>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                {% if user.is_authenticated %}
+                            </table>
+
+                            <table width="100%" style="border:1px solid #ddd;">
+                                <form action="" method="post">
+                                    {% csrf_token %}
+                                    <tr>
+                                        <td>
+                                            <p><b>ADD CHARACTERISTIC:</b>&nbsp;&nbsp;<a title="Part characteristics are pieces of information that
+                                                describe a part in greater detail. Example part characteristics may be weight, length, width, 
+                                                recommended application or any other piece of information that describes characteristics of a part.">?</a></p>
+                                            {{ metadata_form.key }}
+                                            <p><i>Example: Weight</i></p>
+                                        </td>
+                                        <td>
+                                            <p><br /></p>
+                                            {{ metadata_form.value }}
+                                            <p><i>Example: 10 LBS</i></p>
+                                        </td>
+                                        <td>
+                                            <p></p>
+                                            <input type="submit" value="Save" class="submit" name="metadata_button" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <p><b>Tip:</b> You can add multiple values by separating each value with "\n"</p>
+                                        </td>
+                                    </tr>
+                                </form>
                                 {% else %}
-                                {{ v|usernl2nl|linebreaksbr }}<br />
+                                <tr>
+                                    <td colspan="2">
+                                        <h4 class="signin">
+                                            Please <a href="/users/login/">sign in</a> or <a href="/users/register/">register</a> to add part characteristics.
+                                        </h4>
+                                    </td>
+                                </tr>
+
                                 {% endif %}
-                                </p>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                        {% if user.is_authenticated %}
-                    </table>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </table>
 
-                    <table width="100%" style="border:1px solid #ddd;">
-                        <form action="" method="post">
-                            {% csrf_token %}
-                            <tr>
-                                <td>
-                                    <p><b>ADD CHARACTERISTIC:</b>&nbsp;&nbsp;<a title="Part characteristics are pieces of information that
-                                        describe a part in greater detail. Example part characteristics may be weight, length, width, 
-                                        recommended application or any other piece of information that describes characteristics of a part.">?</a></p>
-                                    {{ metadata_form.key }}
-                                    <p><i>Example: Weight</i></p>
-                                </td>
-                                <td>
-                                    <p><br /></p>
-                                    {{ metadata_form.value }}
-                                    <p><i>Example: 10 LBS</i></p>
-                                </td>
-                                <td>
-                                    <p></p>
-                                    <input type="submit" value="Save" class="submit" name="metadata_button" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">
-                                    <p><b>Tip:</b> You can add multiple values by separating each value with "\n"</p>
-                                </td>
-                            </tr>
-                        </form>
-                        {% else %}
-                        <tr>
-                            <td colspan="2">
-                                <h4 class="signin">
-                                    Please <a href="/users/login/">sign in</a> or <a href="/users/register/">register</a> to add part characteristics.
-                                </h4>
-                            </td>
-                        </tr>
+            <h2 style="margin-top: 20px" class="clear">Cross referenced part numbers</h2>
+            <table class="results" border="0" cellpadding="0"  cellspacing="0" width="100%">
+                {% if xrefs %}
+                {% for xref in xrefs %}
+                <tr>
+                    <td class="part_number">
+                        <a href="/parts/{{ xref.xrefpart.id}}/{{ xref.xrefpart.number|slugify|upper }}/">{{ xref.xrefpart.number }}</a>
+                    </td>
+                    <td class="part_desc">
+                        {{ xref.xrefpart.description }}
+                    </td>
+                    <td class="part_desc">
+                        {{ xref.xrefpart.company }}
+                    </td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <tr>
+                    <td colspan="3">
+                        <h3 class="add">No part number cross references. Add one using the form below.</h3>
+                    </td>
+                </tr>
+                {% endif %}
+            </table>
 
-                        {% endif %}
-                    </table>
-                </div>
-            </td>
-        </tr>
-    </table>
+            <table width="100%" style="border:1px solid #ddd;">
+                {% if user.is_authenticated %}
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <tr>
+                        <td>
+                            <p>
+                            <b>ADD CROSS REFERENCE:</b>&nbsp;&nbsp;<a title="A part cross reference is a part by a different manufacturer 
+                                that has the same application. for example, a Purolator PL14162 oil filter has the same characteristics of a
+                                Fram PH6607 oil filter so those parts would be cross reference parts.">?</a>
+                            </p>
+                            {{ xref_form.part }}
+                            <p>Part #</p>
+                        </td>
+                        <td>
+                            <p><br /></p>	
+                            {{ xref_form.company }}
+                            <p>Company</p>
+                        </td>
+                        <td>
+                            <p></p>	
+                            <input type="submit" value="Save" class="submit" name="xref_button" />
+                        </td>
+                    </td>
+                </tr>
+            </form>
+            {% else %}
+            <tr>
+                <td colspan="3">
+                    <h4 class="signin">Please <a href="/users/login/">sign in</a> or <a href="/users/register/">register</a> to add a cross reference.</h4>
+                </td>
+            </tr>
+            {% endif %}
+        </table>
 
-    <h2 style="margin-top: 20px" class="clear">Cross referenced part numbers</h2>
-    <table class="results" border="0" cellpadding="0"  cellspacing="0" width="100%">
-        {% if xrefs %}
-        {% for xref in xrefs %}
-        <tr>
-            <td class="part_number">
-                <a href="/parts/{{ xref.xrefpart.id}}/{{ xref.xrefpart.number|slugify|upper }}/">{{ xref.xrefpart.number }}</a>
-            </td>
-            <td class="part_desc">
-                {{ xref.xrefpart.description }}
-            </td>
-            <td class="part_desc">
-                {{ xref.xrefpart.company }}
-            </td>
-        </tr>
-        {% endfor %}
-        {% else %}
-        <tr>
-            <td colspan="3">
-                <h3 class="add">No part number cross references. Add one using the form below.</h3>
-            </td>
-        </tr>
-        {% endif %}
-    </table>
+        <br /><br />
 
-    <table width="100%" style="border:1px solid #ddd;">
-        {% if user.is_authenticated %}
-        <form action="" method="post">
-            {% csrf_token %}
+        <h2 style="margin-top: 20px" class="clear">Parts that cross reference this part</h2>
+        <table class="results" border="0" cellpadding="0"  cellspacing="0" width="100%">
+            {% if reverse_xrefs %}
+            {% for rxref in reverse_xrefs %}
+            <tr>
+                <td class="part_number">
+                    <a href="/parts/{{ rxref.part.id}}/{{ rxref.part.number|slugify|upper }}/">{{ rxref.part.number }}</a>
+                </td>
+                <td class="part_desc">
+                    {{ rxref.part.description }}
+                </td>
+                <td class="part_desc">
+                    {{ rxref.part.company }}
+                </td>
+            </tr>
+            {% endfor %}
+            {% else %}
             <tr>
                 <td>
-                    <p>
-                    <b>ADD CROSS REFERENCE:</b>&nbsp;&nbsp;<a title="A part cross reference is a part by a different manufacturer 
-                        that has the same application. for example, a Purolator PL14162 oil filter has the same characteristics of a
-                        Fram PH6607 oil filter so those parts would be cross reference parts.">?</a>
-                    </p>
-                    {{ xref_form.part }}
-                    <p>Part #</p>
+                    <h3 class="add">No reverse cross references. </h3>
                 </td>
-                <td>
-                    <p><br /></p>	
-                    {{ xref_form.company }}
-                    <p>Company</p>
-                </td>
-                <td>
-                    <p></p>	
-                    <input type="submit" value="Save" class="submit" name="xref_button" />
-                </td>
-            </td>
-        </tr>
-    </form>
-    {% else %}
-    <tr>
-        <td colspan="3">
-            <h4 class="signin">Please <a href="/users/login/">sign in</a> or <a href="/users/register/">register</a> to add a cross reference.</h4>
-        </td>
-    </tr>
-    {% endif %}
-</table>
+            </tr>
+            {% endif %}
+        </table>
 
-<br /><br />
-
-<h2 style="margin-top: 20px" class="clear">Parts that cross reference this part</h2>
-<table class="results" border="0" cellpadding="0"  cellspacing="0" width="100%">
-    {% if reverse_xrefs %}
-    {% for rxref in reverse_xrefs %}
-    <tr>
-        <td class="part_number">
-            <a href="/parts/{{ rxref.part.id}}/{{ rxref.part.number|slugify|upper }}/">{{ rxref.part.number }}</a>
-        </td>
-        <td class="part_desc">
-            {{ rxref.part.description }}
-        </td>
-        <td class="part_desc">
-            {{ rxref.part.company }}
-        </td>
-    </tr>
-    {% endfor %}
-    {% else %}
-    <tr>
-        <td>
-            <h3 class="add">No reverse cross references. </h3>
-        </td>
-    </tr>
-    {% endif %}
-</table>
-
-<h2 style="margin-top: 20px" class="clear">Part Comments</h2>
-{% get_comment_list for part as part_comments %}
-<dl class="comments" id="comments">
-    {% for comment in part_comments %}
-        <div class="commentbox">
-            <dt>{{ comment.user }} wrote {{ comment.submit_date|naturalday }}:</dt>
-            <dd>{{ comment.comment }}</dd>
-        </div>
-    {% endfor %}
-</dl>
-
-<div style="margin-top:20px"></div>
-<h2 class="clear">Add new comment</h2>
-{% get_comment_form for part as form %}
-    <form action="{% comment_form_target %}" method="post">
-    {% csrf_token %}
-        <dl>
-            <dt><label for="id_name">Name:</label><label style="margin-left:265px;" for="id_email">Email:</dt>
-            <dd class="commentform">{{ form.name }} {{ form.email }}</dd>
-        
-            <dt><label for="id_comment">Comment:</label></dt>
-            <dd>{{ form.comment }}</dd>
-
+        <h2 style="margin-top: 20px" class="clear">Part Comments</h2>
+        {% get_comment_list for part as part_comments %}
+        <dl class="comments" id="comments">
+            {% for comment in part_comments %}
+            <div class="commentbox">
+                <dt>{{ comment.user }} wrote {{ comment.submit_date|naturalday }}:</dt>
+                <dd>{{ comment.comment }}</dd>
+            </div>
+            {% endfor %}
         </dl>
-        {{ form.timestamp }}
-        {{ form.security_hash }}
-        {{ form.object_pk }}
-        {{ form.content_type }}
-        <input type="submit" value="Post" class="submit" name="submit" />
-        <input type="submit" value="Preview" class="submit" name="preview" />
-    </form>
-    
-</div>
 
-<div class="right">
-    <h3>Part Metadata</h3>
-    <div class="right_articles">
-        <p><b>Date added:</b> {{ part.created_at|naturalday }}</p>
-        <p><b>Last updated:</b> {{ part.updated_at|naturalday }}</p> 
-        <p><b>Hits:</b> {{ part.hits }}</p>
-        <p><b>Added by:</b> {{ part.user.username }}</p>
-    </div>
-</div>
+        <div style="margin-top:20px"></div>
+        <h2 class="clear">Add new comment</h2>
+        {% get_comment_form for part as form %}
+        <form action="{% comment_form_target %}" method="post">
+            {% csrf_token %}
+            <dl>
+                <dt><label for="id_name">Name:</label><label style="margin-left:265px;" for="id_email">Email:</dt>
+                    <dd class="commentform">{{ form.name }} {{ form.email }}</dd>
 
-<div class="right">
-    <h3>Part Actions</h3>
-    <div class="right_articles">
-        <ul>
-            <li>Add to my part group:</li>
-            <li>Add to an assembly:</li>
-        </ul>
-    </div>
-</div>
+                    <dt><label for="id_comment">Comment:</label></dt>
+                    <dd>{{ form.comment }}</dd>
 
-{% endblock %}
+                </dl>
+                {{ form.timestamp }}
+                {{ form.security_hash }}
+                {{ form.object_pk }}
+                {{ form.content_type }}
+                <input type="submit" value="Post" class="submit" name="submit" />
+                <input type="submit" value="Preview" class="submit" name="preview" />
+            </form>
+
+        </div>
+
+        <div class="right">
+            <h3>Part Metadata</h3>
+            <div class="right_articles">
+                <p><b>Date added:</b> {{ part.created_at|naturalday }}</p>
+                <p><b>Last updated:</b> {{ part.updated_at|naturalday }}</p> 
+                <p><b>Hits:</b> {{ part.hits }}</p>
+                <p><b>Added by:</b> {{ part.user.username }}</p>
+            </div>
+        </div>
+
+        <div class="right">
+            <h3>Part Actions</h3>
+            <div class="right_articles">
+                <ul>
+                    <li>Add to my part group:</li>
+                    <li>Add to an assembly:</li>
+                </ul>
+            </div>
+        </div>
+
+        {% endblock %}
 
