@@ -76,9 +76,8 @@ def addpart(request):
                 newpart.hits = 0
                 newpart.save()
                 return HttpResponseRedirect('/parts/%d/%s/' % (newpart.id, newpart.number,))
-            else:
-                partform = XrefForm()
-
+    else:
+        partform = XrefForm()
     return render_to_response('parts/add.html',
                               {'partform': partform,},
                               context_instance=RequestContext(request))
