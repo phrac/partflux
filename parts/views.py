@@ -90,7 +90,6 @@ def addxref(request, part_id):
     print 'adding xref' 
     if xrefform.is_valid():
         part_number = xrefform.cleaned_data['part'].upper()
-        #desc = xrefform.cleaned_data['desc'].upper()
         company = xrefform.cleaned_data['company'].upper()
         # first we need to get the company or create it if it doesn't exist
         c, _created = Company.objects.get_or_create(name=company)
