@@ -5,26 +5,26 @@
 {% endblock %}
 
 {% block content %}
-	<div class="center_content">
-		<h2>Newest parts added to the database</h2>
-		<table class="results" border="0" cellpadding="0"  cellspacing="0" width="100%">
-			
-				{% for part in parts_list %}
-				<tr>
-					<td style="width:20%" class="part_number">
-						<a href="/parts/{{ part.id}}/{{ part.number|slugify|upper }}/">{{ part.number }}</a>
-					</td>
-					<td class="part_desc">
-						{{ part.description|truncatewords:10 }}
-					</td>
-					<td class="part_desc">
-						<a href="/companies/{{ part.company.id }}/">{{ part.company.name }}</a>
-					</td>
-				</tr>
-				{% endfor %}
-			</table>
-			<p></p>
-		
-	</div>
+<div class="center_content">
+    <h2>Newest parts added to the database</h2>
+    <table class="results" border="0" cellpadding="0"  cellspacing="0" width="100%">
+
+        {% for part in parts_list %}
+        <tr>
+            <td style="width:20%" class="part_number">
+                <a href="/parts/{{ part.id}}/{{ part.number|slugify|upper }}/">{{ part.number }}</a>
+            </td>
+            <td class="part_desc">
+                {{ part.description|truncatewords:10 }}
+            </td>
+            <td class="part_desc">
+                <a href="/companies/{{ part.company.id }}/">{{ part.company.name }}</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <p></p>
+
+</div>
 {% endblock %}
 

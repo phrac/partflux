@@ -18,10 +18,10 @@ class Part(models.Model):
     nsn = models.ForeignKey(Nsn, null=True)
 
     objects = hstore.HStoreManager()
-    
+
     def __unicode__(self):
         return self.number
-    
+
     class Meta:
         unique_together = ('number', 'company',)
 
@@ -49,7 +49,7 @@ class PartComment(models.Model):
     comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     last_edit = models.DateTimeField(auto_now=True)
-    
+
     def __unicode__(self):
         return self.comment
 

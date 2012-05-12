@@ -14,17 +14,17 @@ from parts.forms import MetadataForm, XrefForm, SearchForm
 
 def index(request):
     parts_list = Part.objects.all().order_by('-created_at')[:25]
-    
+
     return render_to_response('parts/index.html',
                               {'parts_list': parts_list},
                               context_instance=RequestContext(request))
 
 def detail(request, part_id):
     p = get_object_or_404(Part, pk=part_id)
-    
+
     xrefs = Xref.objects.filter(part=part_id).exclude(xrefpart=part_id)
     reverse_xrefs = Xref.objects.filter(xrefpart=part_id).exclude(part=part_id)
-    
+
     metaform = MetadataForm(None)
     xrefform = XrefForm(None)
 
@@ -58,7 +58,7 @@ def addmeta(request, part_id):
         value = metaform.cleaned_data['value'].strip().upper()
         p.metadata[key] = value
         p.save()
-        
+
 def addpart(request):
     if request.method == 'POST':
         partform = XrefForm(request.POST)
@@ -75,9 +75,9 @@ def addpart(request):
                 newpart.description = desc
                 newpart.hits = 0
                 newpart.save()
-            return HttpResponseRedirect('/parts/%d/%s/' % (newpart.id, newpart.number,))
-    else:
-        partform = XrefForm()
+                return HttpResponseRedirect('/parts/%d/%s/' % (newpart.id, newpart.number,))
+            else:
+                partform = XrefForm()
 
     return render_to_response('parts/add.html',
                               {'partform': partform,},
@@ -100,11 +100,11 @@ def addxref(request, part_id):
             newpart.description = p.description
             newpart.hits = 0
             newpart.save()
-         
+
         xr1, _created = Xref.objects.get_or_create(part=p, xrefpart=newpart)
         if _created == True:
             xr1.user = request.user
             xr1.save()
-    
+
 
 
