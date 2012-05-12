@@ -2,7 +2,6 @@
 
 {% load humanize %}
 {% load parttags %}
-{% load comments %}
 
 {% block title %}
 {{ part.number }} by {{ part.company }} | partfindr
@@ -184,38 +183,8 @@
             </tr>
             {% endif %}
         </table>
-
-        <h2 style="margin-top: 20px" class="clear">Part Comments</h2>
-        {% get_comment_list for part as part_comments %}
-        <dl class="comments" id="comments">
-            {% for comment in part_comments %}
-            <div class="commentbox">
-                <dt>{{ comment.user }} wrote {{ comment.submit_date|naturalday }}:</dt>
-                <dd>{{ comment.comment }}</dd>
-            </div>
-            {% endfor %}
-        </dl>
-
-        <div style="margin-top:20px"></div>
-        <h2 class="clear">Add new comment</h2>
-        {% get_comment_form for part as form %}
-        <form action="{% comment_form_target %}" method="post">
-            {% csrf_token %}
-            <dl>
-                <dt><label for="id_name">Name:</label><label style="margin-left:265px;" for="id_email">Email:</dt>
-                    <dd class="commentform">{{ form.name }} {{ form.email }}</dd>
-
-                    <dt><label for="id_comment">Comment:</label></dt>
-                    <dd>{{ form.comment }}</dd>
-
-                </dl>
-                {{ form.timestamp }}
-                {{ form.security_hash }}
-                {{ form.object_pk }}
-                {{ form.content_type }}
-                <input type="submit" value="Post" class="submit" name="submit" />
-                <input type="submit" value="Preview" class="submit" name="preview" />
-            </form>
+        
+        {% include "partials/comment_section.html" with object="part" %}
 
         </div>
 
