@@ -22,23 +22,23 @@ DATABASES = {
         'PASSWORD': 'CHANGEME',                  			# Not used with sqlite3.
         'HOST': 'localhost',                      	# Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      					# Set to empty string for default. Not used with sqlite3.
-		'OPTIONS': {
-			'POOL_ENABLED': True,
-			}
+	'OPTIONS': {
+		'POOL_ENABLED': True,
+		}
     }
 }
 HAYSTACK_CONNECTIONS = {
-	'default': {
-	'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
-	'URL': 'http://127.0.0.1:8983/solr',
-	}
+    'default': {
+        'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
+        'URL': 'http://127.0.0.1:8983/solr',
+    }
 }
 
 # use gmail for sending email
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'partfindr@partfindr.net'
-EMAIL_HOST_PASSWORD = 'gL7.bT#!'
+EMAIL_HOST_USER = 'CHANGME'
+EMAIL_HOST_PASSWORD = 'CHANGEME'
 EMAIL_PORT = 587
 
 # Local time zone for this installation. Choices can be found here:
@@ -147,24 +147,23 @@ TEMPLATE_DIRS = (
 
 INSTALLED_APPS = (
     'django.contrib.humanize',
-	'django.contrib.auth',
+    'django.contrib.auth',
     'django.contrib.contenttypes',
+    'django.contrib.comments',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
-    
-	'haystack',
-	
-	'parts',
+    'haystack',
+    'parts',
     'companies',
     'registration',
-	'pure_pagination',
-	'nsn',
-	'partgroups',
-	'google_analytics',
+    'pure_pagination',
+    'nsn',
+    'partgroups',
+    'google_analytics',
 )
 ACCOUNT_ACTIVATION_DAYS = 7
 # A sample logging configuration. The only tangible logging

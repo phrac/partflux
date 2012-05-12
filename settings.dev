@@ -111,7 +111,7 @@ TEMPLATE_LOADERS = (
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
-	"partfindr.context_processors.xref_count",
+    "partfindr.context_processors.xref_count",
     "partfindr.context_processors.part_count",
     "partfindr.context_processors.get_current_path",
     "django.contrib.auth.context_processors.auth",
@@ -143,6 +143,7 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'django.contrib.auth',
     'django.contrib.contenttypes',
+    'django.contrib.comments',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
@@ -155,7 +156,7 @@ INSTALLED_APPS = (
     'registration',
     'pure_pagination',
     'nsn',
-	'partgroups',
+    'partgroups',
     'google_analytics',
 )
 

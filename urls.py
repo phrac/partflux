@@ -37,6 +37,9 @@ urlpatterns = patterns('',
                        url(r'^companies/$', 'companies.views.index'),
                        url(r'^companies/(?P<company_id>\d+)/$', 'companies.views.detail'),
                        
+                       # URLs for comments
+                       (r'^comments/', include('django.contrib.comments.urls')),
+
                        # URLs for users
                        url(r'^users/logout/$',
                            auth_views.logout,

@@ -59,19 +59,30 @@ li.clearfix {
     display: list-item;
 }
 
-dl.add_part_form {
+dl {
     margin-left:25px;
     font-size:1.2em;
     font-weight:bold;
 }
-dl.add_part_form input {
+
+dd.commentform input {
+    border: 1px solid #ddd;
+    margin: 0;
+    width: 300px;
+}
+dl input {
     width: 500px; 
     height:25px;
     border: 2px solid #ddd;
     padding: 0px; 
     color: #666;
     font: bold 1.2em Arial, Sans-Serif;
-    margin: 0 0 25px 0;
+    margin: 0 0 15px 0;
+}
+
+dl textarea {
+    width: 605px;
+    border: 2px solid #ddd;
 }
 
 .content { 
