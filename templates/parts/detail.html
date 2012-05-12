@@ -186,10 +186,18 @@
 </table>
 
 <h2 style="margin-top: 20px" class="clear">Part Comments</h2>
-{% render_comment_list for part %}
+{% get_comment_list for part as part_comments %}
+<dl class="comments" id="comments">
+    {% for comment in part_comments %}
+        <div class="commentbox">
+            <dt>{{ comment.user }} wrote {{ comment.submit_date|naturalday }}:</dt>
+            <dd>{{ comment.comment }}</dd>
+        </div>
+    {% endfor %}
+</dl>
 
 <div style="margin-top:20px"></div>
-
+<h2 class="clear">Add new comment</h2>
 {% get_comment_form for part as form %}
     <form action="{% comment_form_target %}" method="post">
     {% csrf_token %}

@@ -60,9 +60,23 @@ li.clearfix {
 }
 
 dl {
-    margin-left:25px;
+    margin-left:10px;
     font-size:1.2em;
     font-weight:bold;
+}
+.commentbox {
+    border: 1px solid #ddd;
+    padding:10px;
+}
+dl.comments {
+    margin-left:10px;
+}
+.comments dt {
+    font: bold 1.0em;
+}
+.comments dd {
+    font-weight: normal;
+    margin-left:15px;
 }
 
 dd.commentform input {
