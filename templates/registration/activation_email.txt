@@ -11,5 +11,7 @@ After activation you can login to the site:
 
 http://partfindr.net/users/login/
 
+Please note, this activation key will expire in {{ expiration_days }} days.
+
 Thanks!
 the partfindr team.

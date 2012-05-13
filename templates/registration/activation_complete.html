@@ -1,9 +1,14 @@
 {% extends "base/base_MAIN.html" %}
 
+{% block breadcrumbs %}
+> <a href="/users/">Users</a> > Account Activation
+{% endblock %}
+
 {% block content %}
 
 <div class="center_content">
-	<h2>Your account is now active!</h2>
+    <h1>Your account is now active!</h2>
+    <p>You can now <a href="/users/login">Log in</a> to your account</p>
 </div>
 
 {% endblock %}
