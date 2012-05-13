@@ -46,17 +46,6 @@ class Xref(models.Model):
     class Meta:
         unique_together = ('part', 'xrefpart',)
 
-class PartComment(models.Model):
-    part = models.ForeignKey('Part')
-    user = models.ForeignKey(User, null=True)
-    parent_comment = models.ForeignKey('PartComment')
-    comment = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    last_edit = models.DateTimeField(auto_now=True)
-
-    def __unicode__(self):
-        return self.comment
-
 class PartModerator(CommentModerator):
     email_notification = True
 
