@@ -2,6 +2,7 @@
 
 {% load humanize %}
 {% load parttags %}
+{% load comments %}
 
 {% block title %}
 {{ part.number }} by {{ part.company }} | partfindr
@@ -183,8 +184,11 @@
             </tr>
             {% endif %}
         </table>
-        
-        {% include "partials/comment_section.html" with object="part" %}
+
+        {% get_comment_count for part as comment_count %}
+        {% include "partials/comments.html" %} 
+        {% get_comment_form for part as form %}
+        {% include "partials/comment_form.html" %}
 
         </div>
 

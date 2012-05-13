@@ -4,7 +4,7 @@
 <h2 style="margin-top: 20px" class="clear">Part comments ({{ comment_count }})</h2>
 
 {% if comment_count == 0 %}
-    <h3 class="add">No reverse cross references. </h3>
+    <h3 class="add">No comments, add one below.</h3>
 {% else %}
     {% get_comment_list for part as comments %}
     <dl class="comments" id="comments">
