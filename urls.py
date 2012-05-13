@@ -33,6 +33,7 @@ urlpatterns = patterns('',
 
                        # URLs for part groups
                        url(r'^partgroups/$', 'partgroups.views.index'),
+                       
                        # URLs for companies
                        url(r'^companies/$', 'companies.views.index'),
                        url(r'^companies/(?P<company_id>\d+)/$', 'companies.views.detail'),
