@@ -1,8 +1,10 @@
-{% extends "comments/base.html" %}
+{% extends "base/base_MAIN.html" %}
 {% load i18n %}
 
 {% block title %}{% trans "Thanks for flagging" %}.{% endblock %}
 
 {% block content %}
-  <h1>{% trans "Thanks for taking the time to improve the quality of discussion on our site" %}.</h1>
+    <div class="center_content">
+        <h1><center>Thanks for taking the time to improve the quality of discussion on our site. A moderator will examine the comment for inappropriate material.</center></h1>
+    </div>
 {% endblock %}
