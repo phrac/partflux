@@ -5,11 +5,11 @@
 {% load comments %}
 
 {% block title %}
-{{ part.number }} by {{ part.company }} | partfindr
+{{ part.number }} by {{ part.company.name }} | partfindr
 {% endblock %}
 
 {% block breadcrumbs %}
-> <a href="/parts/">Parts</a> > <a href="/companies/{{ part.company.id }}/">{{ part.company.name }}</a> > {{ part.number }}
+> <a href="{% url parts.views.index %}">Parts</a> > <a href="{% url companies.views.detail part.company.id %}">{{ part.company.name }}</a> > {{ part.number }}
 {% endblock %}
 
 {% block content %}  

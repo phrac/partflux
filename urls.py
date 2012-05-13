@@ -23,7 +23,7 @@ urlpatterns = patterns('',
                       
                        # URLs for parts
                        url(r'^parts/$', 'parts.views.index'),
-                       url(r'^parts/(?P<part_id>\d+)/.*$', 'parts.views.detail'),
+                       url(r'^parts/(?P<part_id>\d+)/(?P<part_number>.*)$', 'parts.views.detail'),
                        url(r'^parts/add/$', 'parts.views.addpart'),
                        
                        # URLs for search
@@ -36,7 +36,8 @@ urlpatterns = patterns('',
                        
                        # URLs for companies
                        url(r'^companies/$', 'companies.views.index'),
-                       url(r'^companies/(?P<company_id>\d+)/$', 'companies.views.detail'),
+                       url(r'^companies/(?P<company_id>\d+)/$',
+                           'companies.views.detail'),
                        
                        # URLs for comments
                        (r'^comments/', include('django.contrib.comments.urls')),

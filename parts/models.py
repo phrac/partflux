@@ -31,8 +31,11 @@ class Part(models.Model):
         self.description = self.description.strip().upper()
         super(Part, self).save(*args, **kwargs)
     
+    @models.permalink
     def get_absolute_url(self):
-        return "/parts/%i/%s/" % (self.id, self.number)
+        return ('parts.views.detail', (), {
+            'part_id': str(self.id),
+            'part_number': self.number})
 
 class Xref(models.Model):
     user = models.ForeignKey(User, null=True)
