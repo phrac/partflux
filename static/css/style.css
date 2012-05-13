@@ -90,6 +90,7 @@ dd.commentform input {
     width: 300px;
 }
 dd.company_facet {
+    font-weight:normal;
     font-size:.9em;
 }
 dl input {
