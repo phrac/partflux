@@ -32,6 +32,11 @@ p {	margin: 0 0 5px 0; }
 
 ul { list-style : none; }
 
+ul.bullets { 
+    list-style-type:square; 
+    list-style-position:inside;
+}
+    
 /* layout
 ------ */
 .horizontal-line {

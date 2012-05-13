@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.comments.moderation import CommentModerator, moderator
 from django_orm.postgresql import hstore
 
 from companies.models import Company
@@ -52,5 +53,10 @@ class PartComment(models.Model):
 
     def __unicode__(self):
         return self.comment
+
+class PartModerator(CommentModerator):
+    email_notification = True
+
+moderator.register(Part, PartModerator)
 
 

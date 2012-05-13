@@ -1,4 +1,5 @@
 {% load humanize %}
+{% load comments %}
 
 <h2 style="margin-top: 20px" class="clear">Part comments ({{ comment_count }})</h2>
 
@@ -7,7 +8,11 @@
 {% else %}
     <dl class="comments" id="comments">
         {% for comment in comment_list %}
-            <div class="commentbox">
+        <a name="c{{ comment.id }}"></a>
+        <div class="commentbox">
+            <div style="float:right;font-weight:normal;font-size:.8em;">
+                <p><a href="/comments/flag/{{ comment.id }}/">flag</a> <a href="#c{{ comment.id }}">permalink</a></p>
+            </div>
             <dt>{{ comment.user }} wrote {{ comment.submit_date|naturalday }}:</dt>
             <dd>{{ comment.comment }}</dd>
         </div>
