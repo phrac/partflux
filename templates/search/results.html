@@ -11,10 +11,10 @@
         {% for result in results_list.object_list %}
 	{% if result.content_type == "parts.part" %}
                 {% include "search/includes/parts/part.html" %}
-            {% endif %}
-            {% if result.content_type == "nsn.nsn" %}
-                {% include "search/includes/nsn/nsn.html" %}
-            {% endif %}
+        {% endif %}
+        {% if result.content_type == "nsn.nsn" %}
+            {% include "search/includes/nsn/nsn.html" %}
+        {% endif %}
         {% endfor %}
     </table>
 
