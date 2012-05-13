@@ -89,6 +89,9 @@ dd.commentform input {
     margin: 0;
     width: 300px;
 }
+dd.company_facet {
+    font-size:.9em;
+}
 dl input {
     width: 500px; 
     height:25px;
