@@ -60,11 +60,11 @@ def results(request):
             page = 1
 
         p = Paginator(results, 20, request=request)
-        parts_list = p.page(page)
+        results_list = p.page(page)
     
     return render_to_response('search/results.html',
                               { 
-                                  'parts_list': parts_list, 
+                                  'results_list': results_list, 
                                   'searchterm': q,
 								  'facets': results.facet_counts()
                               },

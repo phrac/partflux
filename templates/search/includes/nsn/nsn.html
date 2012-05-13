@@ -1,0 +1,12 @@
+<tr>
+    <td><p style="font-weight:bold; font-size:.8em">NSN</p></td>
+    <td style="width:20%" class="part_number">
+        <a href="/parts/{{ result.object.id}}/{{ result.object.number|slugify|upper }}/">{{ result.object.number }}</a>
+    </td>
+    <td class="part_desc">
+        {{ result.object.description|truncatewords:10 }}
+    </td>
+    <td class="part_desc">
+        FSC: {{ result.object.fsc }}
+    </td>
+</tr>

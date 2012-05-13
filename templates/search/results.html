@@ -5,46 +5,38 @@
 {% endblock %}
 
 {% block content %}
-	<div class="left">
-		<h2>{% block searchstats %}{{ parts_list.paginator.count }} part numbers match "<i>{{ searchterm }}</i>" - showing {{ parts_list.start_index }}-{{ parts_list.end_index }}{% endblock %}</h2>
-		<table class="results" border="0" cellpadding="0"  cellspacing="0" width="100%">
-			
-				{% for part in parts_list.object_list %}
-				<tr>
-					<td style="width:20%" class="part_number">
-						<a href="/parts/{{ part.object.id}}/{{ part.object.number|slugify|upper }}/">{{ part.object.number }}</a>
-					</td>
-					<td class="part_desc">
-						{{ part.object.description|truncatewords:10 }}
-					</td>
-					<td class="part_desc">
-						<a href="/companies/{{ part.object.company.id }}/">{{ part.object.company.name }}</a>
-					</td>
-				</tr>
-				{% endfor %}
-		</table>
-		
-		<div class="pagination">
-			{{ parts_list.render }}
-		</div>
-		{% include "partials/add_part_to_db.html" %}
-	</div>
+<div class="left">
+    <h2>{% block searchstats %}{{ results_list.paginator.count }} part numbers match "<i>{{ searchterm }}</i>" - showing {{ results_list.start_index }}-{{ results_list.end_index }}{% endblock %}</h2>
+    <table class="results" border="0" cellpadding="0"  cellspacing="0" width="100%">
+        {% for result in results_list.object_list %}
+            {% if result.content_type == parts.part %}
+            {% include "search/includes/parts/part.html" %}
+            {% if result.content_type == nsn.nsn %}
+            {% include "search/includes/nsn/nsn.html" %}
+        {% endfor %}
+    </table>
 
-	<div class="right">
-	<h3>Filter by company</h3>
-	<div class="right_articles">
-		<dl>
-		{% if facets.fields.company %}
-			{% for company in facets.fields.company|slice:":30" %}
-				{% if company.1 > 0 %}
-					<dd>
-						<a href="{% url search.views.results %}?q={{ searchterm|urlencode }}&amp;selected_facets=company_exact:{{ company.0|urlencode }}">{{ company.0 }}</a> ({{ company.1 }})
-					</dd>
-				{% endif %}
-			{% endfor %}
-		{% endif %}
-		</dl>
-	</div>
+    <div class="pagination">
+        {{ results_list.render }}
+    </div>
+    {% include "partials/add_part_to_db.html" %}
+</div>
+
+<div class="right">
+    <h3>Filter by company</h3>
+    <div class="right_articles">
+        <dl>
+            {% if facets.fields.company %}
+            {% for company in facets.fields.company|slice:":30" %}
+            {% if company.1 > 0 %}
+            <dd>
+            <a href="{% url search.views.results %}?q={{ searchterm|urlencode }}&amp;selected_facets=company_exact:{{ company.0|urlencode }}">{{ company.0 }}</a> ({{ company.1 }})
+            </dd>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+        </dl>
+    </div>
 </div>
 {% endblock %}
 
