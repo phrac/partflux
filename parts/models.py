@@ -30,6 +30,9 @@ class Part(models.Model):
         self.number = self.number.strip().upper()
         self.description = self.description.strip().upper()
         super(Part, self).save(*args, **kwargs)
+    
+    def get_absolute_url(self):
+        return "/parts/%i/%s/" % (self.id, self.number)
 
 class Xref(models.Model):
     user = models.ForeignKey(User, null=True)
