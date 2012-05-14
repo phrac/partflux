@@ -319,7 +319,7 @@ table.results {
 }
 
 td.part_number, td.part_desc {
-    font: normal 1.0em Arial;
+    font: normal 1.0em "Droid Sans", Arial;
     padding:6px;
     border-bottom: 1px solid #ccc;
 }
