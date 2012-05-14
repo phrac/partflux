@@ -11,3 +11,6 @@ class PartIndex(indexes.SearchIndex, indexes.Indexable):
     def get_model(self):
         return Part
 
+    def get_updated_field(self):
+        return 'updated_at'
+
