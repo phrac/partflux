@@ -8,8 +8,8 @@ author: luka cvrk (www.solucija.com) */
 -------------- */
 *{ margin: 0; padding: 0; }* 
 body { 
-    font: .7em Arial, sans-serif; 
-    line-height: 1.6em;
+    font: .7em "Droid Sans", Arial, sans-serif; 
+    line-heigth: 1.6em;
     color: #444;
 }
 
@@ -20,7 +20,7 @@ html, body {
 a { color: #336699; background: inherit;}
 a:hover { color: #6C757A; background: inherit; }
 
-h1 { font: normal 2.6em Arial, Sans-Serif; padding: 7px 0 0 8px; margin: 0; }
+h1 { font: normal 2.6em "Droid Sans", Arial, Sans-Serif; padding: 7px 0 0 8px; margin: 0; }
 h1 a { color: #737373; background: inherit; }
 .orange { color: #336699; }
 sup { font-size: .5em; }
@@ -99,7 +99,7 @@ dl input {
     border: 2px solid #ddd;
     padding: 0px; 
     color: #666;
-    font: bold 1.2em Arial, Sans-Serif;
+    font: bold 1.2em "Droid Sans", Arial, Sans-Serif;
     margin: 0 0 15px 0;
 }
 
@@ -213,7 +213,7 @@ table.input {
 }
 
 td.input_big {
-    font: normal 1.2em Arial, Sans-Serif;
+    font: normal 1.2em "Droid Sans", Arial, Sans-Serif;
     padding: 10px;
 }
 td.input_big input {
@@ -222,14 +222,14 @@ td.input_big input {
     border: 2px solid #ddd;
     padding: 0px; 
     color: #666;
-    font: bold 1.2em Arial, Sans-Serif;
+    font: bold 1.2em "Droid Sans", Arial, Sans-Serif;
     margin: 0 0 0 0px;
 }
 td.small_login input {
     display:inline;
     height:10px;
     width:65px;
-    font normal .5em Ariel, Sans-Serif;
+    font normal .5em "Droid Sans", Arial, Sans-Serif;
 }
 
 h2.viewall {
@@ -249,7 +249,6 @@ h2.viewall {
 }
 input.search, table input { 
     border: 1px solid #ddd;
-    /*background: #FFF url(/images/input.gif) no-repeat;*/
     padding: 4px; 
     color: #333;
     font-weight: normal;
@@ -261,7 +260,7 @@ input.bigsearch {
     border: 2px solid #ddd;
     padding: 0px; 
     color: #666;
-    font: bold 2.0em Arial, Sans-Serif;
+    font: bold 2.0em "Droid Sans", Arial, Sans-Serif;
     margin: 0 0 0 0px;
 }
 
@@ -273,7 +272,7 @@ input.submit {
     padding: 6px;
     margin: 0 15px 0px 0;
     color: #FFF;
-    font: bold 1em Arial, Sans-Serif;
+    font: bold 1em "Droid Sans", Arial, Sans-Serif;
 }
 input.submit_small {
     background: #E0691A;
@@ -283,14 +282,14 @@ input.submit_small {
     border: 0;
     height:20px;
     color: #FFF;
-    font: bold 1em Arial, Sans-Serif;
+    font: bold 1em "Droid Sans", Arial, Sans-Serif;
 }
 .grey { color: #808080; background: inherit; font-weight: normal; }
 .search_form { float: right; }
 
 .pagination {
     margin-top:10px;
-    font: bold 1.0em Arial, Sans-Serif;
+    font: bold 1.0em "Droid Sans", Arial, Sans-Serif;
 }
 .page {
     border: 1px solid #999;
@@ -311,12 +310,12 @@ h2 {
     background-color:#eee;
     color: #000;
     padding: 3px 0 4px 43px;
-    font: bold 1.2em Arial, Sans-Serif;
+    font: bold 1.2em "Droid Sans", Arial, Sans-Serif;
     margin: 0 0 10px 0;
 }
 
 table.results {
-    font: normal 1.1em Arial;
+    font: normal 1.1em "PT Mono", Arial, Sans-Serif;
 }
 
 td.part_number, td.part_desc {
@@ -330,6 +329,9 @@ td.part_number, td.part_desc {
 }
 td.metadata {
     padding-left: 35px;
+}
+h4.signin {
+    font: bold 1.0em "Droid-Sans", Arial, Sans-Serif;
 }
 /* left side
 --------- */
@@ -356,9 +358,9 @@ h2.clear-green {
 }
 
 h3.add {
-    margin-top:20px;
-    margin-bottom:40px;
-    font: 1.6em Arial, Sans-Serif;
+    margin-top:10px;
+    margin-bottom:30px;
+    font: 1.6em 'Oxygen', Sans-Serif;
 }
 
 .left {
@@ -372,7 +374,7 @@ h3.add {
     clear: both;
     color: #666;
     padding: 3px 0 4px 4px;
-    font: bold 1.2em Arial, Sans-Serif;
+    font: bold 1.2em "Droid Sans", Arial, Sans-Serif;
     margin: 0 0 10px 0;
 }
 .left_side {
@@ -409,14 +411,13 @@ h3.add {
     margin-bottom:5px;
     margin-top:0px;
     clear:right;
-    /*margin-left:644px;*/
 }
 .right h3 {
     background: #BDBDBD;
     border-top-left-radius:5px;
     color: #FFF;
     padding: 7px 0 8px 5px;
-    font: bold 1em Arial, Sans-Serif;
+    font: bold 1em "Droid Sans", Arial, Sans-Serif;
     margin: 0 0 3px 0;
     clear:both;
 }
