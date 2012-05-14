@@ -1,4 +1,2 @@
 {{ object.number }}
 {{ object.description }}
-{{ object.fsc }}
-
