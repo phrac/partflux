@@ -19,7 +19,7 @@ def index(request):
                               {'parts_list': parts_list},
                               context_instance=RequestContext(request))
 
-def detail(request, part_id, part_number):
+def detail(request, part_id):
     p = get_object_or_404(Part, pk=part_id)
 
     xrefs = Xref.objects.filter(part=part_id).exclude(xrefpart=part_id)

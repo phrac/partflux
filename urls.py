@@ -23,7 +23,7 @@ urlpatterns = patterns('',
                       
                        # URLs for parts
                        url(r'^parts/$', 'parts.views.index'),
-                       url(r'^parts/(?P<part_id>\d+)/(?P<part_number>.*)$', 'parts.views.detail'),
+                       url(r'^parts/(?P<part_id>\d+)/.*$', 'parts.views.detail'),
                        url(r'^parts/add/$', 'parts.views.addpart'),
                        
                        # URLs for search
