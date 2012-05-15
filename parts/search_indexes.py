@@ -1,7 +1,7 @@
 from haystack import indexes
 from parts.models import Part
 
-class PartIndex(indexes.SearchIndex, indexes.Indexable):
+class PartIndex(indexes.RealTimeSearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, use_template=True)
     number = indexes.NgramField(model_attr='number', boost=3)
     company = indexes.CharField(model_attr='company', faceted=True)
@@ -11,4 +11,7 @@ class PartIndex(indexes.SearchIndex, indexes.Indexable):
 
     def get_updated_field(self):
         return 'updated_at'
+
+site.register(Part, PartIndex)
+
 
