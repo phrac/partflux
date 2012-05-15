@@ -6,16 +6,16 @@
 {% if comment_count == 0 %}
     <h3 class="add">No comments, be the first to add one.</h3>
 {% else %}
-    <dl class="comments" id="comments">
         {% for comment in comment_list %}
-        <a name="c{{ comment.id }}"></a>
         <div class="commentbox">
+            <a name="c{{ comment.id }}"></a>
             <div style="float:right;font-weight:normal;font-size:.8em;">
                 <p><a href="/comments/flag/{{ comment.id }}/">flag</a> <a href="{% get_comment_permalink comment %}">permalink</a></p>
             </div>
-            <dt>{{ comment.user }} wrote {{ comment.submit_date|naturalday }}:</dt>
-            <dd>{{ comment.comment }}</dd>
+            <dl class="comments" id="comments">
+                <dt>{{ comment.user }} wrote {{ comment.submit_date|naturalday }}:</dt>
+                <dd>{{ comment.comment }}</dd>a
+            </dl>
         </div>
         {% endfor %}
-    </dl>
 {% endif %}
