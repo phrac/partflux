@@ -12,6 +12,4 @@ class PartIndex(indexes.RealTimeSearchIndex, indexes.Indexable):
     def get_updated_field(self):
         return 'updated_at'
 
-site.register(Part, PartIndex)
-
 
