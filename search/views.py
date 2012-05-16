@@ -19,7 +19,6 @@ def index(request):
                               {},
                               context_instance=RequestContext(request))
 
-# retrieve search results
 def results(request):
     searchform = SearchForm(request.GET)
     
