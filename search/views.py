@@ -10,29 +10,16 @@ from haystack.inputs import AutoQuery
 
 from parts.models import Part, Xref
 from companies.models import Company
-from parts.forms import SearchForm
+from search.forms import SearchForm
 
 import re
 
 def index(request):
-    parts_list = Part.objects.all().order_by('-created_at')[:20]
-    paginator = Paginator(parts_list, 20)
-
-    try:
-        page = int(request.GET.get('page', '1'))
-    except ValueError:
-        page = 1
-
-    try:
-        parts = paginator.page(page)
-    except (EmptyPage, InvalidPage):
-        parts = paginator.page(paginator.num_pages)
-
     return render_to_response('search/index.html',
                               {},
                               context_instance=RequestContext(request))
 
-
+# retrieve search results
 def results(request):
     searchform = SearchForm(request.GET)
     
