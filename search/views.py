@@ -42,7 +42,10 @@ def results(request):
         if q:
             sqs = SearchQuerySet().facet('company')
             results = sqs.filter(content=AutoQuery(q))
-            
+        if qp:
+            sqs = SearchQuerySet()
+            results = sqs.filter(number__contains=qp)
+
             
             # drill down
             for facet in selected_facets:

@@ -11,6 +11,7 @@ class XrefForm(forms.Form):
     desc = forms.CharField(max_length=256, required=False)
 
 class SearchForm(forms.Form):
-    q = forms.CharField(max_length=128)
+    q = forms.CharField(max_length=128, required=False)
+    qp = forms.CharField(max_length=128, required=False)
 
 
