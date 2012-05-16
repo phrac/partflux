@@ -37,6 +37,8 @@ def results(request):
     
     if searchform.is_valid():
         q = searchform.cleaned_data['q']
+        if not q:
+            return redirect('search.views.index')
         selected_facets = request.GET.getlist("selected_facets")
         if q:
             sqs = SearchQuerySet().facet('company')
