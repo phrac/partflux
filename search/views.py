@@ -36,7 +36,7 @@ def index(request):
 def results(request):
     searchform = SearchForm(request.GET)
     
-    if not q in request.GET:
+    if not "q" in request.GET:
         return redirect('search.views.index')
     
     if searchform.is_valid():
