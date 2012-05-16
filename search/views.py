@@ -34,11 +34,10 @@ def index(request):
 
 def results(request):
     searchform = SearchForm(request.GET)
-    
+    if not request.GET.q:
+        return redirect('search.views.index')
     if searchform.is_valid():
         q = searchform.cleaned_data['q']
-        if not q:
-            return redirect('search.views.index')
         selected_facets = request.GET.getlist("selected_facets")
         if q:
             sqs = SearchQuerySet().facet('company')
