@@ -35,7 +35,10 @@ def index(request):
 
 def results(request):
     searchform = SearchForm(request.GET)
-
+    
+    if not request.GET.q:
+        return redirect('search.views.index')
+    
     if searchform.is_valid():
         q = searchform.cleaned_data['q']
         no_partial_q = re.sub('\{.+\}', '', q)
