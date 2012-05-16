@@ -42,12 +42,10 @@ def results(request):
         if q:
             sqs = SearchQuerySet().facet('company')
             results = sqs.filter(content=AutoQuery(q))
-        if qp:
-            sqs = SearchQuerySet()
-            results = sqs.filter(number__contains=qp)
-
+	elif qp:
+	        results = results.filter(number__contains=qp)
             
-            # drill down
+	    # drill down
             for facet in selected_facets:
                 if ":" not in facet:
                     continue
@@ -70,6 +68,6 @@ def results(request):
                               { 
                                   'results_list': results_list, 
                                   'searchterm': q,
-								  'facets': results.facet_counts()
+				'facets': results.facet_counts()
                               },
                               context_instance=RequestContext(request))
