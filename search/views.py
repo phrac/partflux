@@ -37,6 +37,7 @@ def results(request):
     
     if searchform.is_valid():
         q = searchform.cleaned_data['q']
+        qp = searchform.cleaned_data['qp']
         selected_facets = request.GET.getlist("selected_facets")
         if q:
             sqs = SearchQuerySet().facet('company')
