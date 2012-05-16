@@ -26,8 +26,8 @@ urlpatterns = patterns('',
                        url(r'^parts/(?P<part_id>\d+)/.*$', 'parts.views.detail'),
                        url(r'^parts/add/$', 'parts.views.addpart'),
                        # URLs for NSN
-                       url(r'^nsn/$', 'nsn.views.index'),
-                       url(r'^nsn/(?P<nsn_id>\d+)/.*$', 'nsn.views.detail'),
+                       #url(r'^nsn/$', 'nsn.views.index'),
+                       #url(r'^nsn/(?P<nsn_id>\d+)/.*$', 'nsn.views.detail'),
                        # URLs for search
                        url(r'^search/advanced/$', 'search.views.index'),
                        url(r'^search/', 'search.views.results'),
