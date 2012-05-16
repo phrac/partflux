@@ -29,8 +29,8 @@ urlpatterns = patterns('',
                        url(r'^nsn/$', 'nsn.views.index'),
                        url(r'^nsn/(?P<nsn_id>\d+)/.*$', 'nsn.views.detail'),
                        # URLs for search
-                       url(r'^search/$', 'search.views.index'),
-                       url(r'^search/.*$', 'search.views.results'),
+                       url(r'^search/advanced/$', 'search.views.index'),
+                       url(r'^search/', 'search.views.results'),
                        #(r'^search/', include('haystack.urls')),
 
                        # URLs for part groups
