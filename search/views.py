@@ -28,34 +28,37 @@ def index(request):
         parts = paginator.page(paginator.num_pages)
 
     return render_to_response('search/index.html',
-                           {},
-                           context_instance=RequestContext(request))
+                              {},
+                              context_instance=RequestContext(request))
 
 
 def results(request):
     searchform = SearchForm(request.GET)
-    
+
     if searchform.is_valid():
         q = searchform.cleaned_data['q']
         qp = searchform.cleaned_data['qp']
         selected_facets = request.GET.getlist("selected_facets")
+        
         if q:
             sqs = SearchQuerySet().facet('company')
             results = sqs.filter(content=AutoQuery(q))
-	elif qp:
-	        results = results.filter(number__contains=qp)
-            
-	    # drill down
-            for facet in selected_facets:
-                if ":" not in facet:
-                    continue
-                field, value = facet.split(":", 1)
-                
-                if value:
-                    results = results.narrow(u'%s:"%s"' % (field, sqs.query.clean(value)))
+
+        elif qp:
+            results = results.filter(number__contains=qp)
+
         else:
             results = []
-    
+
+        # drill down
+        for facet in selected_facets:
+            if ":" not in facet:
+                continue
+            field, value = facet.split(":", 1)
+
+            if value:
+                results = results.narrow(u'%s:"%s"' % (field, sqs.query.clean(value)))
+
         try:                                                                    
             page = request.GET.get('page', 1)
         except PageNotAnInteger:
@@ -63,11 +66,11 @@ def results(request):
 
         p = Paginator(results, 20, request=request)
         results_list = p.page(page)
-    
+
     return render_to_response('search/results.html',
                               { 
                                   'results_list': results_list, 
                                   'searchterm': q,
-				'facets': results.facet_counts()
+                                  'facets': results.facet_counts()
                               },
                               context_instance=RequestContext(request))
