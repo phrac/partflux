@@ -12,6 +12,7 @@ from parts.models import Part, Xref
 from companies.models import Company
 from parts.forms import SearchForm
 
+import re
 
 def index(request):
     parts_list = Part.objects.all().order_by('-created_at')[:20]
@@ -37,15 +38,21 @@ def results(request):
 
     if searchform.is_valid():
         q = searchform.cleaned_data['q']
-        qp = searchform.cleaned_data['qp']
+        no_partial_q = re.sub('\{.+\}', '', q)
         selected_facets = request.GET.getlist("selected_facets")
-        
+        partial = re.findall(r'\{(.+?)\}', q)
+
         if q:
             sqs = SearchQuerySet().facet('company')
-            results = sqs.filter(content=AutoQuery(q))
+            results = sqs.filter(content=AutoQuery(no_partial_q))
 
-        elif qp:
-            results = results.filter(number__contains=qp)
+            # check for a partial part number search
+            if partial:
+                firsthit = str(partial[0])
+                if results:
+                    results = results.narrow(u'number:"%s"' % firsthit)
+                else:
+                    results = sqs.filter(number__contains=firsthit)
 
         else:
             results = []
@@ -71,6 +78,6 @@ def results(request):
                               { 
                                   'results_list': results_list, 
                                   'searchterm': q,
-                                  'facets': results.facet_counts()
+                                  'facets': results.facet_counts(),
                               },
                               context_instance=RequestContext(request))
