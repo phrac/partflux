@@ -9,8 +9,8 @@ from django.contrib.auth.models import User
 
 from parts.models import Part, Xref
 from companies.models import Company
-from parts.forms import MetadataForm, XrefForm, SearchForm
-
+from parts.forms import MetadataForm, XrefForm
+from search.forms import SearchForm
 
 def index(request):
     parts_list = Part.objects.all().order_by('-created_at')[:25]

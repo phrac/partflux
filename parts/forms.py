@@ -9,9 +9,3 @@ class XrefForm(forms.Form):
     part = forms.CharField(max_length=48)
     company = forms.CharField(max_length=48)
     desc = forms.CharField(max_length=256, required=False)
-
-class SearchForm(forms.Form):
-    q = forms.CharField(max_length=128, required=False)
-    qp = forms.CharField(max_length=128, required=False)
-
-
