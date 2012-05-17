@@ -22,11 +22,15 @@ Python
 
 Database
 --------
-	* PostgreSQL 9.0+
-	* hstore contrib module (contrib/hstore.sql)
+    * PostgreSQL 9.0+
+    * hstore contrib module (contrib/hstore.sql)
 
 Search
 ------
     * Apache Solr (http://lucene.apache.org/solr/)
-	 
+
+
+Other Requirements
+------------------
+    * Amazon AWS/S3 account for file storage
 
