@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.comments.moderation import CommentModerator, moderator
 from django_orm.postgresql import hstore
+from sorl.thumbnail import ImageField
 
 from companies.models import Company
 from nsn.models import Nsn
@@ -47,6 +48,12 @@ class Xref(models.Model):
 
     class Meta:
         unique_together = ('part', 'xrefpart',)
+
+class PartImage(models.Model):
+    part = models.ForeignKey('Part')
+    image = ImageField(upload_to='part_images')
+    user = models.ForeignKey(User, null=False)
+    approved = models.BooleanField(default=True)
 
 class PartModerator(CommentModerator):
     email_notification = True

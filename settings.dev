@@ -155,6 +155,7 @@ INSTALLED_APPS = (
     'haystack',
     'pure_pagination',
     'registration',
+    'sorl.thumbnail',
     # partfindr apps    
     'parts',
     'companies',
