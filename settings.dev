@@ -18,12 +18,12 @@ DATABASES = {
     'default': {
         'ENGINE': 'django_orm.backends.postgresql_psycopg2',    # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'partfindr',                     	            # Or path to database file if using sqlite3.
-        'USER': 'CHANGEME',                      				    # Not used with sqlite3.
-        'PASSWORD': 'CHANGEME',                  			            # Not used with sqlite3.
-        'HOST': 'CHANGEME',                      	    # Set to empty string for localhost. Not used with sqlite3.
+        'USER': 'CHANGEME',                      				# Not used with sqlite3.
+        'PASSWORD': 'CHANGEME',                  			    # Not used with sqlite3.
+        'HOST': 'CHANGEME',                      	            # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      					    # Set to empty string for default. Not used with sqlite3.
         'OPTIONS': {
-            'POOL_ENABLED': True,
+        'POOL_ENABLED': True,
         }
     }
 }
@@ -150,15 +150,28 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
+    # external apps
+    'google_analytics',
     'haystack',
+    'pure_pagination',
+    'registration',
+    # partfindr apps    
     'parts',
     'companies',
-    'registration',
-    'pure_pagination',
     'nsn',
     'partgroups',
-    'google_analytics',
 )
+
+# django-registration settings
+ACCOUNT_ACTIVATION_DAYS = 7
+
+# django-storages settings
+DEFAULT_FILE_STORAGE = 'storages.backends.s3.S3Storage'
+AWS_ACCESS_KEY_ID = 'AKIAJEBQFIW46J5LFB3Q'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'partfindr'
+from S3 import CallingFormat
+AWS_CALLING_FORMAT = CallingFormat.SUBDOMAIN
 
 PAGINATION_SETTINGS = {
     'PAGE_RANGE_DISPLAYED': 6,
