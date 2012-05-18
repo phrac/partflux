@@ -18,7 +18,7 @@ Python
     * django-haystack 2.0+ (http://haystacksearch.org/)
     * sorl-thumbnail https://github.com/sorl/sorl-thumbnail
     * django-storages http://django-storages.readthedocs.org/en/latest/index.html
-    * django-gravatar for user avatars: https://github.com/nvie/django-gravatar            
+    * django-gravatar for user avatars: https://github.com/twaddington/django-gravatar            
 
 
 Database

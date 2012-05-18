@@ -162,7 +162,7 @@ INSTALLED_APPS = (
     'pure_pagination',
     'registration',
     'sorl.thumbnail',
-    'gravatar',
+    'django_gravatar',
     # partfindr apps    
     'parts',
     'companies',
