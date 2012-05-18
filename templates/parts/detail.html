@@ -52,10 +52,10 @@
                                     </td>
                                 </tr>
                                 {% endfor %}
-                                {% if user.is_authenticated %}
                             </table>
-
+                            
                             <table width="100%" style="border:1px solid #ddd;">
+                                {% if user.is_authenticated %}
                                 <form action="" method="post">
                                     {% csrf_token %}
                                     <tr>
@@ -204,10 +204,14 @@
         <div class="right">
             <h3>Part Actions</h3>
             <div class="right_articles">
+                {% if user.is_authenticated %}
                 <ul>
                     <li>Add to my part group:</li>
                     <li>Add to an assembly:</li>
                 </ul>
+                {% else %}
+                <h4 class="signin">Please <a href="/users/login/">sign in</a> or <a href="/users/register/">register</a> to add view available actions.</h4>
+                {% endif %}
             </div>
         </div>
 

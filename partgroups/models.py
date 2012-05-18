@@ -11,14 +11,11 @@ class PartGroup(models.Model):
     user = models.ForeignKey(User)
     private = models.NullBooleanField(default=False, null=True)
     parent_group = models.ForeignKey('PartGroup', null=True)
+    parts = models.ManyToManyField(Part)
     
     class Meta:
         unique_together = ('name', 'user',)
     
     def __unicode__(self):
         return self.name
-
-class PartGroupItem(models.Model):
-    partgroup = models.ForeignKey('PartGroup')
-    part = models.ForeignKey(Part)
 

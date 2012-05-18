@@ -162,6 +162,7 @@ INSTALLED_APPS = (
     'pure_pagination',
     'registration',
     'sorl.thumbnail',
+    'gravatar',
     # partfindr apps    
     'parts',
     'companies',
