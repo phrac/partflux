@@ -53,6 +53,11 @@ ul.bullets {
 .clearfix {
     display: inline-block;
 }
+img.gravatar {
+    float:left;
+    padding-right:5px;
+}
+
 /* Hide these rules from IE-mac \*/
 * html .clearfix {
     height: 1%;

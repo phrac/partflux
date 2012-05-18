@@ -30,9 +30,7 @@
             <div class="header">
                 <div class="top_info">
                     <div class="top_info_right">
-                        <div style="float:left;">
-                            {% gravatar_url user.email 100 %}
-                        </div>
+                        {% gravatar user.email 40 %}
                         {% if user.is_authenticated %}
                         <p>Welcome {{ user.username }} (<a href="/users/logout/">Log out</a>)</p>
                         <p>Profile - Messages - Karma - Part Scores</p>
