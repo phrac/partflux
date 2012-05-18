@@ -447,8 +447,7 @@ h3.add {
     clear: both;
     text-align: center;
     padding: 10px 0;
-    border-top: 1px solid #000;
-    background-color:#333;
+    background-color:#3A3A36;
     color: #fff;
 }
 .footer a { color: #fff; }
