@@ -1,3 +1,4 @@
+{% load gravatar %}
 {% load humanize %}
 {% load analytics %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -29,6 +30,9 @@
             <div class="header">
                 <div class="top_info">
                     <div class="top_info_right">
+                        <div style="float:left;">
+                            {% gravatar_url user.email 100 %}
+                        </div>
                         {% if user.is_authenticated %}
                         <p>Welcome {{ user.username }} (<a href="/users/logout/">Log out</a>)</p>
                         <p>Profile - Messages - Karma - Part Scores</p>
