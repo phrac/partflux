@@ -36,6 +36,12 @@ ul.bullets {
     list-style-type:square; 
     list-style-position:inside;
 }
+
+img.part_image {
+    float:left;
+    margin:10px;
+    border: 1px solid #ddd;
+}
     
 /* layout
 ------ */

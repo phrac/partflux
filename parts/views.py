@@ -5,11 +5,11 @@ from django.template import RequestContext
 from django.db.models import Q
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.contrib.auth.models import User
+from django.core.files.storage import default_storage
 
-
-from parts.models import Part, Xref
+from parts.models import Part, Xref, PartImage
 from companies.models import Company
-from parts.forms import MetadataForm, XrefForm
+from parts.forms import MetadataForm, XrefForm, ImageUploadForm
 from search.forms import SearchForm
 
 def index(request):
@@ -27,6 +27,7 @@ def detail(request, part_id):
 
     metaform = MetadataForm(None)
     xrefform = XrefForm(None)
+    imageuploadform = ImageUploadForm(None)
 
     if 'metadata_button' in request.POST:
         metaform = MetadataForm(request.POST)
@@ -39,6 +40,12 @@ def detail(request, part_id):
         if xrefform.is_valid:
             addxref(request, part_id)
             return HttpResponseRedirect(reverse('parts.views.detail', args=[part_id]))
+    
+    if 'image_button' in request.POST:
+        imageuploadform = ImageUploadForm(request.POST, request.FILES)
+        if imageuploadform.is_valid:
+            uploadimage(request, request.FILES['file'], part_id)
+            return HttpResponseRedirect(reverse('parts.views.detail', args=[part_id]))
 
     return render_to_response('parts/detail.html', 
                               {'part': p, 
@@ -46,7 +53,8 @@ def detail(request, part_id):
                                'xrefs': xrefs, 
                                'reverse_xrefs': reverse_xrefs, 
                                'metadata_form': metaform, 
-                               'xref_form' : xrefform
+                               'xref_form' : xrefform,
+                               'imageuploadform' : imageuploadform
                               },
                               context_instance=RequestContext(request))
 
@@ -90,9 +98,9 @@ def addxref(request, part_id):
     if xrefform.is_valid():
         part_number = xrefform.cleaned_data['part'].upper()
         company = xrefform.cleaned_data['company'].upper()
-        # first we need to get the company or create it if it doesn't exist
+        """Check if the company exists and create it if it does not"""
         c, _created = Company.objects.get_or_create(name=company)
-        # next, check if the cross referenced part exists and create it if it does not
+        """Check if the cross referenced part exists and create it if it does not"""
         newpart, _created = Part.objects.get_or_create(number=part_number, company=c)
         if _created == True:
             newpart.user = request.user
@@ -104,6 +112,25 @@ def addxref(request, part_id):
         if _created == True:
             xr1.user = request.user
             xr1.save()
+            
+def uploadimage(request, f, part_id):
+    p = get_object_or_404(Part, pk=part_id)
+    print 'adding image'
+    if request.method == 'POST':
+        form = ImageUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            """Handle the file upload"""
+            new_filename = "%s_%s" % (str(part_id), f.name)
+
+            image = PartImage()
+            image.user = request.user
+            image.image.save(new_filename, f)
+            image.save()
+            p.images.add(image)
+            p.save()
+
+            
+    
 
 
 

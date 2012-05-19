@@ -18,6 +18,7 @@ class Part(models.Model):
     approved = models.BooleanField(default=True)
     metadata = hstore.DictionaryField(db_index=True) 
     nsn = models.ForeignKey(Nsn, null=True)
+    images = models.ManyToManyField('PartImage')
 
     objects = hstore.HStoreManager()
 
@@ -50,10 +51,10 @@ class Xref(models.Model):
         unique_together = ('part', 'xrefpart',)
 
 class PartImage(models.Model):
-    part = models.ForeignKey('Part')
     image = ImageField(upload_to='part_images')
     user = models.ForeignKey(User, null=False)
     approved = models.BooleanField(default=True)
+    album_cover = models.BooleanField(default=False)
 
 class PartModerator(CommentModerator):
     email_notification = True
