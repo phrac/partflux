@@ -11,4 +11,4 @@ class XrefForm(forms.Form):
     desc = forms.CharField(max_length=256, required=False)
     
 class ImageUploadForm(forms.Form):
-    file = forms.FileField()
+    file = forms.FileField(required=True)

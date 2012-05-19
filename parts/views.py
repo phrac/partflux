@@ -44,7 +44,7 @@ def detail(request, part_id):
     if 'image_button' in request.POST:
         imageuploadform = ImageUploadForm(request.POST, request.FILES)
         if imageuploadform.is_valid:
-            uploadimage(request, request.FILES['file'], part_id)
+            uploadimage(request, part_id)
             return HttpResponseRedirect(reverse('parts.views.detail', args=[part_id]))
 
     return render_to_response('parts/detail.html', 
@@ -113,21 +113,19 @@ def addxref(request, part_id):
             xr1.user = request.user
             xr1.save()
             
-def uploadimage(request, f, part_id):
+def uploadimage(request, part_id):
     p = get_object_or_404(Part, pk=part_id)
-    print 'adding image'
-    if request.method == 'POST':
-        form = ImageUploadForm(request.POST, request.FILES)
-        if form.is_valid():
-            """Handle the file upload"""
-            new_filename = "%s_%s" % (str(part_id), f.name)
-
-            image = PartImage()
-            image.user = request.user
-            image.image.save(new_filename, f)
-            image.save()
-            p.images.add(image)
-            p.save()
+    if request.FILES.get('file', False):
+        f = request.FILES['file']
+    
+        """Handle the file upload"""
+        new_filename = "%s_%s" % (str(part_id), f.name)
+        image = PartImage()
+        image.user = request.user
+        image.image.save(new_filename, f)
+        image.save()
+        p.images.add(image)
+        p.save()
 
             
     
