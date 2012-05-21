@@ -28,8 +28,14 @@ def results(request):
     if searchform.is_valid():
         q = searchform.cleaned_data['q']
         no_partial_q = re.sub('\{.+\}', '', q)
+        no_partial_q = re.sub('\(.+\)', '', no_partial_q)
+        no_partial_q = re.sub('\(.+\)', '', no_partial_q)
+
         selected_facets = request.GET.getlist("selected_facets")
+        
         partial = re.findall(r'\{(.+?)\}', q)
+        company = re.findall(r'\((.+?)\)', q)
+        nsn = re.findall(r'\[(.+?)\]', q)
 
         if q:
             sqs = SearchQuerySet().facet('company')
@@ -42,6 +48,13 @@ def results(request):
                     results = results.narrow(u'number:"%s"' % firsthit)
                 else:
                     results = sqs.filter(number__contains=firsthit)
+            if company:
+                firsthit = str(company[0])
+                if results:
+                    results = results.narrow(u'company:"%s"' % firsthit)
+                else:
+                    results = sqs.filter(company__contains=firsthit)
+
 
         else:
             results = []
