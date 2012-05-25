@@ -25,9 +25,11 @@ urlpatterns = patterns('',
                        url(r'^parts/$', 'parts.views.index'),
                        url(r'^parts/(?P<part_id>\d+)/.*$', 'parts.views.detail'),
                        url(r'^parts/add/$', 'parts.views.addpart'),
+                       
                        # URLs for NSN
                        #url(r'^nsn/$', 'nsn.views.index'),
                        #url(r'^nsn/(?P<nsn_id>\d+)/.*$', 'nsn.views.detail'),
+                       
                        # URLs for search
                        url(r'^search/advanced/$', 'search.views.index'),
                        url(r'^search/', 'search.views.results'),
@@ -35,6 +37,7 @@ urlpatterns = patterns('',
 
                        # URLs for part groups
                        url(r'^partgroups/$', 'partgroups.views.index'),
+                       url(r'^partgroups/(?P<partgroup_id>\d+)/$', 'partgroups.views.detail'), 
                        
                        # URLs for companies
                        url(r'^companies/$', 'companies.views.index'),

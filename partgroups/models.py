@@ -18,6 +18,10 @@ class PartGroup(models.Model):
     
     def __unicode__(self):
         return self.name
+    
+    @models.permalink
+    def get_absolute_url(self):
+        return ('partgroups.views.detail', None, { 'partgroup_id': str(self.id) })
 
 class PartGroupItem(models.Model):
     part = models.ForeignKey(Part)
