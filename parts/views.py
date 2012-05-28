@@ -21,7 +21,7 @@ def index(request):
 
 def detail(request, part_id):
     p = get_object_or_404(Part, pk=part_id)
-    p.hits =+ 1
+    p.hits += 1
     p.save()
     xrefs = Xref.objects.filter(part=part_id).exclude(xrefpart=part_id)
     reverse_xrefs = Xref.objects.filter(xrefpart=part_id).exclude(part=part_id)
