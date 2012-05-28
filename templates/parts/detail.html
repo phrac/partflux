@@ -230,7 +230,7 @@
             <div class="right_articles">
                 <p><b>Date added:</b> {{ part.created_at|naturalday }}</p>
                 <p><b>Last updated:</b> {{ part.updated_at|naturalday }}</p> 
-                <p><b>Hits:</b> {{ part.hits }}</p>
+                <p>Part viewed <b>{{ part.hits }}</b> times</p>
                 <p><b>Added by:</b> {{ part.user.username }}</p>
             </div>
         </div>
