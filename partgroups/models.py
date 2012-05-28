@@ -1,17 +1,17 @@
 from django.db import models
-from mongoengine import *
 from django.contrib.auth.models import User
 
 from parts.models import Part
 
-class PartGroup(Document):
-    name = StringField(max_length=128)
-    description = StringField()
-    created_at = DateTimeField()
-    updated_at = DateTimeField()
-    user = ReferenceField('User')
-    private = BooleanField(default=False)
-    parent_group = ReferenceField('PartGroup')
+class PartGroup(models.Model):
+    name = models.CharField(max_length=128)
+    description = models.TextField(null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    user = models.ForeignKey(User)
+    private = models.NullBooleanField(default=False, null=True)
+    parent_group = models.ForeignKey('PartGroup', null=True)
+    parts = models.ManyToManyField('PartGroupItem')
     
     class Meta:
         unique_together = ('name', 'user',)
@@ -22,3 +22,9 @@ class PartGroup(Document):
     @models.permalink
     def get_absolute_url(self):
         return ('partgroups.views.detail', None, { 'partgroup_id': str(self.id) })
+
+class PartGroupItem(models.Model):
+    part = models.ForeignKey(Part)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    required = models.BooleanField(default=True)

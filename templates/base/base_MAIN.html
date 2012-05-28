@@ -17,9 +17,9 @@
             <div style="padding:0px;width:980px;margin:0 auto;">
                 <ul>
                     <li class="browse_category">&nbsp;</li>
-                    <li><a href="">Part Groups</a></li>
-                    <li><b><a href="/parts/add/">Add Part</a></b></li>
-                    <li><a href="">Advanced Search</a></li>
+                    <li><a href="{% url partgroups.views.index %}">Part Groups</a></li>
+                    <li><b><a href="{% url parts.views.addpart %}">Add Part</a></b></li>
+                    <li><a href="{% url search.views.index %}">Advanced Search</a></li>
                     <li><a href="/">Home</a></li>
                 </ul>
                 <p style="padding-top:5px;">Indexing <b>{{ part_count|intcomma }} </b>parts | <b>{{ xref_count|intcomma }}</b> xrefs | <b>{{ nsn_count|intcomma}} </b>NSNs</p>
@@ -66,7 +66,7 @@
                         <p>
                         Search parts:  
                         <input type="text" name="q" class="search" value="{{ searchterm }}" /> 
-                        <input type="submit" value="Search" class="submit" /> <a class="grey" href="">Advanced</a>
+                        <input type="submit" value="Search" class="submit" /> <a class="grey" href="{% url search.views.index %}">Advanced</a>
                         </p>
                     </div>
                 </form>
