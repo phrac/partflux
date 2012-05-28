@@ -14,8 +14,8 @@ from partgroups.forms import PartGroupForm
 
 
 def index(request):
+    user_partgroups = PartGroup.objects.filter(user_id=request.user.id)
 
-    
     if request.method == 'POST':
         partgroupform = PartGroupForm(request.POST)
         if partgroupform.is_valid():
@@ -28,9 +28,20 @@ def index(request):
                 newgroup.description = desc
                 newgroup.private = private
                 newgroup.save()
+            """ redirect back to clear the form """
+            return HttpResponseRedirect(reverse('partgroups.views.index'))
+
 
     else:
         partgroupform = PartGroupForm()
     return render_to_response('partgroups/index.html',
-                              {'partgroup_form': partgroupform},
+                              {'partgroup_form': partgroupform,
+                               'user_partgroups': user_partgroups,
+                              },
                               context_instance=RequestContext(request))
+
+
+def detail(request, partgroup_id):
+    pg = get_object_or_404(PartGroup, pk=partgroup_id)
+
+    

@@ -11,11 +11,20 @@ class PartGroup(models.Model):
     user = models.ForeignKey(User)
     private = models.NullBooleanField(default=False, null=True)
     parent_group = models.ForeignKey('PartGroup', null=True)
-    parts = models.ManyToManyField(Part)
+    parts = models.ManyToManyField('PartGroupItem')
     
     class Meta:
         unique_together = ('name', 'user',)
     
     def __unicode__(self):
         return self.name
+    
+    @models.permalink
+    def get_absolute_url(self):
+        return ('partgroups.views.detail', None, { 'partgroup_id': str(self.id) })
 
+class PartGroupItem(models.Model):
+    part = models.ForeignKey(Part)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    required = models.BooleanField(default=True)

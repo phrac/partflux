@@ -50,6 +50,28 @@ class Xref(models.Model):
     class Meta:
         unique_together = ('part', 'xrefpart',)
 
+class Characteristic(models.Model):
+    part = models.ForeignKey('Part')
+    key = models.CharField(max_length=50)
+    values = models.ManyToManyField('CharacteristicValue')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    user = models.ForeignKey(User, null=True)
+
+    class Meta:
+        unique_together = ('part', 'key')
+
+    def save(self, *args, **kwargs):
+        self.key = self.key.strip().upper()
+        super(Characteristic, self).save(*args, **kwargs)
+
+class CharacteristicValue(models.Model):
+    value = models.CharField(max_length=128, unique=True)
+
+    def save(self, *args, **kwargs):
+        self.value = self.value.strip().upper()
+        super(CharacteristicValue, self).save(*args, **kwargs)
+
 class PartImage(models.Model):
     image = ImageField(upload_to='part_images')
     user = models.ForeignKey(User, null=False)

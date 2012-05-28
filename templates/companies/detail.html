@@ -1,0 +1,50 @@
+{% extends "base/base_MAIN.html" %}
+
+{% load humanize %}
+
+{% block title %}
+{{ company.name }} | partfindr
+{% endblock %}
+
+{% block breadcrumbs %}
+> <a href="{% url companies.views.index %}">Companies</a> > {{ company.name }}</a>
+{% endblock %}
+
+{% block content %}  
+<script type="text/javascript" src="http://cdn.jquerytools.org/1.2.6/full/jquery.tools.min.js"></script> 
+<script type="text/javascript">
+    $(document).ready(function() {
+            $("a[title]").tooltip({ relative: 'true', predelay: 500}).dynamic({ bottom: { direction: 'down', bounce: true } });;
+            });
+</script>
+
+<div class="left">
+    <h2>{{ company.name }}</h2>
+</div>
+
+    <div class="right">
+        <h3>Part Metadata</h3>
+        <div class="right_articles">
+            <p><b>Date added:</b> {{ part.created_at|naturalday }}</p>
+            <p><b>Last updated:</b> {{ part.updated_at|naturalday }}</p> 
+            <p><b>Hits:</b> {{ part.hits }}</p>
+            <p><b>Added by:</b> {{ part.user.username }}</p>
+        </div>
+    </div>
+
+    <div class="right">
+        <h3>Part Actions</h3>
+        <div class="right_articles">
+            {% if user.is_authenticated %}
+            <ul>
+                <li>Add to my part group:</li>
+                <li>Add to an assembly:</li>
+            </ul>
+            {% else %}
+            <h4 class="signin">Please <a href="/users/login/">sign in</a> or <a href="/users/register/">register</a> to add view available actions.</h4>
+            {% endif %}
+        </div>
+    </div>
+
+    {% endblock %}
+

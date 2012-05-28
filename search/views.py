@@ -29,7 +29,7 @@ def results(request):
         q = searchform.cleaned_data['q']
         no_partial_q = re.sub('\{.+\}', '', q)
         no_partial_q = re.sub('\(.+\)', '', no_partial_q)
-        no_partial_q = re.sub('\(.+\)', '', no_partial_q)
+        no_partial_q = re.sub('\[.+\]', '', no_partial_q)
 
         selected_facets = request.GET.getlist("selected_facets")
         
