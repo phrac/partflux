@@ -7,23 +7,22 @@ from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.contrib.auth.models import User
 from django.core.files.storage import default_storage
 
-from parts.models import Part, Xref, PartImage
+from parts.models import Part, Xref, Characteristic
 from companies.models import Company
 from parts.forms import MetadataForm, XrefForm, ImageUploadForm
 from search.forms import SearchForm
 
 def index(request):
-    parts_list = Part.objects.all().order_by('-created_at')[:25]
+    parts_list = Part.objects.all().only('number', 'description', 'company').order_by('-created_at')[:25]
 
     return render_to_response('parts/index.html',
                               {'parts_list': parts_list},
                               context_instance=RequestContext(request))
 
 def detail(request, part_id):
-    p = get_object_or_404(Part, pk=part_id)
-
-    xrefs = Xref.objects.filter(part=part_id).exclude(xrefpart=part_id)
-    reverse_xrefs = Xref.objects.filter(xrefpart=part_id).exclude(part=part_id)
+    p = Part.objects(id=part_id)[0]
+    #xrefs = Xref.objects.filter(part=part_id).exclude(xrefpart=part_id)
+    #reverse_xrefs = Xref.objects.filter(xrefpart=part_id).exclude(part=part_id)
 
     metaform = MetadataForm(None)
     xrefform = XrefForm(None)
@@ -39,7 +38,7 @@ def detail(request, part_id):
         xrefform = XrefForm(request.POST)
         if xrefform.is_valid:
             addxref(request, part_id)
-            return HttpResponseRedirect(reverse('parts.views.detail', args=[part_id]))
+            return HttpResponseRedirect(reverse(self, args=[part_id]))
     
     if 'image_button' in request.POST:
         imageuploadform = ImageUploadForm(request.POST, request.FILES)
@@ -49,9 +48,6 @@ def detail(request, part_id):
 
     return render_to_response('parts/detail.html', 
                               {'part': p, 
-                               'metadata': sorted(p.metadata.iteritems()),
-                               'xrefs': xrefs, 
-                               'reverse_xrefs': reverse_xrefs, 
                                'metadata_form': metaform, 
                                'xref_form' : xrefform,
                                'imageuploadform' : imageuploadform
@@ -59,13 +55,29 @@ def detail(request, part_id):
                               context_instance=RequestContext(request))
 
 def addmeta(request, part_id):
-    p = get_object_or_404(Part, pk=part_id)
+    p = Part.objects(id=part_id)[0]
     metaform = MetadataForm(request.POST)
     if metaform.is_valid():
         key = metaform.cleaned_data['key'].strip().upper()
         value = metaform.cleaned_data['value'].strip().upper()
-        p.metadata[key] = value
+
+        keys = []
+        for c in p.characteristics:
+            keys.append(c.key)
+            if c.key == key:
+                if value in c.value:
+                    next
+                    # do nothing, the value is here already
+                else:
+                    c.value.append(value)
+        if key in keys:
+           print True
+        else:
+           c = Characteristic(key=key)
+           c.value.append(value)
+           p.characteristics.append(c)
         p.save()
+        
 
 def addpart(request):
     if request.method == 'POST':
@@ -79,11 +91,11 @@ def addpart(request):
             # next, check if the cross referenced part exists and create it if it does not
             newpart, _created = Part.objects.get_or_create(number=part_number, company=c)
             if _created == True:
-                newpart.user = request.user
                 newpart.description = desc
+                print newpart.description
                 newpart.hits = 0
                 newpart.save()
-                return HttpResponseRedirect('/parts/%d/%s/' % (newpart.id, newpart.number,))
+                return HttpResponseRedirect('/parts/%s/' % newpart.id)
     else:
         partform = XrefForm()
     return render_to_response('parts/add.html',

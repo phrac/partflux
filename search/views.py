@@ -5,8 +5,6 @@ from django.template import RequestContext
 from django.db.models import Q
 from pure_pagination import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib.auth.models import User
-from haystack.query import SearchQuerySet
-from haystack.inputs import AutoQuery
 
 from parts.models import Part, Xref
 from companies.models import Company

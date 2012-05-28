@@ -1,7 +1,6 @@
 from django.conf.urls.defaults import patterns, include, url
 from django.contrib.auth import views as auth_views
 from django.contrib import admin
-admin.autodiscover()
 
 urlpatterns = patterns('',
                        
@@ -23,8 +22,9 @@ urlpatterns = patterns('',
                       
                        # URLs for parts
                        url(r'^parts/$', 'parts.views.index'),
-                       url(r'^parts/(?P<part_id>\d+)/.*$', 'parts.views.detail'),
                        url(r'^parts/add/$', 'parts.views.addpart'),
+                       url(r'^parts/(?P<part_id>[a-z0-9]+)/$', 'parts.views.detail'),
+                       
                        
                        # URLs for NSN
                        #url(r'^nsn/$', 'nsn.views.index'),
@@ -59,6 +59,4 @@ urlpatterns = patterns('',
 
                        (r'^users/', include('registration.backends.default.urls')),
                        
-                       # activate admin stuff
-                       url(r'^admin/', include(admin.site.urls)),
                       )
