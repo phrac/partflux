@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.comments.moderation import CommentModerator, moderator
-from django_orm.postgresql import hstore
 from sorl.thumbnail import ImageField
 
 from companies.models import Company
@@ -16,11 +15,8 @@ class Part(models.Model):
     user = models.ForeignKey(User, null=True)
     hits = models.IntegerField(default=0, editable=False)
     approved = models.BooleanField(default=True)
-    metadata = hstore.DictionaryField(db_index=True) 
     nsn = models.ForeignKey(Nsn, null=True)
     images = models.ManyToManyField('PartImage')
-
-    objects = hstore.HStoreManager()
 
     def __unicode__(self):
         return self.number

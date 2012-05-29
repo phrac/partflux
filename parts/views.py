@@ -7,7 +7,7 @@ from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.contrib.auth.models import User
 from django.core.files.storage import default_storage
 
-from parts.models import Part, Xref, PartImage
+from parts.models import Part, Xref, PartImage, Characteristic, CharacteristicValue
 from companies.models import Company
 from parts.forms import MetadataForm, XrefForm, ImageUploadForm
 from search.forms import SearchForm
@@ -23,6 +23,7 @@ def detail(request, part_id):
     p = get_object_or_404(Part, pk=part_id)
     p.hits += 1
     p.save()
+    characteristics = Characteristic.objects.filter(part=part_id)
     xrefs = Xref.objects.filter(part=part_id).exclude(xrefpart=part_id)
     reverse_xrefs = Xref.objects.filter(xrefpart=part_id).exclude(part=part_id)
 
@@ -50,8 +51,8 @@ def detail(request, part_id):
 
     return render_to_response('parts/detail.html', 
                               {'part': p, 
-                               'metadata': sorted(p.metadata.iteritems()),
-                               'xrefs': xrefs, 
+                               'xrefs': xrefs,
+                               'characteristics': characteristics,
                                'reverse_xrefs': reverse_xrefs, 
                                'metadata_form': metaform, 
                                'xref_form' : xrefform,
@@ -65,8 +66,12 @@ def addmeta(request, part_id):
     if metaform.is_valid():
         key = metaform.cleaned_data['key'].strip().upper()
         value = metaform.cleaned_data['value'].strip().upper()
-        p.metadata[key] = value
-        p.save()
+        c, _created = Characteristic.objects.get_or_create(part=p, key=key)
+        if _created == True:
+            c.user = request.user
+        v, _created = CharacteristicValue.objects.get_or_create(value=value)
+        c.values.add(v)
+        c.save()
 
 def addpart(request):
     if request.method == 'POST':

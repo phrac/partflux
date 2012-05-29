@@ -35,20 +35,22 @@
                     <td colspan="2">
                         <div id="meta">
                             <table class="metadata" border="0" cellspacing="5" cellpadding="5">
-                                {% for k, v in metadata %}
+                                {% for c in characteristics %}
                                 <tr>
                                     <td style="font-weight:bold" valign="top">
                                         <p>
-                                        {{ k }}	
+                                        {{ c.key }}	
                                         </p>
                                     </td>
                                     <td class="metadata" colspan="2">
                                         <p>
+                                        {% for v in c.values.all %}
                                         {% if "SOURCE" in k %}
                                         {{ v|urlizetrunc:55 }}<br />
                                         {% else %}
-                                        {{ v|usernl2nl|linebreaksbr }}<br />
+                                        {{ v.value }}<br />
                                         {% endif %}
+                                        {% endfor %}
                                         </p>
                                     </td>
                                 </tr>
@@ -79,7 +81,6 @@
                                     </tr>
                                     <tr>
                                         <td colspan="3">
-                                            <p><b>Tip:</b> You can add multiple values by separating each value with "\n"</p>
                                         </td>
                                     </tr>
                                 </form>
