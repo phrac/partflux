@@ -9,18 +9,32 @@
 {{ part.number }} by {{ part.company.name }} | partfindr
 {% endblock %}
 
+{% block head %}
+<link rel="stylesheet" href="{{ STATIC_URL }}js/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
+<script type="text/javascript" src="{{ STATIC_URL }}js/fancybox/jquery.fancybox.pack.js"></script>
+{% endblock %}
+
 {% block breadcrumbs %}
 > <a href="{% url parts.views.index %}">Parts</a> > <a href="{% url companies.views.detail part.company.id %}">{{ part.company.name }}</a> > {{ part.number }}
 {% endblock %}
 
-{% block content %}  
-<script type="text/javascript" src="http://cdn.jquerytools.org/1.2.6/full/jquery.tools.min.js"></script> 
+{% block content %}
 <script type="text/javascript">
     $(document).ready(function() {
-            $("a[title]").tooltip({ relative: 'true', predelay: 500}).dynamic({ bottom: { direction: 'down', bounce: true } });;
-            });
-        </script>
 
+            /* This is basic - uses default settings */
+
+
+            $("a.lightbox").fancybox({
+                'transitionIn'  :   'elastic',
+                'transitionOut' :   'elastic',
+                'speedIn'       :   600, 
+                'speedOut'      :   200, 
+                'overlayShow'   :   false
+                });
+
+            });
+</script>
         <div class="left">
             <h2>Details for {{ part.number }} by {{ part.company }}</h2>
             <table border="0" cellpadding="0"  cellspacing="0" width="100%">
@@ -103,7 +117,7 @@
             <div class="part_image">
                 {% for image in part.images.all %}
                     {% thumbnail image.image "75x75" crop="center" as im %}
-                        <a href="{{ image.image.url }}"><img class="part_image" src="{{ im.url }}" alt="{{ part.number }} image" /></a>
+                        <a class="lightbox" href="{{ image.image.url }}"><img class="part_image" src="{{ im.url }}" alt="{{ part.number }} image" /></a>
                     {% endthumbnail %}
                 {% endfor %}
                 <table width="100%" style="border:1px solid #ddd;">
