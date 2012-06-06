@@ -2,6 +2,7 @@ from django.db import models
 
 class Company(models.Model):
     name = models.CharField(max_length=128, unique=True)
+    slug= models.CharField(max_length=64)
     description = models.TextField(null=True)
     url = models.URLField(null=True)
     email = models.EmailField(max_length=32, null=True)

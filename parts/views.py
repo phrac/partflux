@@ -23,7 +23,7 @@ def detail(request, part_id):
     p = get_object_or_404(Part, pk=part_id)
     p.hits += 1
     p.save()
-    characteristics = Characteristic.objects.filter(part=part_id)
+    characteristics = Characteristic.objects.filter(part=part_id).order_by('key')
     xrefs = Xref.objects.filter(part=part_id).exclude(xrefpart=part_id)
     reverse_xrefs = Xref.objects.filter(xrefpart=part_id).exclude(part=part_id)
 

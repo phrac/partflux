@@ -40,9 +40,33 @@ ul.bullets {
 img.part_image {
     float:left;
     margin:10px;
-    border: 1px solid #ddd;
+    border: 1px solid #ccc;
+    padding: 2px;
 }
-    
+.error_message {
+    background-color:#EEA2AD;
+    padding:5px;
+    color:white;
+    font-weight:bold;
+    font-size:1.2em;
+    margin-top:10px;
+}
+.success_message {
+    background-color:#9AFF9A;
+    padding:5px;
+    color:black;
+    font-weight:bold;
+    font-size:1.2em;
+    margin-top:10px;
+}
+
+.company_details {
+    text-align:center;
+    font-size:1.2em;
+    font-weight: bold;
+    line-height:1.5em;
+}
+
 /* layout
 ------ */
 .horizontal-line {

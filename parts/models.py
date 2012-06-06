@@ -8,6 +8,7 @@ from nsn.models import Nsn
 
 class Part(models.Model):
     number = models.CharField(max_length=48)
+    slug = modelx.CharField(max_length=64)
     description = models.TextField()
     company = models.ForeignKey(Company)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -17,6 +18,7 @@ class Part(models.Model):
     approved = models.BooleanField(default=True)
     nsn = models.ForeignKey(Nsn, null=True)
     images = models.ManyToManyField('PartImage')
+    characteristics = models.ManyToManyField('Characteristic')
 
     def __unicode__(self):
         return self.number
@@ -47,15 +49,11 @@ class Xref(models.Model):
         unique_together = ('part', 'xrefpart',)
 
 class Characteristic(models.Model):
-    part = models.ForeignKey('Part')
-    key = models.CharField(max_length=50)
+    key = models.CharField(max_length=50, unique=True)
     values = models.ManyToManyField('CharacteristicValue')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, null=True)
-
-    class Meta:
-        unique_together = ('part', 'key')
 
     def save(self, *args, **kwargs):
         self.key = self.key.strip().upper()
