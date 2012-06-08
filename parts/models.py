@@ -8,7 +8,7 @@ from nsn.models import Nsn
 
 class Part(models.Model):
     number = models.CharField(max_length=48)
-    slug = modelx.CharField(max_length=64)
+    slug = models.CharField(max_length=64)
     description = models.TextField()
     company = models.ForeignKey(Company)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -18,7 +18,7 @@ class Part(models.Model):
     approved = models.BooleanField(default=True)
     nsn = models.ForeignKey(Nsn, null=True)
     images = models.ManyToManyField('PartImage')
-    characteristics = models.ManyToManyField('Characteristic')
+    source = models.URLField()
 
     def __unicode__(self):
         return self.number
@@ -33,8 +33,7 @@ class Part(models.Model):
     
     @models.permalink
     def get_absolute_url(self):
-        return ('parts.views.detail', (), {
-            'part_id': str(self.id) + '/' + str(self.number),})
+        return ('parts.views.detail', [str(self.company.slug), str(self.slug)])
 
 class Xref(models.Model):
     user = models.ForeignKey(User, null=True)
@@ -49,22 +48,19 @@ class Xref(models.Model):
         unique_together = ('part', 'xrefpart',)
 
 class Characteristic(models.Model):
-    key = models.CharField(max_length=50, unique=True)
-    values = models.ManyToManyField('CharacteristicValue')
+    part = models.ForeignKey('Part')
+    key = models.CharField(max_length=50)
+    value = models.CharField(max_length=128)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, null=True)
 
+    class Meta:
+        unique_together = ('part', 'key', 'value')
+
     def save(self, *args, **kwargs):
         self.key = self.key.strip().upper()
         super(Characteristic, self).save(*args, **kwargs)
-
-class CharacteristicValue(models.Model):
-    value = models.CharField(max_length=128, unique=True)
-
-    def save(self, *args, **kwargs):
-        self.value = self.value.strip().upper()
-        super(CharacteristicValue, self).save(*args, **kwargs)
 
 class PartImage(models.Model):
     image = ImageField(upload_to='part_images')

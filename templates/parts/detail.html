@@ -116,7 +116,7 @@
             <h2 style="margin-top: 20px">Images for {{ part.number }}</h2>
             <div class="part_image">
                 {% for image in part.images.all %}
-                    {% thumbnail image.image "75x75" crop="center" as im %}
+                    {% thumbnail image.image "100x100" crop="center" as im %}
                         <a class="lightbox" href="{{ image.image.url }}"><img class="part_image" src="{{ im.url }}" alt="{{ part.number }} image" /></a>
                     {% endthumbnail %}
                 {% endfor %}
