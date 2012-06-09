@@ -20,7 +20,7 @@ def index(request):
                               context_instance=RequestContext(request))
 
 def detail(request, company_slug, part_slug):
-    c = get_object_or_404(Company, slug=company_slug).only('id')
+    c = get_object_or_404(Company, slug=company_slug)
     p = get_object_or_404(Part, slug=part_slug, company=c.id)
     #p.hits += 1
     #p.save()
