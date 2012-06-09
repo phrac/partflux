@@ -25,8 +25,8 @@ def detail(request, company_slug, part_slug):
     p.hits += 1
     p.save()
     
-    xrefs = Xref.objects.filter(part=part_id).exclude(xrefpart=part_id)
-    reverse_xrefs = Xref.objects.filter(xrefpart=part_id).exclude(part=part_id)
+    xrefs = Xref.objects.filter(part=p.id).exclude(xrefpart=p.id)
+    reverse_xrefs = Xref.objects.filter(xrefpart=p.id).exclude(part=p.id)
 
     metaform = MetadataForm(None)
     xrefform = XrefForm(None)
@@ -36,19 +36,19 @@ def detail(request, company_slug, part_slug):
         metaform = MetadataForm(request.POST)
         if metaform.is_valid:
             addmeta(request, part_id)
-            return HttpResponseRedirect(reverse('parts.views.detail', args=[part_id]))
+            return HttpResponseRedirect(reverse('parts.views.detail', args=[p.id]))
 
     if 'xref_button' in request.POST:
         xrefform = XrefForm(request.POST)
         if xrefform.is_valid:
             addxref(request, part_id)
-            return HttpResponseRedirect(reverse('parts.views.detail', args=[part_id]))
+            return HttpResponseRedirect(reverse('parts.views.detail', args=[p.id]))
     
     if 'image_button' in request.POST:
         imageuploadform = ImageUploadForm(request.POST, request.FILES)
         if imageuploadform.is_valid:
             uploadimage(request, part_id)
-            return HttpResponseRedirect(reverse('parts.views.detail', args=[part_id]))
+            return HttpResponseRedirect(reverse('parts.views.detail', args=[p.id]))
 
     return render_to_response('parts/detail.html', 
                               {'part': p, 
