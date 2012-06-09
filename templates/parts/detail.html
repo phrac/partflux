@@ -15,7 +15,7 @@
 {% endblock %}
 
 {% block breadcrumbs %}
-> <a href="{% url parts.views.index %}">Parts</a> > <a href="{% url companies.views.detail part.company.id %}">{{ part.company.name }}</a> > {{ part.number }}
+> <a href="{% url parts.views.index %}">Parts</a> > <a href="{% url companies.views.detail part.company.slug %}">{{ part.company.name }}</a> > {{ part.number }}
 {% endblock %}
 
 {% block content %}

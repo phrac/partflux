@@ -4,10 +4,6 @@ from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
-from mongoengine.django.shortcuts import get_document_or_404
-from mongoengine import ValidationError
-from gridfs import NoFile
-
 from companies.models import Company
 from companies.forms import CompanyAdminForm
 
@@ -32,8 +28,8 @@ def index(request):
                               context_instance=RequestContext(request))
 
 def detail(request, company_slug):
-    c = get_document_or_404(Company, slug=company_slug)
-    parts_list = Part.objects.filter(company=c.id).order_by('-created')[:25]
+    c = get_object_or_404(Company, slug=company_slug)
+    parts_list = Part.objects.filter(company=c.id).order_by('-created_at')[:25]
     form = CompanyAdminForm()
     return render_to_response('companies/detail.html',
                                {'company': c,
@@ -42,7 +38,7 @@ def detail(request, company_slug):
                                context_instance=RequestContext(request))
 
 def edit(request, company_slug):
-    c = get_document_or_404(Company, slug=company_slug)
+    c = get_object_or_404(Company, slug=company_slug)
     if request.method == 'POST':
         form = CompanyAdminForm(request.POST)
         if form.is_valid():

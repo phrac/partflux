@@ -7,44 +7,67 @@
 {% endblock %}
 
 {% block breadcrumbs %}
-> <a href="{% url companies.views.index %}">Companies</a> > {{ company.name }}</a>
+> <a href="{% url companies.views.index %}">Companies</a> > {{ company.name }}
 {% endblock %}
 
 {% block content %}  
-<script type="text/javascript" src="http://cdn.jquerytools.org/1.2.6/full/jquery.tools.min.js"></script> 
-<script type="text/javascript">
-    $(document).ready(function() {
-            $("a[title]").tooltip({ relative: 'true', predelay: 500}).dynamic({ bottom: { direction: 'down', bounce: true } });;
-            });
-</script>
 
 <div class="left">
     <h2>{{ company.name }}</h2>
+    {% if company.desc %}
+    <p>{{ company.desc|linebreaksbr|truncatewords:150 }}</p>
+    {% else %}
+    <p>No company description available</p>
+    {% endif %}
+
+    <h2>Part numbers by {{ company.name }}</h2>
+    <table class="results" border="0" cellpadding="0"  cellspacing="0" width="100%">
+
+        {% for part in parts_list %}
+        <tr>
+            <td style="width:20%" class="part_number">
+                <a href="{{ part.get_absolute_url }}">{{ part.number }}</a>
+            </td>
+            <td class="part_desc">
+                {{ part.description|truncatewords:10 }}
+            </td>
+            <td class="part_desc">
+                <a href="{{ part.company.get_absolute_url }}">{{ part.company.name }}</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
 </div>
 
     <div class="right">
-        <h3>Part Metadata</h3>
+        <h3>{{ company.name }}</h3>
         <div class="right_articles">
-            <p><b>Date added:</b> {{ part.created_at|naturalday }}</p>
-            <p><b>Last updated:</b> {{ part.updated_at|naturalday }}</p> 
-            <p><b>Hits:</b> {{ part.hits }}</p>
-            <p><b>Added by:</b> {{ part.user.username }}</p>
+            <div class="company_details">
+                {% if company.logo %}<img src="/gridfs/images/{{ company.logo.get.filename }}" alt="{{ company.name }} logo" /><br />{% endif %}
+                {% if company.url %}{{ company.url|urlize }}<br />{% endif %}
+                {% if company.address1 %}{{ company.address1 }}<br />{% endif %}
+                {% if company.address2 %}{{ company.address2 }}<br />{% endif %}
+                {% if company.city %}{{ company.city }}, {{ company.state }}&nbsp;&nbsp;{{ company.zipcode }} {{ company.country }}<br /><br />{% endif %}
+                {% if company.phone %}Phone: {{ company.phone }}<br />{% endif %}
+                {% if company.fax %}Fax: {{ company.fax }}<br />{% endif %}
+                {% if company.email %}Email: {{ company.email|urlize }}<br />{% endif %}
+
+            </div>
         </div>
     </div>
 
     <div class="right">
-        <h3>Part Actions</h3>
+        <h3>Company Actions</h3>
         <div class="right_articles">
             {% if user.is_authenticated %}
             <ul>
-                <li>Add to my part group:</li>
-                <li>Add to an assembly:</li>
+                <li><a href="{% url companies.views.edit company_slug=company.slug %}">Edit company details</a></li>
+                <li></li>
             </ul>
             {% else %}
-            <h4 class="signin">Please <a href="/users/login/">sign in</a> or <a href="/users/register/">register</a> to add view available actions.</h4>
+            <h4 class="signin">Please <a href="/users/login/">sign in</a> or <a href="/users/register/">register</a> to view available actions.</h4>
             {% endif %}
         </div>
     </div>
 
     {% endblock %}
-

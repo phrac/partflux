@@ -1,3 +1,4 @@
+{{ object.company.name }}
 {{ object.number }}
 {{ object.description }}
 {{ object.metadata }}

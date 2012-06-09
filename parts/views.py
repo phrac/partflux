@@ -20,10 +20,10 @@ def index(request):
                               context_instance=RequestContext(request))
 
 def detail(request, company_slug, part_slug):
-    c = get_object_or_404(Company, slug=company_slug)
-    p = get_object_or_404(Part, slug=part_slug, company=c)
-    p.hits += 1
-    p.save()
+    c = get_object_or_404(Company, slug=company_slug).only('id')
+    p = get_object_or_404(Part, slug=part_slug, company=c.id)
+    #p.hits += 1
+    #p.save()
     
     xrefs = Xref.objects.filter(part=p.id).exclude(xrefpart=p.id)
     reverse_xrefs = Xref.objects.filter(xrefpart=p.id).exclude(part=p.id)
