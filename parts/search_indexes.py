@@ -6,7 +6,6 @@ class PartIndex(indexes.RealTimeSearchIndex, indexes.Indexable):
     number = indexes.NgramField(model_attr='number', boost=3)
     company = indexes.CharField(model_attr='company', faceted=True)
     attributes = indexes.FacetMultiValueField()
-    #values = indexes.FacetMultiValueField()
 
     def prepare_attributes(self, obj):
         attrs = []
