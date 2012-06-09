@@ -5,11 +5,17 @@ class PartIndex(indexes.RealTimeSearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, use_template=True)
     number = indexes.NgramField(model_attr='number', boost=3)
     company = indexes.CharField(model_attr='company', faceted=True)
-    #keys = indexes.FacetMultiValueField()
+    attributes = indexes.FacetMultiValueField()
     #values = indexes.FacetMultiValueField()
 
-    def prepare_keys(self):
-        pass
+    def prepare_attributes(self, obj):
+        attrs = []
+        for key, value in obj.attributes.iteritems():
+            values = value.split("|")
+            for v in values:
+                attrs.append("_%s_%s" % (key, v))
+        return attrs
+
     
     def prepare_value(self):
         pass

@@ -28,7 +28,8 @@ Database
 
 Search
 ------
-    * Apache Solr (http://lucene.apache.org/solr/)
+    * ElasticSearch (http://www.elasticsearch.org/)
+    * pyelasticsearch (https://github.com/toastdriven/pyelasticsearch.git)
 
 
 Other Requirements

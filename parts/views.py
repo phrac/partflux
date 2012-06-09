@@ -24,8 +24,7 @@ def detail(request, company_slug, part_slug):
     p = get_object_or_404(Part, slug=part_slug, company=c)
     p.hits += 1
     p.save()
-    characteristics = Characteristic.objects.filter(part_id=part_id).order_by('key')
-    print characteristics
+    
     xrefs = Xref.objects.filter(part=part_id).exclude(xrefpart=part_id)
     reverse_xrefs = Xref.objects.filter(xrefpart=part_id).exclude(part=part_id)
 
@@ -54,7 +53,7 @@ def detail(request, company_slug, part_slug):
     return render_to_response('parts/detail.html', 
                               {'part': p, 
                                'xrefs': xrefs,
-                               'characteristics': characteristics,
+                               'attributes': sorted(p.attributes.iteritems()),
                                'reverse_xrefs': reverse_xrefs, 
                                'metadata_form': metaform, 
                                'xref_form' : xrefform,
@@ -68,12 +67,7 @@ def addmeta(request, part_id):
     if metaform.is_valid():
         key = metaform.cleaned_data['key'].strip().upper()
         value = metaform.cleaned_data['value'].strip().upper()
-        c, _created = Characteristic.objects.get_or_create(part=p, key=key)
-        if _created == True:
-            c.user = request.user
-        v, _created = CharacteristicValue.objects.get_or_create(value=value)
-        c.values.add(v)
-        c.save()
+        values = p.save_attributes(key, value)
 
 def addpart(request, part_number, company, desc):
     c, _created = Company.objects.get_or_create(name=company)

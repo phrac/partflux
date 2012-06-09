@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.comments.moderation import CommentModerator, moderator
+from django_orm.postgresql import hstore
 from sorl.thumbnail import ImageField
 
 from companies.models import Company
@@ -19,7 +20,9 @@ class Part(models.Model):
     nsn = models.ForeignKey(Nsn, null=True)
     images = models.ManyToManyField('PartImage')
     source = models.URLField()
+    attributes = hstore.DictionaryField()
 
+    objects = hstore.HStoreManager()
     def __unicode__(self):
         return self.number
 
@@ -30,6 +33,26 @@ class Part(models.Model):
         self.number = self.number.strip().upper()
         self.description = self.description.strip().upper()
         super(Part, self).save(*args, **kwargs)
+
+    # we have to marshall/unmarshall the dictionary for storage in the hstore
+    def save_attributes(self, k, v):
+        keys = []
+        cleankey = k.strip().upper()
+        cleanvalue = v.strip().upper()
+        for key, value in self.attributes.iteritems():
+            keys.append(key)
+        if cleankey not in keys:
+            self.attributes[cleankey] = cleanvalue
+        else:
+            valuestring = self.attributes[k]
+            values = valuestring.split("|")
+            if cleanvalue in values:
+                pass
+            else:
+                valuestring = valuestring + "|%s" % cleanvalue
+                self.attributes[cleankey] = valuestring
+        self.save()
+
     
     @models.permalink
     def get_absolute_url(self):

@@ -49,22 +49,16 @@
                     <td colspan="2">
                         <div id="meta">
                             <table class="metadata" border="0" cellspacing="5" cellpadding="5">
-                                {% for c in characteristics %}
+                                {% for k, v in metadata %}
                                 <tr>
                                     <td style="font-weight:bold" valign="top">
                                         <p>
-                                        {{ c.key }}	
+                                        {{ k }}	
                                         </p>
                                     </td>
                                     <td class="metadata" colspan="2">
                                         <p>
-                                        {% for v in c.values.all %}
-                                        {% if "SOURCE" in k %}
-                                        {{ v|urlizetrunc:55 }}<br />
-                                        {% else %}
-                                        {{ v.value }}<br />
-                                        {% endif %}
-                                        {% endfor %}
+                                        {{ v|pipe_to_nl|linebreaksbr }}<br />
                                         </p>
                                     </td>
                                 </tr>
