@@ -9,6 +9,7 @@ class XrefForm(forms.Form):
     part = forms.CharField(max_length=48)
     company = forms.CharField(max_length=48)
     desc = forms.CharField(max_length=256, required=False)
+    copy_attrs = forms.BooleanField()
     
 class ImageUploadForm(forms.Form):
     file = forms.FileField(required=True)

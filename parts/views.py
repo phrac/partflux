@@ -10,7 +10,6 @@ from django.core.files.storage import default_storage
 from parts.models import Part, Xref, PartImage, Characteristic
 from companies.models import Company
 from parts.forms import MetadataForm, XrefForm, ImageUploadForm
-from search.forms import SearchForm
 
 def index(request):
     parts_list = Part.objects.all().order_by('-created_at')[:25]
@@ -35,20 +34,32 @@ def detail(request, company_slug, part_slug):
     if 'metadata_button' in request.POST:
         metaform = MetadataForm(request.POST)
         if metaform.is_valid:
-            addmeta(request, part_id)
-            return HttpResponseRedirect(reverse('parts.views.detail', args=[p.id]))
+            status = addmeta(request, p.pk)
+            if status is True:
+                request.flash.success = "Characteristic added. Thanks for your contribution!"
+            else:
+                request.flash.error = "Adding characteristic failed: %s" % status
+            return HttpResponseRedirect(reverse('parts.views.detail', args=[p.company.slug, p.slug]))
 
     if 'xref_button' in request.POST:
         xrefform = XrefForm(request.POST)
         if xrefform.is_valid:
-            addxref(request, part_id)
-            return HttpResponseRedirect(reverse('parts.views.detail', args=[p.id]))
+            status = addxref(request, p.pk)
+            if status is True:
+                request.flash.success = "Cross reference added. Thanks for your contribution!"
+            else:
+                request.flash.error = "Adding cross reference failed: %s" % status
+            return HttpResponseRedirect(reverse('parts.views.detail', args=[p.company.slug, p.slug]))
     
     if 'image_button' in request.POST:
         imageuploadform = ImageUploadForm(request.POST, request.FILES)
         if imageuploadform.is_valid:
-            uploadimage(request, part_id)
-            return HttpResponseRedirect(reverse('parts.views.detail', args=[p.id]))
+            status = uploadimage(request, p.pk)
+            if status is True:
+                request.flash.success = "Image upload success. Thanks for your contribution!"
+            else:
+                request.flash.error = "Image upload failed: %s" % status
+            return HttpResponseRedirect(reverse('parts.views.detail', args=[p.company.slug, p.slug]))
 
     return render_to_response('parts/detail.html', 
                               {'part': p, 
@@ -101,6 +112,7 @@ def addxref(request, part_id):
     if xrefform.is_valid():
         part_number = xrefform.cleaned_data['part'].upper()
         company = xrefform.cleaned_data['company'].upper()
+        copy_attrs = xrefform.cleaned_data['copy_attrs']
         """Check if the company exists and create it if it does not"""
         c, _created = Company.objects.get_or_create(name=company)
         """Check if the cross referenced part exists and create it if it does not"""
@@ -109,6 +121,8 @@ def addxref(request, part_id):
             newpart.user = request.user
             newpart.description = p.description
             newpart.hits = 0
+            if copy_attrs == True:
+                newpart.attributes = p.attributes
             newpart.save()
 
         xr1, _created = Xref.objects.get_or_create(part=p, xrefpart=newpart)

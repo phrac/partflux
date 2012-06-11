@@ -78,7 +78,23 @@
                 {% endblock %}
             </div>
             {% endblock %}
+            
+            {% if flash.error %}
+            <div class="error_message">
+                {% for m in flash.error %}
+                {{ m }}
+                {% endfor %}
+            </div>
+            {% endif %}
 
+            {% if flash.success %}
+            <div class="success_message">
+                {% for m in flash.success %}
+                {{ m }}
+                {% endfor %}
+            </div>
+            {% endif %}
+            
             <div class="horizontal-line">
                 &nbsp;
             </div>

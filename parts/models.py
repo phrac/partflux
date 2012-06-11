@@ -34,7 +34,7 @@ class Part(models.Model):
         self.description = self.description.strip().upper()
         super(Part, self).save(*args, **kwargs)
 
-    # we have to marshall/unmarshall the dictionary for storage in the hstore
+    # we have to marshal/unmarshal the dictionary for storage in the hstore
     def save_attributes(self, k, v):
         keys = []
         cleankey = k.strip().upper()
@@ -94,7 +94,7 @@ class PartImage(models.Model):
 class BuyLink(models.Model):
     part = models.ForeignKey('Part')
     company = models.ForeignKey('Company')
-    url = models.URLField(required=True)
+    url = models.URLField(null=False)
     price = models.DecimalField(decimal_places=4)
     link_ok = models.BooleanField(default=True)
 
