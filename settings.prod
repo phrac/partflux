@@ -19,7 +19,7 @@ DATABASES = {
         'ENGINE': 'django_orm.backends.postgresql_psycopg2', 		# Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'partfindr',                     	                # Or path to database file if using sqlite3.
         'USER': 'derek',                      				        # Not used with sqlite3.
-        'PASSWORD': 'CHANGEME',                  			        # Not used with sqlite3.
+        'PASSWORD': '',                  			        # Not used with sqlite3.
         'HOST': 'localhost',                      	                # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      					        # Set to empty string for default. Not used with sqlite3.
         'OPTIONS': {
@@ -27,18 +27,12 @@ DATABASES = {
 		}
     }
 }
-HAYSTACK_CONNECTIONS = {
-        'default': {
-                'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
-                'URL': 'http://127.0.0.1:8983/solr',
-                'INDEX_NAME': 'haystack',
-                }
-}
+
 # use gmail for sending email
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'CHANGME'
-EMAIL_HOST_PASSWORD = 'CHANGEME'
+EMAIL_HOST_USER = 'partfindr@partfindr.net'
+EMAIL_HOST_PASSWORD = 'gL7.bT#!'
 EMAIL_PORT = 587
 
 # Local time zone for this installation. Choices can be found here:
@@ -158,7 +152,6 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     # external apps
     'google_analytics',
-    'haystack',
     'pure_pagination',
     'registration',
     'sorl.thumbnail',

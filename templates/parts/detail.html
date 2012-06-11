@@ -147,7 +147,7 @@
                 {% for xref in xrefs %}
                 <tr>
                     <td class="part_number">
-                        <a href="/parts/{{ xref.xrefpart.id}}/{{ xref.xrefpart.number|slugify|upper }}/">{{ xref.xrefpart.number }}</a>
+                        <a href="{{ xref.xrefpart.get_absolute_url }}">{{ xref.xrefpart.number }}</a>
                     </td>
                     <td class="part_desc">
                         {{ xref.xrefpart.description }}
@@ -209,7 +209,7 @@
             {% for rxref in reverse_xrefs %}
             <tr>
                 <td class="part_number">
-                    <a href="/parts/{{ rxref.part.id}}/{{ rxref.part.number|slugify|upper }}/">{{ rxref.part.number }}</a>
+                    <a href="{{ rxref.part.get_absolute_url }}">{{ rxref.part.number }}</a>
                 </td>
                 <td class="part_desc">
                     {{ rxref.part.description }}

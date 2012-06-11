@@ -153,7 +153,6 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     # external apps
     'google_analytics',
-    'haystack',
     'pure_pagination',
     'registration',
     'sorl.thumbnail',

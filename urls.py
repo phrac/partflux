@@ -31,7 +31,6 @@ urlpatterns = patterns('',
     # URLs for search
     url(r'^search/advanced/$', 'search.views.index'),
     url(r'^search/', 'search.views.results'),
-    (r'^search/', include('haystack.urls')),
     
     # URLs for part groups
     url(r'^partgroups/$', 'partgroups.views.index'),
