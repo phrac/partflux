@@ -7,9 +7,9 @@ from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.contrib.auth.models import User
 from django.core.files.storage import default_storage
 
-from parts.models import Part, Xref, PartImage, Characteristic
+from parts.models import Part, Xref, PartImage, BuyLink
 from companies.models import Company
-from parts.forms import MetadataForm, XrefForm, ImageUploadForm
+from parts.forms import MetadataForm, XrefForm, ImageUploadForm, BuyLinkForm
 
 def index(request):
     parts_list = Part.objects.all().order_by('-created_at')[:25]
@@ -26,10 +26,22 @@ def detail(request, company_slug, part_slug):
     
     xrefs = Xref.objects.filter(part=p.id).exclude(xrefpart=p.id)
     reverse_xrefs = Xref.objects.filter(xrefpart=p.id).exclude(part=p.id)
+    buylinks = BuyLink.objects.filter(part=p.id).order_by('price')[:10]
 
     metaform = MetadataForm(None)
     xrefform = XrefForm(None)
     imageuploadform = ImageUploadForm(None)
+    buylinkform = BuyLinkForm(None)
+
+    if 'buylink_button' in request.POST:
+        buylinkform = BuyLinkForm(request.POST)
+        if buylinkform.is_valid:
+            status = addbuylink(request, p.pk)
+            if status is True:
+                request.flash.success = "URL added successfully"
+            else:
+                request.flash.error = "Adding URL failed: %s" % status
+            return HttpResponseRedirect(reverse('parts.views.detail', args=[p.company.slug, p.slug]))
 
     if 'metadata_button' in request.POST:
         metaform = MetadataForm(request.POST)
@@ -65,10 +77,12 @@ def detail(request, company_slug, part_slug):
                               {'part': p, 
                                'xrefs': xrefs,
                                'attributes': sorted(p.attributes.iteritems()),
-                               'reverse_xrefs': reverse_xrefs, 
+                               'reverse_xrefs': reverse_xrefs,
+                               'buylinks': buylinks,
                                'metadata_form': metaform, 
                                'xref_form' : xrefform,
-                               'imageuploadform' : imageuploadform
+                               'imageuploadform' : imageuploadform,
+                               'buylinkform' : buylinkform,
                               },
                               context_instance=RequestContext(request))
 
@@ -80,6 +94,18 @@ def addmeta(request, part_id):
         value = metaform.cleaned_data['value'].strip().upper()
         values = p.save_attributes(key, value)
     return True
+
+def addbuylink(request, part_id):
+    p = get_object_or_404(Part, pk=part_id)
+    buylinkform = BuyLinkForm(request.POST)
+    if buylinkform.is_valid():
+        url = buylinkform.cleaned_data['url']
+        company = buylinkform.cleaned_data['company'].strip().upper()
+        price = buylinkform.cleaned_data['price']
+        c, _created = Company.objects.get_or_create(name=company)
+        buylink = BuyLink(part=p, company=c, price=price, url=url)
+        buylink.save()
+
 
 def addpart(request, part_number, company, desc):
     c, _created = Company.objects.get_or_create(name=company)

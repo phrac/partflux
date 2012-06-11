@@ -72,22 +72,6 @@ class Xref(models.Model):
     class Meta:
         unique_together = ('part', 'xrefpart',)
 
-class Characteristic(models.Model):
-    part = models.ForeignKey('Part')
-    key = models.CharField(max_length=50)
-    value = models.CharField(max_length=128)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    user = models.ForeignKey(User, null=True)
-
-    class Meta:
-        unique_together = ('part', 'key', 'value')
-
-    def save(self, *args, **kwargs):
-        self.key = self.key.strip().upper()
-        self.value = self.value.strip().upper()
-        super(Characteristic, self).save(*args, **kwargs)
-
 class PartImage(models.Model):
     image = ImageField(upload_to='part_images')
     user = models.ForeignKey(User, null=False)
@@ -99,7 +83,12 @@ class BuyLink(models.Model):
     company = models.ForeignKey(Company)
     url = models.URLField(null=False)
     price = models.DecimalField(max_digits=16, decimal_places=4)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     link_ok = models.BooleanField(default=True)
+
+    class Meta:
+        unique_together = ('part', 'company')
 
 
 class PartModerator(CommentModerator):

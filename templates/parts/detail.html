@@ -165,7 +165,8 @@
                 </tr>
                 {% endif %}
             </table>
-
+            
+            <br /><br />
             <table width="100%" style="border:1px solid #ddd;">
                 {% if user.is_authenticated %}
                 <form action="" method="post">
@@ -232,6 +233,73 @@
             </tr>
             {% endif %}
         </table>
+
+        <!-- Table for links to buy the product -->
+        <h2 style="margin-top: 20px" class="clear-blue">Purchasing Information</h2>
+        <table class="results" border="0" cellpadding="0"  cellspacing="0" width="100%">
+            {% if buylinks %}
+            {% for buylink in buylinks %}
+            <tr>
+                <td class="part_number">
+                    <a href="{{ buylink.url }}">{{ buylink.company.name }}</a>
+                </td>
+                <td class="part_desc">
+                    <b>${{ buylink.price }}</b>
+                </td>
+                <td class="part_desc">
+                    Last checked: {{ buylink.updated_at|date:"SHORT_DATE_FORMAT" }} (flag)
+                </td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+                <td>
+                    <h3 class="add">Sorry, we don't know where to obtain this part online. </h3>
+                </td>
+            </tr>
+            {% endif %}
+        </table>
+        <br /><br />
+        <table width="100%" style="border:1px solid #ddd;">
+                {% if user.is_authenticated %}
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <tr>
+                        <td>
+                            <p>
+                            <b>ADD NEW LINK:</b>
+                            </p>
+
+                            {{ buylinkform.url }}
+                            <p>URL</p>
+                        </td>
+                        <td>
+                            <p><br /></p>	
+                            {{ buylinkform.company }}
+                            <p>Company</p>
+                        </td>
+                        <td>
+                            <p><br /></p>	
+                            {{ buylinkform.price }}
+                            <p>Current price</p>
+                        </td>
+                        <td>
+                            <p></p>	
+                            <input type="submit" value="Add New Link" class="submit" name="buylink_button" />
+                        </td>
+                    </td>
+                </tr>
+            </form>
+            {% else %}
+            <tr>
+                <td colspan="3">
+                    <h4 class="signin">Please <a href="/users/login/">sign in</a> or <a href="/users/register/">register</a> to add a link.</h4>
+                </td>
+            </tr>
+            {% endif %}
+        </table>
+
+
 
         {% get_comment_count for part as comment_count %}
         {% render_comment_list for part %}
