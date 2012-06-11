@@ -83,6 +83,7 @@ class Characteristic(models.Model):
 
     def save(self, *args, **kwargs):
         self.key = self.key.strip().upper()
+        self.value = self.value.strip().upper()
         super(Characteristic, self).save(*args, **kwargs)
 
 class PartImage(models.Model):
@@ -93,9 +94,9 @@ class PartImage(models.Model):
     
 class BuyLink(models.Model):
     part = models.ForeignKey('Part')
-    company = models.ForeignKey('Company')
+    company = models.ForeignKey(Company)
     url = models.URLField(null=False)
-    price = models.DecimalField(decimal_places=4)
+    price = models.DecimalField(max_digits=16, decimal_places=4)
     link_ok = models.BooleanField(default=True)
 
 
