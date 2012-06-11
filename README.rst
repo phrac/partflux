@@ -15,7 +15,6 @@ Python
     * django-orm 2.0+ (https://github.com/niwibe/django-orm)
     * django-registration 0.8+: (hg clone http://bitbucket.org/ubernostrum/django-registration/)
     * pure pagination (http://pypi.python.org/pypi/django-pure-pagination/)
-    * django-haystack 2.0+ (http://haystacksearch.org/)
     * sorl-thumbnail https://github.com/sorl/sorl-thumbnail
     * django-storages http://django-storages.readthedocs.org/en/latest/index.html
     * django-gravatar for user avatars: https://github.com/twaddington/django-gravatar            
@@ -29,7 +28,7 @@ Database
 Search
 ------
     * ElasticSearch (http://www.elasticsearch.org/)
-    * pyelasticsearch (https://github.com/toastdriven/pyelasticsearch.git)
+    * pyes (https://github.com/aparro/pyes)
 
 
 Other Requirements
