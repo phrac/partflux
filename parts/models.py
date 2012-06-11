@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.comments.moderation import CommentModerator, moderator
+from django.template.defaultfilters import slugify
 from django_orm.postgresql import hstore
 from sorl.thumbnail import ImageField
 
@@ -32,6 +33,7 @@ class Part(models.Model):
     def save(self, *args, **kwargs):
         self.number = self.number.strip().upper()
         self.description = self.description.strip().upper()
+        self.slug = slugify(self.number)
         super(Part, self).save(*args, **kwargs)
 
     # we have to marshal/unmarshal the dictionary for storage in the hstore

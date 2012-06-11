@@ -1,8 +1,9 @@
 from django.db import models
+from django.template.defaultfilters import slugify
 
 class Company(models.Model):
     name = models.CharField(max_length=128, unique=True)
-    slug= models.CharField(max_length=64)
+    slug = models.CharField(max_length=64)
     description = models.TextField(null=True)
     url = models.URLField(null=True)
     email = models.EmailField(max_length=32, null=True)
@@ -16,6 +17,7 @@ class Company(models.Model):
 
     def save(self, *args, **kwargs):
         self.name = self.name.strip().upper()
+        self.slug = slugify(self.name)
         super(Company, self).save(*args, **kwargs)
 
     def __unicode__(self):
