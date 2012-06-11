@@ -90,6 +90,14 @@ class PartImage(models.Model):
     user = models.ForeignKey(User, null=False)
     approved = models.BooleanField(default=True)
     album_cover = models.BooleanField(default=False)
+    
+class BuyLink(models.Model):
+    part = models.ForeignKey('Part')
+    company = models.ForeignKey('Company')
+    url = models.URLField(required=True)
+    price = models.DecimalField(decimal_places=4)
+    link_ok = models.BooleanField(default=True)
+
 
 class PartModerator(CommentModerator):
     email_notification = True

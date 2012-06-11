@@ -6,9 +6,6 @@
 <form action="{% comment_form_target %}" method="post">
     {% csrf_token %}
     <dl>
-        <dt><label for="id_name">Name:</label><label style="margin-left:265px;" for="id_email">Email:</label></dt>
-        <dd class="commentform">{{ form.name }} {{ form.email }}</dd>
-
         <dt><label for="id_comment">Comment:</label></dt>
         <dd>{{ form.comment }}</dd>
 

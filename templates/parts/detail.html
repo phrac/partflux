@@ -230,7 +230,9 @@
 
         {% get_comment_count for part as comment_count %}
         {% render_comment_list for part %}
+        {% if user.is_authenticated %}
         {% render_comment_form for part %}
+        {% endif %}
         
         </div>
 
