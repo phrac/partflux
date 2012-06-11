@@ -79,13 +79,14 @@ def addmeta(request, part_id):
         key = metaform.cleaned_data['key'].strip().upper()
         value = metaform.cleaned_data['value'].strip().upper()
         values = p.save_attributes(key, value)
+    return True
 
 def addpart(request, part_number, company, desc):
     c, _created = Company.objects.get_or_create(name=company)
-    newpart, _created = Part.objects.get_or_create(num=part_number, company=c)
+    newpart, _created = Part.objects.get_or_create(number=part_number, company=c)
     if _created == True:
-        newpart.usr = request.user
-        newpart.desc = desc
+        newpart.user = request.user
+        newpart.description = desc
         newpart.hits = 0
         newpart.save()
     return newpart
