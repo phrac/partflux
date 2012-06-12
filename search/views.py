@@ -27,8 +27,16 @@ def results(request):
         q = request.GET['q']
 
     if searchform.is_valid():
-        query = TextQuery('fulltext', q, operator='and')
-        
+        #query = TextQuery('fulltext', q, operator='and', type='phrase_prefix')
+        #query = TextQuery('fulltext',
+        #                  q,
+        #                  operator='and',
+        #                 )
+        query = StringQuery(q,
+                            default_operator="AND",
+                            search_fields=['number', 'company', 'desc',
+                                           'attrstring',]
+                           )
         s = Search(query, fields=['pgid'], size=250)
         raw_results = conn.search(s)
 
