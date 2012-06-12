@@ -42,7 +42,10 @@ def results(request):
 
         results = []
         for r in raw_results:
-            results.append(Part.objects.get(pk=r.pgid))
+            if r.pgid is not None:
+                results.append(Part.objects.get(pk=r.pgid))
+            else:
+                pass
 
         try:                                                                    
             page = request.GET.get('page', 1)

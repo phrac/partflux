@@ -7,6 +7,7 @@ from sorl.thumbnail import ImageField
 
 from companies.models import Company
 from nsn.models import Nsn
+from pyes import *
 
 class Part(models.Model):
     number = models.CharField(max_length=48)
@@ -34,8 +35,40 @@ class Part(models.Model):
         self.number = self.number.strip().upper()
         self.description = self.description.strip().upper()
         self.slug = slugify(self.number)
+        self.update_index()
         super(Part, self).save(*args, **kwargs)
+    
+           
+    def update_index(self):
+        es = ES('127.0.0.1:9200')
+        attrlist, attrstring = self.prepare_attrs()
+        es.index(
+        {
+            "pgid" : self.id, 
+            "number" : self.number, 
+            "company" : self.company.name, 
+            "attrstring" : attrstring,
+            "desc" : self.description,
+            "attributes" : attrlist,
+        }, 
+        "parts", "part-type", self.id
+        )
+        es.refresh('parts')
+    
+    def prepare_attrs(self):
+        attrlist = []
+        attrstring = ''
+        for k, v in self.attributes.iteritems():
+            attr = {}
+            vals = v.split("|")
+            attr['key'] = k
+            attr['values'] = vals
+            attrlist.append(attr)
+            attrstring += "%s " % k
+            attrstring += "%s " % v.replace('|', '')
 
+        return attrlist, attrstring
+    
     # we have to marshal/unmarshal the dictionary for storage in the hstore
     def save_attributes(self, k, v):
         keys = []
