@@ -96,7 +96,7 @@ def addmeta(request, part_id):
 
         if status == True:
             return True
-        else
+        else:
             return 'Characteristic exists'
 
 def addbuylink(request, part_id):

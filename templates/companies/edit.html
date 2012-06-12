@@ -1,0 +1,103 @@
+{% extends "base/base_MAIN.html" %}
+
+{% block breadcrumbs %}
+> <a href="{% url companies.views.index %}">Companies</a> > <a href="{{ company.get_absolute_url }}">{{ company.name }}</a> > Edit Details
+{% endblock %}
+
+{% block content %}
+<div class="left">
+    <h2>Add a new part</h2>
+    {% if user.is_authenticated %}
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <dl class="add_part_form">
+            {{ form.name.errors }}
+            <dt><label for="id_name">Company name:</label></dt>
+            <dd>{{ form.name }}</dd>
+
+            {{ form.company.errors }}
+            <dt><label for="id_description">Description:</label></dt>
+            <dd>{{ form.description }}</dd>
+
+            {{ form.url.errors }}
+            <dt><label for="id_url">Website URL:</label></dt>
+            <dd>{{ form.url }}</dd>
+
+            {{ form.wikipedia_url.errors }}
+            <dt><label for="id_wikipedia_url">Company Wikipedia page:</label></dt>
+            <dd>{{ form.wikipedia_url }}</dd>
+
+            {{ form.facebook_url.errors }}
+            <dt><label for="id_facebook_url">Company Facebook page:</label></dt>
+            <dd>{{ form.facebook_url }}</dd>
+
+            {{ form.twitter_url.errors }}
+            <dt><label for="id_twitter_url">Company Twitter page:</label></dt>
+            <dd>{{ form.twitter_url }}</dd>
+
+            {{ form.linkedin_url.errors }}
+            <dt><label for="id_linkedin_url">Company LinkedIn page:</label></dt>
+            <dd>{{ form.linkedin_url }}</dd>
+
+            {{ form.phone.errors }}
+            <dt><label for="id_phone">Company phone number: </label></dt>
+            <dd>{{ form.phone }}</dd>
+
+            {{ form.fax.errors }}
+            <dt><label for="id_fax">Company fax number: </label></dt>
+            <dd>{{ form.fax }}</dd>
+
+            {{ form.email.errors }}
+            <dt><label for="id_email">Company email: </label></dt>
+            <dd>{{ form.email }}</dd>
+
+            {{ form.address1.errors }}
+            <dt><label for="id_address1">Company address line 1: </label></dt>
+            <dd>{{ form.address1 }}</dd>
+
+            {{ form.address2.errors }}
+            <dt><label for="id_address2">Company address line 2: </label></dt>
+            <dd>{{ form.address2 }}</dd>
+
+            {{ form.city.errors }}
+            <dt><label for="id_city">Company city: </label></dt>
+            <dd>{{ form.city }}</dd>
+
+            {{ form.state.errors }}
+            <dt><label for="id_state">Company state: </label></dt>
+            <dd>{{ form.state }}</dd>
+
+            {{ form.country.errors }}
+            <dt><label for="id_country">Company country: </label></dt>
+            <dd>{{ form.country }}</dd>
+
+            {{ form.zip.errors }}
+            <dt><label for="id_zip">Company zipcode: </label></dt>
+            <dd>{{ form.zip }}</dd>
+
+            {{ form.image.errors }}
+            <dt><label for="id_image">Company logo: </label></dt>
+            <dd>{{ form.logo }}</dd>
+        </dl>
+
+        <input type="submit" value="Save company details" class="submit" name="metadata_button" />
+    </form>
+
+    {% else %}
+    <h4 class="signin">please <a href="/users/login/">sign in</a> or <a href="/users/register/">register</a> to edit company details. </h4>
+    {% endif %}
+
+</div>
+
+<div class="right">
+    <h3>Tips for adding parts</h3>
+    <div class="right_articles">
+        <ul class="bullets">
+            <li>Make sure your part number is complete and accurate</li>
+            <li>Make sure the company name is correct</li>
+            <li>Enter a great description so others are able to easily find your part</li>
+            <li>After adding a new part, enter any information about the part that may help others identify it correctly</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
