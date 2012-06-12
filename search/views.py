@@ -34,10 +34,12 @@ def results(request):
         #                 )
         query = StringQuery(q,
                             default_operator="AND",
-                            search_fields=['number', 'company', 'desc',
-                                           'attrstring',]
+                            search_fields=['number', 
+                                           'company', 
+                                           'desc',
+                                           'attrstring',],
                            )
-        s = Search(query, fields=['pgid'], size=250)
+        s = Search(query, fields=['pgid'], size=500)
         raw_results = conn.search(s)
 
         results = []

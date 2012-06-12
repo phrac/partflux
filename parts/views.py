@@ -2,7 +2,7 @@ from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
-from django.db.models import Q
+from django.db import IntegrityError
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.contrib.auth.models import User
 from django.core.files.storage import default_storage
@@ -92,8 +92,12 @@ def addmeta(request, part_id):
     if metaform.is_valid():
         key = metaform.cleaned_data['key'].strip().upper()
         value = metaform.cleaned_data['value'].strip().upper()
-        values = p.save_attributes(key, value)
-    return True
+        status = p.save_attributes(key, value)
+
+        if status == True:
+            return True
+        else
+            return 'Characteristic exists'
 
 def addbuylink(request, part_id):
     p = get_object_or_404(Part, pk=part_id)
@@ -104,7 +108,11 @@ def addbuylink(request, part_id):
         price = buylinkform.cleaned_data['price']
         c, _created = Company.objects.get_or_create(name=company)
         buylink = BuyLink(part=p, company=c, price=price, url=url)
-        buylink.save()
+        try:
+            buylink.save()
+            return True
+        except IntegrityError:
+            return 'Link already exists'
 
 
 def addpart(request, part_number, company, desc):
@@ -156,6 +164,9 @@ def addxref(request, part_id):
         if _created == True:
             xr1.user = request.user
             xr1.save()
+            return True
+        else:
+            return 'Cross Reference already exists'
             
 def uploadimage(request, part_id):
     p = get_object_or_404(Part, pk=part_id)

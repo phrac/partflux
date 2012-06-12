@@ -78,15 +78,18 @@ class Part(models.Model):
             keys.append(key)
         if cleankey not in keys:
             self.attributes[cleankey] = cleanvalue
+            status = True
         else:
             valuestring = self.attributes[k]
             values = valuestring.split("|")
             if cleanvalue in values:
-                pass
+               status = False 
             else:
                 valuestring = valuestring + "|%s" % cleanvalue
                 self.attributes[cleankey] = valuestring
+                status = True
         self.save()
+        return status
 
     
     @models.permalink
