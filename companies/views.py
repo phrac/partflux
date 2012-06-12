@@ -1,6 +1,6 @@
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.template import RequestContext
-from django.core.paginator import Paginator, InvalidPage, EmptyPage
+from pure_pagination import Paginator, PageNotAnInteger, EmptyPage
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.core.files.storage import default_storage
@@ -12,21 +12,21 @@ from parts.models import Part
 import os
 
 def index(request):
-    companies_list = Company.objects.all().order_by('-created_at')
-    paginator = Paginator(companies_list, 20)
+    companies = Company.objects.all().order_by('name')
 
     try:
         page = int(request.GET.get('page', '1'))
     except ValueError:
         page = 1
 
+    p = Paginator(companies, 25, request=request)
     try:
-        companies = paginator.page(page)
-    except (EmptyPage, InvalidPage):
-        companies = paginator.page(paginator.num_pages)
+        results_list = p.page(page)
+    except (PageNotAnInteger, EmptyPage):
+        results_list = p.page(1)
 
     return render_to_response('companies/index.html', 
-                              {'companies_list': companies}, 
+                              {'results_list': results_list}, 
                               context_instance=RequestContext(request))
 
 def detail(request, company_slug):
