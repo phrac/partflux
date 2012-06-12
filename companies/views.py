@@ -3,11 +3,13 @@ from django.template import RequestContext
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.core.files.storage import default_storage
 
 from companies.models import Company
 from companies.forms import CompanyAdminForm
 
 from parts.models import Part
+import os
 
 def index(request):
     companies_list = Company.objects.all().order_by('-created_at')
@@ -42,10 +44,10 @@ def edit(request, company_slug):
     if request.method == 'POST':
         form = CompanyAdminForm(request.POST, instance=c)
         if form.is_valid():
+            form.save()
             if request.FILES.get('logo', False):
                 status = uploadlogo(request, c.pk)
-            print 'valid form'
-            form.save()
+            
             request.flash.success = "Company details successfully saved."
             return HttpResponseRedirect(reverse('companies.views.detail',
                                                 args=[c.slug]))
@@ -61,12 +63,18 @@ def edit(request, company_slug):
                                context_instance=RequestContext(request))
 
 
+### this should really be in forms.py under the CompanyAdminForm
 def uploadlogo(request, company_id):
-    c = get_document_or_404(Company, pk=company_id)
-    if request.FILES.get('file', False):
-        f = request.FILES['file']
+    c = get_object_or_404(Company, pk=company_id)
+    if request.FILES.get('logo', False):
+        f = request.FILES['logo']
     
         """Handle the file upload"""
-        new_filename = "%s_%s" % (str(company_id), f.name)
+        ext = os.path.splitext(f.name)[1]
+        ext = ext.lower()
+        new_filename = "%s_%s%s" % (str(c.pk), str(c.slug), ext)
+        if c.logo:
+            default_storage.delete(c.logo)
+        c.logo = new_filename
         c.logo.save(new_filename, f)
         c.save()

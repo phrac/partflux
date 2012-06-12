@@ -49,13 +49,16 @@ def results(request):
             else:
                 pass
 
-        try:                                                                    
+        if "page" in request.GET:                                                                    
             page = request.GET.get('page', 1)
-        except PageNotAnInteger:
+        else:
             page = 1
 
         p = Paginator(results, NUM_RESULTS, request=request)
-        results_list = p.page(page)
+        try:
+            results_list = p.page(page)
+        except (PageNotAnInteger, EmptyPage):
+            results_list = p.page(1)
 
     return render_to_response('search/results.html',
                               { 

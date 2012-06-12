@@ -1,6 +1,7 @@
 {% extends "base/base_MAIN.html" %}
 
 {% load humanize %}
+{% load thumbnail %}
 
 {% block title %}
 {{ company.name }} | partfindr
@@ -43,7 +44,11 @@
         <h3>{{ company.name }}</h3>
         <div class="right_articles">
             <div class="company_details">
-                {% if company.logo %}<img src="/gridfs/images/{{ company.logo.get.filename }}" alt="{{ company.name }} logo" /><br />{% endif %}
+                {% if company.logo %}
+                {% thumbnail company.logo "200" as im %}
+                    <img src="{{ im.url }}" alt="{{company.name }} logo" />
+                {% endthumbnail %}
+                {% endif %}
                 {% if company.url %}{{ company.url|urlize }}<br />{% endif %}
                 {% if company.address1 %}{{ company.address1 }}<br />{% endif %}
                 {% if company.address2 %}{{ company.address2 }}<br />{% endif %}
