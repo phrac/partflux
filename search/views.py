@@ -6,7 +6,7 @@ from pure_pagination import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib.auth.models import User
 
 from pyes import *
-
+import requests, json, ast
 from parts.models import Part, Xref
 from companies.models import Company
 from search.forms import SearchForm
@@ -17,6 +17,32 @@ def index(request):
                               context_instance=RequestContext(request))
 
 def results(request):
+    #url ='http://localhost:9200/parts/part-type/'
+    
+    #query = {
+    #    "query" : { "query_string" : {"query" : "helmet"} },
+    #    "facets" : {
+    #        "attributes" : { "terms" : { 
+    #            "script_field" : "_source.attributes",
+    #            "size":15
+    #        }
+    #        }
+    #    }
+    #}
+
+    #query = json.dumps(query)
+    #print query
+
+    #result = requests.post(url + '_search?pretty=true', query)
+    #results = json.loads(result.content)
+    #facets = results['facets']['attributes']['terms']
+    #facet_dict = {} 
+    #for facet in facets:
+    #    f = {}
+    #    f_vals = []
+    #    f['count'] = facet['count']
+    #    terms = facet['term'].replace('=', ':').strip('{}').split(',')
+
     NUM_RESULTS = 20
     conn = ES('127.0.0.1:9200')
     searchform = SearchForm(request.GET)
@@ -39,7 +65,7 @@ def results(request):
                                            'desc',
                                            'attrstring',],
                            )
-        s = Search(query, fields=['pgid'], size=500)
+        s = Search(query, fields=['pgid'], size=5)
         raw_results = conn.search(s)
 
         results = []
