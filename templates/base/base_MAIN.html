@@ -21,7 +21,9 @@
                     <li class="browse_category">&nbsp;</li>
                     <li><a href="{% url partgroups.views.index %}">Part Groups</a></li>
                     <li><b><a href="{% url parts.views.addpartform %}">Add Part</a></b></li>
-                    <li><a href="{% url search.views.index %}">Advanced Search</a></li>
+                    <li><a href="{% url search.views.index %}">Search</a></li>
+                    <li><a href="{% url parts.views.index %}">Parts</a></li>
+                    <li><a href="{% url companies.views.index %}">Companies</a></li>
                     <li><a href="/">Home</a></li>
                 </ul>
                 <p style="padding-top:5px;">Indexing <b>{{ part_count|intcomma }} </b>parts | <b>{{ xref_count|intcomma }}</b> xrefs | <b>{{ nsn_count|intcomma}} </b>NSNs</p>
