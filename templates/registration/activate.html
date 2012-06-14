@@ -5,9 +5,16 @@
 {% endblock %}
 
 {% block content %}
-
 <div class="center_content">
+    <img style="float:left;" src="{{STATIC_URL}}img/doh.png" />
     <h1>There was an error activating your account.</h2>
-    <p>Something went wrong when activating your account.</div>
+    <br /><br />
 
-{% endblock %
+    <p style="font-size:1.5em;">Our team of mad scientists has been notified of the problem.</p><br />
+    
+    <p style="font-size:1.5em;">In the mean time, feel free to browse our 
+    extensive database of <a href="{% url parts.views.index %}">part numbers</a>
+    and <a href="{% url companies.views.index %}">companies</a>.</p>
+</div>
+
+{% endblock %}
