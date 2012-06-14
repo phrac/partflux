@@ -15,8 +15,8 @@
 
 <div class="left">
     <h2>{{ company.name }}</h2>
-    {% if company.desc %}
-    <p>{{ company.desc|linebreaksbr|truncatewords:150 }}</p>
+    {% if company.description %}
+    <p>{{ company.description|linebreaksbr|truncatewords:150 }}</p>
     {% else %}
     <p>No company description available</p>
     {% endif %}
