@@ -9,14 +9,12 @@
 	<br /><br />
 
 	
-	<h1 class="clear">search {{ part_count }} part numbers</h1>
-	<form method="get" action="/parts/search/"><p class="clear">
+	<h1 class="clear">Search {{ part_count }} part numbers</h1>
+	<form method="get" action="/search/"><p class="clear">
 		<input class="bigsearch" type="text" name="q" id="idxsearch" size="45" maxlength="100" />
-		<input type="submit" class="submit"  value="find it"/></p>
+		<input type="submit" class="bigsubmit"  value="find it"/></p>
 	</form>
-	<small>
-		<p>search for any full or partial part number</p>
-	</small>
+		<h3>search by part number, description, company</h3>
 
 </div>
 {% endblock %}
