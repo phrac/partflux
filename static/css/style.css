@@ -20,7 +20,7 @@ html, body {
 a { color: #336699; background: inherit;}
 a:hover { color: #6C757A; background: inherit; }
 
-h1 { font: normal 2.6em "Droid Sans", Arial, Sans-Serif; padding: 7px 0 0 8px; margin: 0; }
+h1 { font: normal 2.6em Arial, Sans-Serif; padding: 7px 0 0 8px; margin: 0; }
 h1 a { color: #737373; background: inherit; }
 .orange { color: #336699; }
 sup { font-size: .5em; }
@@ -28,8 +28,15 @@ sup { font-size: .5em; }
 h1 a, h2 a { text-decoration: none; }
 h1 a:hover, h2 a:hover { color: #FF6600; background: inherit; }
 h2 { font-size: 1.5em; margin-bottom: 5px; color: #000; background: inherit; }
-p {	margin: 0 0 5px 0; }
+p {	
+font: normal 1.0em Arial, Sans-Serif;
+margin: 0 0 5px 0; 
+}
 
+p.desc {	
+font: normal 1.2em Arial, Sans-Serif;
+margin: 0 0 5px 0; 
+}
 ul { list-style : none; }
 
 .bullets { 
@@ -136,7 +143,7 @@ dl input {
     border: 2px solid #ddd;
     padding: 0px; 
     color: #666;
-    font: bold 1.2em "Droid Sans", Arial, Sans-Serif;
+    font: bold 1.2em Arial, Sans-Serif;
     margin: 0 0 15px 0;
 }
 
@@ -219,12 +226,14 @@ h2.signin {
     background: url(../img/head_mid.png) 0 0 repeat-x; 
     padding-left:10px;
     padding-right:10px;
+    font: bold 1.2em Arial, Sans-Serif; 
 }
 
 .bar li { 
     padding: 6px 12px 6px 12px;
     color: #FFEADC;
-    float: right; 
+    float: right;
+
 }
 
 .bar li.active { 
@@ -250,7 +259,7 @@ table.input {
 }
 
 td.input_big {
-    font: normal 1.2em "Droid Sans", Arial, Sans-Serif;
+    font: normal 1.2em Arial, Sans-Serif;
     padding: 10px;
 }
 td.input_big input {
@@ -259,14 +268,14 @@ td.input_big input {
     border: 2px solid #ddd;
     padding: 0px; 
     color: #666;
-    font: bold 1.2em "Droid Sans", Arial, Sans-Serif;
+    font: bold 1.2em Arial, Sans-Serif;
     margin: 0 0 0 0px;
 }
 td.small_login input {
     display:inline;
     height:10px;
     width:65px;
-    font: normal .5em "Droid Sans", Arial, Sans-Serif;
+    font: normal .5em Arial, Sans-Serif;
 }
 
 h2.viewall {
@@ -316,7 +325,7 @@ input.bigsearch {
     border: 2px solid #ddd;
     padding: 0px; 
     color: #666;
-    font: bold 2.0em "Droid Sans", Arial, Sans-Serif;
+    font: bold 2.0em Arial, Sans-Serif;
     margin: 0 0 0 0px;
 }
 
@@ -328,7 +337,7 @@ input.submit {
     padding: 6px;
     margin: 0 15px 0px 0;
     color: #FFF;
-    font: bold 1em "Droid Sans", Arial, Sans-Serif;
+    font: bold 1em Arial, Sans-Serif;
     float:right;
 }
 
@@ -340,14 +349,14 @@ input.submit_small {
     border: 0;
     height:20px;
     color: #FFF;
-    font: bold 1em "Droid Sans", Arial, Sans-Serif;
+    font: bold 1em Arial, Sans-Serif;
 }
 .grey { color: #808080; background: inherit; font-weight: normal; }
 .search_form { float: right; }
 
 .pagination {
     margin-top:10px;
-    font: bold 1.0em "Droid Sans", Arial, Sans-Serif;
+    font: bold 1.0em Arial, Sans-Serif;
 }
 .page {
     border: 1px solid #999;
@@ -368,7 +377,7 @@ h2 {
     background-color:#eee;
     color: #000;
     padding: 3px 0 4px 43px;
-    font: bold 1.2em "Droid Sans", Arial, Sans-Serif;
+    font: bold 1.2em Arial, Sans-Serif;
     margin: 0 0 10px 0;
 }
 
@@ -377,7 +386,7 @@ table.results {
 }
 
 td.part_number, td.part_desc {
-    font: normal 1.0em "PT Mono", "Droid Sans", Arial;
+    font: normal 1.0em "PT Mono", Arial;
     padding:6px;
     border-bottom: 1px solid #ccc;
 }
@@ -389,7 +398,7 @@ td.metadata {
     padding-left: 35px;
 }
 h4.signin {
-    font: bold 1.0em "Droid-Sans", Arial, Sans-Serif;
+    font: bold 1.0em Arial, Sans-Serif;
 }
 /* left side
 --------- */
@@ -418,7 +427,7 @@ h2.clear-green {
 h3.add {
     margin-top:10px;
     margin-bottom:30px;
-    font: 1.6em 'Oxygen', Sans-Serif;
+    font: 1.6em Arial, Sans-Serif;
 }
 
 .left {
@@ -432,7 +441,7 @@ h3.add {
     clear: both;
     color: #666;
     padding: 3px 0 4px 4px;
-    font: bold 1.2em "Droid Sans", Arial, Sans-Serif;
+    font: bold 1.2em Arial, Sans-Serif;
     margin: 0 0 10px 0;
 }
 .left_side {
@@ -475,7 +484,7 @@ h3.add {
     border-top-left-radius:5px;
     color: #FFF;
     padding: 7px 0 8px 5px;
-    font: bold 1em "Droid Sans", Arial, Sans-Serif;
+    font: bold 1em Arial, Sans-Serif;
     margin: 0 0 3px 0;
     clear:both;
 }

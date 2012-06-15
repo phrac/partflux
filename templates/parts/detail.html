@@ -38,7 +38,7 @@
 
         <div class="left">
             <h2>Details for {{ part.number }} by {{ part.company }} ({{ part.id }})</h2>
-            <table border="0" cellpadding="0"  cellspacing="0" width="100%">
+            <table class="results" border="0" cellpadding="0"  cellspacing="0" width="100%">
                 <tr>
                     <td colspan="2">
                         <p>
@@ -47,34 +47,30 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="2">
+                    <td colspan="2" class="part_desc">
                         <div id="meta">
-                            <table class="metadata" border="0" cellspacing="5" cellpadding="5">
+                            <table style="font-size:1.0em" class="results" border="0" cellspacing="0" width="100%">
                                 {% for k, v in attributes %}
                                 <tr>
-                                    <td style="font-weight:bold" valign="top">
-                                        <p>
-                                        {{ k }}	
-                                        </p>
+                                    <td style="font-weight:bold" valign="top" class="part_number">
+                                        {{ k }}:	
                                     </td>
-                                    <td class="metadata" colspan="2">
-                                        <p>
+                                    <td class="part_desc" colspan="2">
+                                        
                                         {{ v|pipe_to_nl|linebreaksbr }}<br />
-                                        </p>
+                                        
                                     </td>
                                 </tr>
                                 {% endfor %}
                             </table>
-                            
+                            <br />
                             <table width="100%" style="border:1px solid #ddd;">
                                 {% if user.is_authenticated %}
                                 <form action="" method="post">
                                     {% csrf_token %}
                                     <tr>
                                         <td>
-                                            <p><b>ADD CHARACTERISTIC:</b>&nbsp;&nbsp;<a title="Part characteristics are pieces of information that
-                                                describe a part in greater detail. Example part characteristics may be weight, length, width, 
-                                                recommended application or any other piece of information that describes characteristics of a part.">?</a></p>
+                                            <p><b>Add new attribute:</b></p>
                                             {{ metadata_form.key }}
                                             <p><i>Example: Weight</i></p>
                                         </td>
@@ -121,7 +117,7 @@
                         {% csrf_token %}
                         <tr>
                             <td>
-                                <p><b>UPLOAD AN IMAGE</b></p>
+                                <p><b>Upload an image</b></p>
                                 {{ imageuploadform.file }}
                             </td>
                             <td>
@@ -167,7 +163,7 @@
                 {% endif %}
             </table>
             
-            <br /><br />
+            <br />
             <table width="100%" style="border:1px solid #ddd;">
                 {% if user.is_authenticated %}
                 <form action="" method="post">
@@ -175,9 +171,7 @@
                     <tr>
                         <td>
                             <p>
-                            <b>ADD CROSS REFERENCE:</b>&nbsp;&nbsp;<a title="A part cross reference is a part by a different manufacturer 
-                                that has the same application. for example, a Purolator PL14162 oil filter has the same characteristics of a
-                                Fram PH6607 oil filter so those parts would be cross reference parts.">?</a>
+                            <b>Add a cross reference:</b>
                             </p>
                             {{ xref_form.part }}
                             <p>Part #</p>
@@ -260,7 +254,7 @@
             </tr>
             {% endif %}
         </table>
-        <br /><br />
+        <br />
         <table width="100%" style="border:1px solid #ddd;">
                 {% if user.is_authenticated %}
                 <form action="" method="post">
@@ -268,7 +262,7 @@
                     <tr>
                         <td>
                             <p>
-                            <b>ADD NEW LINK:</b>
+                            <b>Add new link:</b>
                             </p>
 
                             {{ buylinkform.url }}

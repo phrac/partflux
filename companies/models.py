@@ -1,6 +1,7 @@
 from django.db import models
 from django.template.defaultfilters import slugify
 from sorl.thumbnail import ImageField
+from pyes import *
 
 class Company(models.Model):
     name = models.CharField(max_length=128, unique=True)
@@ -27,10 +28,22 @@ class Company(models.Model):
     def save(self, *args, **kwargs):
         self.name = self.name.strip().upper()
         self.slug = slugify(self.name)
+        self.update_index()
         super(Company, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return self.name
+    
+    def update_index(self):
+        es = ES('127.0.0.1:9200')
+        es.index(
+            {
+                "pgid" : str(self.pk), 
+                "company_name" : self.name, 
+            }, 
+            "companies", "company-type", self.id
+        )
+        es.refresh('companies')
 
     @models.permalink
     def get_absolute_url(self):
