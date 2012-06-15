@@ -72,7 +72,7 @@
                         <input id="id_searchbox" type="text" name="q" class="search" value="{{ searchterm }}" /> 
                         <input type="submit" value="Search" class="submit" /> 
                         <script type="text/javascript">
-                        $('#id_searchbox').autocomplete({source: '/search/ac/?type=part', minLength: 3});</script>
+                        $('#id_searchbox').autocomplete({source: '{% url search.views.autocomplete %}?type=part', minLength: 3});</script>
                         <a class="grey" href="{% url search.views.index %}">Advanced</a>
 
                         </p>

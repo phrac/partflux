@@ -29,9 +29,7 @@ urlpatterns = patterns('',
     #url(r'^nsn/(?P<nsn_id>\d+)/.*$', 'nsn.views.detail'),
     
     # URLs for search
-    url(r'^search/advanced/$', 'search.views.index'),
-    url(r'^search/ac/$', 'search.views.autocomplete'),
-    url(r'^search/', 'search.views.results'),
+    url(r'^search/', include('search.urls')),
     
     # URLs for part groups
     url(r'^partgroups/$', 'partgroups.views.index'),
