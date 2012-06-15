@@ -9,7 +9,7 @@ author: luka cvrk (www.solucija.com) */
 *{ margin: 0; padding: 0; }* 
 body { 
     font: .7em "Droid Sans", Arial, sans-serif; 
-    line-heigth: 1.6em;
+    line-height: 1.6em;
     color: #444;
 }
 
@@ -32,23 +32,11 @@ p {	margin: 0 0 5px 0; }
 
 ul { list-style : none; }
 
-ul.bullets { 
+.bullets { 
     list-style-type:square; 
     list-style-position:inside;
 }
 
-#id_searchbox input {
-    width: 100px;
-    -moz-transition: width 0.5s ease-out;
-    -webkit-transition: width 0.5s ease-out;
-    transition: width 0.5s ease-out;
-}
-#id_searchbox input:focus {
-    width: 200px;
-    -moz-transition: width 0.5s ease-out;
-    -webkit-transition: width 0.5s ease-out;
-    transition: width 0.5s ease-out;
-    }
 img.part_image {
     float:left;
     margin:10px;
@@ -278,7 +266,7 @@ td.small_login input {
     display:inline;
     height:10px;
     width:65px;
-    font normal .5em "Droid Sans", Arial, Sans-Serif;
+    font: normal .5em "Droid Sans", Arial, Sans-Serif;
 }
 
 h2.viewall {

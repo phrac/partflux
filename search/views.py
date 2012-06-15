@@ -105,23 +105,17 @@ def autocomplete(request):
     if type == 'part':
         query = StringQuery(term, search_fields=['number',])
 
-    s = Search(query, fields=['pgid'], size=10)
+    s = Search(query, fields=['pgid', 'company_name', 'number', 'desc'], size=10)
     raw_results = conn.search(s)
         
     results = []
     for r in raw_results:
-        if r.pgid is not None:
-            if type == 'company':
-                obj = Company.objects.get(pk=r.pgid)
-                results.append(obj.name)
-            if type == 'part':
-                obj = Part.objects.filter(pk=r.pgid).only('number',
-                                                          'description')[0]
-                results.append({'label': "%s - %s" % (obj.number,
-                                                      truncatechars(obj.description,60)),
-                                'value': obj.number})
-        else:
-            pass
+        if type == 'company':
+            results.append(r.company_name)
+        if type == 'part':
+            results.append({'label': "%s - %s" % (r.number,
+                                                  truncatechars(r.desc,60)),
+                                                  'value': r.number})
 
     return HttpResponse(json.dumps(results), mimetype="application/json")
 
