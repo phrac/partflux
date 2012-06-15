@@ -14,7 +14,7 @@ class JQueryAutoComplete(forms.TextInput):
         http://jquery.bassistance.de/autocomplete/"""
         
         self.options = None
-        self.attrs = {'autocomplete': 'off'}
+        self.attrs = {}
         self.source = source
         if len(options) > 0:
             self.options = JSONEncoder().encode(options)
