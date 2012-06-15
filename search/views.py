@@ -5,7 +5,7 @@ from django.template import RequestContext
 from django.core import serializers
 from pure_pagination import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib.auth.models import User
-
+from django.template.defaultfilters import truncatechars
 from pyes import *
 import requests, json, ast
 from parts.models import Part, Xref
@@ -118,7 +118,7 @@ def autocomplete(request):
                 obj = Part.objects.filter(pk=r.pgid).only('number',
                                                           'description')[0]
                 results.append({'label': "%s - %s" % (obj.number,
-                                                      obj.description),
+                                                      truncatechars(obj.description,60)),
                                 'value': obj.number})
         else:
             pass
