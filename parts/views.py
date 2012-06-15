@@ -3,7 +3,8 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.db import IntegrityError
-from django.core.paginator import Paginator, InvalidPage, EmptyPage
+from pure_pagination import Paginator, PageNotAnInteger, EmptyPage
+
 from django.contrib.auth.models import User
 from django.core.files.storage import default_storage
 

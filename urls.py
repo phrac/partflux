@@ -30,6 +30,7 @@ urlpatterns = patterns('',
     
     # URLs for search
     url(r'^search/advanced/$', 'search.views.index'),
+    url(r'^search/ac/$', 'search.views.autocomplete'),
     url(r'^search/', 'search.views.results'),
     
     # URLs for part groups
@@ -40,6 +41,11 @@ urlpatterns = patterns('',
     url(r'^companies/', include('companies.urls')),
     
     # URLs for users
+    
+    # Uncomment the below URL to disable users section                   
+    #url(r'^users/.*', 'django.views.generic.simple.direct_to_template',
+    #    {'template': 'users/disabled.html'}),
+
     url(r'^users/logout/$',
        auth_views.logout,
        {'template_name': 'main/comingsoon.html'}),
