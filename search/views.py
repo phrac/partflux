@@ -95,17 +95,16 @@ def results(request):
                               context_instance=RequestContext(request))
 
 def autocomplete(request):
-    term = "%s*" % request.GET['term']
+    term = request.GET['term']
     type = request.GET['type']
     conn = ES('127.0.0.1:9200')
     
-    
     if type == 'company':
-        query = StringQuery(term, search_fields=['company_name',] )
+        query = PrefixQuery(field='company_name', prefix=term )
     if type == 'part':
-        query = StringQuery(term, search_fields=['number',])
+        query = PrefixQuery(field='number',prefix=term)
 
-    s = Search(query, fields=['pgid', 'company_name', 'number', 'desc'], size=10)
+    s = Search(query, fields=['company_name', 'number', 'desc'], size=10)
     raw_results = conn.search(s)
         
     results = []

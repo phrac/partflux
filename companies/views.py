@@ -31,11 +31,21 @@ def index(request):
 
 def detail(request, company_slug):
     c = get_object_or_404(Company, slug=company_slug)
-    parts_list = Part.objects.filter(company=c.id).order_by('-created_at')[:25]
+    parts_list = Part.objects.filter(company=c.id).order_by('-created_at')
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+
+    p = Paginator(parts_list, 25, request=request)
+    try:
+        results_list = p.page(page)
+    except (PageNotAnInteger, EmptyPage):
+        results_list = p.page(1)
     form = CompanyAdminForm()
     return render_to_response('companies/detail.html',
                                {'company': c,
-                                'parts_list': parts_list,
+                                'parts_list': results_list,
                                },
                                context_instance=RequestContext(request))
 

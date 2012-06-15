@@ -21,10 +21,10 @@
     <p>No company description available</p>
     {% endif %}
 
-    <h2>Part numbers by {{ company.name }}</h2>
+    <h2>Part numbers by {{ company.name }} ({{ parts_list.paginator.count }} parts)</h2>
     <table class="results" border="0" cellpadding="0"  cellspacing="0" width="100%">
 
-        {% for part in parts_list %}
+        {% for part in parts_list.object_list %}
         <tr>
             <td style="width:20%" class="part_number">
                 <a href="{{ part.get_absolute_url }}">{{ part.number }}</a>
@@ -38,6 +38,9 @@
         </tr>
         {% endfor %}
     </table>
+    <div class="pagination">
+        {{ parts_list.render }}
+    </div>
 </div>
 
     <div class="right">
