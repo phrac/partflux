@@ -30,6 +30,7 @@ urlpatterns = patterns('',
     
     # URLs for search
     url(r'^search/advanced/$', 'search.views.index'),
+    url(r'^search/ac/$', 'search.views.autocomplete'),
     url(r'^search/', 'search.views.results'),
     
     # URLs for part groups

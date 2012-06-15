@@ -12,13 +12,6 @@
 {% block head %}
 <link rel="stylesheet" href="{{ STATIC_URL }}js/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
 <script type="text/javascript" src="{{ STATIC_URL }}js/fancybox/jquery.fancybox.pack.js"></script>
-{% endblock %}
-
-{% block breadcrumbs %}
-> <a href="{% url parts.views.index %}">Parts</a> > <a href="{% url companies.views.detail part.company.slug %}">{{ part.company.name }}</a> > {{ part.number }}
-{% endblock %}
-
-{% block content %}
 <script type="text/javascript">
     $(document).ready(function() {
 
@@ -35,6 +28,14 @@
 
             });
 </script>
+{% endblock %}
+
+{% block breadcrumbs %}
+> <a href="{% url parts.views.index %}">Parts</a> > <a href="{% url companies.views.detail part.company.slug %}">{{ part.company.name }}</a> > {{ part.number }}
+{% endblock %}
+
+{% block content %}
+
         <div class="left">
             <h2>Details for {{ part.number }} by {{ part.company }} ({{ part.id }})</h2>
             <table border="0" cellpadding="0"  cellspacing="0" width="100%">

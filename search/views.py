@@ -1,7 +1,8 @@
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.template import RequestContext
+from django.core import serializers
 from pure_pagination import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib.auth.models import User
 
@@ -92,3 +93,35 @@ def results(request):
                                   'searchterm': q,
                               },
                               context_instance=RequestContext(request))
+
+def autocomplete(request):
+    term = "%s*" % request.GET['term']
+    type = request.GET['type']
+    conn = ES('127.0.0.1:9200')
+    
+    
+    if type == 'company':
+        query = StringQuery(term, search_fields=['company_name',] )
+    if type == 'part':
+        query = StringQuery(term, search_fields=['number',])
+
+    s = Search(query, fields=['pgid'], size=10)
+    raw_results = conn.search(s)
+        
+    results = []
+    for r in raw_results:
+        if r.pgid is not None:
+            if type == 'company':
+                obj = Company.objects.get(pk=r.pgid)
+                results.append(obj.name)
+            if type == 'part':
+                obj = Part.objects.filter(pk=r.pgid).only('number',
+                                                          'description')[0]
+                results.append({'label': "%s - %s" % (obj.number,
+                                                      obj.description),
+                                'value': obj.number})
+        else:
+            pass
+
+    return HttpResponse(json.dumps(results), mimetype="application/json")
+
