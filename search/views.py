@@ -66,11 +66,7 @@ def results(request):
                                            'desc',
                                            'attrstring',],
                            )
-<<<<<<< local
-        s = Search(query, fields=['_source', 'pgid'], size=500)
-=======
         s = Search(query, fields=['pgid'], size=5)
->>>>>>> other
         raw_results = conn.search(s)
 
         results = []
