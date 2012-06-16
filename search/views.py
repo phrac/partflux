@@ -6,8 +6,9 @@ from django.core import serializers
 from pure_pagination import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib.auth.models import User
 from django.template.defaultfilters import truncatechars
+from django.conf import settings
+
 from pyes import *
-import requests, json, ast
 from parts.models import Part, Xref
 from companies.models import Company
 from search.forms import SearchForm
@@ -45,7 +46,7 @@ def results(request):
     #    terms = facet['term'].replace('=', ':').strip('{}').split(',')
 
     NUM_RESULTS = 20
-    conn = ES('127.0.0.1:9200')
+    conn = ES(settings.ES_HOST)
     searchform = SearchForm(request.GET)
     
     if not "q" in request.GET:
@@ -93,28 +94,4 @@ def results(request):
                                   'searchterm': q,
                               },
                               context_instance=RequestContext(request))
-
-def autocomplete(request):
-    term = request.GET['term']
-    type = request.GET['type']
-    conn = ES('127.0.0.1:9200')
-    
-    if type == 'company':
-        query = PrefixQuery(field='company_name', prefix=term )
-    if type == 'part':
-        query = PrefixQuery(field='number',prefix=term)
-
-    s = Search(query, fields=['company_name', 'number', 'desc'], size=10)
-    raw_results = conn.search(s)
-        
-    results = []
-    for r in raw_results:
-        if type == 'company':
-            results.append(r.company_name)
-        if type == 'part':
-            results.append({'label': "%s - %s" % (r.number,
-                                                  truncatechars(r.desc,60)),
-                                                  'value': r.number})
-
-    return HttpResponse(json.dumps(results), mimetype="application/json")
 
