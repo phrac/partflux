@@ -71,7 +71,7 @@
                 <li></li>
             </ul>
             {% else %}
-            <h4 class="signin">Please <a href="/users/login/">sign in</a> or <a href="/users/register/">register</a> to view available actions.</h4>
+            <h4 class="signin">{% include "partials/sign_in.html" with action="view available company actions." %}</h4>
             {% endif %}
         </div>
     </div>

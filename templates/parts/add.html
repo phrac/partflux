@@ -1,7 +1,7 @@
 {% extends "base/base_MAIN.html" %}
 
 {% block breadcrumbs %}
-> <a href="/parts/">Parts</a> > Add new part
+> <a href="{% url parts.views.index %}">Parts</a> > Add new part
 {% endblock %}
 
 {% block content %}
@@ -28,7 +28,7 @@
     </form>
 
     {% else %}
-    <h4 class="signin">please <a href="/users/login/">sign in</a> or <a href="/users/register/">register</a> to add a cross reference.</h4>
+    <h3 class="add">{% include "partials/sign_in.html" with action="add a new part." %}</h3>
     {% endif %}
 
 </div>

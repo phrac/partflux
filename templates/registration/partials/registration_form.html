@@ -3,58 +3,24 @@ Registration is 100% free and gives you access to millions of part numbers. Regi
 </p>
 <br /><br />
 
-<table class="input">
-	<form method="post" action"/users/register/">
+    <form method="post" action="{% url registration.views.register %}">
 		{% csrf_token %}
-		<tr>
-			<td class="input_big">
-				<label for="id_username">Username:</label>
-			</td>
-			<td class="input_big">
-				{% if form.username.errors %}
-            	<p class="errors">{{ form.username.errors.as_text }}</p>
-          		{% endif %}
-				<input id="id_username" type="text" class="required" name="username" maxlength="30" />
-			</td>
-		</tr>
-		<tr>
-			<td class="input_big">
-				<label for="id_email">E-mail:</label>
-			</td>
-			<td class="input_big">
-				{% if form.email.errors %}
-            	<p class="errors">{{ form.email.errors.as_text }}</p>
-          		{% endif %}
-				<input id="id_email" type="text" class="required" name="email" maxlength="75" />
-			</td>
-		</tr>
-		<tr>
-			<td class="input_big">
-				<label for="id_password1">Password:</label>
-			</td class="input_big">
-			<td class="input_big">
-				{% if form.password1.errors %}
-            	<p class="errors">{{ form.password1.errors.as_text }}</p>
-          		{% endif %}
-				<input id="id_password1" type="password" class="required" name="password1" />
-			</td>
-		</tr>
-		<tr>
-			<td class="input_big">
-				<label for="id_password2">Password (again):</label>
-			</td class="input_big">
-			<td class="input_big">
-				{% if form.password2.errors %}
-            	<p class="errors">{{ form.password2.errors.as_text }}</p>
-          		{% endif %}
-				<input id="id_password2" type="password" class="required" name="password2" />
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<input class="submit" type="submit" value="Register" />
-			</td>
-		</tr>
-	</form>
-</table>
+                <dl class="big_form">
+                    {{ form.username.errors }}
+                    <dt><label for="id_username">Username:</label></dt>
+                    <dd>{{ form.username }}</dd>
 
+                    {{ form.email.errors }}
+                    <dt><label for="id_email">Email:</label></dt>
+                    <dd>{{ form.email }}</dd>
+
+                    {{ form.password1.errors }}
+                    <dt><label for="id_password1">Password:</label></dt>
+                    <dd>{{ form.password1 }}</dd>
+
+                    {{ form.password2.errors }}
+                    <dt><label for="id_password2">Password (again):</label></dt>
+                    <dd>{{ form.password2 }}</dd>
+                </dl>
+                <input style="float:left" class="submit" type="submit" value="Register for a partfindr account" />
+            </form>

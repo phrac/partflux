@@ -84,7 +84,7 @@
     </form>
 
     {% else %}
-    <h4 class="signin">please <a href="/users/login/">sign in</a> or <a href="/users/register/">register</a> to edit company details. </h4>
+    <h3 class="add">{% include "partials/sign_in.html" with action="to edit company details." %}</h3>
     {% endif %}
 
 </div>

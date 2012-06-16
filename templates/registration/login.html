@@ -9,7 +9,7 @@
 <div class="center_content">
 	<h2>Already a member?</h2>
 	{% if form.errors %}
-	<p>Your username and password didn't match. Please try again.</p>
+	<h1>Your username and password didn't match. Please try again.</h1>
 	{% endif %}
 			<form method="post" action="{% url 'django.contrib.auth.views.login' %}">
 		{% csrf_token %}
