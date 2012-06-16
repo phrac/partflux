@@ -146,7 +146,7 @@
                         {{ xref.xrefpart.description }}
                     </td>
                     <td class="part_desc">
-                        {{ xref.xrefpart.company }}
+                        <a href="{% url companies.views.detail xref.xrefpart.company.slug %}">{{ xref.xrefpart.company }}</a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -206,7 +206,7 @@
                     {{ rxref.part.description }}
                 </td>
                 <td class="part_desc">
-                    {{ rxref.part.company }}
+                    <a href="{% url companies.views.detail rxref.part.company.slug %}">{{ rxref.part.company }}</a>
                 </td>
             </tr>
             {% endfor %}
