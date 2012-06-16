@@ -35,7 +35,12 @@
 {% endblock %}
 
 {% block content %}
-
+{% if user.is_authenticated %}
+{% else %}
+<div>
+    <p style="font: 1.4em bold;">{% include "partials/sign_in.html" with action="edit this part." %}</p>
+</div>
+{% endif %}
         <div class="left">
             <h2>Details for {{ part.number }} by {{ part.company }} ({{ part.id }})</h2>
             <table class="results" border="0" cellpadding="0"  cellspacing="0" width="100%">
@@ -49,6 +54,7 @@
                 <tr>
                     <td colspan="2" class="part_desc">
                         <div id="meta">
+                            {% if attributes %}
                             <table style="font-size:1.0em" class="results" border="0" cellspacing="0" width="100%">
                                 {% for k, v in attributes %}
                                 <tr>
@@ -63,9 +69,10 @@
                                 </tr>
                                 {% endfor %}
                             </table>
+                            {% endif %}
                             <br />
+                            {% if user.is_authenticated %}
                             <table width="100%" style="border:1px solid #ddd;">
-                                {% if user.is_authenticated %}
                                 <form action="" method="post">
                                     {% csrf_token %}
                                     <tr>
@@ -81,7 +88,7 @@
                                         </td>
                                         <td>
                                             <p></p>
-                                            <input type="submit" value="Save Characteristic" class="submit" name="metadata_button" />
+                                            <input type="submit" value="Save Attribute" class="submit" name="metadata_button" />
                                         </td>
                                     </tr>
                                     <tr>
@@ -89,16 +96,8 @@
                                         </td>
                                     </tr>
                                 </form>
-                                {% else %}
-                                <tr>
-                                    <td colspan="3">
-                                        <h4 class="signin">
-                                            Please <a href="/users/login/">sign in</a> or <a href="/users/register/">register</a> to add more part characteristics.
-                                        </h4>
-                                    </td>
-                                </tr>
-                                {% endif %}
                             </table>
+                            {% endif %}
                         </div>
                     </td>
                 </tr>
@@ -106,13 +105,18 @@
             
             <h2 style="margin-top: 20px">Images for {{ part.number }}</h2>
             <div class="part_image">
+                {% if part.images.all %}
                 {% for image in part.images.all %}
                     {% thumbnail image.image "100x100" crop="center" as im %}
                         <a class="lightbox" href="{{ image.image.url }}"><img class="part_image" src="{{ im.url }}" alt="{{ part.number }} image" /></a>
                     {% endthumbnail %}
-                {% endfor %}
+                    {% endfor %}
+                    {% else %}
+                    <h3 class="add">No images available for this part.</h3>
+                    {% endif %}
+                
+                {% if user.is_authenticated %}
                 <table width="100%" style="border:1px solid #ddd;">
-                    {% if user.is_authenticated %}
                     <form action="" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         <tr>
@@ -126,16 +130,8 @@
                             </td>
                         </tr>
                     </form>
-                    {% else %}
-                        <tr>
-                            <td colspan="3">
-                                <h4 class="signin">
-                                    Please <a href="/users/login/">sign in</a> or <a href="/users/register/">register</a> to upload an image.
-                                </h4>
-                            </td>
-                        </tr>
-                    {% endif %}
                 </table>
+                {% endif %}
             </div>
             
             <h2 style="margin-top: 20px" class="clear-green">Cross referenced part numbers</h2>
@@ -157,16 +153,16 @@
                 {% else %}
                 <tr>
                     <td colspan="3">
-                        <h3 class="add">No part number cross references. Add one using the form below.</h3>
+                        <h3 class="add">No part number cross references.</h3>
                     </td>
                 </tr>
                 {% endif %}
             </table>
             
             <br />
+            {% if user.is_authenticated %}
             <table width="100%" style="border:1px solid #ddd;">
-                {% if user.is_authenticated %}
-                <form action="" method="post">
+                 <form action="" method="post">
                     {% csrf_token %}
                     <tr>
                         <td>
@@ -193,14 +189,8 @@
                     </td>
                 </tr>
             </form>
-            {% else %}
-            <tr>
-                <td colspan="3">
-                    <h4 class="signin">Please <a href="/users/login/">sign in</a> or <a href="/users/register/">register</a> to add a cross reference.</h4>
-                </td>
-            </tr>
-            {% endif %}
         </table>
+        {% endif %}
 
         <br /><br />
 
@@ -285,12 +275,6 @@
                     </td>
                 </tr>
             </form>
-            {% else %}
-            <tr>
-                <td colspan="3">
-                    <h4 class="signin">Please <a href="/users/login/">sign in</a> or <a href="/users/register/">register</a> to add a link.</h4>
-                </td>
-            </tr>
             {% endif %}
         </table>
 
@@ -323,7 +307,7 @@
                     <li>Add to an assembly:</li>
                 </ul>
                 {% else %}
-                <h4 class="signin">Please <a href="/users/login/">sign in</a> or <a href="/users/register/">register</a> to add view available actions.</h4>
+                {% include "partials/sign_in.html" with action="view available actions." %}
                 {% endif %}
             </div>
         </div>

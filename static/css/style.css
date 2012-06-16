@@ -10,7 +10,7 @@ author: luka cvrk (www.solucija.com) */
 body { 
     font: .7em "Droid Sans", Arial, sans-serif; 
     line-height: 1.6em;
-    color: #444;
+    color: #222;
 }
 
 html, body {
@@ -275,7 +275,7 @@ td.small_login input {
     display:inline;
     height:10px;
     width:65px;
-    font: normal .5em Arial, Sans-Serif;
+    font: normal 1.0em Arial, Sans-Serif;
 }
 
 h2.viewall {
