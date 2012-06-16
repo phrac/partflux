@@ -21,10 +21,9 @@
                     <li class="browse_category">&nbsp;</li>
                     <li><a href="{% url partgroups.views.index %}">Part Groups</a></li>
                     <li><b><a href="{% url parts.views.addpartform %}">Add Part</a></b></li>
-                    <li><a href="{% url search.views.index %}">Search</a></li>
-                    <li><a href="{% url parts.views.index %}">Parts</a></li>
+                    <li><a href="{% url search.views.index %}">Advanced Search</a></li>
                     <li><a href="{% url companies.views.index %}">Companies</a></li>
-                    <li><a href="/">Home</a></li>
+                    <li><a href="{% url parts.views.index %}">Parts</a></li>
                 </ul>
                 <p style="padding-top:5px;font-size:1.0em;">Indexing {{ part_count|intcomma }} parts | {{ xref_count|intcomma }} xrefs | {{ nsn_count|intcomma}} NSNs</p>
 
@@ -68,12 +67,11 @@
                 <form method="get" action="/search/">
                     <div class="search_form">
                         <p>
+                        <input type="submit" value="Search" class="submit" />
                         Search parts:  
-                        <input id="id_searchbox" type="text" name="q" class="search" value="{{ searchterm }}" /> 
-                        <input type="submit" value="Search" class="submit" /> 
+                        <input id="id_searchbox" type="text" name="q" class="search" value="{{ searchterm }}" />&nbsp; 
                         <script type="text/javascript">
                         $('#id_searchbox').autocomplete({source: '{% url search.autocomplete.autocomplete %}?type=part', minLength: 3});</script>
-                        <a class="grey" href="{% url search.views.index %}">Advanced</a>
 
                         </p>
                     </div>
