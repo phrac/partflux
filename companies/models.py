@@ -28,17 +28,18 @@ class Company(models.Model):
     def save(self, *args, **kwargs):
         self.name = self.name.strip().upper()
         self.slug = slugify(self.name)
-        self.update_index()
         super(Company, self).save(*args, **kwargs)
+        self.update_index()
 
     def __unicode__(self):
         return self.name
     
+    """ Update the ElasticSearch index """
     def update_index(self):
         es = ES('127.0.0.1:9200')
         es.index(
             {
-                "pgid" : str(self.pk), 
+                "pgid" : str(self.id), 
                 "company_name" : self.name, 
             }, 
             "companies", "company-type", self.id

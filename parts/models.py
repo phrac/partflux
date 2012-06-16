@@ -38,7 +38,7 @@ class Part(models.Model):
         self.update_index()
         super(Part, self).save(*args, **kwargs)
     
-           
+    """ Update the ElasticSearch index """       
     def update_index(self):
         es = ES('127.0.0.1:9200')
         attrlist, attrstring = self.prepare_attrs()
