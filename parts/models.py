@@ -35,11 +35,11 @@ class Part(models.Model):
         self.number = self.number.strip().upper()
         self.description = self.description.strip().upper()
         self.slug = slugify(self.number)
-        self.update_index()
+        self.update_ES()
         super(Part, self).save(*args, **kwargs)
     
     """ Update the ElasticSearch index """       
-    def update_index(self):
+    def update_ES(self):
         es = ES('127.0.0.1:9200')
         attrlist, attrstring = self.prepare_attrs()
         es.index(

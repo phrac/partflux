@@ -29,13 +29,13 @@ class Company(models.Model):
         self.name = self.name.strip().upper()
         self.slug = slugify(self.name)
         super(Company, self).save(*args, **kwargs)
-        self.update_index()
+        self.update_ES()
 
     def __unicode__(self):
         return self.name
     
     """ Update the ElasticSearch index """
-    def update_index(self):
+    def update_ES(self):
         es = ES('127.0.0.1:9200')
         es.index(
             {
