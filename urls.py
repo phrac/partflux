@@ -48,7 +48,7 @@ urlpatterns = patterns('',
 
     url(r'^users/logout/$',
        auth_views.logout,
-       {'template_name': 'main/index.html'}),
+       {'next_page': '/'}),
     
     url(r'^users/password/reset/$',
        auth_views.password_reset,
