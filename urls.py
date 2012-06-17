@@ -1,5 +1,7 @@
 from django.conf.urls.defaults import patterns, include, url
 from django.contrib.auth import views as auth_views
+from django.contrib import admin
+admin.autodiscover()
 
 urlpatterns = patterns('',
     #GENERIC VIEWS
@@ -54,5 +56,9 @@ urlpatterns = patterns('',
       ),
     
     (r'^users/', include('registration.urls')),
+
+    # Admin related urls
+    (r'^admin/doc/', include('django.contrib.admindocs.urls')),
+    url(r'^admin/', include(admin.site.urls)),
     
     )

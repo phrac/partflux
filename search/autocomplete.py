@@ -6,6 +6,10 @@ from pyes import *
 import json
 
 def autocomplete(request):
+    """ 
+    Handles jQuery XHR requests for autocomplete 
+    
+    """
     term = request.GET['term']
     type = request.GET['type']
     conn = ES(settings.ES_HOST)

@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.comments.moderation import CommentModerator, moderator
 from django.template.defaultfilters import slugify
+from django.conf import settings
 from django_orm.postgresql import hstore
 from sorl.thumbnail import ImageField
 
@@ -10,6 +11,10 @@ from nsn.models import Nsn
 from pyes import *
 
 class Part(models.Model):
+    """
+    Stores a unique part number and related information
+
+    """
     number = models.CharField(max_length=48)
     slug = models.CharField(max_length=64)
     description = models.TextField()
@@ -25,6 +30,7 @@ class Part(models.Model):
     attributes = hstore.DictionaryField()
 
     objects = hstore.HStoreManager()
+    
     def __unicode__(self):
         return self.number
 
@@ -32,15 +38,23 @@ class Part(models.Model):
         unique_together = ('number', 'company',)
 
     def save(self, *args, **kwargs):
+        """
+        Slugify the part number and upcase the number and description. Also
+        updates the ElasticSearch index.
+
+        """
         self.number = self.number.strip().upper()
         self.description = self.description.strip().upper()
         self.slug = slugify(self.number)
         self.update_ES()
         super(Part, self).save(*args, **kwargs)
     
-    """ Update the ElasticSearch index """       
     def update_ES(self):
-        es = ES('127.0.0.1:9200')
+        """ 
+        Update the ElasticSearch index with fresh data about the part.
+        
+        """
+        es = ES(settings.ES_HOST)
         attrlist, attrstring = self.prepare_attrs()
         es.index(
         {
@@ -56,6 +70,11 @@ class Part(models.Model):
         es.refresh('parts')
     
     def prepare_attrs(self):
+        """
+        Turn the hstore attribute column into a dict & string for storage in
+        ElasticSearch
+
+        """
         attrlist = []
         attrstring = ''
         for k, v in self.attributes.iteritems():
@@ -69,8 +88,13 @@ class Part(models.Model):
 
         return attrlist, attrstring
     
-    # we have to marshal/unmarshal the dictionary for storage in the hstore
     def save_attributes(self, k, v):
+        """
+        Multiple values are stored in the PostgreSQL hstore column `attributes`.
+        We have to marshal and unmarshal this column to check for duplicates and
+        add new attributes.
+
+        """
         keys = []
         cleankey = k.strip().upper()
         cleanvalue = v.strip().upper()
@@ -97,6 +121,10 @@ class Part(models.Model):
         return ('parts.views.detail', [str(self.company.slug), str(self.slug)])
 
 class Xref(models.Model):
+    """ Store part number cross references, related to :model:`parts.Part` and
+    :model:`auth.User`.
+
+    """
     user = models.ForeignKey(User, null=True)
     part = models.ForeignKey('Part')
     xrefpart = models.ForeignKey('Part', related_name='xrefpart')
@@ -122,6 +150,7 @@ class BuyLink(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     link_ok = models.BooleanField(default=True)
+    price_xpath = models.CharField(max_length=512, null=True, blank=True)
 
     class Meta:
         unique_together = ('part', 'company')
