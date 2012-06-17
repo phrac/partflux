@@ -161,10 +161,14 @@ INSTALLED_APPS = (
     'companies',
     'nsn',
     'partgroups',
+    'users',
 )
 
 # django-registration settings
 ACCOUNT_ACTIVATION_DAYS = 7
+
+# custom user profile module
+AUTH_PROFILE_MODULE = 'users.UserProfile'
 
 # django-storages settings
 DEFAULT_FILE_STORAGE = 'storages.backends.s3.S3Storage'
