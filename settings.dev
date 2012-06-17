@@ -31,6 +31,10 @@ DATABASES = {
 # ES_HOST should be in a format that pyes understands
 ES_HOST = '127.0.0.1:9200'
 
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/users/login/'
+LOGOUT_URL = '/users/logout/'
+
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.

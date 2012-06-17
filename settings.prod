@@ -1,6 +1,6 @@
 # Django settings for partfindr project.
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -37,6 +37,11 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'partfindr@partfindr.net'
 EMAIL_HOST_PASSWORD = 'gL7.bT#!'
 EMAIL_PORT = 587
+SERVER_EMAIL = 'web@partfindr.net'
+
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/users/login/'
+LOGOUT_URL = '/users/logout/'
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name

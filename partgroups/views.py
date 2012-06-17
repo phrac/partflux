@@ -44,4 +44,9 @@ def index(request):
 def detail(request, partgroup_id):
     pg = get_object_or_404(PartGroup, pk=partgroup_id)
 
+    return render_to_response('partgroups/detail.html',
+                              {'partgroup': pg,
+                              },
+                              context_instance=RequestContext(request))
+
     

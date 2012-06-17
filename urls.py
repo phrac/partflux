@@ -5,8 +5,8 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     #GENERIC VIEWS
-    url(r'^$', 'django.views.generic.simple.direct_to_template', {'template': 'main/comingsoon.html'}),
-    #url(r'^$', 'django.views.generic.simple.direct_to_template', {'template': 'main/index.html'}), 
+    #url(r'^$', 'django.views.generic.simple.direct_to_template', {'template': 'main/comingsoon.html'}),
+    url(r'^$', 'main.views.index'), 
     
     url(r'^partbot/$',
        'django.views.generic.simple.direct_to_template',
@@ -48,7 +48,7 @@ urlpatterns = patterns('',
 
     url(r'^users/logout/$',
        auth_views.logout,
-       {'template_name': 'main/comingsoon.html'}),
+       {'template_name': 'main/index.html'}),
     
     url(r'^users/password/reset/$',
        auth_views.password_reset,

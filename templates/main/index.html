@@ -4,18 +4,33 @@
 {% endblock %}
 
 {% block content %}
-
+{% load humanize %}
 <div class="center_content" style="text-align:center">
-	<br /><br />
+    <br /><br />
+    <h1 class="clear">Search {{ part_count|intcomma }} Part Numbers</h1>
+    <form method="get" action="/search/"><p class="clear">
+        <input class="bigsearch" type="text" name="q" id="idxsearch" size="45" maxlength="100" />
+        <input type="submit" class="submit_big"  value="Go!"/></p>
+    </form>
+    <p style="font-size:1.5em">Try searching by a part number, a description, or an attribute.</p>
+    <h3>Need more help? <a href="/about/">Check out our F.A.Q.</a></h3>
+    <br /><br />
+    <h3>We need your help to grow our database! <a href="{% url parts.views.addpartform %}">Add a new part number now!</a></h3>
+    <br /><br /><br />
 
-	
-	<h1 class="clear">Search {{ part_count }} part numbers</h1>
-	<form method="get" action="/search/"><p class="clear">
-		<input class="bigsearch" type="text" name="q" id="idxsearch" size="45" maxlength="100" />
-		<input type="submit" class="bigsubmit"  value="find it"/></p>
-	</form>
-		<h3>search by part number, description, company</h3>
-
+    <h1 style="font-size:1.8em bold;color:#999;border-bottom:1px solid #ccc;">Recent Part Activity</h1>
+    <table width="100%">
+        <tr>
+            {% for part in recent %}
+            <td><a href="{{ part.get_absolute_url }}">{{ part.number }}</a></td>
+            {% if forloop.counter|divisibleby:5 %}
+            </tr>
+            <tr>
+        {% endif %}
+        {% endfor %}
+    </table>
+    <br /><br />
+    <h3>Are you a company that would like to see your parts listed on partfindr? <a href="mailto:info@partfindr.net">Contact us</a>!</h3>
 </div>
 {% endblock %}
 

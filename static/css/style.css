@@ -300,7 +300,10 @@ table input {
     font-weight: normal;
     margin: 0 0 0 3px;
 }
-
+.reading {
+    font-size:1.4em;
+    text-align:justify;
+}
 input.search { 
     transition-property:width;
     transition-duration:.25s;
@@ -339,6 +342,17 @@ input.bigsearch {
     color: #FFF;
     font: bold 1em Arial, Sans-Serif;
     float:right;
+}
+
+.submit_big {
+    background: #336699;
+    border: 1px solid #ccc;
+    -moz-border-radius:3px;
+    border-radius:3px;
+    padding: 6px;
+    margin: 0 15px 0px 0;
+    color: #FFF;
+    font: bold 2em Arial, Sans-Serif;
 }
 
 input.submit_small {

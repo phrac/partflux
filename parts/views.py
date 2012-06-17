@@ -182,6 +182,7 @@ def uploadimage(request, part_id):
         image.save()
         p.images.add(image)
         p.save()
+        return True
 
             
     
