@@ -243,10 +243,10 @@
                 </td>
             </tr>
             {% endif %}
-        </table>
+        </table> 
         <br />
-        <table width="100%" style="border:1px solid #ddd;">
-                {% if user.is_authenticated %}
+        {% if user.is_authenticated %}
+        <table width="100%" style="border:1px solid #ddd;">    
                 <form action="" method="post">
                     {% csrf_token %}
                     <tr>
@@ -275,8 +275,8 @@
                     </td>
                 </tr>
             </form>
-            {% endif %}
         </table>
+        {% endif %}
 
 
 
