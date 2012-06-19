@@ -120,6 +120,24 @@ class Part(models.Model):
     def get_absolute_url(self):
         return ('parts.views.detail', [str(self.company.slug), str(self.slug)])
 
+class Attribute(models.Model):
+    part = models.ForeignKey('Part')
+    key = models.CharField(max_length=50)
+    value = models.CharField(max_length=128)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    user = models.ForeignKey(User, null=True)
+    upvotes = models.IntegerField()
+    downvotes = models.IntegerField()
+
+    class Meta:
+        unique_together = ('part', 'key', 'value')
+
+    def save(self, *args, **kwargs):
+        self.key = self.key.strip().upper()
+        self.value = self.value.strip().upper()
+        super(Characteristic, self).save(*args, **kwargs)
+        
 class Xref(models.Model):
     """ Store part number cross references, related to :model:`parts.Part` and
     :model:`auth.User`.

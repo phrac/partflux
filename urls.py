@@ -12,10 +12,6 @@ urlpatterns = patterns('',
        'django.views.generic.simple.direct_to_template',
        {'template': 'main/partbot.html'}),
     
-    url(r'^about/$', 
-       'django.views.generic.simple.direct_to_template', 
-       {'template': 'main/about.html'}),
-    
     url(r'^contact/$',
        'django.views.generic.simple.direct_to_template',
        {'template': 'main/contact.html'}),
@@ -39,6 +35,7 @@ urlpatterns = patterns('',
     
     # URLs for companies
     url(r'^companies/', include('companies.urls')),
+    url('^faq/', include('faq.urls')),
     
     # URLs for users
     

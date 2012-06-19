@@ -36,7 +36,6 @@ LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/users/login/'
 LOGOUT_URL = '/users/logout/'
 
-
 # Settings for user voting system
 # Reputation required before a user can up/down vote items
 MINIMUM_VOTE_REPUTATION = 50
@@ -178,6 +177,7 @@ INSTALLED_APPS = (
     'sorl.thumbnail',
     'django_gravatar',
     # partfindr apps    
+    'faq',
     'parts',
     'companies',
     'nsn',

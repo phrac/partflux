@@ -20,6 +20,7 @@
             <div style="padding:0px;width:980px;margin:0 auto;">
                 <ul>
                     <li class="browse_category">&nbsp;</li>
+                    <li><a href="{% url faq_topic_list %}">Help</a></li>
                     <li><b><a href="{% url parts.views.addpartform %}">Add Part</a></b></li>
                     <li><a href="{% url search.views.index %}">Advanced Search</a></li>
                     <li><a href="{% url companies.views.index %}">Companies</a></li>
@@ -110,7 +111,8 @@
         <div class="footer">
             <div style="padding:0px;width:980px;margin:0 auto;">
                 <p>
-                <a href="/about">About</a> | <a href="http://blog.partfindr.net">Blog</a> | <a href="https://twitter.com/#!/partfindr">Follow us on Twitter</a> | 
+                <a href="{% url faq_topic_list %}">About</a> | <a href="http://blog.partfindr.net">Blog</a> 
+                | <a href="https://twitter.com/#!/partfindr">Follow us on Twitter</a> | 
                 Valid <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> and <a href="http://validator.w3.org/check?uri=referer">XHTML</a>
                 <br />
                 &copy; Copyright 2011-2012 partfindr.net, a disflux, LLC. production.
