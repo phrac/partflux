@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.db import IntegrityError
+from django.contrib.auth.decorators import login_required
 from pure_pagination import Paginator, PageNotAnInteger, EmptyPage
 
 from django.contrib.auth.models import User
@@ -87,6 +88,7 @@ def detail(request, company_slug, part_slug):
                               },
                               context_instance=RequestContext(request))
 
+@login_required
 def addmeta(request, part_id):
     p = get_object_or_404(Part, pk=part_id)
     metaform = MetadataForm(request.POST)
@@ -100,6 +102,7 @@ def addmeta(request, part_id):
         else:
             return 'Characteristic exists'
 
+@login_required
 def addbuylink(request, part_id):
     p = get_object_or_404(Part, pk=part_id)
     buylinkform = BuyLinkForm(request.POST)
@@ -115,7 +118,7 @@ def addbuylink(request, part_id):
         except IntegrityError:
             return 'Link already exists'
 
-
+@login_required
 def addpart(request, part_number, company, desc):
     c, _created = Company.objects.get_or_create(name=company)
     newpart, _created = Part.objects.get_or_create(number=part_number, company=c)
@@ -126,6 +129,7 @@ def addpart(request, part_number, company, desc):
         newpart.save()
     return newpart
 
+@login_required
 def addpartform(request):
     if request.method == 'POST':
         partform = XrefForm(request.POST)
@@ -141,6 +145,7 @@ def addpartform(request):
                               {'partform': partform,},
                               context_instance=RequestContext(request))
 
+@login_required
 def addxref(request, part_id):
     p = get_object_or_404(Part, pk=part_id)
     xrefform = XrefForm(request.POST)
@@ -169,6 +174,7 @@ def addxref(request, part_id):
         else:
             return 'Cross Reference already exists'
             
+@login_required
 def uploadimage(request, part_id):
     p = get_object_or_404(Part, pk=part_id)
     if request.FILES.get('file', False):

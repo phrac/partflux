@@ -4,6 +4,7 @@ from pure_pagination import Paginator, PageNotAnInteger, EmptyPage
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.core.files.storage import default_storage
+from django.contrib.auth.decorators import login_required
 
 from companies.models import Company
 from companies.forms import CompanyAdminForm
@@ -49,6 +50,7 @@ def detail(request, company_slug):
                                },
                                context_instance=RequestContext(request))
 
+@login_required
 def edit(request, company_slug):
     c = get_object_or_404(Company, slug=company_slug)
     if request.method == 'POST':
@@ -74,6 +76,7 @@ def edit(request, company_slug):
 
 
 ### this should really be in forms.py under the CompanyAdminForm
+@login_required
 def uploadlogo(request, company_id):
     c = get_object_or_404(Company, pk=company_id)
     if request.FILES.get('logo', False):
