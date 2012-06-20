@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 from django.contrib.comments.moderation import CommentModerator, moderator
 from django.template.defaultfilters import slugify
 from django.conf import settings
-from django_orm.postgresql import hstore
 from sorl.thumbnail import ImageField
 
 from companies.models import Company
@@ -27,9 +26,6 @@ class Part(models.Model):
     nsn = models.ForeignKey(Nsn, null=True)
     images = models.ManyToManyField('PartImage')
     source = models.URLField()
-    attributes = hstore.DictionaryField()
-
-    objects = hstore.HStoreManager()
     
     def __unicode__(self):
         return self.number
@@ -46,7 +42,7 @@ class Part(models.Model):
         self.number = self.number.strip().upper()
         self.description = self.description.strip().upper()
         self.slug = slugify(self.number)
-        self.update_ES()
+        #self.update_ES()
         super(Part, self).save(*args, **kwargs)
     
     def update_ES(self):
@@ -88,47 +84,19 @@ class Part(models.Model):
 
         return attrlist, attrstring
     
-    def save_attributes(self, k, v):
-        """
-        Multiple values are stored in the PostgreSQL hstore column `attributes`.
-        We have to marshal and unmarshal this column to check for duplicates and
-        add new attributes.
-
-        """
-        keys = []
-        cleankey = k.strip().upper()
-        cleanvalue = v.strip().upper()
-        for key, value in self.attributes.iteritems():
-            keys.append(key)
-        if cleankey not in keys:
-            self.attributes[cleankey] = cleanvalue
-            status = True
-        else:
-            valuestring = self.attributes[k]
-            values = valuestring.split("|")
-            if cleanvalue in values:
-               status = False 
-            else:
-                valuestring = valuestring + "|%s" % cleanvalue
-                self.attributes[cleankey] = valuestring
-                status = True
-        self.save()
-        return status
-
-    
     @models.permalink
     def get_absolute_url(self):
         return ('parts.views.detail', [str(self.company.slug), str(self.slug)])
 
 class Attribute(models.Model):
     part = models.ForeignKey('Part')
-    key = models.CharField(max_length=50)
+    key = models.CharField(max_length=64)
     value = models.CharField(max_length=128)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, null=True)
-    upvotes = models.IntegerField()
-    downvotes = models.IntegerField()
+    upvotes = models.IntegerField(null=True)
+    downvotes = models.IntegerField(null=True)
 
     class Meta:
         unique_together = ('part', 'key', 'value')
@@ -136,7 +104,11 @@ class Attribute(models.Model):
     def save(self, *args, **kwargs):
         self.key = self.key.strip().upper()
         self.value = self.value.strip().upper()
-        super(Characteristic, self).save(*args, **kwargs)
+        if not self.upvotes:
+            self.upvotes = 0
+        if not self.downvotes:
+            self.downvotes = 0
+        super(Attribute, self).save(*args, **kwargs)
         
 class Xref(models.Model):
     """ Store part number cross references, related to :model:`parts.Part` and

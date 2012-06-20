@@ -56,14 +56,14 @@
                         <div id="meta">
                             {% if attributes %}
                             <table style="font-size:1.0em" class="results" border="0" cellspacing="0" width="100%">
-                                {% for k, v in attributes %}
+                                {% for a in attributes %}
                                 <tr>
                                     <td style="font-weight:bold" valign="top" class="part_number">
-                                        {{ k }}:	
+                                        {{ a.key }}:	
                                     </td>
                                     <td class="part_desc" colspan="2">
                                         
-                                        {{ v|pipe_to_nl|linebreaksbr }}<br />
+                                        {{ a.value }}<br />
                                         
                                     </td>
                                 </tr>
