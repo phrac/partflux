@@ -1,12 +1,13 @@
 from django.contrib.sitemaps import Sitemap
+from django.core.paginator import Paginator
 from parts.models import Part
 
 class PartSitemap(Sitemap):
-    changefreq = "never"
+    changefreq = "weekly"
     priority = 0.5
 
     def items(self):
-        return Part.objects.all()
+        return Part.objects.all()[:250]
 
     def lastmod(self, obj):
         return obj.updated_at
