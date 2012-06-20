@@ -1,7 +1,9 @@
 from django.conf.urls.defaults import patterns, include, url
 from django.contrib.auth import views as auth_views
+from django.contrib.sitemaps import FlatPageSitemap, GenericSitemap
 from django.contrib import admin
 admin.autodiscover()
+
 
 urlpatterns = patterns('',
     #GENERIC VIEWS
