@@ -43,6 +43,20 @@ LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/users/login/'
 LOGOUT_URL = '/users/logout/'
 
+# Settings for user voting system
+# Reputation required before a user can up/down vote items
+MINIMUM_VOTE_REPUTATION = 50
+# how many reputation points should the user get for a new part
+REP_VALUE_NEW_PART = 10
+# how many reputation points should the user get for a new buylink
+REP_VALUE_NEW_BUYLINK = 4
+# how many rep points should user get for new attribute
+REP_VALUE_NEW_ATTRIBUTE = 2
+# how many rep points should user get for new comment
+REP_VALUE_NEW_COMMENT = 3
+# how many rep points should user get for new image
+REP_VALUE_NEW_IMAGE = 3
+
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
@@ -166,6 +180,7 @@ INSTALLED_APPS = (
     'registration',
     'sorl.thumbnail',
     'django_gravatar',
+    'faq',
     # partfindr apps    
     'parts',
     'companies',

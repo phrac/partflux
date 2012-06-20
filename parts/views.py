@@ -9,7 +9,7 @@ from pure_pagination import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib.auth.models import User
 from django.core.files.storage import default_storage
 
-from parts.models import Part, Xref, PartImage, BuyLink
+from parts.models import Part, Xref, PartImage, BuyLink, Attribute
 from companies.models import Company
 from parts.forms import MetadataForm, XrefForm, ImageUploadForm, BuyLinkForm
 
@@ -23,12 +23,11 @@ def index(request):
 def detail(request, company_slug, part_slug):
     c = get_object_or_404(Company, slug=company_slug)
     p = get_object_or_404(Part, slug=part_slug, company=c.id)
-    #p.hits += 1
-    #p.save()
     
     xrefs = Xref.objects.filter(part=p.id).exclude(xrefpart=p.id)
     reverse_xrefs = Xref.objects.filter(xrefpart=p.id).exclude(part=p.id)
     buylinks = BuyLink.objects.filter(part=p.id).order_by('price')[:10]
+    attributes = Attribute.objects.filter(part=p.id).order_by('key', 'value')
 
     metaform = MetadataForm(None)
     xrefform = XrefForm(None)
@@ -43,17 +42,17 @@ def detail(request, company_slug, part_slug):
                 request.flash.success = "URL added successfully"
             else:
                 request.flash.error = "Adding URL failed: %s" % status
-            return HttpResponseRedirect(reverse('parts.views.detail', args=[p.company.slug, p.slug]))
+            return HttpResponseRedirect(reverse('parts.views.detail', args=[c.slug, p.slug]))
 
     if 'metadata_button' in request.POST:
         metaform = MetadataForm(request.POST)
         if metaform.is_valid:
             status = addmeta(request, p.pk)
             if status is True:
-                request.flash.success = "Characteristic added. Thanks for your contribution!"
+                request.flash.success = "Attribute added. Thanks for your contribution!"
             else:
-                request.flash.error = "Adding characteristic failed: %s" % status
-            return HttpResponseRedirect(reverse('parts.views.detail', args=[p.company.slug, p.slug]))
+                request.flash.error = "Adding attribute failed: %s" % status
+            return HttpResponseRedirect(reverse('parts.views.detail', args=[c.slug, p.slug]))
 
     if 'xref_button' in request.POST:
         xrefform = XrefForm(request.POST)
@@ -63,7 +62,7 @@ def detail(request, company_slug, part_slug):
                 request.flash.success = "Cross reference added. Thanks for your contribution!"
             else:
                 request.flash.error = "Adding cross reference failed: %s" % status
-            return HttpResponseRedirect(reverse('parts.views.detail', args=[p.company.slug, p.slug]))
+            return HttpResponseRedirect(reverse(p.get_absolute_url()))
     
     if 'image_button' in request.POST:
         imageuploadform = ImageUploadForm(request.POST, request.FILES)
@@ -73,12 +72,12 @@ def detail(request, company_slug, part_slug):
                 request.flash.success = "Image upload success. Thanks for your contribution!"
             else:
                 request.flash.error = "Image upload failed: %s" % status
-            return HttpResponseRedirect(reverse('parts.views.detail', args=[p.company.slug, p.slug]))
+            return HttpResponseRedirect(reverse('parts.views.detail', args=[c.slug, p.slug]))
 
     return render_to_response('parts/detail.html', 
                               {'part': p, 
                                'xrefs': xrefs,
-                               'attributes': sorted(p.attributes.iteritems()),
+                               'attributes': attributes,
                                'reverse_xrefs': reverse_xrefs,
                                'buylinks': buylinks,
                                'metadata_form': metaform, 
@@ -95,12 +94,12 @@ def addmeta(request, part_id):
     if metaform.is_valid():
         key = metaform.cleaned_data['key'].strip().upper()
         value = metaform.cleaned_data['value'].strip().upper()
-        status = p.save_attributes(key, value)
-
-        if status == True:
+        attr = Attribute(key=key, value=value, user=request.user, part=p)
+        try:
+            attr.save()
             return True
-        else:
-            return 'Characteristic exists'
+        except IntegrityError:
+            return 'Attribute already exists'
 
 @login_required
 def addbuylink(request, part_id):
