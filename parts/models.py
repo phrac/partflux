@@ -42,7 +42,7 @@ class Part(models.Model):
         self.number = self.number.strip().upper()
         self.description = self.description.strip().upper()
         self.slug = slugify(self.number)
-        #self.update_ES()
+        self.update_ES()
         super(Part, self).save(*args, **kwargs)
     
     def update_ES(self):
@@ -73,14 +73,14 @@ class Part(models.Model):
         """
         attrlist = []
         attrstring = ''
-        for k, v in self.attributes.iteritems():
+        attributes = Attribute.objects.filter(part=self)
+        for a in attributes:
             attr = {}
-            vals = v.split("|")
-            attr['key'] = k
-            attr['values'] = vals
+            attr['key'] = a.key
+            attr['value'] = a.value
             attrlist.append(attr)
-            attrstring += "%s " % k
-            attrstring += "%s " % v.replace('|', '')
+            attrstring += "%s " % a.key
+            attrstring += "%s " % a.value
 
         return attrlist, attrstring
     

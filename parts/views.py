@@ -62,7 +62,7 @@ def detail(request, company_slug, part_slug):
                 request.flash.success = "Cross reference added. Thanks for your contribution!"
             else:
                 request.flash.error = "Adding cross reference failed: %s" % status
-            return HttpResponseRedirect(reverse(p.get_absolute_url()))
+            return HttpResponseRedirect(reverse('parts.views.detail', args=[c.slug, p.slug]))
     
     if 'image_button' in request.POST:
         imageuploadform = ImageUploadForm(request.POST, request.FILES)
@@ -162,7 +162,13 @@ def addxref(request, part_id):
             newpart.description = p.description
             newpart.hits = 0
             if copy_attrs == True:
-                newpart.attributes = p.attributes
+                attributes = Attribute.objects.filter(part=p.id)
+                for a in attributes:
+                    new_attr = a
+                    new_attr.part = newpart
+                    new_attr.upvotes = 0
+                    new_attr.downvotes = 0
+                    new_attr.save()
             newpart.save()
 
         xr1, _created = Xref.objects.get_or_create(part=p, xrefpart=newpart)
