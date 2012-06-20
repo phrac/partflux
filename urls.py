@@ -16,6 +16,10 @@ urlpatterns = patterns('',
        'django.views.generic.simple.direct_to_template',
        {'template': 'main/contact.html'}),
     
+    url(r'^privacy/$',
+       'django.views.generic.simple.direct_to_template',
+       {'template': 'main/privacy.html'}),
+    
     # URLs for parts
     url(r'^parts/', include('parts.urls')),
     
