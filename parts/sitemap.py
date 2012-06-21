@@ -7,7 +7,7 @@ class PartSitemap(Sitemap):
     priority = 0.5
 
     def items(self):
-        return Part.objects.all()[:250]
+        return Part.objects.all()[:50000]
 
     def lastmod(self, obj):
         return obj.updated_at

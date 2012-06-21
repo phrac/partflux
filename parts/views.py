@@ -150,8 +150,8 @@ def addxref(request, part_id):
     xrefform = XrefForm(request.POST)
     print 'adding xref' 
     if xrefform.is_valid():
-        part_number = xrefform.cleaned_data['part'].upper()
-        company = xrefform.cleaned_data['company'].upper()
+        part_number = xrefform.cleaned_data['part'].strip().upper()
+        company = xrefform.cleaned_data['company'].strip().upper()
         copy_attrs = xrefform.cleaned_data['copy_attrs']
         """Check if the company exists and create it if it does not"""
         c, _created = Company.objects.get_or_create(name=company)
