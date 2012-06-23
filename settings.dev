@@ -129,8 +129,11 @@ TEMPLATE_LOADERS = (
 TEMPLATE_CONTEXT_PROCESSORS = (
     "partfindr.context_processors.xref_count",
     "partfindr.context_processors.get_current_path",
+    "partfindr.context_processors.get_absolute_url",
+    "partfindr.context_processors.get_current_domain",
     "partfindr.context_processors.part_count",
     "partfindr.context_processors.nsn_count",
+    "partfindr.context_processors.user_reputation",
     "flashcookie.flash_context",
     "django.core.context_processors.request",
     "django.contrib.auth.context_processors.auth",
@@ -177,7 +180,8 @@ INSTALLED_APPS = (
     'registration',
     'sorl.thumbnail',
     'django_gravatar',
-    # partfindr apps    
+    # partfindr apps 
+    'main',
     'faq',
     'parts',
     'companies',

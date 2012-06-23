@@ -1,5 +1,7 @@
 {% extends "base/base_MAIN.html" %}
 
+{% block companies_active %}class="active"{% endblock %}
+
 {% block breadcrumbs %}
 > <a href="{% url companies.views.index %}">Companies</a> > Company Directory
 {% endblock %}

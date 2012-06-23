@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
 from pure_pagination import Paginator, PageNotAnInteger, EmptyPage
 
 from django.contrib.auth.models import User
@@ -12,6 +13,8 @@ from django.core.files.storage import default_storage
 from parts.models import Part, Xref, PartImage, BuyLink, Attribute
 from companies.models import Company
 from parts.forms import MetadataForm, XrefForm, ImageUploadForm, BuyLinkForm
+from users.models import UserProfile
+import json
 
 def index(request):
     parts_list = Part.objects.all().order_by('-created_at')[:25]
@@ -52,7 +55,12 @@ def detail(request, company_slug, part_slug):
                 request.flash.success = "Attribute added. Thanks for your contribution!"
             else:
                 request.flash.error = "Adding attribute failed: %s" % status
-            return HttpResponseRedirect(reverse('parts.views.detail', args=[c.slug, p.slug]))
+                
+            if request.is_ajax():
+                return HttpResponseRedirect(reverse('parts.views.detail', args=[c.slug, p.slug]))
+                #return HttpResponse(json.dumps('good'), mimetype="application/json")
+            else:
+                return HttpResponseRedirect(reverse('parts.views.detail', args=[c.slug, p.slug]))
 
     if 'xref_button' in request.POST:
         xrefform = XrefForm(request.POST)
@@ -97,6 +105,8 @@ def addmeta(request, part_id):
         attr = Attribute(key=key, value=value, user=request.user, part=p)
         try:
             attr.save()
+            profile = request.user.get_profile()
+            profile.increment_reputation(settings.REP_VALUE_NEW_ATTRIBUTE)
             return True
         except IntegrityError:
             return 'Attribute already exists'

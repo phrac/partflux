@@ -33,7 +33,7 @@ def autocomplete(request):
         results = []
         for r in raw_results:
             if type == 'company':
-                results.append(r.company_name)
+                results.append({'label': r.company_name})
             if type == 'part':
                 results.append({'label': "%s - %s" % (r.number,
                                                       truncatechars(r.desc,60)),
