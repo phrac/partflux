@@ -30,18 +30,16 @@ def get_current_path(request):
         'current_path': request.get_full_path()
     }
 
-def get_absolute_url(request):
-    return {
-        'page_absolute_url': request.REQUEST.get('page') or request.META.get('PATH_INFO') or "" 
-    }
-
 def get_current_domain(request):
     from django.contrib.sites.models import Site
     return {
         'current_domain': 'http://%s' % Site.objects.get_current().domain
     }
 
-def user_reputation(request):
-    from django.contrib.auth.models import User
-    profile = request.user.get_profile()
-    return { 'user_reputation': profile.reputation }
+#def user_reputation(request):
+#    from django.contrib.auth.models import User
+#    if request.user.is_authenticated():
+#        profile = request.user.get_profile()
+#        return { 'user_reputation': profile.reputation }
+#    else:
+#        return {None}

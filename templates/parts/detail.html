@@ -57,34 +57,14 @@
         <h1>{{ part.number }} by {{ part.company }} <br /><small>{{ part.description }}</small></h1>
     </div>
     <div class="row">
-        <div class="span8">
+        <div class="span9">
             <h3>Extended Part Information</h3>
-            <table class="table table-striped">
-                {% for a in attributes %}
-                <tr>
-                    <td>
-                        {{ a.key }}:	
-                    </td>
-                    <td>
-                        {{ a.value }}
-                    </td>
-                    <td>
-                        <div class="btn-group">
-                            <button class="btn btn-mini">Actions</button>
-                            <button class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <a href="#">Flag</a>
-                            </ul>
-                        </div>
-                    </td>
-                </tr>
-                {% endfor %}
-            </table>
+            <div id="attribute-table">
+                {% include 'parts/partials/attribute_table.html' %}
+            </div>
 
-            {% if user.is_authenticated %}
             <div class="modal hide" id="attribute-modal">
+                {% if user.is_authenticated %}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
                     <h2>Add new attribute</h2>
@@ -110,7 +90,7 @@
                         <div class="control-group">
                             <label class="control-label" for="id_part">Attribute Value</label>
                             <div class="controls">
-                                <input id="id_key" name="key" type="text" class="input-large" placeholder="Value">
+                                <input id="id_value" name="value" type="text" class="input-large" placeholder="Value">
                                 <p>The attribute <strong><i>value</i></strong> holds the attribute data. Examples of values:
                                 <strong>10 LBS</strong>, <strong>RED</strong>, etc.
                                 </p>
@@ -118,12 +98,11 @@
                         </div>
 
                         <div class="form-actions">
-                            <button type="submit" class="btn btn-primary">Save Attribute</button>
+                            <input type="submit" class="btn btn-primary" name="metadata_button" value="Save Attribute" />
                             <button class="btn" data-dismiss="modal">Cancel</button>
                         </div>
                     </form>
                 </div>
-            </div>
             <!--<script type="text/javascript">
                 $('#attribute-form').on('submit', function(){
 
@@ -142,8 +121,11 @@
                         // Stop the normal form submission
                         return false;
                         });
-            </script> -->
+                    </script>-->
+            {% else %}
+            {% include 'partials/login_modal.html' %}
             {% endif %}
+        </div>
 
             <!-- part images section -->
 
@@ -430,44 +412,45 @@
         </div>
 
         
-        <div id="part-menu" class="well span3" >
-            {% include 'partials/share_links.html' %}
-
-            <ul class="nav nav-list">
-                <li class="nav-header">
-                <h3>Edit this part</h3>
-                </li>
-                <li>
-                <a href="#attribute-modal" data-toggle="modal">
-                    <i class="icon-info-sign"></i>
-                    Add new part attribute
-                </a>
-                </li>
-                <li>
-                <a href="#img-upload" data-toggle="modal">
-                    <i class="icon-picture"></i>
-                    Upload a part image
-                </a>
-                </li>
-                <li>
-                <a href="#add-xref" data-toggle="modal">
-                    <i class="icon-random"></i>
-                    Add a new cross reference
-                </a>
-                </li>
-                <li>
-                <a href="#add-buylink" data-toggle="modal">
-                    <i class="icon-globe"></i>
-                    Add a new purchase link
-                </a>
-                </li>
-                <li>
-                <a href="#comment" data-toggle="modal">
-                    <i class="icon-comment"></i>
-                    Add a comment
-                </a>
-                </li>
-            </ul>
+        <div id="part-menu" class="span3" >
+            <div class="well">
+                {% include 'partials/share_links.html' %}
+                <ul class="nav nav-list">
+                    <li class="nav-header">
+                    <h3>Edit this part</h3>
+                    </li>
+                    <li>
+                    <a href="#attribute-modal" data-toggle="modal">
+                        <i class="icon-info-sign"></i>
+                        Add new part attribute
+                    </a>
+                    </li>
+                    <li>
+                    <a href="#img-upload" data-toggle="modal">
+                        <i class="icon-picture"></i>
+                        Upload a part image
+                    </a>
+                    </li>
+                    <li>
+                    <a href="#add-xref" data-toggle="modal">
+                        <i class="icon-random"></i>
+                        Add a new cross reference
+                    </a>
+                    </li>
+                    <li>
+                    <a href="#add-buylink" data-toggle="modal">
+                        <i class="icon-globe"></i>
+                        Add a new purchase link
+                    </a>
+                    </li>
+                    <li>
+                    <a href="#comment" data-toggle="modal">
+                        <i class="icon-comment"></i>
+                        Add a comment
+                    </a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>

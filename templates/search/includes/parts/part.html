@@ -1,12 +1,12 @@
 <tr>
-    <td style="width:5%" class="part_number"><p style="font-weight:bold; font-size:.7em">PART</p></td>
-    <td class="part_number">
+    <td><p style="font-weight:bold; font-size:.7em">PART</p></td>
+    <td>
         <a href="{{ result.get_absolute_url }}">{{ result.number }}</a>
     </td>
-    <td class="part_desc">
+    <td>
         {{ result.description|truncatewords:10 }}
     </td>
-    <td class="part_desc">
+    <td>
         <a href="{{ result.company.get_absolute_url }}">{{ result.company.name }}</a>
     </td>
 </tr>

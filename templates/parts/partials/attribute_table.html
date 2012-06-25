@@ -1,0 +1,23 @@
+<table class="table table-striped">
+    {% for a in attributes %}
+    <tr>
+        <td>
+            {{ a.key }}:	
+        </td>
+        <td>
+            {{ a.value }}
+        </td>
+        <td>
+            <div class="btn-group">
+                <button class="btn btn-mini">Actions</button>
+                <button class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <a href="#">Flag</a>
+                </ul>
+            </div>
+        </td>
+    </tr>
+    {% endfor %}
+</table>

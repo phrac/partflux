@@ -1,6 +1,6 @@
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.template import RequestContext
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
@@ -57,8 +57,8 @@ def detail(request, company_slug, part_slug):
                 request.flash.error = "Adding attribute failed: %s" % status
                 
             if request.is_ajax():
-                return HttpResponseRedirect(reverse('parts.views.detail', args=[c.slug, p.slug]))
-                #return HttpResponse(json.dumps('good'), mimetype="application/json")
+                #return HttpResponseRedirect(reverse('parts.views.detail', args=[c.slug, p.slug]))
+                return HttpResponse(json.dumps('good'), mimetype="application/json")
             else:
                 return HttpResponseRedirect(reverse('parts.views.detail', args=[c.slug, p.slug]))
 
