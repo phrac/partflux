@@ -133,6 +133,7 @@ TEMPLATE_LOADERS = (
 TEMPLATE_CONTEXT_PROCESSORS = (
     "partfindr.context_processors.xref_count",
     "partfindr.context_processors.get_current_path",
+    "partfindr.context_processors.get_current_domain",
     "partfindr.context_processors.part_count",
     "partfindr.context_processors.nsn_count",
     "flashcookie.flash_context",
@@ -183,6 +184,7 @@ INSTALLED_APPS = (
     'django_gravatar',
     'faq',
     # partfindr apps    
+    'main',
     'parts',
     'companies',
     'nsn',
