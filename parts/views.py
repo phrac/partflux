@@ -23,9 +23,8 @@ def index(request):
                               {'parts_list': parts_list},
                               context_instance=RequestContext(request))
 
-def detail(request, company_slug, part_slug):
-    c = get_object_or_404(Company, slug=company_slug)
-    p = get_object_or_404(Part, slug=part_slug, company=c.id)
+def detail(request, part_id, company_slug, part_slug):
+    p = get_object_or_404(Part, id=part_id)
     
     xrefs = Xref.objects.filter(part=p.id).exclude(xrefpart=p.id)
     reverse_xrefs = Xref.objects.filter(xrefpart=p.id).exclude(part=p.id)
@@ -45,7 +44,7 @@ def detail(request, company_slug, part_slug):
                 request.flash.success = "URL added successfully"
             else:
                 request.flash.error = "Adding URL failed: %s" % status
-            return HttpResponseRedirect(reverse('parts.views.detail', args=[c.slug, p.slug]))
+            return HttpResponseRedirect(reverse('parts.views.detail', args=[part_id, c.slug, p.slug]))
 
     if 'metadata_button' in request.POST:
         metaform = MetadataForm(request.POST)
@@ -61,7 +60,8 @@ def detail(request, company_slug, part_slug):
                                           { 'attributes': attributes,
                                             'new_id': new_id, })
             else:
-                return HttpResponseRedirect(reverse('parts.views.detail', args=[c.slug, p.slug]))
+                return HttpResponseRedirect(reverse('parts.views.detail',
+                                                    args=[part_id, c.slug, p.slug]))
 
     if 'xref_button' in request.POST:
         xrefform = XrefForm(request.POST)
@@ -71,7 +71,8 @@ def detail(request, company_slug, part_slug):
                 request.flash.success = "Cross reference added. Thanks for your contribution!"
             else:
                 request.flash.error = "Adding cross reference failed: %s" % status
-            return HttpResponseRedirect(reverse('parts.views.detail', args=[c.slug, p.slug]))
+            return HttpResponseRedirect(reverse('parts.views.detail',
+                                                args=[part_id, c.slug, p.slug]))
     
     if 'image_button' in request.POST:
         imageuploadform = ImageUploadForm(request.POST, request.FILES)
@@ -81,7 +82,8 @@ def detail(request, company_slug, part_slug):
                 request.flash.success = "Image upload success. Thanks for your contribution!"
             else:
                 request.flash.error = "Image upload failed: %s" % status
-            return HttpResponseRedirect(reverse('parts.views.detail', args=[c.slug, p.slug]))
+            return HttpResponseRedirect(reverse('parts.views.detail',
+                                                args=[part_id, c.slug, p.slug]))
 
     return render_to_response('parts/detail.html', 
                               {'part': p, 
