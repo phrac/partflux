@@ -50,15 +50,16 @@ def detail(request, company_slug, part_slug):
     if 'metadata_button' in request.POST:
         metaform = MetadataForm(request.POST)
         if metaform.is_valid:
-            status = addmeta(request, p.pk)
+            status, new_id = addmeta(request, p.pk)
             if status is True:
                 request.flash.success = "Attribute added. Thanks for your contribution!"
             else:
                 request.flash.error = "Adding attribute failed: %s" % status
                 
             if request.is_ajax():
-                #return HttpResponseRedirect(reverse('parts.views.detail', args=[c.slug, p.slug]))
-                return HttpResponse(json.dumps('good'), mimetype="application/json")
+                return render_to_response('parts/partials/attribute_table.html',
+                                          { 'attributes': attributes,
+                                            'new_id': new_id, })
             else:
                 return HttpResponseRedirect(reverse('parts.views.detail', args=[c.slug, p.slug]))
 
@@ -107,21 +108,25 @@ def addmeta(request, part_id):
             attr.save()
             profile = request.user.get_profile()
             profile.increment_reputation(settings.REP_VALUE_NEW_ATTRIBUTE)
-            return True
+            return True, attr.pk
         except IntegrityError:
             return 'Attribute already exists'
 
 @login_required
 def addbuylink(request, part_id):
+    print request.POST
     p = get_object_or_404(Part, pk=part_id)
     buylinkform = BuyLinkForm(request.POST)
+    print 'in addbuylink()'
     if buylinkform.is_valid():
+        print 'form valid'
         url = buylinkform.cleaned_data['url']
         company = buylinkform.cleaned_data['company'].strip().upper()
         price = buylinkform.cleaned_data['price']
         c, _created = Company.objects.get_or_create(name=company)
         buylink = BuyLink(part=p, company=c, price=price, url=url)
         try:
+            print 'saving link'
             buylink.save()
             return True
         except IntegrityError:
@@ -197,6 +202,7 @@ def uploadimage(request, part_id):
     
         """Handle the file upload"""
         new_filename = "%s_%s" % (str(part_id), f.name)
+        print new_filename
         image = PartImage()
         image.user = request.user
         image.image.save(new_filename, f)

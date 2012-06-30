@@ -8,19 +8,8 @@ admin.autodiscover()
 urlpatterns = patterns('',
     #GENERIC VIEWS
     #url(r'^$', 'django.views.generic.simple.direct_to_template', {'template': 'main/comingsoon.html'}),
-    url(r'^$', 'main.views.index'), 
     
-    url(r'^partbot/$',
-       'django.views.generic.simple.direct_to_template',
-       {'template': 'main/partbot.html'}),
-    
-    url(r'^contact/$',
-       'django.views.generic.simple.direct_to_template',
-       {'template': 'main/contact.html'}),
-    
-    url(r'^privacy/$',
-       'django.views.generic.simple.direct_to_template',
-       {'template': 'main/privacy.html'}),
+    url(r'^', include('main.urls')),
     
     # URLs for parts
     url(r'^parts/', include('parts.urls')),

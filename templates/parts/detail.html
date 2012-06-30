@@ -6,10 +6,10 @@
 {% load thumbnail %}
 
 {% block title %}
-{{ part.number }} by {{ part.company.name }} | partfindr
+{{ part.number }} by {{ part.company.name }} | partengine
 {% endblock %}
 
-{% block parts_active %}class="active"{% endblock %}
+{% block parts_active %}active{% endblock %}
 
 {% block breadcrumb_links %}
 <li>
@@ -58,10 +58,7 @@
     </div>
     <div class="row">
         <div class="span9">
-            <h3>Extended Part Information</h3>
-            <div id="attribute-table">
-                {% include 'parts/partials/attribute_table.html' %}
-            </div>
+            
 
             <div class="modal hide" id="attribute-modal">
                 {% if user.is_authenticated %}
@@ -98,30 +95,33 @@
                         </div>
 
                         <div class="form-actions">
-                            <input type="submit" class="btn btn-primary" name="metadata_button" value="Save Attribute" />
+                            <input type="hidden" name="metadata_button" value="1" />
+                            <button type="submit" data-loading-text="Saving..." class="btn btn-primary">Save Attribute</button>
                             <button class="btn" data-dismiss="modal">Cancel</button>
                         </div>
                     </form>
                 </div>
-            <!--<script type="text/javascript">
-                $('#attribute-form').on('submit', function(){
-
-                        //Serialize the form and post it to the server
-                        $.post("{{ current_path }}", $(this).serialize(), function(){
-
-                            // When this executes, we know the form was submitted
-
-                            // To give some time for the animation, 
-                            // let's add a delay of 200 ms before the redirect
-                            // Hide the modal
-                            $("#attribute-modal").modal('hide');
-
+                <script language="JavaScript">
+                    $(document).ready(function() {
+                        $('#attribute-form').submit(function() { // catch the form's submit event
+                            $.ajax({ // create an AJAX call...
+                                data: $(this).serialize(), // get the form data
+                                type: $(this).attr('method'), // GET or POST
+                                url: $(this).attr('action'), // the file to call
+                                success: function(response) { // on success..
+                                    $('#attribute-modal').modal('hide');
+                                    $('#attribute-form').each(function() {
+                                        this.reset();
+                                    });
+                                    $('#status-messages').hide().load("{% url main.views.status_messages %}").fadeIn("fast");
+                                    $('#attribute-table').hide().html(response).fadeIn("slow"); // update the DIV
+                                    $('#new-attribute').effect("highlight", {color: '#468847'}, 6000);
+                                }
                             });
-
-                        // Stop the normal form submission
-                        return false;
+                            return false;
                         });
-                    </script>-->
+                    });
+                </script>
             {% else %}
             {% include 'partials/login_modal.html' %}
             {% endif %}
@@ -129,60 +129,61 @@
 
             <!-- part images section -->
 
-            <div class="well page-header" data-toggle="collapse" data-target="#images">
-                <h2>Images for {{ part.number }}</h2>
-            </div>
+            
 
-            <div id="images">
-                {% if part.images.all %}
-                <ul class="thumbnails">
-                    {% for image in part.images.all %}
-                    {% thumbnail image.image "160x120" crop="center" as im %}
-                    <li class="span2">
-                    <a id="lightbox" class="thumbnail" href="{{ image.image.url }}"><img src="{{ im.url }}" alt="{{ part.number }} image" /></a>
-                    </li>
-                    {% endthumbnail %}
-                    {% endfor %}
-                </ul>
-                {% else %}
-                <h3>No images available for this part.</h3>
-                {% endif %}
 
-                {% if user.is_authenticated %}
+
                 <div class="modal hide" id="img-upload">
+                    {% if user.is_authenticated %}
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
                         <h2>Upload new part image</h2>
                     </div>
                     <div class="modal-body">
-                        <form class="form-inline" method="post">
+                        <form class="form-horizontal" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                             {{ imageuploadform.file }}
-                            <button type="submit" class="btn btn-primary"><i class="icon-hdd icon-white"></i> Upload</button>
+                            <div class="form-actions">
+                                <input type="hidden" name="image_button" value="1" />
+                                <button id="save-button" type="submit" data-loading-text="Saving Image" class="btn btn-primary"><i class="icon-hdd icon-white"></i> Upload</button>
+                                <button class="btn" data-dismiss="modal">Cancel</button>
+                            </div>   
+
                         </form>
                     </div>
+                    {% else %}
+                    {% include 'partials/login_modal.html' %}
+                    {% endif %}
                 </div>
-                {% endif %}
-            </div>
+ 
             <!-- end part images -->
 
 
             <!-- cross references -->
-            <div class="well page-header" data-toggle="collapse" data-target="#xrefs">
-                <h2>Cross references</h2>
-            </div>
+            
+ 
 
             <div id="xrefs">
                 <div class="tabbable">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a href="#tab1" data-toggle="tab">Cross References</a></li>
-                        <li><a href="#tab2" data-toggle="tab">Reverse Cross References</a></li>
+                        <li class="active"><a href="#attributes" data-toggle="tab"><i class="icon-info-sign"></i> Extended Information</a></li>
+                        <li><a href="#tab1" data-toggle="tab"><i class="icon-random"></i> Cross References</a></li>
+                        <li><a href="#tab2" data-toggle="tab"><i class="icon-random"></i> Reverse Cross References</a></li>
+                        <li><a href="#images" data-toggle="tab"><i class="icon-picture"></i> Images</a></li>
+                        <li><a href="#buylinks" data-toggle="tab"><i class="icon-globe"></i> Purchasing</a></li>
+                        <li><a href="#comments" data-toggle="tab"><i class="icon-comment"></i> Comments</a></li>
                     </ul>
 
                     <div class="tab-content">
+                        <!-- part attributes tab -->
+                        <div class="tab-pane active" id="attributes">
+                            <div id="attribute-table">
+                            {% include 'parts/partials/attribute_table.html' %}
+                            </div>
+                        </div>
 
                         <!-- forward xrefs tab -->
-                        <div class="tab-pane active" id="tab1">
+                        <div class="tab-pane" id="tab1">
                             {% if xrefs %}
                             <table class="table table-striped">
                                 <thead>
@@ -246,13 +247,93 @@
                             {% endif %}
                         </div>
                         <!-- end reverse xrefs tab -->
+                        
+                        <!-- part images tab -->
+                        
+                        <div class="tab-pane" id="images">
+                        <div id="images">
+                            {% if part.images.all %}
+                            <ul class="thumbnails">
+                                {% for image in part.images.all %}
+                                {% thumbnail image.image "160x120" crop="center" as im %}
+                                <li class="span2">
+                                <a id="lightbox" class="thumbnail" href="{{ image.image.url }}"><img src="{{ im.url }}" alt="{{ part.number }} image" /></a>
+                                </li>
+                                {% endthumbnail %}
+                                {% endfor %}
+                            </ul>
+                            {% else %}
+                            <h3>No images available for this part.</h3>
+                            {% endif %}
+                        </div>
+                        </div>
+                        <!-- end part images tab -->
+                        
+                        <!-- buylinks tab -->
+                        <div class="tab-pane" id="buylinks">
+                        <div id="buylinks">
+                            {% if buylinks %}
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Company &amp; Link</th>
+                                        <th>Price</th>
+                                        <th>Last checked</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for buylink in buylinks %}
+                                    <tr>
+                                        <td>
+                                            <a href="{{ buylink.url }}">{{ buylink.company.name }}</a>
+                                        </td>
+                                        <td>
+                                            <b>${{ buylink.price }}</b>
+                                        </td>
+                                        <td>
+                                            {{ buylink.updated_at|date:"SHORT_DATE_FORMAT" }}
+                                        </td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button class="btn btn-mini">Actions</button>
+                                                <button class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
+                                                    <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <a href="#">Flag as dead link</a>
+                                                    <a href="#">Flag as wrong price</a>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            {% else %}
+                            <h3>Sorry, we don't know where to obtain this part online. </h3>
+                            {% endif %}
+                        </div>
+                        </div>
+                        <!-- end buylinks tab -->
+                        
+                        <div class="tab-pane" id="comments">
+                        {% get_comment_count for part as comment_count %}
+                        {% render_comment_list for part %}
+                        {% if user.is_authenticated %}
+                        {% render_comment_form for part %}
+                        {% endif %}
+                        </div>
+                        
 
+                        
+                        
                     </div>
 
                 </div>
 
-                {% if user.is_authenticated %}
                 <div class="modal hide" id="add-xref">
+                    {% if user.is_authenticated %}
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
                         <h2>Add part cross reference</h2>
@@ -293,8 +374,10 @@
 
                         </form>
                     </div>
+                    {% else %}
+                    {% include 'partials/login_modal.html' %}
+                    {% endif %}
                 </div>
-                {% endif %}
             </div>
 
 
@@ -302,56 +385,13 @@
 
 
             <!-- Table for links to buy the product -->
-            <div class="well page-header" data-toggle="collapse" data-target="#buylinks">
-                <h2>Purchasing Information</h2>
-            </div>
-
-            <div id="buylinks">
-                {% if buylinks %}
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Company &amp; Link</th>
-                            <th>Price</th>
-                            <th>Last checked</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for buylink in buylinks %}
-                        <tr>
-                            <td>
-                                <a href="{{ buylink.url }}">{{ buylink.company.name }}</a>
-                            </td>
-                            <td>
-                                <b>${{ buylink.price }}</b>
-                            </td>
-                            <td>
-                                {{ buylink.updated_at|date:"SHORT_DATE_FORMAT" }}
-                            </td>
-                            <td>
-                                <div class="btn-group">
-                                    <button class="btn btn-mini">Actions</button>
-                                    <button class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <a href="#">Flag as dead link</a>
-                                        <a href="#">Flag as wrong price</a>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-                {% else %}
-                <h3>Sorry, we don't know where to obtain this part online. </h3>
-                {% endif %}
+            
+            
+            
 
                 <!-- form for adding a new buylink -->
-                {% if user.is_authenticated %}
-                <div class="modal hide fade" id="add-buylink">
+                <div class="modal hide" id="add-buylink">
+                    {% if user.is_authenticated %}
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
                         <h2>Add a new purchase link</h2>
@@ -382,32 +422,27 @@
                                 <label class="control-label" for="id_price">Current Price</label>
                                 <div class="controls">
                                     <div class="input-prepend">
-                                        <span class="add-on">$</span><input class="span2" id="id_price" size="16" type="text">
+                                        <span class="add-on">$</span><input name="price" class="span2" id="id_price" size="16" type="text">
                                         <p>Enter the price of the item.</p>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="form-actions">
+                                <input type="hidden" name="buylink_button" value="1" />
                                 <button type="submit" class="btn btn-primary">Save Link</button>
                                 <button class="btn" data-dismiss="modal">Cancel</button>
                             </div>
 
                         </form>
                     </div>
+                    {% else %}
+                    {% include 'partials/login_modal.html' %}
+                    {% endif %}
                 </div>
-                {% endif %}
                 <!-- end buylink form -->
-            </div>
+    
             <!-- end buylinks section -->
-
-
-
-            {% get_comment_count for part as comment_count %}
-            {% render_comment_list for part %}
-            {% if user.is_authenticated %}
-            {% render_comment_form for part %}
-            {% endif %}
 
         </div>
 
@@ -415,6 +450,7 @@
         <div id="part-menu" class="span3" >
             <div class="well">
                 {% include 'partials/share_links.html' %}
+                <div class="divider">&nbsp;</div>
                 <ul class="nav nav-list">
                     <li class="nav-header">
                     <h3>Edit this part</h3>

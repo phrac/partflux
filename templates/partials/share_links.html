@@ -1,25 +1,32 @@
 <div class="row center">
     <a href="https://plus.google.com/share?url={{ current_domain }}{{ current_path }}" rel="tooltip" title="Share on Google+" onclick="javascript:window.open(this.href,
-  '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
-  <img src="{{ STATIC_URL }}images/glyphicons/glyphicons_362_google+_alt.png" alt="g+" /></a>
+        '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
+        <img src="{{ STATIC_URL }}images/glyphicons/glyphicons_362_google+_alt.png" alt="g+" /></a>
 
     <a href="http://pinterest.com/pin/create/button/?url={{ current_domain }}{{ current_path }}" rel="tooltip" title="Pin to Pinterest"><img src="{{ STATIC_URL }}images/glyphicons/glyphicons_360_pinterest.png" alt="pinterest" /></a>
-    
-    
+
+
     <a href="#" rel="tooltip" title="Share on LinkedIn"><img src="{{ STATIC_URL }}images/glyphicons/glyphicons_377_linked_in.png" alt="linked in" /></a>
     <a href="#" rel="tooltip" title="Share on Facebook"><img src="{{ STATIC_URL }}images/glyphicons/glyphicons_390_facebook.png" alt="facebook" /></a>
     <a href="#" rel="tooltip" title="Share on Twitter"><img src="{{ STATIC_URL }}images/glyphicons/glyphicons_391_twitter_t.png" alt="twitter" /></a>
     <a href="#" rel="tooltip" title="RSS Feed"><img src="{{ STATIC_URL }}images/glyphicons/glyphicons_397_rss.png" alt="rss" /></a>
-    <a href="#" rel="tooltip" title="Print this page"><img src="{{ STATIC_URL }}images/glyphicons/glyphicons_015_print.png" alt="print" /></a>
-    
+    <a href="#" rel="tooltip" title="Print this page"><img src="{{ STATIC_URL }}images/glyphicons/glyphicons_015_print.png" alt="print" onclick="printpage()" /></a>
+
+    <script type="text/javascript">
+        function printpage() {
+            window.print()
+        }
+    </script>
+
     <script type="text/javascript">
         $("[rel=tooltip]").tooltip();
     </script>
+    
     <script type="text/javascript">
-  (function() {
-    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-    po.src = 'https://apis.google.com/js/plusone.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-  })();
-</script>
-</div>
+        (function() {
+            var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+            po.src = 'https://apis.google.com/js/plusone.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+         })();
+    </script>
+ </div>

@@ -35,9 +35,7 @@ def autocomplete(request):
             if type == 'company':
                 results.append({'label': r.company_name})
             if type == 'part':
-                results.append({'label': "%s - %s" % (r.number,
-                                                      truncatechars(r.desc,60)),
-                                'value': r.number})
+                results.append({'label': r.number })
 
         return HttpResponse(json.dumps(results), mimetype="application/json")
     else:

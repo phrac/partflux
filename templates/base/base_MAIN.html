@@ -6,16 +6,18 @@
 <!DOCTYPE html>
 <html {% block html_itemscope %} {% endblock %}>
     <head>
-        <title>{% block title %}partfindr | find information about ANY part number {% endblock %}</title>
+        <title>{% block title %}Part Engine | Find information about ANY part number {% endblock %}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="{{ STATIC_URL }}css/bootstrap.css" media="screen" rel="stylesheet" type="text/css" />
         <link href="{{ STATIC_URL }}css/bootstrap-responsive.css" media="screen" rel="stylesheet" type="text/css" />
         <link href="{{ STATIC_URL }}css/blanca.css" media="screen" rel="stylesheet" type="text/css" />
         <link href="{{ STATIC_URL }}css/application.css" media="screen" rel="stylesheet" type="text/css" />
+        <link href="{{ STATIC_URL }}css/sticky-footer.css" media="screen" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Droid+Serif:regular,italic,bold,bolditalic" type="text/css"/>
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold" type="text/css"/>
 
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
         <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
         <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap-typeahead.js"></script>
 
@@ -24,6 +26,7 @@
         {% endblock %}
     </head>
     <body id="{% block body_id %}section-index{% endblock %}">
+        <div class="wrapper"> <!--sticky footer wrapper -->
         
     <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
@@ -33,7 +36,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </a>
-                <a href="/" class="brand"><img src="{{ STATIC_URL }}images/logo-small.png" /></a>
+                <a href="/" class="brand"><img src="{{ STATIC_URL }}images/logo_small-white-alpha.png" alt="partengine logo" /></a>
                 <div class="nav-collapse">
                     <ul class="nav">
                         <li {% block home_active %}{% endblock %}><a href="/">Home</a></li>
@@ -43,6 +46,8 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a href="{% url parts.views.index %}">Newest Parts</a></li>
+                                <li class="divider"></li>
+                                <li><a href="{% url parts.views.addpartform %}"><i class="icon icon-plus-sign"></i> Add a part</a></li>
                             </ul>
                         </li>
                         <li {% block companies_active %}{% endblock %}><a href="{% url companies.views.index %}">Companies</a></li>
@@ -50,8 +55,8 @@
                         <li class="{% block help_active %}{% endblock %} dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Help/Docs <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/faq/">F.A.Q. (Frequently Asked Questions)</a></li>
-                            <li><a href="{% url search.views.index %}">Search Guide</a></li>
+                            <li><a href="/faq/"><i class="icon icon-list"></i> F.A.Q. (Frequently Asked Questions)</a></li>
+                            <li><a href="{% url search.views.index %}"><i class="icon icon-search"></i> Advanced Search Guide</a></li>
                         </ul>
                         </li>
                     </ul>
@@ -72,12 +77,26 @@
                                 <li class="divider"></li>
                                 <li><a href="#"><i class="icon-wrench"></i> My Parts</a></li>
                                 <li class="divider"></li>
-                                <li><a href="/users/logout"><i class="icon-off"></i> Log Out</a></li>
+                                <li><a href="/users/logout"><i class="icon-off"></i> Sign Out</a></li>
                             </ul>
                         </li>
                         {% else %}
-                        <li><a href="">Sign Up</a></li>
-                        <li><a href="/users/login/">Login</a></li>
+                        <li><a href="{% url django.contrib.auth.views.login %}">Sign Up</a></li>
+                        <li class="divider-vertical"></li>
+                        <li class="dropdown">
+                        <a class="dropdown-toggle" href="#" data-toggle="dropdown">Sign In<b class="caret"></b></a>
+                        <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
+                            <form class="form-horizontal" action="/users/login/" method="post" accept-charset="UTF-8">
+                                {% csrf_token %}
+                                <input placeholder="Username" style="margin-bottom: 15px;" id="id_username" type="text" name="username" size="30" />
+                                <input placeholder="Password" style="margin-bottom: 15px;" id="id_password" type="password" name="password" size="30" />
+                                <input style="float: left; margin-right: 10px;" id="user_remember_me" type="checkbox" name="remember_me" value="1" />
+                                <label class="string optional" for="user_remember_me"> Remember me</label>
+                                <input type="hidden" name="next" value="{{ current_path }}" />
+                                <input class="btn btn-inverse" type="submit" style="width: 95%; height: 32px; font-size: 12px;" name="commit" value="Log In" />
+                            </form>
+                        </div>
+                        </li>
                         {% endif %}
                     </ul>
                 </div>
@@ -85,8 +104,9 @@
         </div>
     </div>
 
+    
     {% block breadcrumbs %}
-    <div class="container">
+    <div id="main" class="container clear-top">
         <div class="row">
             <div class="span6">
                 <ul class="breadcrumb">
@@ -101,47 +121,22 @@
     {% endblock %}
 
 
-    {% if flash.error %}
-    <div class="container">
-        <div class="row">
-            <div class="span6">
-                <div class="alert alert-error">
-                    <button class="close" data-dismiss="alert" href="#">&times;</button>
-                    {% for m in flash.error %}
-                    {{ m }}
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
+    <div id="status-messages">
+        {% include 'partials/status_messages.html' %} 
     </div>
-    {% endif %}
-
-    {% if flash.success %}
-    <div class="container">
-        <div class="row">
-            <div class="span6">
-                <div class="alert alert-success">
-                    <button class="close" data-dismiss="alert" href="#">&times;</button>
-                    {% for m in flash.success %}
-                    {{ m }}
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endif %}
     
     {% block content %}
 
     {% endblock %}
-
-
+    <div class="push"><!--//--></div>
+   </div> <!-- END WRAPPER -->
+   
     <footer>
     <div id="footer" class="stripe-color">
         <div class="container">
             <div class="row">
                 <div class="span3">
-                    <h6>Partfindr</h6>
+                    <h6>Part Engine</h6>
                     <ul class="unstyled">
                         <li><a href="/">Home</a></li>
                         <li><a href="{% url parts.views.index %}">Parts</a></li>
@@ -154,7 +149,7 @@
                 <div class="span3">
                     <h6>Latest Blog Posts</h6>
                     {% cache 3 rss_display %}
-                    {% get_rss "http://blog.partfindr.net/?feed=rss2" as rss %}
+                    {% get_rss "http://blog.partengine.org/feeds/posts/default?alt=rss" as rss %}
                         {% for entry in rss.entries %}
                             {% for link in entry.links %}
                             {% if forloop.first %}
@@ -168,26 +163,12 @@
                     {% endcache %}
                 </div>
 
-                <div class="span3">
-                    <h6>From Facebook</h6>
-                    <p>Latest additions to our team make us stronger, faster, better!</p>
-                    <p class="sub">April 31st, 2012</p>
-                    <p>Like us for a chance to win a free template!</p>
-                    <p class="sub">March 20th, 2012</p>
-                </div>
-
-                <div class="span3">
-                    <h6>From Twitter</h6>
-                    <p><a href="">@bootstrap</a> you guys really know how to create clean apps</p>
-                    <p class="sub">One hour ago (12:32 PM)</p>
-                    <p><a href="">@simon</a> way to go!</p>
-                    <p class="sub">Two hours ago (11:45 AM)</p>
-                </div>
+                
             </div>
             <div class="divider"></div>
             <div class="row last">
                 <div class="span12">
-                    <p class="sub">&copy; Partfindr 2012</p>
+                    <p class="sub">&copy; Part Engine 2012</p>
                 </div>
             </div>
         </div>

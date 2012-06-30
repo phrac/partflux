@@ -2,36 +2,46 @@
 
 {% block companies_active %}class="active"{% endblock %}
 
-{% block breadcrumbs %}
-> <a href="{% url companies.views.index %}">Companies</a> > Company Directory
+{% block breadcrumb_links %}
+    <li>
+        <a href="{% url companies.views.index %}">Companies</a>
+        <span class="divider">></span>
+    </li>
+    <li class="active">Company Directory</li>
 {% endblock %}
 
 {% block content %}
-<div class="center_content">
-    <h2>Company Directory ({{ results_list.paginator.count }} companies) - showing {{ results_list.start_index }}-{{ results_list.end_index }}</h2>
-    <table class="results" border="0" cellpadding="0"  cellspacing="0" width="100%">
+<div class="container">
+    <div class="page-header">
+        <h1>Company Directory <small>{{ results_list.paginator.count }} companies - showing {{ results_list.start_index }}-{{ results_list.end_index }}</small></h1>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Company</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
 
         {% for company in results_list.object_list %}
         <tr>
-            <td style="width:30%" class="part_number">
+            <td>
                 <a href="{{ company.get_absolute_url }}">{{ company.name }}</a>
             </td>
-            <td class="part_desc">
+            <td>
                 {% if company.description %}
                 {{ company.description|truncatewords:10 }}
                 {% else %}
                 No company description
                 {% endif %}
             </td>
-            <td class="part_desc">
-                <a href="{{ part.company.get_absolute_url }}">{{ part.company.name }}</a>
-            </td>
         </tr>
         {% endfor %}
     </table>
-    <div class="pagination">
+
         {{ results_list.render }}
-    </div>
 
 </div>
 {% endblock %}
