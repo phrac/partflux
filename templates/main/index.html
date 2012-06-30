@@ -1,39 +1,119 @@
 {% extends "base/base_MAIN.html" %}
 
-{% block sitesearch %}
+{% block home_active %}class="active"{% endblock %}
+{% block breadcrumbs %}
 {% endblock %}
 
 {% block content %}
 {% load humanize %}
-<div class="center_content" style="text-align:center">
-    <br /><br />
-    <h1 class="clear">Search {{ part_count|intcomma }} Part Numbers</h1>
-    <form method="get" action="/search/"><p class="clear">
-        <input class="bigsearch" type="text" name="q" id="idxsearch" size="45" maxlength="100" />
-        <input type="submit" class="submit_big"  value="Go!"/></p>
-    </form>
-    <p style="font-size:1.5em">Try searching by a part number, a description, or an attribute.</p>
-    <h3>Need more help? <a href="/faq/">Check out our F.A.Q.</a></h3>
-    <br /><br />
-    <h3>We need your help to grow our database! <a href="{% url parts.views.addpartform %}">Add a new part number now!</a></h3>
-    <br /><br /><br />
+<div class="container">
+    <div class="row-center">
+        <div class="hero-unit-white hero-unit">
+            <h1>Search {{ part_count|intcomma }} part numbers</h1>
+            <p>Try searching by part number, description, or attributes.</p>
+            <form class="form-inline" method="get" action="/search/">
+                <input class="input-huge" type="text" name="q" id="idxsearch" size="45" maxlength="100" />
+                <button class="btn btn-huge btn-primary" type="submit">Find It!</button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span3 offset2">
+            <h3>From microchips...</h3>
+                <img src="{{ STATIC_URL }}images/microchip.png" />
+                
+            </div>
+            <div class="span3">
+                <img src="{{ STATIC_URL }}images/earthmover.png" />
+                <h3>to earth movers...</h3>
+            </div>
+            <div class="span3">
+                <img src="{{ STATIC_URL }}images/spacer.png" />
+                <h3>If it has a part number, Part Engine can help you find it</h3>
+            </div>
 
-    <h1 style="font-size:1.8em bold;color:#999;border-bottom:1px solid #ccc;">Recent Part Activity</h1>
-    <table width="100%">
-        <tr>
-            {% for part in recent %}
-            <td><a href="{{ part.get_absolute_url }}">{{ part.number }}</a></td>
-            {% if forloop.counter|divisibleby:5 %}
-            </tr>
-            <tr>
-        {% endif %}
-        {% endfor %}
-        <td></td>
-    </tr>
-    </table>
-    <br /><br />
-    <h3>Are you a company that would like to see your parts listed on partfindr? <a href="mailto:info@partfindr.net">Contact us</a>!</h3>
+        </div>
 </div>
+
+<div class="stripe stripe-color">
+    <div class="container">
+        <div id="download-now" class="row">
+            <div class="span12">
+                <h2>Part Engine <small>wants to index all the world's part numbers. We need your help. <a href="/users/login/">Join Now.</a></small></h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="stripe">
+    <div class="container">
+        <div class="row">
+            <div class="span3">
+                <h2>Our mission</h2>
+                <p class="justify">Part Engine's goals are lofty: <strong>index every part number in the world.</strong>
+                This goal is only possible with help from our users. We need help to enter parts,
+                verify data, and ensure that all information is of the utmost quality.</p>
+                <p>
+                Interested in helping? <a href="/users/register/">Register for a free account</a>.
+                </p>
+            </div>
+
+            <div class="span8 offset1">
+                <h2>Partfindr Indexes:</h2>
+                <div class="row">
+                    <div class="span2">
+                        <dl>
+                            <dt><h4><i class="icon-cog"></i> Part Information</h4></dt>
+                            <ul>
+                                <li>Part attributes</li>
+                                <li>Cross references</li>
+                                <li>Images</li>
+                                <li>Purchasing information</li>
+                            </ul>
+                        </dl>
+                    </div>
+                    <div class="span2">
+                        <dl>
+                            <dt><h4><i class="icon-briefcase"></i> Company Information</h4></dt>
+                            <ul>
+                                <li>Addresses</li>
+                                <li>Phone &amp; fax numbers</li>
+                                <li>Sales contacts</li>
+                                <li>Branch Locations</li>
+                                <li>Part Listings</li>
+                            </ul>
+                        </dl>
+                    </div>
+                    <div class="span2">
+                        <dl> 
+                            <dt><h4><i class="icon-wrench"></i> Assemblies & <a href="#" rel="tooltip" title="Bill of Material"> B.O.M.s</a></h4></dt>
+                            <ul>
+                                <li>Assemblies and sub-assemblies</li>
+                                <li>Lists of parts</li>
+                                <li>Public and private assemblies &amp; lists</li>
+                            </ul>
+                        </dl>
+                    </div>
+                    <div class="span2">
+                        <dl>
+                            <dt><h4><i class="icon-barcode"></i><a href="#" rel="tooltip" title="National/NATO Stock Number"> NSN</a> Information</h4></dt>
+                            <ul>
+                                <li><a href="#" rel="tooltip" title="Federal Supply Class">FSC</a> Codes</li>
+                                <li>Manufacturers</li>
+                                <li>Associated Part Numbers</li>
+                            </ul>
+                        </dl>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    $("[rel=tooltip]").tooltip();
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 {% endblock %}
 
 

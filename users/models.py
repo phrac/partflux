@@ -6,11 +6,11 @@ from django.conf import settings
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
-    reputation = models.IntegerField()
+    reputation = models.IntegerField(default=0)
     facebook_profile = models.URLField()
     twitter_profile = models.URLField()
     linkedin_profile = models.URLField()
-    apikey = models.CharField(max_length=128)
+    api_key = models.CharField(max_length=128)
     location = models.CharField(max_length=64)
     
 
@@ -25,6 +25,10 @@ class UserProfile(models.Model):
             return True
         else:
             return False
+
+    def increment_reputation(self, rep_points):
+        self.reputation += rep_points
+        self.save()
 
 
 

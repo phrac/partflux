@@ -1,0 +1,26 @@
+<table class="table table-striped">
+    {% for a in attributes %}
+    <tr {% if a.id == new_id %}id="new-attribute"{% endif %}>
+        <td>
+            {{ a.key }}:	
+        </td>
+        <td>
+            {{ a.value }}
+        </td>
+        <td>
+            {% if user.is_authenticated %}
+            <div class="btn-group">
+                <button class="btn btn-mini">Actions</button>
+                <button class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <a href="#"><i class="icon icon-flag"></i> Flag</a>
+                </ul>
+            </div>
+            {% else %}
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>

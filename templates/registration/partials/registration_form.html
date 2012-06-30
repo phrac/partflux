@@ -1,26 +1,50 @@
-<p style="font-size:1.3em;">
-Registration is 100% free and gives you access to millions of part numbers. Registration also allows you to enter metadata, cross references, and part comments.
-</p>
-<br /><br />
+<form class="well form-horizontal" method="post" action="{% url registration.views.register %}">
+    {% csrf_token %}
+    <div class="control-group">
+        <label class="control-label" for="id_username">User name</label>
+        <div class="controls">
+            <input id="id_username" type="text" class="span3" name="username" maxlength="30" placeholder="The name others will see you as" />
+        </div>
+    </div>
 
-    <form method="post" action="{% url registration.views.register %}">
-		{% csrf_token %}
-                <dl class="big_form">
-                    {{ form.username.errors }}
-                    <dt><label for="id_username">Username:</label></dt>
-                    <dd>{{ form.username }}</dd>
+    <div class="control-group">
+        <label class="control-label" for="id_username">First Name</label>
+        <div class="controls">
+            <input id="id_firstname" type="text" class="span3" name="firstname" maxlength="30" placeholder="Joe" />
+        </div>
+    </div>
 
-                    {{ form.email.errors }}
-                    <dt><label for="id_email">Email:</label></dt>
-                    <dd>{{ form.email }}</dd>
+    <div class="control-group">
+        <label class="control-label" for="id_username">Last Name</label>
+        <div class="controls">
+            <input id="id_lastname" type="text" class="span3" name="lastname" maxlength="30" placeholder="Public" />
+        </div>
+    </div>
 
-                    {{ form.password1.errors }}
-                    <dt><label for="id_password1">Password:</label></dt>
-                    <dd>{{ form.password1 }}</dd>
+    <div class="control-group">
+        <label class="control-label" for="id_email">Email</label>
+        <div class="controls">
+            <input id="id_email" type="text" class="span3" name="email" maxlength="30" placeholder="you@yourdomain.com" />
+            <p>Don't worry, we won't share your email with anyone.</p>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="id_username">Password</label>
+        <div class="controls">
+            <input id="id_password1" type="password" class="span3" name="password1" maxlength="30" />
+        </div>
+    </div>
 
-                    {{ form.password2.errors }}
-                    <dt><label for="id_password2">Password (again):</label></dt>
-                    <dd>{{ form.password2 }}</dd>
-                </dl>
-                <input style="float:left" class="submit" type="submit" value="Register for a partfindr account" />
-            </form>
+    <div class="control-group">
+        <label class="control-label" for="id_username">Password (again)</label>
+        <div class="controls">
+            <input id="id_password2" type="password" class="span3" name="password2" maxlength="30" />
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <input type="hidden" name="next" value="/" />
+        <button type="submit" class="btn btn-primary">Sign Up</button>
+        <button type="submit" class="btn btn-default">Clear Form</button>
+    </div>
+</form>

@@ -1,35 +1,55 @@
 {% extends "base/base_MAIN.html" %}
 {% load url from future %}
 
-{% block breadcrumbs %}
-> <a href="/users/">Users</a> > Register/Sign In
+{% block breadcrumb_links %}
+    <li>
+    <a href="/users/">Users</a>
+    <span class="divider">></span>
+    </li>
+    <li class="active">Register/Sign In</li>
 {% endblock %}
 
 {% block content %}
-<div class="center_content">
-	<h2>Already a member?</h2>
-	{% if form.errors %}
-	<h1>Your username and password didn't match. Please try again.</h1>
-	{% endif %}
-			<form method="post" action="{% url 'django.contrib.auth.views.login' %}">
-		{% csrf_token %}
-		<table class="input">
-			<tr>
-				<td class="input_big">{{ form.username.label_tag }}</td>
-				<td class="input_big">{{ form.username }}</td>
-			</tr>
-			<tr>
-				<td class="input_big">{{ form.password.label_tag }}</td>
-				<td class="input_big">{{ form.password }}</td>
-			</tr>
+<div class="container">
+    <div class="page-header">
+        <h1>Sign Up or Sign In</h1>
+    </div>
+    <div class="row">
+        <div class="span6">
+            <h2>Don't have an account? <br /><small>It takes under a minute to enjoy all the features of <b>Part Engine</b>!</small></h2>
+            {% include 'registration/partials/registration_form.html' %}
+        </div>
 
-			<tr>
-				<td><input class="submit" type="submit" value="Sign in" /></td>
-			</tr>
-		</table>
-		
-		<input type="hidden" name="next" value="/" />
-	</form>
+
+        <div class="span4 offset1">
+            <h2>Already a member?<br /><small>Sign in now</small></h2>
+            {% if form.errors %}
+            <h1>Your username and password didn't match. Please try again.</h1>
+            {% endif %}
+            
+            <form class="well form-vertical" method="post" action="{% url 'django.contrib.auth.views.login' %}">
+                {% csrf_token %}
+
+                <div class="control-group">
+                    <div class="controls">
+                        <input id="id_username" type="text" class="span3" name="username" maxlength="30" placeholder="User Name" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <input id="id_password" type="password" class="span3" name="password" maxlength="30" placeholder="Password" />
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <input type="hidden" name="next" value="/" />
+                    <button type="submit" class="btn btn-primary">Sign In</button>
+                    <button type="submit" class="btn btn-danger">Forgot Password</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
 </div>
 {% endblock %}
 

@@ -1,9 +1,10 @@
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.template import RequestContext
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
 from pure_pagination import Paginator, PageNotAnInteger, EmptyPage
 
 from django.contrib.auth.models import User
@@ -12,6 +13,8 @@ from django.core.files.storage import default_storage
 from parts.models import Part, Xref, PartImage, BuyLink, Attribute
 from companies.models import Company
 from parts.forms import MetadataForm, XrefForm, ImageUploadForm, BuyLinkForm
+from users.models import UserProfile
+import json
 
 def index(request):
     parts_list = Part.objects.all().order_by('-created_at')[:25]
@@ -20,9 +23,8 @@ def index(request):
                               {'parts_list': parts_list},
                               context_instance=RequestContext(request))
 
-def detail(request, company_slug, part_slug):
-    c = get_object_or_404(Company, slug=company_slug)
-    p = get_object_or_404(Part, slug=part_slug, company=c.id)
+def detail(request, part_id, company_slug, part_slug):
+    p = get_object_or_404(Part, id=part_id)
     
     xrefs = Xref.objects.filter(part=p.id).exclude(xrefpart=p.id)
     reverse_xrefs = Xref.objects.filter(xrefpart=p.id).exclude(part=p.id)
@@ -42,17 +44,24 @@ def detail(request, company_slug, part_slug):
                 request.flash.success = "URL added successfully"
             else:
                 request.flash.error = "Adding URL failed: %s" % status
-            return HttpResponseRedirect(reverse('parts.views.detail', args=[c.slug, p.slug]))
+            return HttpResponseRedirect(reverse('parts.views.detail', args=[part_id, c.slug, p.slug]))
 
     if 'metadata_button' in request.POST:
         metaform = MetadataForm(request.POST)
         if metaform.is_valid:
-            status = addmeta(request, p.pk)
+            status, new_id = addmeta(request, p.pk)
             if status is True:
                 request.flash.success = "Attribute added. Thanks for your contribution!"
             else:
                 request.flash.error = "Adding attribute failed: %s" % status
-            return HttpResponseRedirect(reverse('parts.views.detail', args=[c.slug, p.slug]))
+                
+            if request.is_ajax():
+                return render_to_response('parts/partials/attribute_table.html',
+                                          { 'attributes': attributes,
+                                            'new_id': new_id, })
+            else:
+                return HttpResponseRedirect(reverse('parts.views.detail',
+                                                    args=[part_id, c.slug, p.slug]))
 
     if 'xref_button' in request.POST:
         xrefform = XrefForm(request.POST)
@@ -62,7 +71,8 @@ def detail(request, company_slug, part_slug):
                 request.flash.success = "Cross reference added. Thanks for your contribution!"
             else:
                 request.flash.error = "Adding cross reference failed: %s" % status
-            return HttpResponseRedirect(reverse('parts.views.detail', args=[c.slug, p.slug]))
+            return HttpResponseRedirect(reverse('parts.views.detail',
+                                                args=[part_id, c.slug, p.slug]))
     
     if 'image_button' in request.POST:
         imageuploadform = ImageUploadForm(request.POST, request.FILES)
@@ -72,7 +82,8 @@ def detail(request, company_slug, part_slug):
                 request.flash.success = "Image upload success. Thanks for your contribution!"
             else:
                 request.flash.error = "Image upload failed: %s" % status
-            return HttpResponseRedirect(reverse('parts.views.detail', args=[c.slug, p.slug]))
+            return HttpResponseRedirect(reverse('parts.views.detail',
+                                                args=[part_id, c.slug, p.slug]))
 
     return render_to_response('parts/detail.html', 
                               {'part': p, 
@@ -97,21 +108,27 @@ def addmeta(request, part_id):
         attr = Attribute(key=key, value=value, user=request.user, part=p)
         try:
             attr.save()
-            return True
+            profile = request.user.get_profile()
+            profile.increment_reputation(settings.REP_VALUE_NEW_ATTRIBUTE)
+            return True, attr.pk
         except IntegrityError:
             return 'Attribute already exists'
 
 @login_required
 def addbuylink(request, part_id):
+    print request.POST
     p = get_object_or_404(Part, pk=part_id)
     buylinkform = BuyLinkForm(request.POST)
+    print 'in addbuylink()'
     if buylinkform.is_valid():
+        print 'form valid'
         url = buylinkform.cleaned_data['url']
         company = buylinkform.cleaned_data['company'].strip().upper()
         price = buylinkform.cleaned_data['price']
         c, _created = Company.objects.get_or_create(name=company)
         buylink = BuyLink(part=p, company=c, price=price, url=url)
         try:
+            print 'saving link'
             buylink.save()
             return True
         except IntegrityError:
@@ -187,6 +204,7 @@ def uploadimage(request, part_id):
     
         """Handle the file upload"""
         new_filename = "%s_%s" % (str(part_id), f.name)
+        print new_filename
         image = PartImage()
         image.user = request.user
         image.image.save(new_filename, f)

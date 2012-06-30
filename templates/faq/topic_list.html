@@ -4,37 +4,46 @@
 Frequently Asked Questions | partfindr
 {% endblock %}
 
-{% block breadcrumbs %}
-> Frequently Asked Questions
+{% block help_active %}active{% endblock %}
+
+{% block breadcrumb_links %}
+<li>
+<a href="#">Help</a> <span class="divider">></span>
+</li>
+<li class="active">
+Frequently Asked Questions
+</li>
 {% endblock %}
 
 {% block content %}
-<div class="left">
-    <h1 style="border-bottom:1px solid #ccc;margin-bottom:20px;">About Partfindr / F.A.Q.</h1>
-    
-    {% for topic in topics %}
-        <h2>{{ topic }}</h2>
-        {% for q in topic.questions.all %}
-            <h3 class="faq_q"><a name="{{ q.slug }}">{{ q.text }}</a></h3>
-            <p class="reading">{{ q.answer|safe }}</p>
-        {% endfor %}
-    {% endfor %}
-</div>
-
-<div class="right">
-    <h3>Table of contents</h3>
-    <div class="right_articles" style="font-size:1.2em">
-        {% for topic in topics %}
-        <h4>{{ topic }}</h4>
-        <ul class="bullets">
+<div class="container">
+    <div class="page-header">
+        <h1>Frequently Asked Questions</h1>
+    </div>
+    <div class="row">
+        <div class="span8">
+            {% for topic in topics %}
+            <h2>{{ topic }}</h2>
             {% for q in topic.questions.all %}
-            <li><a href="{% url faq_topic_list %}#{{ q.slug }}">{{ q.text }}</a></li>
-        {% endfor %}
-        </ul>
-    <br />
-    {% endfor %}
-</div>
+            <h3><a name="{{ q.slug }}">{{ q.text }}</a></h3>
+            <p class="justify">{{ q.answer|safe }}</p>
+            {% endfor %}
+            {% endfor %}
+        </div>
 
+        <div class="well span3">
+            <div class="right_articles" style="font-size:1.2em">
+                {% for topic in topics %}
+                <h3>{{ topic }}</h3>
+                <ul>
+                    {% for q in topic.questions.all %}
+                    <li><a href="{% url faq_topic_list %}#{{ q.slug }}">{{ q.text }}</a></li>
+                    {% endfor %}
+                </ul>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 </div>
 
 {% endblock %}

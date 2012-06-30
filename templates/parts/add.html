@@ -1,47 +1,73 @@
 {% extends "base/base_MAIN.html" %}
 
-{% block breadcrumbs %}
-> <a href="{% url parts.views.index %}">Parts</a> > Add new part
+{% block breadcrumb_links %}
+    <li>
+        <a href="{% url parts.views.index %}">Parts</a>
+        <span class="divider">></span>
+    </li>
+    <li class="active">Add new part</li>
 {% endblock %}
 
 {% block content %}
-<div class="left">
-    <h2>Add a new part</h2>
-    {% if user.is_authenticated %}
-    <form action="" method="post">
-        {% csrf_token %}
-        <dl class="add_part_form">
-            {{ partform.part.errors }}
-            <dt><label for="id_part">Part Number:</label></dt>
-            <dd>{{ partform.part }}</dd>
+<div class="container">
+    <div class="page-header">
+        <h1>Add a new part</h1>
+    </div>
+    <div class="row">
+        <div class="span6">
+            {% if user.is_authenticated %}
+            <form class="well form-horizontal" action="" method="post" autocomplete="off">
+                {% csrf_token %}
+                <div class="control-group">
+                    <label class="control-label" for="id_part">Part #</label>
+                    <div class="controls">
+                        {{ partform.part }}
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label" for="id_company">Company Name</label>
+                    <div class="controls">
+                        {{ partform.company }}
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label" for="id_description">Description</label>
+                    <div class="controls">
+                        {{ partform.desc }}
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Add Part</button>
+                    <button type="submit" class="btn btn-default">Clear Form</button>
+                </div>
+            </form>
+        
+            {% else %}
+            <h3 class="add">{% include "partials/sign_in.html" with action="add a new part." %}</h3>
+            {% endif %}
+        </div>
 
-            {{ partform.company.errors }}
-            <dt><label for="id_company">Company:</label></dt>
-            <dd>{{ partform.company }}</dd>
 
-            {{ partform.desc.errors }}
-            <dt><label for="id_desc">Part Description:</label></dt>
-            <dd>{{ partform.desc }}</dd>
-        </dl>
-
-        <input type="submit" value="Add new part" class="submit" name="metadata_button" />
-    </form>
-
-    {% else %}
-    <h3 class="add">{% include "partials/sign_in.html" with action="add a new part." %}</h3>
-    {% endif %}
-
-</div>
-
-<div class="right">
-    <h3>Tips for adding parts</h3>
-    <div class="right_articles">
-        <ul class="bullets">
-            <li>Make sure your part number is complete and accurate</li>
-            <li>Make sure the company name is correct</li>
-            <li>Enter a great description so others are able to easily find your part</li>
-            <li>After adding a new part, enter any information about the part that may help others identify it correctly</li>
-        </ul>
+        <div class="span6">
+                <h3>Tips for adding parts <br /><small>Make it easy for users to find the information they need.</h3>
+                <div class="right_articles">
+                    <dl class="dl-horizontal">
+                        <dt>Part #:</dt>
+                        <dd>Make sure the new part has the correct part number, including any spaces,
+                        dashes, periods, etc.</dd>
+                        <dt>Company:</dt>
+                        <dd>Double check the manufacturer of the part and ensure that it is complete and spelled correctly.</dd>
+                        <dt>Description:</dt>
+                        <dd>Provide as much detail as possible so that users can easily find your part in search results.</dd>
+                        <dt>Attributes:</dt>
+                        <dd>After creating a part number, be sure to enter key information such as
+                        <strong>weight</strong>, <strong>finish</strong>, <strong>color</strong>, etc.</dd>
+                    </dl>
+                </div>
+        </div>
     </div>
 </div>
 {% endblock %}

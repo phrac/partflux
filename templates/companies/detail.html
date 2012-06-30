@@ -7,68 +7,86 @@
 {{ company.name }} | partfindr
 {% endblock %}
 
-{% block breadcrumbs %}
-> <a href="{% url companies.views.index %}">Companies</a> > {{ company.name }}
+{% block companies_active %}class="active"{% endblock %}
+
+{% block breadcrumb_links %}
+    <li>
+        <a href="{% url companies.views.index %}">Companies</a>
+        <span class="divider">></span>
+    </li>
+    <li class="active">{{ company.name }}</li>
 {% endblock %}
+
 
 {% block content %}  
 
-<div class="left">
-    <h2>{{ company.name }}</h2>
-    {% if company.description %}
-    <p class="desc">{{ company.description|linebreaksbr|truncatewords:150 }}</p>
-    {% else %}
-    <p class="desc">No company description available</p>
-    {% endif %}
-
-    <h2>Part numbers by {{ company.name }} ({{ parts_list.paginator.count }} parts)</h2>
-    <table class="results" border="0" cellpadding="0"  cellspacing="0" width="100%">
-
-        {% for part in parts_list.object_list %}
-        <tr>
-            <td style="width:25%" class="part_number">
-                <a href="{{ part.get_absolute_url }}">{{ part.number }}</a>
-            </td>
-            <td class="part_desc">
-                {{ part.description|truncatewords:10 }}
-            </td>
-            
-        </tr>
-        {% endfor %}
-    </table>
-    <div class="pagination">
-        {{ parts_list.render }}
+<div class="container">
+    <div class="page-header">
+        <h1>{{ company.name }}</h1>
     </div>
-</div>
-
-<div class="right">
-    <h3>{{ company.name }}</h3>
-    <div class="right_articles">
-        <div class="company_details">
-            {% if company.logo %}
-            {% thumbnail company.logo "200" as im %}
-            <img src="{{ im.url }}" alt="{{company.name }} logo" />
-            {% endthumbnail %}
+    
+    <div class="row">
+        <div class="span9">
+                        
+            {% if company.description %}
+            <p>{{ company.description|linebreaksbr|truncatewords:150 }}</p>
+            {% else %}
+            <p>No company description available</p>
             {% endif %}
-            {% if company.url %}{{ company.url|urlize }}<br />{% endif %}
-            {% if company.address1 %}{{ company.address1 }}<br />{% endif %}
-            {% if company.address2 %}{{ company.address2 }}<br />{% endif %}
-            {% if company.city %}{{ company.city }}, {{ company.state }}&nbsp;&nbsp;{{ company.zipcode }} {{ company.country }}<br /><br />{% endif %}
-            {% if company.phone %}Phone: {{ company.phone }}<br />{% endif %}
-            {% if company.fax %}Fax: {{ company.fax }}<br />{% endif %}
-            {% if company.email %}Email: {{ company.email|urlize }}<br />{% endif %}
+        
+            <h2>Part numbers by {{ company.name }} <small>{{ parts_list.paginator.count|intcomma }} parts</small></h2>
+            <table class="table table-striped">
+        
+                {% for part in parts_list.object_list %}
+                <tr>
+                    <td>
+                        <a href="{{ part.get_absolute_url }}">{{ part.number }}</a>
+                    </td>
+                    <td>
+                        {{ part.description|truncatewords:20 }}
+                    </td>
+                    
+                </tr>
+                {% endfor %}
+            </table>
+
+                {{ parts_list.render }}
 
         </div>
-    </div>
 
-    {% if user.is_staff %}
-    <h3>Company Actions</h3>
-    <div class="right_articles">
-        <ul>
-            <li><a href="{% url companies.views.edit company_slug=company.slug %}">Edit company details</a></li>
-            <li></li>
-        </ul>
+        <div class="span3">
+            <div class="well">
+                <h3>{{ company.name }}</h3>
+                <div class="right_articles">
+                    <div class="company_details">
+                        {% if company.logo %}
+                        {% thumbnail company.logo "200" as im %}
+                        <img src="{{ im.url }}" alt="{{company.name }} logo" />
+                        {% endthumbnail %}
+                        {% endif %}
+                        {% if company.url %}{{ company.url|urlize }}<br />{% endif %}
+                        {% if company.address1 %}{{ company.address1 }}<br />{% endif %}
+                        {% if company.address2 %}{{ company.address2 }}<br />{% endif %}
+                        {% if company.city %}{{ company.city }}, {{ company.state }}&nbsp;&nbsp;{{ company.zipcode }} {{ company.country }}<br /><br />{% endif %}
+                        {% if company.phone %}Phone: {{ company.phone }}<br />{% endif %}
+                        {% if company.fax %}Fax: {{ company.fax }}<br />{% endif %}
+                        {% if company.email %}Email: {{ company.email|urlize }}<br />{% endif %}
+            
+                    </div>
+                </div>
+            
+                {% if user.is_staff %}
+                <h3>Company Actions</h3>
+                <div class="right_articles">
+                    <ul>
+                        <li><a href="{% url companies.views.edit company_slug=company.slug %}">Edit company details</a></li>
+                        <li></li>
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+        </div>
     </div>
-    {% endif %}
 </div>
+
 {% endblock %}

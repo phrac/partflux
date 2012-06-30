@@ -86,7 +86,7 @@ class Part(models.Model):
     
     @models.permalink
     def get_absolute_url(self):
-        return ('parts.views.detail', [str(self.company.slug), str(self.slug)])
+        return ('parts.views.detail', [self.id, str(self.company.slug), str(self.slug)])
 
 class Attribute(models.Model):
     part = models.ForeignKey('Part')

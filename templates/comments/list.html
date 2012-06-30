@@ -1,21 +1,23 @@
 {% load humanize %}
 {% load comments %}
 
-<h2 style="margin-top: 20px" class="clear-blue">Part comments ({{ comment_count }}) | <a href="#cnew">Write your own comment</a></h2>
 
+
+<div id="comments">
 {% if comment_count == 0 %}
-    <h3 class="add">No comments, be the first to add one.</h3>
+<h3 class="add">No comments, be the first to add one.</h3>
 {% else %}
-        {% for comment in comment_list %}
-        <div class="commentbox">
-            <a name="c{{ comment.id }}"></a>
-            <div style="float:right;font-weight:normal;font-size:.8em;">
-                <p><a href="/comments/flag/{{ comment.id }}/">flag</a> <a href="{% get_comment_permalink comment %}">permalink</a></p>
-            </div>
-            <dl class="comments" id="comments">
-                <dt>{{ comment.user }} wrote {{ comment.submit_date|naturalday }}:</dt>
-                <dd>{{ comment.comment }}</dd>
-            </dl>
-        </div>
-        {% endfor %}
+{% for comment in comment_list %}
+<div class="commentbox">
+    <a name="c{{ comment.id }}"></a>
+    <div style="float:right;font-weight:normal;font-size:.8em;">
+        <p><a href="/comments/flag/{{ comment.id }}/">flag</a> <a href="{% get_comment_permalink comment %}">permalink</a></p>
+    </div>
+    <dl class="comments" id="comments">
+        <dt>{{ comment.user }} wrote {{ comment.submit_date|naturalday }}:</dt>
+        <dd>{{ comment.comment }}</dd>
+    </dl>
+</div>
+{% endfor %}
 {% endif %}
+</div>

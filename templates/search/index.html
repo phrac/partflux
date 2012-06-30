@@ -1,12 +1,90 @@
 {% extends "base/base_MAIN.html" %}
 
-{% block breadcrumbs %}
-> <a href="/search/">Advanced Search</a>
+{% block title %}
+Advanced Search | partfindr
 {% endblock %}
 
+{% block breadcrumb_links %}
+<li class="active">Advanced Search</li>
+{% endblock %}
+
+
 {% block content %}
-	<div class="center_content">
-		<h2>Advanced part search</h2>
-	</div>
+<div class="container">
+    <div class="page-header">
+        <h1>Advanced Search</h1>
+    </div>
+    <div class="row">
+        <div class="span10">
+            <p>We are continually working to improve our search experience by adding more features and capabilities. This page
+            is intended to document our search system to help you find exactly the parts you are looking for.
+            </p>
+        </div>
+    </div>
+    
+    <div class="page-header">
+        <h2>Queries <small>How to use the search box to find what you are looking for</small></h2>
+    </div>
+        
+
+    <div class="row">
+        <div class="span6">
+        <h3>Standard search</h3>
+        <p>We implement all of the standard search features that you would expect to find
+        on any major search engine. These include exact phrase, keyword, or, and none types.</p>
+        
+        <p>You can use these features to narrow down your results and find exactly what you
+        are looking for.</p>
+            
+        </div>
+        <div class="well span5">
+        <h3>Using standard search <small>some examples</small></h3>
+        <p>Text that is <code>highlighted like this</code> is what you would type in the search box.</p>
+        <dl>
+            <dt>Match all keywords:</dt>
+            <dd>Type important terms: <code>jetta brake pad</code></dd>
+            
+            <dt>Match an exact phrase:</dt>
+            <dd>Put <code>"</code> around your terms: <code>"timken roller bearing"</code></dd>
+            
+            <dt>Exclude certain terms and phrases:</dt>
+            <dd>Prefix terms with <code>-</code>: <code>jetta brake -disc</code></dd>
+            
+            <dt>Find one thing or another:</dt>
+            <dd>Include <code>OR</code> in your query: <code>jetta brake pad OR disc</code></dd>
+        </dl>
+        </p>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="span6">
+        <h3>Wildcard search</h3>
+        <p>Wildcards are helpful specifically when you are searching by part number.
+        Wildcards help find the part you're looking for if you don't know the full part number.
+        </p>
+        <p>For example, say you just pulled the alternator out of your car and you see:
+        9357<strong>X</strong>564 where the <strong>X</strong> is smudged out. With wildcard searches, you can
+        easily find that part using a <code>?</code> wildcard. You would simply search for <code>9357?564</code>.
+        </p>
+        <p>Partfindr currently has two wildcards: <code>?</code> and <code>*</code>.</p>
+            
+        </div>
+        <div class="well span5">
+        <h3>Using wildcards <small>some examples</small></h3>
+        <p>Text that is <code>highlighted like this</code> is what you would type in the search box.</p>
+        <dl>
+            <dt>Find all part numbers starting with digits <strong>4196</strong>:</dt>
+            <dd>Query: <code>4196*</code></dd>
+            <dt>Find part numbers starting with 419 with the 4 character unknown:</dt>
+            <dd>Query: <code>419?*</code></dd>
+            <dt>Find a part number with one or more missing digits:</dt>
+            <dd>Query: <code>9?57?564</code></dd>
+        </dl>
+        </p>
+        </div>
+    </div>
+</div>
 {% endblock %}
 

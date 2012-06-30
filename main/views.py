@@ -18,3 +18,7 @@ def index(request):
                               {'recent' : recent_activity,},
                               context_instance=RequestContext(request))
 
+def status_messages(request):
+    if request.is_ajax():
+        return render_to_response('partials/status_messages.html', {}, context_instance=RequestContext(request))
+

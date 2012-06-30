@@ -1,0 +1,132 @@
+{% load gravatar %}
+{% load humanize %}
+{% load analytics %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css" type="text/css" />
+        <title>{% block title %}partfindr | find information about ANY part number {% endblock %}</title>
+        <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700|PT+Mono|Oxygen' rel='stylesheet' type='text/css' />
+        <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/redmond/jquery-ui.css" />
+        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+        {% block head %}
+        {% endblock %}
+    </head>
+    <body>
+        <div class="bar" style="border-bottom:1px solid #000;" >
+            <div style="padding:0px;width:980px;margin:0 auto;">
+                <ul>
+                    <li class="browse_category">&nbsp;</li>
+                    <li><a href="{% url faq_topic_list %}">Help</a></li>
+                    <li><b><a href="{% url parts.views.addpartform %}">Add Part</a></b></li>
+                    <li><a href="{% url search.views.index %}">Advanced Search</a></li>
+                    <li><a href="{% url companies.views.index %}">Companies</a></li>
+                    <li><a href="{% url parts.views.index %}">Parts</a></li>
+                </ul>
+                <p style="padding-top:5px;font-size:1.0em;">Indexing {{ part_count|intcomma }} parts | {{ xref_count|intcomma }} xrefs</p>
+
+            </div>
+        </div>
+        <div class="content">
+            <div class="header">
+                <div class="top_info">
+                    <div class="top_info_right">
+                        {% if user.is_authenticated %}
+                        <div style="text-align:center;float:left; font-size:20px; font-weight:bold;">
+                            {% gravatar user.email 40 %}
+                            <br />
+                            {{ user_reputation }}
+                            <br />
+                        </div>
+                        <p>Welcome {{ user.username }} (<a href="/users/logout/">Log out</a>)</p>
+                        <!-- <p>Profile - Messages - Karma - Part Scores</p> -->
+                        {% else %}
+                        <p>Please <a href="/users/login/">Sign in</a> or <a href="/users/register/">Register</a></p>
+                        <form method="post" action="/users/login/">
+                            {% csrf_token %}
+                            <table>
+                                <tr >
+                                    <td>user</td><td class="small_login"><input id="id_username" type="text" class="required" name="username" maxlength="30" /></td>
+                                    <td>pass</td><td class="small_login"><input id="id_password" type="password" class="required" name="password" /></td>
+                                    <td><input class="submit_small" type="submit" value="Sign In" /></td>
+                                </tr>
+                                <tr><td colspan="3"><a href="/users/password/reset/">Forgot your password?</a></td></tr>
+                            </table>
+                            <p><input type="hidden" name="next" value="{{ current_path }}" /></p>
+                        </form>
+
+                        {% endif %}
+                    </div>		
+                </div>
+                <div class="logo">
+                    <h1>
+                        <a href="/"><img src="{{ STATIC_URL}}img/logo.png" alt="partfindr" /><sup>ALPHA</sup></a>
+                    </h1>
+                </div>
+            </div>
+
+            {% block sitesearch %}
+            <div class="search_field">
+                <form method="get" action="/search/">
+                    <div class="search_form">
+                        <p>
+                        <input type="submit" value="Search" class="submit" />
+                        Search parts:  
+                        <input id="id_searchbox" type="text" name="q" class="search" value="{{ searchterm }}" />&nbsp; 
+                        <script type="text/javascript">
+                        $('#id_searchbox').autocomplete({source: '{% url search.autocomplete.autocomplete %}?type=part', minLength: 3});</script>
+
+                        </p>
+                    </div>
+                </form>
+                <a href="/">Home</a>
+                {% block breadcrumbs %}
+
+                {% endblock %}
+            </div>
+            {% endblock %}
+            
+            {% if flash.error %}
+            <div class="error_message">
+                {% for m in flash.error %}
+                {{ m }}
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% if flash.success %}
+            <div class="success_message">
+                {% for m in flash.success %}
+                {{ m }}
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+            <div class="horizontal-line">
+                &nbsp;
+            </div>
+
+            {% block content %}{% endblock %}
+            <div class="push"></div>	
+        </div>
+
+        <div class="footer">
+            <div style="padding:0px;width:980px;margin:0 auto;">
+                <p>
+                <a href="{% url faq_topic_list %}">About</a> | <a href="http://blog.partfindr.net">Blog</a>
+                | <a href="/privacy/">Privacy</a> 
+                | <a href="https://twitter.com/#!/partfindr">Follow us on Twitter</a> | 
+                Valid <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> and <a href="http://validator.w3.org/check?uri=referer">XHTML</a>
+                <br />
+                &copy; Copyright 2011-2012 partfindr.net, a disflux, LLC. production.
+                </p>
+                <br />
+            </div>
+        </div>
+        {% analytics "UA-29058601-1" %}
+        {{ sql_queries }}
+    </body>
+</html>

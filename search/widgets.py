@@ -33,7 +33,30 @@ class JQueryAutoComplete(forms.TextInput):
         if self.options:
             options += ', %s' % str(self.options).strip('{}"').replace('"', '')
 
-        return u'$(\'#%s\').autocomplete({source: %s%s});' % (field_id, source, options)
+        return u'''<script type="text/javascript">
+                        $("#%s").typeahead({
+                            ajax: {
+                                url: %s,
+                                timeout: 500,
+                                displayField: "label",
+                                triggerLength: 3,
+                                method: "get",
+                                loadingClass: "loading-circle",
+                                preDispatch: function (query) {
+                                    return {
+                                        term: query,
+                                    }
+                                },
+                                preProcess: function (data) {
+                                    if (data.success === false) {
+                                        return false;
+                                    }
+                                    return data;
+                                }
+                            }
+                        });
+                   </script>''' % (field_id, source)
+
 
     def render(self, name, value=None, attrs=None):
         final_attrs = self.build_attrs(attrs, name=name)
@@ -43,10 +66,9 @@ class JQueryAutoComplete(forms.TextInput):
         if not self.attrs.has_key('id'):
             final_attrs['id'] = 'id_%s' % name    
         
-        return mark_safe(u'''<input type="text" %(attrs)s/>
-        <script type="text/javascript">
-        %(js)s</script>
-        ''' % {
+        return mark_safe(u'''<input type="text" %(attrs)s data-provide="typeahead"/>
+                         %(js)s
+                         ''' % {
             'attrs' : flatatt(final_attrs),
             'js' : self.render_js(final_attrs['id']),
         })

@@ -1,21 +1,35 @@
 {% extends "base/base_MAIN.html" %}
 
-{% block breadcrumbs %}
-> <a href="/search/">Search</a> > <a href="/search/results/?q={{ searchterm }}">Results</a> > "{{ searchterm }}"
+{% block breadcrumb_links %}
+    <li>
+        <a href="{% url search.views.index %}">Search</a>
+        <span class="divider">></span>
+    </li>
+    <li class="active">Results</li>
 {% endblock %}
 
 {% block content %}
-<div class="center_content">
-    <h2>{% block searchstats %}{{ results_list.paginator.count }} part numbers match "<i>{{ searchterm }}</i>" - showing {{ results_list.start_index }}-{{ results_list.end_index }}{% endblock %}</h2>
-    <table class="results" border="0" cellpadding="0"  cellspacing="0" width="100%">
+<div class="container">
+    <div class="page-header">
+        <h1>{% block searchstats %}{{ results_list.paginator.count }} part numbers match "<i>{{ searchterm }}</i>" <small>showing {{ results_list.start_index }}-{{ results_list.end_index }}{% endblock %}</small></h1>
+    </div>
+    
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Part #</th>
+                <th>Description</th>
+                <th>Company</th>
+            </tr>
+        </thead>
         {% for result in results_list.object_list %}
 	    {% include "search/includes/parts/part.html" %}
         {% endfor %}
     </table>
 
-    <div class="pagination">
-        {{ results_list.render }}
-    </div>
+
+    {{ results_list.render }}
+
     {% include "partials/add_part_to_db.html" %}
 </div>
 

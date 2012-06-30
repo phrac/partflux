@@ -16,11 +16,16 @@ class XrefForm(forms.Form):
     part = forms.CharField(
         widget=JQueryAutoComplete(
             source='/search/autocomplete/?type=part',
-            attrs={'max_length':48,},
+            attrs={'max_length':48, 'placeholder':'New Part #'},
             options={"minLength":3}))
 
-    company = forms.CharField(widget=JQueryAutoComplete(source='/search/autocomplete/?type=company',
-                                                        attrs={'max_length':48,}))
+    company = forms.CharField(
+                              widget=JQueryAutoComplete(
+                                  source='/search/autocomplete/?type=company',
+                                  attrs={'max_length':48,
+                                         'placeholder':'Company Name'
+                                        }))
+
     desc = forms.CharField(max_length=256, required=False)
     copy_attrs = forms.BooleanField(required=False)
     

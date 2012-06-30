@@ -1,23 +1,35 @@
 {% load comments %}
 
-<div style="margin-top:20px"></div>
-<a name="cnew"></a>
-<h2 class="clear-blue">Add new comment</h2>
-<form action="{% comment_form_target %}" method="post">
-    {% csrf_token %}
-    <dl>
-        <dt><label for="id_comment">Comment:</label></dt>
-        <dd>{{ form.comment }}</dd>
-
-    </dl>
-    <div style="display:none">{{ form.honeypot }}</div>
-    <div>
-        {{ form.timestamp }}
-        {{ form.security_hash }}
-        {{ form.object_pk }}
-        {{ form.content_type }}
-        <input type="hidden" name="next" value="{{ current_path }}" />
-        <input type="submit" value="Post" class="submit" name="submit" />
-        <input type="submit" value="Preview" class="submit" name="preview" />
+<div class="modal hide" id="comment">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+        <h2>Comment on {{ part.number }}</h2>
     </div>
-</form>
+    <div class="modal-body">
+        <form class="form-horizontal" method="post">
+            {% csrf_token %}
+            
+            <div class="control-group">
+                <label class="control-label" for="id_comment">Comment</label>
+                <div class="controls">
+                    <textarea class="span3 input-xlarge" id="id_comment" rows="6" name="comment"></textarea>
+                    <p>Your comment</p>
+                </div>
+            </div>
+            
+            <div style="display:none">{{ form.honeypot }}</div>
+            <div>
+                {{ form.timestamp }}
+                {{ form.security_hash }}
+                {{ form.object_pk }}
+                {{ form.content_type }}
+                <input type="hidden" name="next" value="{{ current_path }}" />
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Post</button>
+                    <button type="submit" class="btn">Preview</button>
+                    <button class="btn" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
