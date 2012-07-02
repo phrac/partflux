@@ -35,18 +35,14 @@
 <meta itemprop="image" content="{{ current_domain }}{{ STATIC_URL }}images/partfindr_logo_big.png" />
 {% endfor %}
 
-<<<<<<< local
 <link rel="stylesheet" href="{{ STATIC_URL }}js/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
 <script type="text/javascript" src="{{ STATIC_URL }}js/fancybox/jquery.fancybox.pack.js"></script>
 <script type="text/javascript">
-    $(document).ready(function() {
-=======
     <link rel="stylesheet" href="{{ STATIC_URL }}js/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
     <script type="text/javascript" src="{{ STATIC_URL }}js/fancybox/jquery.fancybox.pack.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/jeditable.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
->>>>>>> other
             $("#lightbox").fancybox({
                 'transitionIn'  :   'elastic',
                 'transitionOut' :   'elastic',
@@ -58,16 +54,7 @@
                 indicator : 'Saving...',
                 tooltip : 'Click to edit...'
             });
-<<<<<<< local
-<<<<<<< local
 </script>
-=======
-=======
-        });
-            
->>>>>>> other
-    </script>
->>>>>>> other
 {% endblock %}
 
 
