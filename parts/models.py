@@ -43,7 +43,7 @@ class Part(models.Model):
         self.number = self.number.strip().upper()
         self.description = self.description.strip().upper()
         self.slug = slugify(self.number)
-        self.update_ES()
+        #self.update_ES()
         super(Part, self).save(*args, **kwargs)
 
     @models.permalink
@@ -119,21 +119,21 @@ def update_ES(sender, instance, **kwargs):
 
     """
     es = ES(settings.ES_HOST)
-    attrlist, attrstring = self.prepare_attrs()
+    attrlist, attrstring = prepare_attrs(instance)
     es.index(
         {
-            "pgid" : self.id, 
-            "number" : self.number, 
-            "company" : self.company.name, 
+            "pgid" : instance.id, 
+            "number" : instance.number, 
+            "company" : instance.company.name, 
             "attrstring" : attrstring,
-            "desc" : self.description,
+            "desc" : instance.description,
             "attributes" : attrlist,
         }, 
-        "parts", "part-type", self.id
+        "parts", "part-type", instance.id
     )
     es.refresh('parts')
 
-def prepare_attrs(self):
+def prepare_attrs(instance):
     """
     Turn the hstore attribute column into a dict & string for storage in
     ElasticSearch
@@ -141,7 +141,7 @@ def prepare_attrs(self):
     """
     attrlist = []
     attrstring = ''
-    attributes = Attribute.objects.filter(part=self)
+    attributes = Attribute.objects.filter(part=instance.id)
     for a in attributes:
         attr = {}
         attr['key'] = a.key
