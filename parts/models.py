@@ -149,6 +149,6 @@ class BuyLink(models.Model):
 class PartModerator(CommentModerator):
     email_notification = True
 
-moderator.register(Part, PartModerator)
+#moderator.register(Part, PartModerator)
 
 
