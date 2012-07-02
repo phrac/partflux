@@ -37,6 +37,7 @@
 
     <link rel="stylesheet" href="{{ STATIC_URL }}js/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
     <script type="text/javascript" src="{{ STATIC_URL }}js/fancybox/jquery.fancybox.pack.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jeditable.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             $("#lightbox").fancybox({
@@ -46,7 +47,12 @@
                 'speedOut'      :   200, 
                 'overlayShow'   :   false
                 });
+            $('.edit').editable('http://www.example.com/save.php', {
+                indicator : 'Saving...',
+                tooltip : 'Click to edit...'
             });
+        });
+            
     </script>
 {% endblock %}
 
@@ -54,7 +60,7 @@
 {% block content %}
 <div class="container">
     <div class="page-header">
-        <h1>{{ part.number }} by {{ part.company }} <br /><small>{{ part.description }}</small></h1>
+        <h1>{{ part.number }} by {{ part.company }} <br /><small><div class="edit" id="div_1">{{ part.description }}</div></small></h1>
     </div>
     <div class="row">
         <div class="span9">
