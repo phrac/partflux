@@ -182,6 +182,7 @@ INSTALLED_APPS = (
     'sorl.thumbnail',
     'django_gravatar',
     'faq',
+    'tastypie',
     # partfindr apps    
     'parts',
     'companies',

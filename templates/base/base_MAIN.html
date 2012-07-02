@@ -72,7 +72,7 @@
                             <img src="{% gravatar_url user.email 25 %}" /><b> {{ user.username }}</b><b class="caret"></b>
                         </a>
                             <ul class="dropdown-menu">
-                                <li><a href="#"><i class="icon-user"></i> Profile</a></li>
+                                <li><a href="{% url users.views.view_profile user.username %}"><i class="icon-user"></i> Profile</a></li>
                                 <li><a href="#"><i class="icon-cog"></i> Settings</a></li>
                                 <li class="divider"></li>
                                 <li><a href="#"><i class="icon-wrench"></i> My Parts</a></li>

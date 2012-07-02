@@ -1,8 +1,17 @@
 from django.conf.urls.defaults import patterns, include, url
-from django.contrib.auth import views as auth_views
 from django.contrib.sitemaps import FlatPageSitemap, GenericSitemap
 from django.contrib import admin
+from tastypie.api import Api
+from partfindr.api import PartResource, AttributeResource, CompanyResource, UserResource
+
 admin.autodiscover()
+
+# setup the API urls
+v1_api = Api(api_name='v1')
+v1_api.register(PartResource())
+v1_api.register(AttributeResource())
+v1_api.register(CompanyResource())
+v1_api.register(UserResource())
 
 
 urlpatterns = patterns('',
@@ -34,20 +43,10 @@ urlpatterns = patterns('',
     
     # URLs for users
     
-    # Uncomment the below URL to disable users section                   
-    #url(r'^users/.*', 'django.views.generic.simple.direct_to_template',
-    #    {'template': 'users/disabled.html'}),
+    (r'^users/', include('users.urls')),
 
-    url(r'^users/logout/$',
-       auth_views.logout,
-       {'next_page': '/'}),
-    
-    url(r'^users/password/reset/$',
-       auth_views.password_reset,
-       {'template_name': 'registration/pwreset.html'}
-      ),
-    
-    (r'^users/', include('registration.urls')),
+    # API URLs
+    (r'^api/', include(v1_api.urls)),
 
     # Admin related urls
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
