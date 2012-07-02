@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 from django.contrib.comments.moderation import CommentModerator, moderator
 from django.template.defaultfilters import slugify
@@ -26,7 +27,7 @@ class Part(models.Model):
     nsn = models.ForeignKey(Nsn, null=True)
     images = models.ManyToManyField('PartImage')
     source = models.URLField()
-    
+
     def __unicode__(self):
         return self.number
 
@@ -44,46 +45,7 @@ class Part(models.Model):
         self.slug = slugify(self.number)
         self.update_ES()
         super(Part, self).save(*args, **kwargs)
-    
-    def update_ES(self):
-        """ 
-        Update the ElasticSearch index with fresh data about the part.
-        
-        """
-        es = ES(settings.ES_HOST)
-        attrlist, attrstring = self.prepare_attrs()
-        es.index(
-        {
-            "pgid" : self.id, 
-            "number" : self.number, 
-            "company" : self.company.name, 
-            "attrstring" : attrstring,
-            "desc" : self.description,
-            "attributes" : attrlist,
-        }, 
-        "parts", "part-type", self.id
-        )
-        es.refresh('parts')
-    
-    def prepare_attrs(self):
-        """
-        Turn the hstore attribute column into a dict & string for storage in
-        ElasticSearch
 
-        """
-        attrlist = []
-        attrstring = ''
-        attributes = Attribute.objects.filter(part=self)
-        for a in attributes:
-            attr = {}
-            attr['key'] = a.key
-            attr['value'] = a.value
-            attrlist.append(attr)
-            attrstring += "%s " % a.key
-            attrstring += "%s " % a.value
-
-        return attrlist, attrstring
-    
     @models.permalink
     def get_absolute_url(self):
         return ('parts.views.detail', [self.id, str(self.company.slug), str(self.slug)])
@@ -106,10 +68,10 @@ class Attribute(models.Model):
         self.value = self.value.strip().upper()
         if not self.upvotes:
             self.upvotes = 0
-        if not self.downvotes:
-            self.downvotes = 0
-        super(Attribute, self).save(*args, **kwargs)
-        
+            if not self.downvotes:
+                self.downvotes = 0
+                super(Attribute, self).save(*args, **kwargs)
+
 class Xref(models.Model):
     """ Store part number cross references, related to :model:`parts.Part` and
     :model:`auth.User`.
@@ -131,7 +93,7 @@ class PartImage(models.Model):
     user = models.ForeignKey(User, null=False)
     approved = models.BooleanField(default=True)
     album_cover = models.BooleanField(default=False)
-    
+
 class BuyLink(models.Model):
     part = models.ForeignKey('Part')
     company = models.ForeignKey(Company)
@@ -148,6 +110,49 @@ class BuyLink(models.Model):
 
 class PartModerator(CommentModerator):
     email_notification = True
+
+
+# functions for updating the ElasticSearch index
+def update_ES(sender, instance, **kwargs):
+    """ 
+    Update the ElasticSearch index with fresh data about the part.
+
+    """
+    es = ES(settings.ES_HOST)
+    attrlist, attrstring = self.prepare_attrs()
+    es.index(
+        {
+            "pgid" : self.id, 
+            "number" : self.number, 
+            "company" : self.company.name, 
+            "attrstring" : attrstring,
+            "desc" : self.description,
+            "attributes" : attrlist,
+        }, 
+        "parts", "part-type", self.id
+    )
+    es.refresh('parts')
+
+def prepare_attrs(self):
+    """
+    Turn the hstore attribute column into a dict & string for storage in
+    ElasticSearch
+
+    """
+    attrlist = []
+    attrstring = ''
+    attributes = Attribute.objects.filter(part=self)
+    for a in attributes:
+        attr = {}
+        attr['key'] = a.key
+        attr['value'] = a.value
+        attrlist.append(attr)
+        attrstring += "%s " % a.key
+        attrstring += "%s " % a.value
+
+    return attrlist, attrstring
+
+post_save.connect(update_ES, sender=Part)
 
 #moderator.register(Part, PartModerator)
 
