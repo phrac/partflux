@@ -17,5 +17,5 @@ urlpatterns = patterns('',
        {'template_name': 'registration/pwreset.html'}
       ),
     
-    (r'^/', include('registration.urls')),
+    (r'^', include('registration.urls')),
 )
