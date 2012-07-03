@@ -16,8 +16,10 @@ class AttributeResource(ModelResource):
     class Meta:
         queryset = Attribute.objects.all()
         fields = ['key', 'value']
-        resource_name = 'attributes'
+        resource_name = 'attribute'
         filtering = {'pk':['in','exact'],}
+        authentication = ApiKeyAuthentication()
+        authorization = DjangoAuthorization()
 
 class CompanyResource(ModelResource):
     class Meta:

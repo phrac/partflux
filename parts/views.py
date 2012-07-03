@@ -1,6 +1,6 @@
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect, HttpResponse
 from django.template import RequestContext
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
@@ -22,9 +22,14 @@ def index(request):
     return render_to_response('parts/index.html',
                               {'parts_list': parts_list},
                               context_instance=RequestContext(request))
-
+def redirect_new_page(request, company_slug, part_slug):
+    c = get_object_or_404(Company, slug=company_slug) 
+    p = get_object_or_404(Part, slug=part_slug, company=c)
+    return HttpResponsePermanentRedirect(reverse('parts.views.detail', args=[p.id, c.slug, p.slug]))
+    
 def detail(request, part_id, company_slug, part_slug):
     p = get_object_or_404(Part, id=part_id)
+    c = get_object_or_404(Company, id=p.company.id)
     
     xrefs = Xref.objects.filter(part=p.id).exclude(xrefpart=p.id)
     reverse_xrefs = Xref.objects.filter(xrefpart=p.id).exclude(part=p.id)
