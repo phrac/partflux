@@ -24,233 +24,141 @@
 {% block html_itemscope %}itemscope itemtype="http://schema.org/Product"{% endblock %}
 
 {% block head %}
-    <meta itemprop="name" content="{{ part.number}} by {{ part.company.name }}" />
-    <meta itemprop="description" content="{{ part.description }}" />
+<meta itemprop="name" content="{{ part.number}} by {{ part.company.name }}" />
+<meta itemprop="description" content="{{ part.description }}" />
 
-    {% for image in part.images.all %}
-        {% if forloop.first %}
-            <meta itemprop="image" content="{{ image.image.url }}" />
-        {% endif %}
-    {% empty %}
-    <meta itemprop="image" content="{{ current_domain }}{{ STATIC_URL }}images/partfindr_logo_big.png" />
-    {% endfor %}
+{% for image in part.images.all %}
+{% if forloop.first %}
+<meta itemprop="image" content="{{ image.image.url }}" />
+{% endif %}
+{% empty %}
+<meta itemprop="image" content="{{ current_domain }}{{ STATIC_URL }}images/partfindr_logo_big.png" />
+{% endfor %}
 
+<link rel="stylesheet" href="{{ STATIC_URL }}js/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
+<script type="text/javascript" src="{{ STATIC_URL }}js/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
     <link rel="stylesheet" href="{{ STATIC_URL }}js/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
     <script type="text/javascript" src="{{ STATIC_URL }}js/fancybox/jquery.fancybox.pack.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jeditable.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
-            $("#lightbox").fancybox({
-                'transitionIn'  :   'elastic',
-                'transitionOut' :   'elastic',
-                'speedIn'       :   600, 
-                'speedOut'      :   200, 
-                'overlayShow'   :   false
-                });
-            });
-    </script>
+                $("#lightbox").fancybox({
+                    'transitionIn'  :   'elastic',
+                    'transitionOut' :   'elastic',
+                    'speedIn'       :   600, 
+                    'speedOut'      :   200, 
+                    'overlayShow'   :   false
+                    });
+                $('.edit').editable('http://www.example.com/save.php', {
+indicator : 'Saving...',
+tooltip : 'Click to edit...'
+});
+</script>
 {% endblock %}
 
 
 {% block content %}
 <div class="container">
     <div class="page-header">
-        <h1>{{ part.number }} by {{ part.company }} <br /><small>{{ part.description }}</small></h1>
+        <h1>{{ part.number }} by {{ part.company }} <br /><small><div class="edit" id="div_1">{{ part.description }}</div></small></h1>
     </div>
+
     <div class="row">
         <div class="span9">
-            
+            {% include 'parts/modals/attribute_modal.html' %} 
+            {% include 'parts/modals/image_modal.html' %}
+            {% include 'parts/modals/xref_modal.html' %}
+            {% include 'parts/modals/buylink_modal.html' %}
 
-            <div class="modal hide" id="attribute-modal">
-                {% if user.is_authenticated %}
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
-                    <h2>Add new attribute</h2>
-                </div>
-                <div class="modal-body">
-                    <p>Attributes are pieces of information that describe a part in greater detail.</p>
+            <!-- information tabs -->
+            <div class="tabbable">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#attributes" data-toggle="tab"><i class="icon-info-sign"></i> Details {{ attributes|length }})</a></li>
+                    <li><a href="#tab1" data-toggle="tab"><i class="icon-random"></i> Cross Refs ({{ xrefs|length }})</a></li>
+                    <li><a href="#tab2" data-toggle="tab"><i class="icon-random"></i> Reverse Cross Refs ({{ rxrefs|length }})</a></li>
+                    <li><a href="#images" data-toggle="tab"><i class="icon-picture"></i> Images ({{ part.images.all|length }})</a></li>
+                    <li><a href="#buylinks" data-toggle="tab"><i class="icon-globe"></i> Purchasing ({{ buylinks|length }})</a></li>
+                    <li><a href="#comments" data-toggle="tab"><i class="icon-comment"></i> Comments</a></li>
+                </ul>
 
-                    <form id="attribute-form" class="form-horizontal" autocomplete="off" method="post">
-
-                        {% csrf_token %}
-
-                        <div class="control-group">
-                            <label class="control-label" for="id_part">Attribute Key</label>
-                            <div class="controls">
-                                <input id="id_key" name="key" type="text" class="input-large" placeholder="Key">
-                                <p>The attribute <strong><i>key</i></strong> holds the type of attribute. 
-                                Examples of attribute keys are: <strong>weight</strong>,
-                                <strong>finish</strong>, <strong>color</strong>, etc.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label" for="id_part">Attribute Value</label>
-                            <div class="controls">
-                                <input id="id_value" name="value" type="text" class="input-large" placeholder="Value">
-                                <p>The attribute <strong><i>value</i></strong> holds the attribute data. Examples of values:
-                                <strong>10 LBS</strong>, <strong>RED</strong>, etc.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="form-actions">
-                            <input type="hidden" name="metadata_button" value="1" />
-                            <button type="submit" data-loading-text="Saving..." class="btn btn-primary">Save Attribute</button>
-                            <button class="btn" data-dismiss="modal">Cancel</button>
-                        </div>
-                    </form>
-                </div>
-                <script language="JavaScript">
-                    $(document).ready(function() {
-                        $('#attribute-form').submit(function() { // catch the form's submit event
-                            $.ajax({ // create an AJAX call...
-                                data: $(this).serialize(), // get the form data
-                                type: $(this).attr('method'), // GET or POST
-                                url: $(this).attr('action'), // the file to call
-                                success: function(response) { // on success..
-                                    $('#attribute-modal').modal('hide');
-                                    $('#attribute-form').each(function() {
-                                        this.reset();
-                                    });
-                                    $('#status-messages').hide().load("{% url main.views.status_messages %}").fadeIn("fast");
-                                    $('#attribute-table').hide().html(response).fadeIn("slow"); // update the DIV
-                                    $('#new-attribute').effect("highlight", {color: '#468847'}, 6000);
-                                }
-                            });
-                            return false;
-                        });
-                    });
-                </script>
-            {% else %}
-            {% include 'partials/login_modal.html' %}
-            {% endif %}
-        </div>
-
-            <!-- part images section -->
-
-            
-
-
-
-                <div class="modal hide" id="img-upload">
-                    {% if user.is_authenticated %}
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
-                        <h2>Upload new part image</h2>
-                    </div>
-                    <div class="modal-body">
-                        <form class="form-horizontal" method="post" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            {{ imageuploadform.file }}
-                            <div class="form-actions">
-                                <input type="hidden" name="image_button" value="1" />
-                                <button id="save-button" type="submit" data-loading-text="Saving Image" class="btn btn-primary"><i class="icon-hdd icon-white"></i> Upload</button>
-                                <button class="btn" data-dismiss="modal">Cancel</button>
-                            </div>   
-
-                        </form>
-                    </div>
-                    {% else %}
-                    {% include 'partials/login_modal.html' %}
-                    {% endif %}
-                </div>
- 
-            <!-- end part images -->
-
-
-            <!-- cross references -->
-            
- 
-
-            <div id="xrefs">
-                <div class="tabbable">
-                    <ul class="nav nav-tabs">
-                        <li class="active"><a href="#attributes" data-toggle="tab"><i class="icon-info-sign"></i> Details ({{attributes|length}})</a></li>
-                        <li><a href="#tab1" data-toggle="tab"><i class="icon-random"></i> Cross Refs ({{xrefs|length}})</a></li>
-                        <li><a href="#tab2" data-toggle="tab"><i class="icon-random"></i> Reverse Cross Refs ({{reverse_xrefs|length}})</a></li>
-                        <li><a href="#images" data-toggle="tab"><i class="icon-picture"></i> Images ({{part.images.all|length}})</a></li>
-                        <li><a href="#buylinks" data-toggle="tab"><i class="icon-globe"></i> Purchasing ({{bulinks|length}})</a></li>
-                        <li><a href="#comments" data-toggle="tab"><i class="icon-comment"></i> Comments</a></li>
-                    </ul>
-
-                    <div class="tab-content">
-                        <!-- part attributes tab -->
-                        <div class="tab-pane active" id="attributes">
-                            <div id="attribute-table">
+                <div class="tab-content">
+                    <!-- part attributes tab -->
+                    <div class="tab-pane active" id="attributes">
+                        <div id="attribute-table">
                             {% include 'parts/partials/attribute_table.html' %}
-                            </div>
                         </div>
+                    </div>
 
-                        <!-- forward xrefs tab -->
-                        <div class="tab-pane" id="tab1">
-                            {% if xrefs %}
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Part #</th>
-                                        <th>Description</th>
-                                        <th>Company</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for xref in xrefs %}
-                                    <tr>
-                                        <td>
-                                            <a href="{{ xref.xrefpart.get_absolute_url }}">{{ xref.xrefpart.number }}</a>
-                                        </td>
-                                        <td>
-                                            {{ xref.xrefpart.description }}
-                                        </td>
-                                        <td>
-                                            <a href="{% url companies.views.detail xref.xrefpart.company.slug %}">{{ xref.xrefpart.company }}</a>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                            {% else %}
-                            <h3>No cross references available.</h3>
-                            {% endif %}
-                        </div>
-                        <!-- end forward xrefs tab -->
+                    <!-- forward xrefs tab -->
+                    <div class="tab-pane" id="tab1">
+                        {% if xrefs %}
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Part #</th>
+                                    <th>Description</th>
+                                    <th>Company</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for xref in xrefs %}
+                                <tr>
+                                    <td>
+                                        <a href="{{ xref.xrefpart.get_absolute_url }}">{{ xref.xrefpart.number }}</a>
+                                    </td>
+                                    <td>
+                                        {{ xref.xrefpart.description }}
+                                    </td>
+                                    <td>
+                                        <a href="{% url companies.views.detail xref.xrefpart.company.slug %}">{{ xref.xrefpart.company }}</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        {% else %}
+                        <h3>No cross references available.</h3>
+                        {% endif %}
+                    </div>
+                    <!-- end forward xrefs tab -->
 
-                        <!-- reverse xref tab -->
-                        <div class="tab-pane" id="tab2">
-                            {% if reverse_xrefs %}
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Part #</th>
-                                        <th>Description</th>
-                                        <th>Company</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for rxref in reverse_xrefs %}
-                                    <tr>
-                                        <td>
-                                            <a href="{{ rxref.part.get_absolute_url }}">{{ rxref.part.number }}</a>
-                                        </td>
-                                        <td>
-                                            {{ rxref.part.description }}
-                                        </td>
-                                        <td>
-                                            <a href="{% url companies.views.detail rxref.part.company.slug %}">{{ rxref.part.company }}</a>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                            {% else %}
-                            <h3>No parts cross reference this part.</h3>
-                            {% endif %}
-                        </div>
-                        <!-- end reverse xrefs tab -->
-                        
-                        <!-- part images tab -->
-                        
-                        <div class="tab-pane" id="images">
+                    <!-- reverse xref tab -->
+                    <div class="tab-pane" id="tab2">
+                        {% if reverse_xrefs %}
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Part #</th>
+                                    <th>Description</th>
+                                    <th>Company</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for rxref in reverse_xrefs %}
+                                <tr>
+                                    <td>
+                                        <a href="{{ rxref.part.get_absolute_url }}">{{ rxref.part.number }}</a>
+                                    </td>
+                                    <td>
+                                        {{ rxref.part.description }}
+                                    </td>
+                                    <td>
+                                        <a href="{% url companies.views.detail rxref.part.company.slug %}">{{ rxref.part.company }}</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        {% else %}
+                        <h3>No parts cross reference this part.</h3>
+                        {% endif %}
+                    </div>
+                    <!-- end reverse xrefs tab -->
+
+                    <!-- part images tab -->
+
+                    <div class="tab-pane" id="images">
                         <div id="images">
                             {% if part.images.all %}
                             <ul class="thumbnails">
@@ -266,11 +174,11 @@
                             <h3>No images available for this part.</h3>
                             {% endif %}
                         </div>
-                        </div>
-                        <!-- end part images tab -->
-                        
-                        <!-- buylinks tab -->
-                        <div class="tab-pane" id="buylinks">
+                    </div>
+                    <!-- end part images tab -->
+
+                    <!-- buylinks tab -->
+                    <div class="tab-pane" id="buylinks">
                         <div id="buylinks">
                             {% if buylinks %}
                             <table class="table table-striped">
@@ -314,139 +222,23 @@
                             <h3>Sorry, we don't know where to obtain this part online. </h3>
                             {% endif %}
                         </div>
-                        </div>
-                        <!-- end buylinks tab -->
-                        
-                        <div class="tab-pane" id="comments">
+                    </div>
+                    <!-- end buylinks tab -->
+
+                    <!-- comments tab -->
+                    <div class="tab-pane" id="comments">
                         {% get_comment_count for part as comment_count %}
                         {% render_comment_list for part %}
                         {% if user.is_authenticated %}
                         {% render_comment_form for part %}
                         {% endif %}
-                        </div>
-                        
-
-                        
-                        
                     </div>
-
-                </div>
-
-                <div class="modal hide" id="add-xref">
-                    {% if user.is_authenticated %}
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
-                        <h2>Add part cross reference</h2>
-                    </div>
-                    <div class="modal-body">
-                        <form class="form-horizontal" autocomplete="off" method="post">
-
-                            {% csrf_token %}
-
-                            <div class="control-group">
-                                <label class="control-label" for="id_part">Part #</label>
-                                <div class="controls">
-                                    {{ xref_form.part }}
-                                </div>
-                            </div>
-
-                            <div class="control-group">
-                                <label class="control-label" for="id_company">Company</label>
-                                <div class="controls">
-                                    {{ xref_form.company }}
-                                </div>
-                            </div>
-
-                            <div class="control-group">
-                                <label class="control-label" for="id_copy_attrs">Copy Attributes?</label>
-                                <div class="controls">
-                                    {{ xref_form.copy_attrs }}
-                                    <p>If you copy attributes, all attributes for <strong>{{ part.number }}</strong>
-                                    will be copied to the new part if it doesn't exist.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="form-actions">
-                                <button type="submit" class="btn btn-primary">Save Cross Reference</button>
-                                <button class="btn" data-dismiss="modal">Cancel</button>
-                            </div>
-
-                        </form>
-                    </div>
-                    {% else %}
-                    {% include 'partials/login_modal.html' %}
-                    {% endif %}
-                </div>
-            </div>
+                    <!-- end comments tab -->
+                </div> <!-- end tabcontent -->
+            </div>     <!-- end tabbable -->
+        </div>         <!-- end span9 -->
 
 
-            <!-- end cross references -->
-
-
-            <!-- Table for links to buy the product -->
-            
-            
-            
-
-                <!-- form for adding a new buylink -->
-                <div class="modal hide" id="add-buylink">
-                    {% if user.is_authenticated %}
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
-                        <h2>Add a new purchase link</h2>
-                    </div>
-                    <div class="modal-body">
-                        <p>Purchase links are links to online retailers. These links assist users in purchasing the parts.
-                        </p>
-                        <form class="form-horizontal" autocomplete="off" method="post">
-                            {% csrf_token %}
-
-                            <div class="control-group">
-                                <label class="control-label" for="id_url">URL</label>
-                                <div class="controls">
-                                    {{ buylinkform.url }}
-                                    <p>Enter the full URL to a page where part # {{ part.number }} can be purchased.</p>
-                                </div>
-                            </div>
-
-                            <div class="control-group">
-                                <label class="control-label" for="id_company">Company Name</label>
-                                <div class="controls">
-                                    {{ buylinkform.company }}
-                                    <p>Enter the name of the company selling the part, <strong>not the manufacturer of the part!</strong></p>
-                                </div>
-                            </div>
-
-                            <div class="control-group">
-                                <label class="control-label" for="id_price">Current Price</label>
-                                <div class="controls">
-                                    <div class="input-prepend">
-                                        <span class="add-on">$</span><input name="price" class="span2" id="id_price" size="16" type="text">
-                                        <p>Enter the price of the item.</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-actions">
-                                <input type="hidden" name="buylink_button" value="1" />
-                                <button type="submit" class="btn btn-primary">Save Link</button>
-                                <button class="btn" data-dismiss="modal">Cancel</button>
-                            </div>
-
-                        </form>
-                    </div>
-                    {% else %}
-                    {% include 'partials/login_modal.html' %}
-                    {% endif %}
-                </div>
-                <!-- end buylink form -->
-    
-            <!-- end buylinks section -->
-
-        </div>
-
-        
         <div id="part-menu" class="span3" >
             <div class="well">
                 {% include 'partials/share_links.html' %}
