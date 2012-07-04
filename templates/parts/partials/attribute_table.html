@@ -1,8 +1,9 @@
-<table class="table table-striped">
+{% if attributes %}
+<table class="table table-striped attribute-table">
     {% for a in attributes %}
     <tr {% if a.id == new_id %}id="new-attribute"{% endif %}>
         <td>
-            {{ a.key }}:	
+            <strong>{{ a.key }}:</strong>	
         </td>
         <td>
             {{ a.value }}
@@ -14,7 +15,7 @@
                 <button class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
                     <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu">
+                <ul class="dropdown-menu pull-right">
                     <a href="#"><i class="icon icon-flag"></i> Flag</a>
                 </ul>
             </div>
@@ -24,3 +25,6 @@
     </tr>
     {% endfor %}
 </table>
+{% else %}
+<h3>No additional information available.</h3>
+{% endif %}

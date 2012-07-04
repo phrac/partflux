@@ -72,11 +72,11 @@ tooltip : 'Click to edit...'
             {% include 'parts/modals/buylink_modal.html' %}
 
             <!-- information tabs -->
-            <div class="tabbable">
+            <div class="tabbable tabs-left">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#attributes" data-toggle="tab"><i class="icon-info-sign"></i> Details {{ attributes|length }})</a></li>
-                    <li><a href="#tab1" data-toggle="tab"><i class="icon-random"></i> Cross Refs ({{ xrefs|length }})</a></li>
-                    <li><a href="#tab2" data-toggle="tab"><i class="icon-random"></i> Reverse Cross Refs ({{ rxrefs|length }})</a></li>
+                    <li class="active"><a href="#attributes" data-toggle="tab"><i class="icon-info-sign"></i> Details ({{ attributes|length }})</a></li>
+                    <li><a href="#tab1" data-toggle="tab"><i class="icon-random"></i> XRefs ({{ xrefs|length }})</a></li>
+                    <li><a href="#tab2" data-toggle="tab"><i class="icon-random"></i> Reverse XRefs ({{ rxrefs|length }})</a></li>
                     <li><a href="#images" data-toggle="tab"><i class="icon-picture"></i> Images ({{ part.images.all|length }})</a></li>
                     <li><a href="#buylinks" data-toggle="tab"><i class="icon-globe"></i> Purchasing ({{ buylinks|length }})</a></li>
                     <li><a href="#comments" data-toggle="tab"><i class="icon-comment"></i> Comments</a></li>

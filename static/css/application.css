@@ -24,6 +24,10 @@ article{
 	border-bottom: 1px solid #DDD;
 }
 
+.attribute-table {
+font-size: 12px;
+}
+
 @media (max-width: 767px) {
   body {
     padding-left:0px !important;
