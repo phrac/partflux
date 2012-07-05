@@ -6,7 +6,7 @@
 {% load thumbnail %}
 
 {% block title %}
-{{ part.number }} by {{ part.company.name }} | partengine
+{{ part.number }} by {{ part.company.name }} | Part Engine
 {% endblock %}
 
 {% block parts_active %}active{% endblock %}
@@ -37,23 +37,21 @@
 
 <link rel="stylesheet" href="{{ STATIC_URL }}js/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
 <script type="text/javascript" src="{{ STATIC_URL }}js/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jeditable.min.js"></script>
 <script type="text/javascript">
-    <link rel="stylesheet" href="{{ STATIC_URL }}js/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
-    <script type="text/javascript" src="{{ STATIC_URL }}js/fancybox/jquery.fancybox.pack.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/jeditable.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-                $("#lightbox").fancybox({
-                    'transitionIn'  :   'elastic',
-                    'transitionOut' :   'elastic',
-                    'speedIn'       :   600, 
-                    'speedOut'      :   200, 
-                    'overlayShow'   :   false
-                    });
-                $('.edit').editable('http://www.example.com/save.php', {
-indicator : 'Saving...',
-tooltip : 'Click to edit...'
-});
+    $(document).ready(function() {
+        $("#lightbox").fancybox({
+            'transitionIn'  :   'elastic',
+            'transitionOut' :   'elastic',
+            'speedIn'       :   600, 
+            'speedOut'      :   200, 
+            'overlayShow'   :   false
+        });
+        $('.edit').editable('http://www.example.com/save.php', {
+            indicator : 'Saving...',
+            tooltip : 'Click to edit...'
+        });
+    });
 </script>
 {% endblock %}
 
@@ -76,7 +74,7 @@ tooltip : 'Click to edit...'
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#attributes" data-toggle="tab"><i class="icon-info-sign"></i> Details ({{ attributes|length }})</a></li>
                     <li><a href="#tab1" data-toggle="tab"><i class="icon-random"></i> XRefs ({{ xrefs|length }})</a></li>
-                    <li><a href="#tab2" data-toggle="tab"><i class="icon-random"></i> Reverse XRefs ({{ rxrefs|length }})</a></li>
+                    <li><a href="#tab2" data-toggle="tab"><i class="icon-random"></i> Reverse XRefs ({{ reverse_xrefs|length }})</a></li>
                     <li><a href="#images" data-toggle="tab"><i class="icon-picture"></i> Images ({{ part.images.all|length }})</a></li>
                     <li><a href="#buylinks" data-toggle="tab"><i class="icon-globe"></i> Purchasing ({{ buylinks|length }})</a></li>
                     <li><a href="#comments" data-toggle="tab"><i class="icon-comment"></i> Comments</a></li>
