@@ -184,12 +184,9 @@ def addxref(request, part_id):
             newpart.description = p.description
             newpart.hits = 0
             if copy_attrs == True:
-                attributes = Attribute.objects.filter(part=p.id)
+                attributes = Attribute.objects.filter(part=part_id)
                 for a in attributes:
-                    new_attr = a
-                    new_attr.part = newpart
-                    new_attr.upvotes = 0
-                    new_attr.downvotes = 0
+                    new_attr = Attribute(key=a.key, value=a.value, part=newpart, upvotes=0, downvotes=0, user=request.user)
                     new_attr.save()
             newpart.save()
 

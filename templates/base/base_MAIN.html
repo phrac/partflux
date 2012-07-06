@@ -1,9 +1,4 @@
-{% load cache %}
-{% load rss %}
-{% load humanize %}
-{% load gravatar %}
-{% load analytics %}
-<!DOCTYPE html>
+<!DOCTYPE html>{% load cache %}{% load rss %}{% load humanize %}{% load gravatar %}{% load analytics %}
 <html {% block html_itemscope %} {% endblock %}>
     <head>
         <title>{% block title %}Part Engine | Find information about ANY part number {% endblock %}</title>
@@ -12,6 +7,7 @@
         <link href="{{ STATIC_URL }}css/bootstrap-responsive.css" media="screen" rel="stylesheet" type="text/css" />
         <link href="{{ STATIC_URL }}css/application.css" media="screen" rel="stylesheet" type="text/css" />
         <link href="{{ STATIC_URL }}css/sticky-footer.css" media="screen" rel="stylesheet" type="text/css" />
+        <link href="{{ STATIC_URL }}css/print.css" media="print" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Droid+Serif:regular,italic,bold,bolditalic" type="text/css"/>
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold" type="text/css"/>
         <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=PT+Mono' type='text/css'/>
