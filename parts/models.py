@@ -36,8 +36,7 @@ class Part(models.Model):
 
     def save(self, *args, **kwargs):
         """
-        Slugify the part number and upcase the number and description. Also
-        updates the ElasticSearch index.
+        Slugify the part number and upcase the number and description. 
 
         """
         self.number = self.number.strip().upper()
