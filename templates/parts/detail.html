@@ -9,6 +9,10 @@
 {{ part.number }} by {{ part.company.name }} | Part Engine
 {% endblock %}
 
+{% block meta_description %}
+{{ part.number }} by {{ part.company.name }} : {{ part.description }} 
+{% endblock %}
+
 {% block parts_active %}active{% endblock %}
 
 {% block breadcrumb_links %}
