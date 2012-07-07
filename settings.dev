@@ -174,7 +174,6 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'django.contrib.sitemaps',
     # external apps
-    'google_analytics',
     'pure_pagination',
     'registration',
     'sorl.thumbnail',
