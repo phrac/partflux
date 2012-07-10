@@ -1,26 +1,13 @@
 {% extends "base/base_MAIN.html" %}
 
 {% block companies_active %}class="active"{% endblock %}
-{% block upper_right %}
-<script type="text/javascript"><!--
-google_ad_client = "ca-pub-3185089159153756";
-/* upper right banner */
-google_ad_slot = "1205283736";
-google_ad_width = 468;
-google_ad_height = 60;
-//-->
-</script>
-<script type="text/javascript"
-src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-</script>
-{% endblock %}
 
 {% block breadcrumb_links %}
-    <li>
-        <a href="{% url companies.views.index %}">Companies</a>
-        <span class="divider">></span>
-    </li>
-    <li class="active">Company Directory</li>
+<li>
+<a href="{% url companies.views.index %}">Companies</a>
+<span class="divider">></span>
+</li>
+<li class="active">Company Directory</li>
 {% endblock %}
 
 {% block content %}
@@ -28,33 +15,62 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
     <div class="page-header">
         <h1>Company Directory <small>{{ results_list.paginator.count }} companies - showing {{ results_list.start_index }}-{{ results_list.end_index }}</small></h1>
     </div>
+    <div class="row">
+        <div class="span10">
+        <div class="adsense">
+        <script type="text/javascript"><!--
+google_ad_client = "ca-pub-3185089159153756";
+/* details */
+google_ad_slot = "5226656636";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+    </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Company</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Company</th>
-                <th>Description</th>
-            </tr>
-        </thead>
-        <tbody>
+                    {% for company in results_list.object_list %}
+                    <tr>
+                        <td>
+                            <a href="{{ company.get_absolute_url }}">{{ company.name }}</a>
+                        </td>
+                        <td>
+                            {% if company.description %}
+                            {{ company.description|truncatewords:10 }}
+                            {% else %}
+                            No company description
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
 
-        {% for company in results_list.object_list %}
-        <tr>
-            <td>
-                <a href="{{ company.get_absolute_url }}">{{ company.name }}</a>
-            </td>
-            <td>
-                {% if company.description %}
-                {{ company.description|truncatewords:10 }}
-                {% else %}
-                No company description
-                {% endif %}
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-
-        {{ results_list.render }}
-
-</div>
-{% endblock %}
+                        {{ results_list.render }}
+                    </div>
+                    <div class="span2">
+                        <script type="text/javascript"><!--
+                            google_ad_client = "ca-pub-3185089159153756";
+                            /* upper right banner */
+                            google_ad_slot = "2319027142";
+                            google_ad_width = 160;
+                            google_ad_height = 600;
+                            //-->
+                            </script>
+                            <script type="text/javascript"                                   
+                                src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endblock %}

@@ -9,9 +9,7 @@
 {{ part.number }} by {{ part.company.name }} | Part Engine
 {% endblock %}
 
-{% block meta_description %}
-{{ part.number }} by {{ part.company.name }} : {{ part.description }} 
-{% endblock %}
+{% block meta_description %}{{ part.number }} by {{ part.company.name }} : {{ part.description }}{% endblock %}
 
 {% block parts_active %}active{% endblock %}
 
@@ -66,8 +64,20 @@
         <h1>{{ part.number }} by {{ part.company }} <br /><small><div class="edit" id="div_1">{{ part.description }}</div></small></h1>
     </div>
 
+
     <div class="row">
         <div class="span9">
+            <script type="text/javascript"><!--
+google_ad_client = "ca-pub-3185089159153756";
+/* details */
+google_ad_slot = "5226656636";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
             <div id="modals">
             {% include 'parts/modals/attribute_modal.html' %} 
             {% include 'parts/modals/image_modal.html' %}
@@ -92,6 +102,7 @@
                         <div id="attribute-table">
                             {% include 'parts/partials/attribute_table.html' %}
                         </div>
+                        
                     </div>
 
                     <!-- forward xrefs tab -->
@@ -240,6 +251,7 @@
                     <!-- end comments tab -->
                 </div> <!-- end tabcontent -->
             </div>     <!-- end tabbable -->
+            
         </div>         <!-- end span9 -->
 
 
@@ -284,17 +296,7 @@
                 </ul>
             </div>
             <div id="adsense-details">
-                <script type="text/javascript"><!--
-                    google_ad_client = "ca-pub-3185089159153756";
-                    /* part details right column ad unit */
-                    google_ad_slot = "4074273542";
-                    google_ad_width = 300;
-                    google_ad_height = 250;
-                    //-->
-                    </script>
-                    <script type="text/javascript"
-                    src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-                </script>
+                
             </div>
         </div>
     </div>
