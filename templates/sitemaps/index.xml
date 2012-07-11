@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+{% for date in dates %}
+    <sitemap>
+        <loc>http://partengine.org/sitemap-{{ date|date:"Y-m-d" }}.xml</loc>
+        <lastmod>{{ date|date:"Y-m-d" }}</lastmod>
+    </sitemap>
+{% endfor %}
+
+</sitemapindex>
+

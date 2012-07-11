@@ -48,6 +48,10 @@ urlpatterns = patterns('',
     # API URLs
     (r'^api/', include(v1_api.urls)),
 
+    # SITEMAP URLs
+    url(r'^sitemap.xml$', 'sitemap.index'),
+    url(r'^sitemap-(?P<sitemap_date>(\d{4})\D?(0[1-9]|1[0-2])\D?([12]\d|0[1-9]|3[01])).xml', 'sitemap.sitemap'),
+
     # Admin related urls
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
