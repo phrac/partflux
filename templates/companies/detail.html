@@ -10,11 +10,11 @@
 {% block companies_active %}class="active"{% endblock %}
 
 {% block breadcrumb_links %}
-    <li>
-        <a href="{% url companies.views.index %}">Companies</a>
-        <span class="divider">></span>
-    </li>
-    <li class="active">{{ company.name|safe }}</li>
+<li>
+<a href="{% url companies.views.index %}">Companies</a>
+<span class="divider">></span>
+</li>
+<li class="active">{{ company.name|safe }}</li>
 {% endblock %}
 
 
@@ -24,96 +24,96 @@
     <div class="page-header">
         <h1>{{ company.name|safe }}</h1>
     </div>
-    
+
     <div class="row">
         <div class="span9">
-                        
+
             {% if company.description %}
             <p>{{ company.description|linebreaksbr|truncatewords:150 }}</p>
             {% else %}
             <p>No company description available</p>
             {% endif %}
-        
+
             <h2>Part numbers by {{ company.name }} <small>{{ parts_list.paginator.count|intcomma }} parts</small></h2>
             <script type="text/javascript"><!--
-                google_ad_client = "ca-pub-3185089159153756";
-                /* parts listing link unit */
-                google_ad_slot = "0399333054";
+                google_ad_client = "ca-pub-9983559020454044";
+                /* company link unit */
+                google_ad_slot = "9835820671";
                 google_ad_width = 728;
                 google_ad_height = 15;
                 //-->
-            </script>
-            <script type="text/javascript"
-                src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-            </script>
-            <table class="table table-striped">
-        
-                {% for part in parts_list.object_list %}
-                <tr>
-                    <td>
-                        <a href="{{ part.get_absolute_url }}">{{ part.number }}</a>
-                    </td>
-                    <td>
-                        {{ part.description|truncatewords:20 }}
-                    </td>
-                    
-                </tr>
-                {% endfor %}
-            </table>
+                </script>
+                <script type="text/javascript"
+                    src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+                    </script>
+                    <table class="table table-striped">
 
-                {{ parts_list.render }}
+                        {% for part in parts_list.object_list %}
+                        <tr>
+                            <td>
+                                <a href="{{ part.get_absolute_url }}">{{ part.number }}</a>
+                            </td>
+                            <td>
+                                {{ part.description|truncatewords:20 }}
+                            </td>
 
-        </div>
+                        </tr>
+                        {% endfor %}
+                    </table>
 
-        <div class="span3">
-            <div class="well">
-                <h3>{{ company.name }}</h3>
-                <div class="right_articles">
-                    <div class="company_details">
-                        {% if company.logo %}
-                        {% thumbnail company.logo "200" as im %}
-                        <img src="{{ im.url }}" alt="{{company.name }} logo" />
-                        {% endthumbnail %}
+                    {{ parts_list.render }}
+
+                </div>
+
+                <div class="span3">
+                    <div class="well">
+                        <h3>{{ company.name }}</h3>
+                        <div class="right_articles">
+                            <div class="company_details">
+                                {% if company.logo %}
+                                {% thumbnail company.logo "200" as im %}
+                                <img src="{{ im.url }}" alt="{{company.name }} logo" />
+                                {% endthumbnail %}
+                                {% endif %}
+                                {% if company.url %}{{ company.url|urlize }}<br />{% endif %}
+                                {% if company.address1 %}{{ company.address1 }}<br />{% endif %}
+                                {% if company.address2 %}{{ company.address2 }}<br />{% endif %}
+                                {% if company.city %}{{ company.city }}, {{ company.state }}&nbsp;&nbsp;{{ company.zipcode }} {{ company.country }}<br /><br />{% endif %}
+                                {% if company.phone %}Phone: {{ company.phone }}<br />{% endif %}
+                                {% if company.fax %}Fax: {{ company.fax }}<br />{% endif %}
+                                {% if company.email %}Email: {{ company.email|urlize }}<br />{% endif %}
+
+                            </div>
+                        </div>
+
+                        {% if user.is_staff %}
+                        <h3>Company Actions</h3>
+                        <div class="right_articles">
+                            <ul>
+                                <li><a href="{% url companies.views.edit company_slug=company.slug %}">Edit company details</a></li>
+                                <li></li>
+                            </ul>
+                        </div>
                         {% endif %}
-                        {% if company.url %}{{ company.url|urlize }}<br />{% endif %}
-                        {% if company.address1 %}{{ company.address1 }}<br />{% endif %}
-                        {% if company.address2 %}{{ company.address2 }}<br />{% endif %}
-                        {% if company.city %}{{ company.city }}, {{ company.state }}&nbsp;&nbsp;{{ company.zipcode }} {{ company.country }}<br /><br />{% endif %}
-                        {% if company.phone %}Phone: {{ company.phone }}<br />{% endif %}
-                        {% if company.fax %}Fax: {{ company.fax }}<br />{% endif %}
-                        {% if company.email %}Email: {{ company.email|urlize }}<br />{% endif %}
-            
+                    </div>
+                    <div>
+                        <div id="adsense-details">
+                            <script type="text/javascript"><!--
+                                google_ad_client = "ca-pub-9983559020454044";
+                                /* wide skyscraper */
+                                google_ad_slot = "2294449110";
+                                google_ad_width = 160;
+                                google_ad_height = 600;
+                                //-->
+                                </script>
+                                <script type="text/javascript"
+                                    src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+                                    </script>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
-            
-                {% if user.is_staff %}
-                <h3>Company Actions</h3>
-                <div class="right_articles">
-                    <ul>
-                        <li><a href="{% url companies.views.edit company_slug=company.slug %}">Edit company details</a></li>
-                        <li></li>
-                    </ul>
-                </div>
-                {% endif %}
-            </div>
-            <div>
-                <div id="adsense-details">
-                    <script type="text/javascript"><!--
-                        google_ad_client = "ca-pub-3185089159153756";
-                        /* companies skyscraper */
-                        google_ad_slot = "2319027142";
-                        google_ad_width = 160;
-                        google_ad_height = 600;
-                        //-->
-                        </script>
-                        <script type="text/javascript"
-                        src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-                        </script>
-                </div>
-                
-            </div>
-        </div>
-    </div>
-</div>
 
-{% endblock %}
+                {% endblock %}
