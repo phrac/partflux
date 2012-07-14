@@ -6,10 +6,10 @@
 {% load thumbnail %}
 
 {% block title %}
-{{ part.number }} by {{ part.company.name }} | Part Engine
+{{ part.number }} by {{ part.company.name|safe }} | Part Engine
 {% endblock %}
 
-{% block meta_description %}{{ part.number }} by {{ part.company.name }} : {{ part.description }}{% endblock %}
+{% block meta_description %}{{ part.number }} by {{ part.company.name|safe }} : {{ part.description }}{% endblock %}
 
 {% block parts_active %}active{% endblock %}
 
@@ -18,7 +18,7 @@
 <a href="{% url parts.views.index %}">Parts</a> <span class="divider">></span>
 </li>
 <li>
-<a href="{% url companies.views.detail part.company.slug %}">{{ part.company.name }}</a> <span class="divider">></span>
+<a href="{% url companies.views.detail part.company.slug %}">{{ part.company.name|safe }}</a> <span class="divider">></span>
 </li>
 <li class="active">{{ part.number }}</li>
 {% endblock %}
@@ -28,6 +28,10 @@
 {% block head %}
 <meta itemprop="name" content="{{ part.number}} by {{ part.company.name }}" />
 <meta itemprop="description" content="{{ part.description }}" />
+<meta itemprop="url" content="{{ current_domain }}{{ current_path }}" />
+<meta itemprop="model" content="{{ part.number }}" />
+<meta itemprop="manufacturer" content="{{ part.company.name }}" />
+<meta itemprop="productID" content="{{ part.number }}" />
 
 {% for image in part.images.all %}
 {% if forloop.first %}
@@ -61,7 +65,7 @@
 {% block content %}
 <div class="container">
     <div class="page-header">
-        <h1>{{ part.number }} by {{ part.company }} <br /><small><div class="edit" id="div_1">{{ part.description }}</div></small></h1>
+        <h1>{{ part.number }} by {{ part.company|safe }}<br /><small><div class="edit" id="div_1">{{ part.description }}</div></small></h1>
     </div>
 
 
@@ -236,6 +240,9 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
                             {% else %}
                             <h3>Sorry, we don't know where to obtain this part online. </h3>
                             {% endif %}
+                            <script type="text/javascript"><!--
+amazon_ad_tag = "partfindr-20"; amazon_ad_width = "468"; amazon_ad_height = "60"; amazon_ad_price = "retail"; amazon_ad_border = "hide"; amazon_color_link = "0088CC";//--></script>
+<script type="text/javascript" src="http://www.assoc-amazon.com/s/ads.js"></script>
                         </div>
                     </div>
                     <!-- end buylinks tab -->
@@ -251,7 +258,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
                     <!-- end comments tab -->
                 </div> <!-- end tabcontent -->
             </div>     <!-- end tabbable -->
-            
+             
         </div>         <!-- end span9 -->
 
 
@@ -295,8 +302,18 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
                     </li>
                 </ul>
             </div>
-            <div id="adsense-details">
-                
+            <div class="adsense-details center">
+                <script type="text/javascript"><!--
+                    google_ad_client = "ca-pub-3185089159153756";
+                    /* companies skyscraper */
+                    google_ad_slot = "2319027142";
+                    google_ad_width = 160;
+                    google_ad_height = 600;
+                    //-->
+                </script>
+                <script type="text/javascript"
+                    src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+                </script>    
             </div>
         </div>
     </div>

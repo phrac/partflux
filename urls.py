@@ -4,6 +4,8 @@ from django.contrib import admin
 from tastypie.api import Api
 from partfindr.api import PartResource, AttributeResource, CompanyResource, UserResource
 
+from parts.feeds import LatestPartsFeed
+
 admin.autodiscover()
 
 # setup the API urls
@@ -15,11 +17,11 @@ v1_api.register(UserResource())
 
 
 urlpatterns = patterns('',
-    #GENERIC VIEWS
-    #url(r'^$', 'django.views.generic.simple.direct_to_template', {'template': 'main/comingsoon.html'}),
-    
     url(r'^', include('main.urls')),
     
+    # RSS Feeds
+    (r'^feeds/parts/latest/$', LatestPartsFeed()),
+        
     # URLs for parts
     url(r'^parts/', include('parts.urls')),
     

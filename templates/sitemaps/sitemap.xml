@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-{% for part in parts %}
+{% for object in objects %}
     <url>
-    <loc>{{ part.get_absolute_url }}</loc>
-        <lastmod>{{ part.updated_at|date:"Y-m-d" }}</lastmod>
+    <loc>{{ current_domain }}{{ object.get_absolute_url }}</loc>
+        <lastmod>{{ object.updated_at|date:"Y-m-d" }}</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>.5</priority>
     </url>
 {% endfor %}
 
