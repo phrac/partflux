@@ -2,6 +2,10 @@
 
 {% block companies_active %}class="active"{% endblock %}
 
+{% block title %}
+Company Directory - Page {{ results_list.page }} | Part Engine
+{% endblock %}
+
 {% block breadcrumb_links %}
 <li>
 <a href="{% url companies.views.index %}">Companies</a>
