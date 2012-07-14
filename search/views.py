@@ -19,31 +19,6 @@ def index(request):
                               context_instance=RequestContext(request))
 
 def results(request):
-    #url ='http://localhost:9200/parts/part-type/'
-    
-    #query = {
-    #    "query" : { "query_string" : {"query" : "helmet"} },
-    #    "facets" : {
-    #        "attributes" : { "terms" : { 
-    #            "script_field" : "_source.attributes",
-    #            "size":15
-    #        }
-    #        }
-    #    }
-    #}
-
-    #query = json.dumps(query)
-    #print query
-
-    #result = requests.post(url + '_search?pretty=true', query)
-    #results = json.loads(result.content)
-    #facets = results['facets']['attributes']['terms']
-    #facet_dict = {} 
-    #for facet in facets:
-    #    f = {}
-    #    f_vals = []
-    #    f['count'] = facet['count']
-    #    terms = facet['term'].replace('=', ':').strip('{}').split(',')
 
     NUM_RESULTS = 20
     conn = ES(settings.ES_HOST)
@@ -55,11 +30,6 @@ def results(request):
         q = request.GET['q']
 
     if searchform.is_valid():
-        #query = TextQuery('fulltext', q, operator='and', type='phrase_prefix')
-        #query = TextQuery('fulltext',
-        #                  q,
-        #                  operator='and',
-        #                 )
         query = StringQuery(q,
                             default_operator="AND",
                             search_fields=['number', 
