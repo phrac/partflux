@@ -151,7 +151,7 @@ def prepare_attrs(instance):
 
     return attrlist, attrstring
 
-post_save.connect(update_ES, sender=Part)
+#post_save.connect(update_ES, sender=Part)
 
 #moderator.register(Part, PartModerator)
 
