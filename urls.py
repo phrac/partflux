@@ -33,8 +33,9 @@ urlpatterns = patterns('',
     #url(r'^nsn/(?P<nsn_id>\d+)/.*$', 'nsn.views.detail'),
     
     # URLs for search
-    url(r'^search/', include('search.urls')),
-    
+    #url(r'^search/', include('search.urls')),
+    url(r'^search/', include('googlesearch.urls')),
+
     # URLs for part groups
     url(r'^partgroups/$', 'partgroups.views.index'),
     url(r'^partgroups/(?P<partgroup_id>\d+)/$', 'partgroups.views.detail'), 
