@@ -11,10 +11,15 @@
         <div class="hero-unit-white hero-unit">
             <h1>Search {{ part_count|intcomma }} part numbers</h1>
             <p>Try searching by part number, description, or attributes.</p>
-            <form class="form-inline" method="get" action="/search/">
-                <input class="input-huge" style="height:45px; font-size:2.0em;" type="text" name="q" id="idxsearch" size="45" maxlength="100" />
+            <form id="frmSearch" action="/search/results/" id="cref_iframe" class="form-inline">
+                <input name="cx" value="partner-pub-3185089159153756:8723235659" type="hidden">
+                <input name="cof" value="FORID:11" type="hidden">
+                <input name="ie" value="ISO-8859-1" type="hidden">
+                <input type="text" name="q" value="Search Parts" class="input-huge" style="height:45px; font-size:2.0em;" onfocus="if (this.value == 'Search Parts') {this.value = '';}" onblur="if (this.value == '') {this.value = '';}" />
                 <button class="btn btn-huge btn-primary" type="submit">Find It!</button>
-            </form>
+            </form><!--/search-->
+            <script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=cref_iframe"></script>
+            
         </div>
     </div>
     <div class="row">

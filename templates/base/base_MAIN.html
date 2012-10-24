@@ -1,4 +1,4 @@
-<!DOCTYPE html>{% load cache %}{% load rss %}{% load humanize %}{% load gravatar %}
+<!DOCTYPE html>{% load cache %}{% load rss %}{% load humanize %}{% load gravatar %} {% load googlesearch_inclusion_tags %}
 <html {% block html_itemscope %} {% endblock %}>
     <head>
         <title>{% block title %}Part Engine | Find information about ANY part number {% endblock %}</title>
@@ -69,15 +69,19 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Help/Docs <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="/faq/"><i class="icon icon-list"></i> F.A.Q. (Frequently Asked Questions)</a></li>
-                            <li><a href="{% url search.views.index %}"><i class="icon icon-search"></i> Advanced Search Guide</a></li>
+                            <li><a href=""><i class="icon icon-search"></i> Advanced Search Guide</a></li>
                         </ul>
                         </li>
                     </ul>
                     <ul class="nav pull-right">
                         <li>
-                        <form class="navbar-search pull-left" action="/search/">
-                            <input name="q" type="text" class="search-query" placeholder="Search parts">
-                        </form>
+                        <form id="frmSearch" action="/search/results/" id="cref_iframe" class="navbar-search pull-left search">
+                            <input name="cx" value="partner-pub-3185089159153756:8723235659" type="hidden">
+                            <input name="cof" value="FORID:11" type="hidden">
+                            <input name="ie" value="ISO-8859-1" type="hidden">
+                            <input type="text" name="q" value="Search Parts" class="search-query" onfocus="if (this.value == 'Search Parts') {this.value = '';}" onblur="if (this.value == '') {this.value = '';}" />
+                        </form><!--/search-->
+                        <script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=cref_iframe"></script>
                         </li>
                         {% if user.is_authenticated %}
                         <li class="dropdown">
