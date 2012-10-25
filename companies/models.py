@@ -29,7 +29,7 @@ class Company(models.Model):
         self.name = self.name.strip().upper()
         self.slug = slugify(self.name)
         super(Company, self).save(*args, **kwargs)
-        self.update_ES()
+        #self.update_ES()
 
     def __unicode__(self):
         return self.name
