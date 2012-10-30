@@ -29,8 +29,7 @@ urlpatterns = patterns('',
     (r'^comments/', include('django.contrib.comments.urls')),
     
     # URLs for NSN
-    #url(r'^nsn/$', 'nsn.views.index'),
-    #url(r'^nsn/(?P<nsn_id>\d+)/.*$', 'nsn.views.detail'),
+    url(r'^nsn/', include('nsn.urls')),
     
     # URLs for search
     #url(r'^search/', include('search.urls')),

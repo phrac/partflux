@@ -1,7 +1,7 @@
 <!DOCTYPE html>{% load cache %}{% load rss %}{% load humanize %}{% load gravatar %} {% load googlesearch_inclusion_tags %}
 <html {% block html_itemscope %} {% endblock %}>
     <head>
-        <title>{% block title %}Part Engine | Find information about ANY part number {% endblock %}</title>
+        <title>{% block title %}Part Engine | The Part Number Search Engine {% endblock %}</title>
         <meta name="Description" content="{% block meta_description %}Part Engine - find information about any part number, from oil filters, to microchips. Find cross references, alternate part numbers, interchange information, images, and places to purchase. {% endblock %}" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="{{ STATIC_URL }}css/bootstrap.min.css" media="screen" rel="stylesheet" type="text/css" />
@@ -45,11 +45,6 @@
             document.write("<sc"+"ript type='text/javascript' src='" +
             scJsHost +
             "statcounter.com/counter/counter.js'></"+"script>");</script>
-            <noscript><div class="statcounter"><a title="web analytics"
-            href="http://statcounter.com/" target="_blank"><img
-            class="statcounter"
-            src="https://c.statcounter.com/8410352/0/4bec6654/1/"
-            alt="web analytics"></a></div></noscript>
         <!-- End of StatCounter Code for Default Guide -->
     </head>
     <body id="{% block body_id %}section-index{% endblock %}">
@@ -216,7 +211,7 @@
             <div class="divider"></div>
             <div class="row last">
                 <div class="span12">
-                    <p class="sub">&copy; Part Engine 2012</p>
+                    <p class="sub">&copy; Part Engine {% now "Y" %}</p>
                 </div>
             </div>
         </div>
