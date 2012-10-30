@@ -8,6 +8,15 @@ class Nsn(models.Model):
      
     def __unicode__(self):
         return self.number
+        
+    def save(self, *args, **kwargs):
+        self.number = self.number.strip().upper()
+        self.description = self.description.strip().upper()
+        super(Nsn, self).save(*args, **kwargs)
+        
+    @models.permalink
+    def get_absolute_url(self):
+        return ('nsn.views.detail', [self.id, str(self.number)])
     
 
 class Fsc(models.Model):
