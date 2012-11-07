@@ -48,7 +48,7 @@ class Company(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('companies.views.detail', [str(self.slug)])
+        return ('companies.views.detail', [self.id, str(self.slug)])
 
 class CompanyContact(models.Model):
     SEX = (('M', 'Male'),

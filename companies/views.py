@@ -1,7 +1,7 @@
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.template import RequestContext
 from pure_pagination import Paginator, PageNotAnInteger, EmptyPage
-from django.http import HttpResponseRedirect
+from django.http import HttpResponsePermanentRedirect, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.core.files.storage import default_storage
 from django.contrib.auth.decorators import login_required
@@ -29,9 +29,13 @@ def index(request):
     return render_to_response('companies/index.html', 
                               {'results_list': results_list}, 
                               context_instance=RequestContext(request))
+                              
+def redirect_new_page(request, company_slug):
+    c = get_object_or_404(Company, slug=company_slug) 
+    return HttpResponsePermanentRedirect(reverse('companies.views.detail', args=[c.id, c.slug]))
 
-def detail(request, company_slug):
-    c = get_object_or_404(Company, slug=company_slug)
+def detail(request, company_id, company_slug):
+    c = get_object_or_404(Company, id=company_id)
     parts_list = Part.objects.filter(company=c.id).order_by('-created_at')
     try:
         page = int(request.GET.get('page', '1'))
@@ -51,8 +55,8 @@ def detail(request, company_slug):
                                context_instance=RequestContext(request))
 
 @login_required
-def edit(request, company_slug):
-    c = get_object_or_404(Company, slug=company_slug)
+def edit(request, company_id, company_slug):
+    c = get_object_or_404(Company, id=company_id)
     if request.method == 'POST':
         form = CompanyAdminForm(request.POST, instance=c)
         if form.is_valid():
@@ -62,7 +66,7 @@ def edit(request, company_slug):
             
             request.flash.success = "Company details successfully saved."
             return HttpResponseRedirect(reverse('companies.views.detail',
-                                                args=[c.slug]))
+                                                args=[c.id, c.slug]))
         else:
             print form.errors
     else:

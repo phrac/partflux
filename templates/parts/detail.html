@@ -18,7 +18,7 @@
 <a href="{% url parts.views.index %}">Parts</a> <span class="divider">></span>
 </li>
 <li>
-<a href="{% url companies.views.detail part.company.slug %}">{{ part.company.name|safe }}</a> <span class="divider">></span>
+<a href="{{ part.company.get_absolute_url }}">{{ part.company.name|safe }}</a> <span class="divider">></span>
 </li>
 <li class="active">{{ part.number }}</li>
 {% endblock %}
@@ -53,7 +53,7 @@
             'speedOut'      :   200, 
             'overlayShow'   :   false
         });
-        $('.edit').editable('http://www.example.com/save.php', {
+        $('.edit').editable('http://partengine.org/save.php', {
             indicator : 'Saving...',
             tooltip : 'Click to edit...'
         });
@@ -130,7 +130,7 @@
                                         {{ xref.xrefpart.description }}
                                     </td>
                                     <td>
-                                        <a href="{% url companies.views.detail xref.xrefpart.company.slug %}">{{ xref.xrefpart.company }}</a>
+                                        <a href="{{ xref.xrefpart.company.get_absolute_url }}">{{ xref.xrefpart.company }}</a>
                                     </td>
                                 </tr>
                                 {% endfor %}
@@ -163,7 +163,7 @@
                                         {{ rxref.part.description }}
                                     </td>
                                     <td>
-                                        <a href="{% url companies.views.detail rxref.part.company.slug %}">{{ rxref.part.company }}</a>
+                                        <a href="{{ rxref.part.company.get_absolute_url }}">{{ rxref.part.company }}</a>
                                     </td>
                                 </tr>
                                 {% endfor %}
@@ -240,9 +240,7 @@
                             {% else %}
                             <h3>Sorry, we don't know where to obtain this part online. </h3>
                             {% endif %}
-                            <script type="text/javascript"><!--
-amazon_ad_tag = "partfindr-20"; amazon_ad_width = "468"; amazon_ad_height = "60"; amazon_ad_price = "retail"; amazon_ad_border = "hide"; amazon_color_link = "0088CC";//--></script>
-<script type="text/javascript" src="http://www.assoc-amazon.com/s/ads.js"></script>
+                            
                         </div>
                     </div>
                     <!-- end buylinks tab -->
