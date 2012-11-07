@@ -55,8 +55,8 @@ def detail(request, company_id, company_slug):
                                context_instance=RequestContext(request))
 
 @login_required
-def edit(request, company_slug):
-    c = get_object_or_404(Company, slug=company_slug)
+def edit(request, company_id, company_slug):
+    c = get_object_or_404(Company, id=company_id)
     if request.method == 'POST':
         form = CompanyAdminForm(request.POST, instance=c)
         if form.is_valid():
@@ -66,7 +66,7 @@ def edit(request, company_slug):
             
             request.flash.success = "Company details successfully saved."
             return HttpResponseRedirect(reverse('companies.views.detail',
-                                                args=[c.slug]))
+                                                args=[c.id, c.slug]))
         else:
             print form.errors
     else:

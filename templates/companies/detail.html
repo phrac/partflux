@@ -27,15 +27,7 @@
 
     <div class="row">
         <div class="span9">
-
-            {% if company.description %}
-            <p>{{ company.description|linebreaksbr|truncatewords:150 }}</p>
-            {% else %}
-            <p>No company description available</p>
-            {% endif %}
-
-            <h2>Part numbers by {{ company.name }} <small>{{ parts_list.paginator.count|intcomma }} parts</small></h2>
-            <script type="text/javascript"><!--
+        <script type="text/javascript"><!--
                 google_ad_client = "ca-pub-3185089159153756";
                 /* details */
                 google_ad_slot = "5226656636";
@@ -46,6 +38,15 @@
         <script type="text/javascript"
         src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
         </script>
+
+            {% if company.description %}
+            <p>{{ company.description|linebreaksbr|truncatewords:150 }}</p>
+            {% else %}
+            <p>No company description available</p>
+            {% endif %}
+
+            <h2>Part numbers by {{ company.name }} <small>{{ parts_list.paginator.count|intcomma }} parts</small></h2>
+            
                     <table class="table table-striped">
 
                         {% for part in parts_list.object_list %}
@@ -90,7 +91,7 @@
                         <h3>Company Actions</h3>
                         <div class="right_articles">
                             <ul>
-                                <li><a href="{% url companies.views.edit company_slug=company.slug %}">Edit company details</a></li>
+                                
                                 <li></li>
                             </ul>
                         </div>
