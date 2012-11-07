@@ -29,6 +29,10 @@ def index(request):
     return render_to_response('companies/index.html', 
                               {'results_list': results_list}, 
                               context_instance=RequestContext(request))
+                              
+def redirect_new_page(request, company_slug):
+    c = get_object_or_404(Company, slug=company_slug) 
+    return HttpResponsePermanentRedirect(reverse('companies.views.detail', args=[c.id, c.slug]))
 
 def detail(request, company_id, company_slug):
     c = get_object_or_404(Company, id=company_id)
