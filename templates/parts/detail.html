@@ -18,7 +18,7 @@
 <a href="{% url parts.views.index %}">Parts</a> <span class="divider">></span>
 </li>
 <li>
-<a href="{% url companies.views.detail part.company.slug %}">{{ part.company.name|safe }}</a> <span class="divider">></span>
+<a href="{{ part.company.get_absolute_url }}">{{ part.company.name|safe }}</a> <span class="divider">></span>
 </li>
 <li class="active">{{ part.number }}</li>
 {% endblock %}
@@ -130,7 +130,7 @@
                                         {{ xref.xrefpart.description }}
                                     </td>
                                     <td>
-                                        <a href="{% url companies.views.detail xref.xrefpart.company.slug %}">{{ xref.xrefpart.company }}</a>
+                                        <a href="{{ xref.xrefpart.company.get_absolute_url }}">{{ xref.xrefpart.company }}</a>
                                     </td>
                                 </tr>
                                 {% endfor %}
@@ -163,7 +163,7 @@
                                         {{ rxref.part.description }}
                                     </td>
                                     <td>
-                                        <a href="{% url companies.views.detail rxref.part.company.slug %}">{{ rxref.part.company }}</a>
+                                        <a href="{{ rxref.part.company.get_absolute_url }}">{{ rxref.part.company }}</a>
                                     </td>
                                 </tr>
                                 {% endfor %}

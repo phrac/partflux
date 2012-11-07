@@ -30,8 +30,8 @@ def index(request):
                               {'results_list': results_list}, 
                               context_instance=RequestContext(request))
 
-def detail(request, company_slug):
-    c = get_object_or_404(Company, slug=company_slug)
+def detail(request, company_id, company_slug):
+    c = get_object_or_404(Company, id=company_id)
     parts_list = Part.objects.filter(company=c.id).order_by('-created_at')
     try:
         page = int(request.GET.get('page', '1'))
