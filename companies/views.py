@@ -1,7 +1,7 @@
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.template import RequestContext
 from pure_pagination import Paginator, PageNotAnInteger, EmptyPage
-from django.http import HttpResponseRedirect
+from django.http import HttpResponsePermanentRedirect, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.core.files.storage import default_storage
 from django.contrib.auth.decorators import login_required
