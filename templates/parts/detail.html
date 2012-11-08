@@ -13,6 +13,19 @@
 
 {% block parts_active %}active{% endblock %}
 
+{% block upper_right %}
+<script type="text/javascript"><!--
+                google_ad_client = "ca-pub-3185089159153756";
+                /* details */
+                google_ad_slot = "5226656636";
+                google_ad_width = 728;
+                google_ad_height = 90;
+                //-->
+        </script>
+        <script type="text/javascript"
+        src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+        </script>
+{% endblock %}
 {% block breadcrumb_links %}
 <li>
 <a href="{% url parts.views.index %}">Parts</a> <span class="divider">></span>
@@ -71,17 +84,7 @@
 
     <div class="row">
         <div class="span9">
-            <script type="text/javascript"><!--
-                google_ad_client = "ca-pub-3185089159153756";
-                /* details */
-                google_ad_slot = "5226656636";
-                google_ad_width = 728;
-                google_ad_height = 90;
-                //-->
-        </script>
-        <script type="text/javascript"
-        src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-        </script>
+            
             <div id="modals">
             {% include 'parts/modals/attribute_modal.html' %} 
             {% include 'parts/modals/image_modal.html' %}
@@ -93,8 +96,8 @@
             <div class="tabbable tabs-left">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#attributes" data-toggle="tab"><i class="icon-info-sign"></i> Details ({{ attributes|length }})</a></li>
-                    <li><a href="#tab1" data-toggle="tab"><i class="icon-random"></i> XRefs ({{ xrefs|length }})</a></li>
-                    <li><a href="#tab2" data-toggle="tab"><i class="icon-random"></i> Reverse XRefs ({{ reverse_xrefs|length }})</a></li>
+                    <li><a href="#tab1" data-toggle="tab"><i class="icon-random"></i> Cross References ({{ xrefs|length }})</a></li>
+                    <li><a href="#tab2" data-toggle="tab"><i class="icon-random"></i> Reverse Cross References ({{ reverse_xrefs|length }})</a></li>
                     <li><a href="#images" data-toggle="tab"><i class="icon-picture"></i> Images ({{ part.images.all|length }})</a></li>
                     <li><a href="#buylinks" data-toggle="tab"><i class="icon-globe"></i> Purchasing ({{ buylinks|length }})</a></li>
                     <li><a href="#comments" data-toggle="tab"><i class="icon-comment"></i> Comments</a></li>
