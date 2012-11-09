@@ -1,222 +1,183 @@
 <!DOCTYPE html>{% load cache %}{% load rss %}{% load humanize %}{% load gravatar %} {% load googlesearch_inclusion_tags %}
-<html {% block html_itemscope %} {% endblock %}>
+<html lang="en">
     <head>
-        <title>{% block title %}Part Engine | The Part Number Search Engine {% endblock %}</title>
-        <meta name="Description" content="{% block meta_description %}Part Engine - find information about any part number, from oil filters, to microchips. Find cross references, alternate part numbers, interchange information, images, and places to purchase. {% endblock %}" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="{{ STATIC_URL }}css/bootstrap.min.css" media="screen" rel="stylesheet" type="text/css" />
-        <link href="{{ STATIC_URL }}css/bootstrap-responsive.css" media="screen" rel="stylesheet" type="text/css" />
-        <link href="{{ STATIC_URL }}css/application.css" media="screen" rel="stylesheet" type="text/css" />
-        <link href="{{ STATIC_URL }}css/sticky-footer.css" media="screen" rel="stylesheet" type="text/css" />
-        <link href="{{ STATIC_URL }}css/print.css" media="print" rel="stylesheet" type="text/css" />
-        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Droid+Serif:regular,italic,bold,bolditalic" type="text/css"/>
-        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold" type="text/css"/>
-        <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=PT+Mono' type='text/css'/>
-
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
-        <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap-typeahead.js"></script>
-
-        <script src="{{ STATIC_URL }}js/application.js" type="text/javascript"></script>
-        {% block head %}
-        {% endblock %}
+        <title>Part Engine</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.min.css" />
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap-responsive.min.css" />
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.gritter.css" />
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/unicorn.main.css" />
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/unicorn.grey.css" class="skin-color" />	
+        
         <!-- analytics asynchrous -->
         <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-29058601-1']);
+            _gaq.push(['_trackPageview']);
 
-          var _gaq = _gaq || [];
-          _gaq.push(['_setAccount', 'UA-29058601-1']);
-          _gaq.push(['_trackPageview']);
-        
-          (function() {
-            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-          })();
-        
+            (function() {
+             var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+             ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+             var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+             })();
         </script>
+        
         <!-- Start of StatCounter Code for Default Guide -->
-            <script type="text/javascript">
+        <script type="text/javascript">
             var sc_project=8410352; 
             var sc_invisible=1; 
             var sc_security="4bec6654"; 
             var scJsHost = (("https:" == document.location.protocol) ?
-            "https://secure." : "http://www.");
+                "https://secure." : "http://www.");
             document.write("<sc"+"ript type='text/javascript' src='" +
             scJsHost +
-            "statcounter.com/counter/counter.js'></"+"script>");</script>
+            "statcounter.com/counter/counter.js'></"+"script>");
+        </script>
         <!-- End of StatCounter Code for Default Guide -->
+            
     </head>
-    <body id="{% block body_id %}section-index{% endblock %}">
-        <div class="wrapper"> <!--sticky footer wrapper -->
+    <body>
+
+
+        <div id="header">
+            <h1><a href="/">Part Engine</a></h1>		
+        </div>
+
+        <div id="search">
+            <form id="frmSearch" action="/search/results/" id="cref_iframe" class="navbar-search pull-left search">
+                <input name="cx" value="partner-pub-3185089159153756:8723235659" type="hidden">
+                <input name="cof" value="FORID:11" type="hidden">
+                <input name="ie" value="ISO-8859-1" type="hidden">
+                <input type="text" placeholder="Search here..."/><button type="submit" class="tip-right" title="Search"><i class="icon-search icon-white"></i></button>
+            </form>
+            <script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=cref_iframe"></script>
+        </div>
         
-    <div class="navbar navbar-fixed-top">
-        <div class="navbar-inner">
-            <div class="container">
-                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </a>
-                <a href="/" class="brand"><img src="{{ STATIC_URL }}images/logo_small-white-alpha.png" alt="partengine logo" /></a>
-                <div class="nav-collapse">
-                    <ul class="nav">
-                        <li {% block home_active %}{% endblock %}><a href="/">Home</a></li>
-                        <li class="dropdown {% block parts_active %}{% endblock %}">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                Parts<b class="caret"></b>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li class="nav-header">Parts</li>
-                                <li><a href="{% url parts.views.index %}">Newest Parts</a></li>
-                                <li><a href="{% url parts.views.addpartform %}"><i class="icon icon-plus-sign"></i> Add a part</a></li>
-                                <li class="divider"></li>
-                                <li class="nav-header">Assemblies</li>
-                            </ul>
-                        </li>
-                        <li {% block companies_active %}{% endblock %}><a href="{% url companies.views.index %}">Companies</a></li>
-
-                        <li class="{% block help_active %}{% endblock %} dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Help <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/faq/"><i class="icon icon-list"></i> F.A.Q.</a></li>
-                            <li><a href=""><i class="icon icon-share"></i> Suggest a Feature</a></li>
-                            <li><a href=""><i class="icon icon-comment"></i> Contact Us</a></li>
-                        </ul>
-                        </li>
-                    </ul>
-                    <ul class="nav pull-right">
-                        <li>
-                        <form id="frmSearch" action="/search/results/" id="cref_iframe" class="navbar-search pull-left search">
-                            <input name="cx" value="partner-pub-3185089159153756:8723235659" type="hidden">
-                            <input name="cof" value="FORID:11" type="hidden">
-                            <input name="ie" value="ISO-8859-1" type="hidden">
-                            <input type="text" name="q" value="Search Parts" class="search-query" onfocus="if (this.value == 'Search Parts') {this.value = '';}" onblur="if (this.value == '') {this.value = '';}" />
-                        </form><!--/search-->
-                        <script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=cref_iframe"></script>
-                        </li>
-                        {% if user.is_authenticated %}
-                        <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="{% gravatar_url user.email 25 %}" /><b> {{ user.username }}</b><b class="caret"></b>
-                        </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="{% url users.views.view_profile user.username %}"><i class="icon-user"></i> Profile</a></li>
-                                <li><a href="#"><i class="icon-cog"></i> Settings</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#"><i class="icon-wrench"></i> My Parts</a></li>
-                                <li class="divider"></li>
-                                <li><a href="/users/logout"><i class="icon-off"></i> Sign Out</a></li>
-                            </ul>
-                        </li>
-                        {% else %}
-                        <li><a href="{% url django.contrib.auth.views.login %}">Sign Up</a></li>
-                        <li class="divider-vertical"></li>
-                        <li class="dropdown">
-                        <a class="dropdown-toggle" href="#" data-toggle="dropdown">Sign In<b class="caret"></b></a>
-                        <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
-                            <form class="form-horizontal" action="/users/login/" method="post" accept-charset="UTF-8">
-                                {% csrf_token %}
-                                <input placeholder="Username" style="margin-bottom: 15px;" id="id_username" type="text" name="username" size="30" />
-                                <input placeholder="Password" style="margin-bottom: 15px;" id="id_password" type="password" name="password" size="30" />
-                                <input style="float: left; margin-right: 10px;" id="user_remember_me" type="checkbox" name="remember_me" value="1" />
-                                <label class="string optional" for="user_remember_me"> Remember me</label>
-                                <input type="hidden" name="next" value="{{ current_path }}" />
-                                <input class="btn btn-inverse" type="submit" style="width: 95%; height: 32px; font-size: 12px;" name="commit" value="Log In" />
-                            </form>
-                        </div>
-                        </li>
-                        {% endif %}
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    
-    {% block breadcrumbs %}
-    <div id="main" class="container clear-top">
-        <div class="row">
-            <div class="span4">
-                <ul class="breadcrumb">
-                    <li>
-                    <a href="/">Home</a> <span class="divider">></span>
-                    </li>
-                    {% block breadcrumb_links %} {% endblock %}
+        <div id="user-nav" class="navbar navbar-inverse">
+            <ul class="nav btn-group">
+                {% if user.is_authenticated %}
+                <li class="btn btn-inverse" ><a title="" href="#"><i class="icon icon-user"></i> <span class="text">Profile</span></a></li>
+                <li class="btn btn-inverse dropdown" id="menu-messages"><a href="#" data-toggle="dropdown" data-target="#menu-messages" class="dropdown-toggle"><i class="icon icon-envelope"></i> <span class="text">Messages</span> <span class="label label-important">5</span> <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a class="sAdd" title="" href="#">New message</a></li>
+                    <li><a class="sInbox" title="" href="#">Inbox</a></li>
+                    <li><a class="sOutbox" title="" href="#">Outbox</a></li>
+                    <li><a class="sTrash" title="" href="#">Trash</a></li>
                 </ul>
-            </div>
-            <div class="span6">
-            {% block upper_right %}
-            {% endblock %}
-            </div>
-        </div>
-    </div>
-    {% endblock %}
-
-
-    <div id="status-messages">
-        {% include 'partials/status_messages.html' %} 
-    </div>
-    
-    {% block content %}
-
-    {% endblock %}
-    <div class="push"><!--//--></div>
-   </div> <!-- END WRAPPER -->
-   
-    <footer>
-    <div id="footer" class="stripe-color">
-        <div class="container">
-            <div class="row">
-                <div class="span3">
-                    <h6>Part Engine</h6>
-                    <ul class="unstyled">
-                        <li><a href="/">Home</a></li>
-                        <li><a href="{% url parts.views.index %}">Parts</a></li>
-                        <li><a href="{% url companies.views.index %}">Companies</a></li>
-                        <li><a href="#">NSNs</a></li>
-                        <li><a href="/faq/">FAQ / Documentation</a></li>
-                    </ul>
-                </div>
-
-                <div class="span3">
-                    <h6>Latest Blog Posts</h6>
-                    {% cache 3 rss_display %}
-                    {% get_rss "http://blog.partengine.org/feeds/posts/default?alt=rss" as rss %}
-                        {% for entry in rss.entries %}
-                            {% for link in entry.links %}
-                            {% if forloop.first %}
-                            <h6><a href="{{ link.href }}">{{ entry.title }}</a></h6>
-                            {% endif %}
-                            {% endfor %}
-                        <p class="sub">
-                            {{ entry.published|naturalday }}
-                        </p>
-                    {% endfor %}
-                    {% endcache %}
-                </div>
-
-                <div class="span3">
-                    <h6>Help</h6>
-                    <ul class="unstyled">
-                        <li><a href="/faq/">FAQ</a></li>
-                        <li><a href="/search/">Advanced Search</a></li>
-                        <li><a href="/privacy/">Privacy Policy</a></li>
-                        <li><a href="/privacy/#contact">Contact</a></li>
-                        <li><a href="/sitemap.xml">Sitemap</a></li>
-                    </ul>
-                </div>
-
+                </li>
+                <li class="btn btn-inverse"><a title="" href="#"><i class="icon icon-cog"></i> <span class="text">Settings</span></a></li>
+                <li class="btn btn-inverse"><a title="" href="/users/logout/"><i class="icon icon-share-alt"></i> <span class="text">Logout</span></a></li>
                 
+                {% else %}
+                <li class="btn btn-inverse"><a title="" href="{% url django.contrib.auth.views.login %}"><i class="icon icon-pencil"></i> <span class="text">Sign Up</span></a></li>
+                
+                <!-- login dropdown form -->
+                <li class="btn btn-inverse"><a title="" href="login.html"><i class="icon icon-user"></i> <span class="text">Log In</span></a>
+                    <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px;">
+                        <form class="form-horizontal" action="/users/login/" method="post" accept-charset="UTF-8">
+                            {% csrf_token %}
+                            <input placeholder="Username" style="margin-bottom: 15px;" id="id_username" type="text" name="username" size="30" />
+                            <input placeholder="Password" style="margin-bottom: 15px;" id="id_password" type="password" name="password" size="30" />
+                            <input style="float: left; margin-right: 10px;" id="user_remember_me" type="checkbox" name="remember_me" value="1" />
+                            <label class="string optional" for="user_remember_me"> Remember me</label>
+                            <input type="hidden" name="next" value="{{ current_path }}" />
+                            <input class="btn btn-inverse" type="submit" style="width: 95%; height: 32px; font-size: 12px;" name="commit" value="Log In" />
+                        </form>
+                    </div>
+                </li>
+                {% endif %}
+                
+            </ul>
+        </div>
+
+        <div id="sidebar">
+            <a href="#" class="visible-phone"><i class="icon icon-pencil"></i> Interface elements</a>
+            <ul>
+                <li {% block home_active %}{% endblock %}><a href="index.html"><i class="icon icon-home"></i> <span>Home</span></a></li>
+                
+                <!-- parts sub-menu -->
+                <li {% block parts_active %}{% endblock %} class="submenu">
+                <a href="#"><i class="icon icon-cog"></i> <span>Parts</span> <span class="label">4</span></a>
+                <ul>
+                    <li><a href="form-wizard.html">My Parts</a></li>
+                    <li><a href="form-common.html">Newest Parts</a></li>
+                    <li><a href="form-validation.html">Add a Part</a></li>
+                    <li><a href="form-wizard.html">Part Statistics</a></li>
+                </ul>
+                </li>
+                
+                <!-- assemblies sub-menu -->
+                <li {% block assemblies_active %}{% endblock %} class="submenu"><i class="icon icon-wrench"></i> <span>Assemblies</span> <span class="label">3</span>
+                <ul>
+                    <li><a href="form-wizard.html">My Assemblies</a></li>
+                    <li><a href="form-common.html">Newest Assemblies</a></li>
+                    <li><a href="form-validation.html">Browse Assemblies</a></li>
+                </ul>
+                </li>
+                
+                <!-- NSN sub-menu -->
+                <li {% block nsn_active %}{% endblock %}  class="submenu"><i class="icon icon-wrench"></i> <span>NSN Data</span> <span class="label">2</span>
+                <ul>
+                    <li><a href="form-wizard.html">NSN Details</a></li>
+                    <li><a href="form-common.html">FSC Details</a></li>
+                </ul>
+                </li>
+                
+                <li {% block search_active %}{% endblock %} ><a href="interface.html"><i class="icon icon-search"></i> <span>Search</span></a></li>
+                
+                <li {% block sourcing_active %}{% endblock %} ><a href="interface.html"><i class="icon icon-magnet"></i> <span>Sourcing Dashboard</span></a></li>
+                
+                <li {% block data_collection_active %}{% endblock %} ><a href="tables.html"><i class="icon icon-filter"></i> <span>Data Collection</span></a></li>
+                
+            </ul>
+
+        </div>
+
+        <div id="style-switcher">
+            <i class="icon-arrow-left icon-white"></i>
+            <span>Style:</span>
+            <a href="#grey" style="background-color: #555555;border-color: #aaaaaa;"></a>
+            <a href="#blue" style="background-color: #2D2F57;"></a>
+            <a href="#red" style="background-color: #673232;"></a>
+        </div>
+
+        <div id="content">
+            <div id="content-header">
+                <h1>{% block page_title %} {% endblock %}</h1>
+                <div class="btn-group">
+                    <a class="btn btn-large tip-bottom" title="Manage Files"><i class="icon-file"></i></a>
+                    <a class="btn btn-large tip-bottom" title="Manage Users"><i class="icon-user"></i></a>
+                    <a class="btn btn-large tip-bottom" title="Manage Comments"><i class="icon-comment"></i><span class="label label-important">5</span></a>
+                    <a class="btn btn-large tip-bottom" title="Manage Orders"><i class="icon-shopping-cart"></i></a>
+                </div>
             </div>
-            <div class="divider"></div>
-            <div class="row last">
-                <div class="span12">
-                    <p class="sub">&copy; Part Engine {% now "Y" %}</p>
+            
+            <div id="breadcrumb">
+                <a href="/" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a>
+                {% block breadcrumb_links %} {% endblock %}
+            </div>
+            <div class="container-fluid">
+                {% block content %}
+                
+                {% endblock %}
+
+                <div class="row-fluid">
+                    <div id="footer" class="span12">
+                        &copy; {% now "Y" %} Part Engine
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    </footer>
-</body>
+
+
+
+        <script src="{{ STATIC_URL }}js/jquery.min.js"></script>
+        <script src="{{ STATIC_URL }}js/jquery.ui.custom.js"></script>
+        <script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+        <script src="{{ STATIC_URL }}js/jquery.gritter.min.js"></script>
+        <script src="{{ STATIC_URL }}js/jquery.peity.min.js"></script>
+        <script src="{{ STATIC_URL }}js/unicorn.js"></script>
+        <script src="{{ STATIC_URL }}js/unicorn.interface.js"></script>
+    </body>
 </html>
