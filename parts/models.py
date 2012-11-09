@@ -17,7 +17,7 @@ class Part(models.Model):
     """
     number = models.CharField(max_length=48)
     slug = models.CharField(max_length=64)
-    description = models.TextField()
+    description = models.TextField(null=False)
     company = models.ForeignKey(Company)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
