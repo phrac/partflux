@@ -3,20 +3,21 @@
 <div class="modal hide" id="comment">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
-        <h2>Comment on {{ part.number }}</h2>
+        <h3>Comment on Part # {{ part.number }} by {{ part.company.name }}</h3>
     </div>
-    <div class="modal-body">
-        <form class="form-horizontal" method="post">
+    <form class="form-horizontal" method="post" action="{% comment_form_target %}">
+        <div class="modal-body">
             {% csrf_token %}
-            
+
             <div class="control-group">
                 <label class="control-label" for="id_comment">Comment</label>
                 <div class="controls">
-                    <textarea class="span3 input-xlarge" id="id_comment" rows="6" name="comment"></textarea>
-                    <p>Your comment</p>
+                    <textarea rows="8" name="comment"></textarea>
                 </div>
             </div>
-            
+        </div>
+        <div class="modal-footer">
+
             <div style="display:none">{{ form.honeypot }}</div>
             <div>
                 {{ form.timestamp }}
@@ -24,12 +25,10 @@
                 {{ form.object_pk }}
                 {{ form.content_type }}
                 <input type="hidden" name="next" value="{{ current_path }}" />
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">Post</button>
-                    <button type="submit" class="btn">Preview</button>
-                    <button class="btn" data-dismiss="modal">Cancel</button>
-                </div>
+                <button type="submit" class="btn btn-inverse">Post</button>
+                <button type="submit" class="btn">Preview</button>
+                <button class="btn" data-dismiss="modal">Cancel</button>
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
 </div>

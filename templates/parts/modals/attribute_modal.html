@@ -2,7 +2,7 @@
     {% if user.is_authenticated %}
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
-        <h2>Add new attribute</h2>
+        <h3>Add a new attribute</h3>
     </div>
     <div class="modal-body">
         <p>Attributes are pieces of information that describe a part in greater detail.</p>
@@ -32,11 +32,11 @@
                 </div>
             </div>
 
-            <div class="form-actions">
-                <input type="hidden" name="metadata_button" value="1" />
-                <button id="submit_attribute" data-loading-text="Saving..." data-toggle="button" class="btn btn-primary">Save Attribute</button>
-                <button class="btn" data-dismiss="modal">Cancel</button>
-            </div>
+        </div>
+        <div class="modal-footer">
+            <input type="hidden" name="metadata_button" value="1" />
+            <button id="submit_attribute" data-loading-text="Saving..." data-toggle="button" class="btn btn-inverse">Save Attribute</button>
+            <button class="btn" data-dismiss="modal">Cancel</button>
         </form>
     </div>
     <script language="JavaScript">
