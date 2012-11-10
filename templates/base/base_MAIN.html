@@ -99,7 +99,7 @@
                 <ul>
                     <li><a href="form-wizard.html"><i class="icon icon-star"></i> My Parts</a></li>
                     <li><a href="{% url parts.views.index %}"><i class="icon icon-inbox"></i> Newest Parts</a></li>
-                    <li><a href="form-validation.html"><i class="icon icon-plus-sign"></i> Add a Part</a></li>
+                    <li><a href="{% url parts.views.addpartform %}"><i class="icon icon-plus-sign"></i> Add a Part</a></li>
                     <li><a href="form-wizard.html"><i class="icon icon-list-alt"></i> Part Statistics</a></li>
                 </ul>
                 </li>
@@ -138,12 +138,7 @@
                 <h1>{% block page_title %} {% endblock %}</h1>
 
                 {% block right_buttons %}
-                <div class="btn-group">
-                    <a class="btn btn-large tip-bottom" title="Manage Files"><i class="icon-file"></i></a>
-                    <a class="btn btn-large tip-bottom" title="Manage Users"><i class="icon-user"></i></a>
-                    <a class="btn btn-large tip-bottom" title="Manage Comments"><i class="icon-comment"></i><span class="label label-important">5</span></a>
-                    <a class="btn btn-large tip-bottom" title="Manage Orders"><i class="icon-shopping-cart"></i></a>
-                </div>
+                
                 {% endblock %}
             </div>
             
