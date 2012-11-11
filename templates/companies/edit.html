@@ -1,97 +1,145 @@
 {% extends "base/base_MAIN.html" %}
 
-{% block breadcrumbs %}
-> <a href="{% url companies.views.index %}">Companies</a> > <a href="{{ company.get_absolute_url }}">{{ company.name }}</a> > Edit Details
+{% block breadcrumb_links %}
+<a href="{% url companies.views.index %}" title="Companies" class="tip-bottom"><i class="icon-briefcase"></i> Companies</a>
+<a href="{{ company.get_absolute_url }}">{{ company.name }}</a>
+<a href="#" class="current">Edit Details</a>
 {% endblock %}
 
+{% block page_title %}Editing {{ company.name }}{% endblock %}
+
 {% block content %}
-<div class="left">
-    <h2>Add a new part</h2>
-    {% if user.is_authenticated %}
-    <form action="" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <dl class="add_part_form">
-            {{ form.name.errors }}
-            <dt><label for="id_name">Company name:</label></dt>
-            <dd>{{ form.name }}</dd>
+<div class="row-fluid">
+    <div class="span6">
+        {% if user.is_authenticated %}
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon">
+                    <i class="icon-edit"></i>
+                </span>
+                <h5>Edit Company Details</h5>
+            </div>
+            <div class="widget-content nopadding">
+                <form class="well form-horizontal" action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="control-group">
+                        {{ form.name.errors }}
+                        <label class="control-label" for="id_name">Company name:</label>
+                        <div class="controls">
+                            {{ form.name }}
+                        </div>
 
-            {{ form.company.errors }}
-            <dt><label for="id_description">Description:</label></dt>
-            <dd>{{ form.description }}</dd>
+                        {{ form.description.errors }}
+                        <label class="control-label" for="id_description">Marketing Blurb:</label>
+                        <div class="controls">
+                            {{ form.description }}
+                        </div>
 
-            {{ form.url.errors }}
-            <dt><label for="id_url">Website URL:</label></dt>
-            <dd>{{ form.url }}</dd>
+                        {{ form.url.errors }}
+                        <label class="control-label" for="id_url">Website URL:</label>
+                        <div class="controls">
+                            {{ form.url }}
+                        </div>
 
-            {{ form.wikipedia_url.errors }}
-            <dt><label for="id_wikipedia_url">Company Wikipedia page:</label></dt>
-            <dd>{{ form.wikipedia_url }}</dd>
+                        {{ form.wikipedia_url.errors }}
+                        <label class="control-label" for="id_wikipedia_url">Wikipedia Page URL:</label>
+                        <div class="controls">
+                            {{ form.wikipedia_url }}
+                        </div>
 
-            {{ form.facebook_url.errors }}
-            <dt><label for="id_facebook_url">Company Facebook page:</label></dt>
-            <dd>{{ form.facebook_url }}</dd>
+                        {{ form.facebook_url.errors }}
+                        <label class="control-label" for="id_facebook_url">Facebook Page URL:</label>
+                        <div class="controls">
+                            {{ form.facebook_url }}
+                        </div>
 
-            {{ form.twitter_url.errors }}
-            <dt><label for="id_twitter_url">Company Twitter page:</label></dt>
-            <dd>{{ form.twitter_url }}</dd>
+                        {{ form.twitter_url.errors }}
+                        <label class="control-label" for="id_twitter_url">Twitter Page URL:</label>
+                        <div class="controls">
+                            {{ form.twitter_url }}
+                        </div>
 
-            {{ form.linkedin_url.errors }}
-            <dt><label for="id_linkedin_url">Company LinkedIn page:</label></dt>
-            <dd>{{ form.linkedin_url }}</dd>
+                        {{ form.linkedin_url.errors }}
+                        <label class="control-label" for="id_linkedin_url">LinkedIn Page URL:</label>
+                        <div class="controls">
+                            {{ form.linkedin_url }}
+                        </div>
 
-            {{ form.phone.errors }}
-            <dt><label for="id_phone">Company phone number: </label></dt>
-            <dd>{{ form.phone }}</dd>
+                        {{ form.phone.errors }}
+                        <label class="control-label" for="id_phone">Phone Number:</label>
+                        <div class="controls">
+                            {{ form.phone }}
+                        </div>
 
-            {{ form.fax.errors }}
-            <dt><label for="id_fax">Company fax number: </label></dt>
-            <dd>{{ form.fax }}</dd>
+                        {{ form.fax.errors }}
+                        <label class="control-label" for="id_fax">Fax Number:</label>
+                        <div class="controls">
+                            {{ form.fax }}
+                        </div>
 
-            {{ form.email.errors }}
-            <dt><label for="id_email">Company email: </label></dt>
-            <dd>{{ form.email }}</dd>
+                        {{ form.email.errors }}
+                        <label class="control-label" for="id_email">Sales Email:</label>
+                        <div class="controls">
+                            {{ form.email }}
+                        </div>
 
-            {{ form.address1.errors }}
-            <dt><label for="id_address1">Company address line 1: </label></dt>
-            <dd>{{ form.address1 }}</dd>
+                        {{ form.address1.errors }}
+                        <label class="control-label" for="id_address1">Address Line 1:</label>
+                        <div class="controls">
+                            {{ form.address1 }}
+                        </div>
 
-            {{ form.address2.errors }}
-            <dt><label for="id_address2">Company address line 2: </label></dt>
-            <dd>{{ form.address2 }}</dd>
+                        {{ form.address2.errors }}
+                        <label class="control-label" for="id_address2">Address Line 2:</label>
+                        <div class="controls">
+                            {{ form.address2 }}
+                        </div>
 
-            {{ form.city.errors }}
-            <dt><label for="id_city">Company city: </label></dt>
-            <dd>{{ form.city }}</dd>
+                        {{ form.city.errors }}
+                        <label class="control-label" for="id_city">City:</label>
+                        <div class="controls">
+                            {{ form.city }}
+                        </div>
 
-            {{ form.state.errors }}
-            <dt><label for="id_state">Company state: </label></dt>
-            <dd>{{ form.state }}</dd>
+                        {{ form.state.errors }}
+                        <label class="control-label" for="id_state">State:</label>
+                        <div class="controls">
+                            {{ form.state }}
+                        </div>
 
-            {{ form.country.errors }}
-            <dt><label for="id_country">Company country: </label></dt>
-            <dd>{{ form.country }}</dd>
+                        {{ form.country.errors }}
+                        <label class="control-label" for="id_country">Country:</label>
+                        <div class="controls">
+                            {{ form.country }}
+                        </div>
 
-            {{ form.zip.errors }}
-            <dt><label for="id_zip">Company zipcode: </label></dt>
-            <dd>{{ form.zip }}</dd>
+                        {{ form.zip.errors }}
+                        <label class="control-label" for="id_zip">Zip Code:</label>
+                        <div class="controls">
+                            {{ form.zip }}
+                        </div>
 
-            {{ form.image.errors }}
-            <dt><label for="id_image">Company logo: </label></dt>
-            <dd>{{ form.logo }}</dd>
-        </dl>
+                        {{ form.logo.errors }}
+                        <label class="control-label" for="id_zip">Company Logo:</label>
+                        <div class="controls">
+                            {{ form.logo }}
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-inverse">Update Details</button>
+                        <button type="submit" class="btn btn-default" onclick="this.form.reset()">Clear Form</button>
+                    </div>
+                </form>
 
-        <input type="submit" value="Save company details" class="submit" name="metadata_button" />
-    </form>
+                {% else %}
+                <h3 class="add">{% include "partials/sign_in.html" with action="to edit company details." %}</h3>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 
-    {% else %}
-    <h3 class="add">{% include "partials/sign_in.html" with action="to edit company details." %}</h3>
-    {% endif %}
-
-</div>
-
-<div class="right">
-    <h3>Tips for adding parts</h3>
-    <div class="right_articles">
+    <div class="well span6">
+        <h3>Tips For Updating Companies</h3>
         <ul class="bullets">
             <li>Make sure your part number is complete and accurate</li>
             <li>Make sure the company name is correct</li>

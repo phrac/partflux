@@ -92,7 +92,7 @@
             <ul>
                 <li {% block home_active %}{% endblock %}><a href="/"><i class="icon icon-home"></i> <span>Home</span></a></li>
 
-                <li {% block companies_active %}{% endblock %} ><a href="tables.html"><i class="icon icon-briefcase"></i> <span>Companies</span></a></li>
+                <li {% block companies_active %}{% endblock %} ><a href="{% url companies.views.index %}"><i class="icon icon-briefcase"></i> <span>Companies</span></a></li>
                 
                 <!-- parts sub-menu -->
                 <li class="submenu {% block parts_active %}{% endblock %}">

@@ -15,7 +15,7 @@
 
 {% block breadcrumb_links %}
     <a href="{% url parts.views.index %}" title="Parts" class="tip-bottom"><i class="icon-cog"></i> Parts</a>
-    <a href="{{ part.company.get_absolute_url }}">{{ part.company.name|safe }}</a>
+    <a href="{{ part.company.get_absolute_url }}"><i class="icon-briefcase"></i> {{ part.company.name|safe }}</a>
     <a href="#" class="current">{{ part.number }}</a>
 {% endblock %}
 
@@ -41,7 +41,8 @@
 
 <link rel="stylesheet" href="{{ STATIC_URL }}js/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
 <script type="text/javascript" src="{{ STATIC_URL }}js/fancybox/jquery.fancybox.pack.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}js/jeditable.min.js"></script>
+<link href="{{ STATIC_URL }}css/bootstrap-editable.css" rel="stylesheet">
+<script src="{{ STATIC_URL }}js/bootstrap-editable.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
         $("#lightbox").fancybox({
@@ -50,11 +51,16 @@
             'speedIn'       :   600, 
             'speedOut'      :   200, 
             'overlayShow'   :   false
-        });
-        $('.edit').editable('http://partengine.org/save.php', {
-            indicator : 'Saving...',
-            tooltip : 'Click to edit...'
-        });
+            });
+        $('#description').editable({
+                           type:  'text',
+                           pk:    1,
+                           name:  'username',
+                           url:   'post.php',  
+                           title: 'Enter Part Description',
+                           inputclass: 'input',
+                           loading: ''
+                        });
     });
 </script>
 {% endblock %}
@@ -75,7 +81,7 @@
 
 <div class="row-fluid">
     <div class="span12">
-        <h2>{{ part.number }} by {{ part.company|safe }}<br /><small><div class="edit tip-bottom" title="Click to Edit" id="div_1">{{ part.description }}</div></small></h2>
+    <h2>{{ part.number }} by {{ part.company|safe }}<br /><small><a id="description">{{ part.description }}</a></small></h2>
     </div>
 </div>
 
@@ -84,7 +90,7 @@
         <div class="widget-box">
             <div class="widget-title">
                 <span class="icon">
-                    <i class="icon-th"></i>
+                    <i class="icon-list-alt"></i>
                 </span>
                 <h5>Part Details ({{attributes|length}} attributes)</h5>
                 <div class="buttons">
