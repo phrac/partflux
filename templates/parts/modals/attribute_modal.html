@@ -51,9 +51,12 @@
                         $('#attribute-form').each(function() {
                             this.reset();
                         });
-                        $('#status-messages').hide().load("{% url main.views.status_messages %}").fadeIn("fast");
                         $('#attribute-table').hide().html(response).fadeIn("slow"); // update the DIV
-                        $('#new-attribute').effect("highlight", {color: '#468847'}, 6000);
+                        $.gritter.add({
+                            title:	'Attribute Added',
+                            text:	'Thanks for contributing to Part Engine!',
+                            sticky: false
+                        });		
                     }
                 });
                 return false;

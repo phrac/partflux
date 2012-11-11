@@ -60,12 +60,7 @@
 {% endblock %}
 
 {% block right_buttons %}
-<div class="btn-group">
-    <a class="btn btn-large tip-bottom" title="Share on Google+" href="https://plus.google.com/share?url={{ current_domain }}{{ current_path }}" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"><img src="{{ STATIC_URL }}images/glyphicons/glyphicons_362_google+_alt.png" alt="g+" /></a>
-    <a class="btn btn-large tip-bottom" title="Pin to Pintrest" href="http://pinterest.com/pin/create/button/?url={{ current_domain }}{{ current_path }}" ><img src="{{ STATIC_URL }}images/glyphicons/glyphicons_360_pinterest.png" alt="pinterest" /></a>
-    <a class="btn btn-large tip-bottom" title="Share on LinkedIn" href="http://www.linkedin.com/shareArticle?mini=true"><img src="{{ STATIC_URL }}images/glyphicons/glyphicons_377_linked_in.png" alt="linked in"></a>
-    <a class="btn btn-large tip-bottom" title="Print this Page" title="Print this page"><img src="{{ STATIC_URL }}images/glyphicons/glyphicons_015_print.png" alt="print" onclick="printpage()"></a>
-</div>
+{% include 'partials/share_links.html' %}
 {% endblock %}
 
 
@@ -80,7 +75,7 @@
 
 <div class="row-fluid">
     <div class="span12">
-        <h1>{{ part.number }} by {{ part.company|safe }}<br /><small><div class="edit" id="div_1">{{ part.description }}</div></small></h1>
+        <h2>{{ part.number }} by {{ part.company|safe }}<br /><small><div class="edit tip-bottom" title="Click to Edit" id="div_1">{{ part.description }}</div></small></h2>
     </div>
 </div>
 
@@ -93,51 +88,18 @@
                 </span>
                 <h5>Part Details ({{attributes|length}} attributes)</h5>
                 <div class="buttons">
-                    <a title="Icon Title" class="btn btn-mini" href="#"><i class="icon-print"></i> Print</a>
+                    <a class="btn btn-mini tip-top" title="Add To My Parts"><i class="icon icon-star"></i></a>
+                    <a class="btn btn-mini tip-top" title="Add To RFQ List"><i class="icon icon-shopping-cart"></i></a>
+                    <a class="btn btn-mini tip-top" title="Flag Part"><i class="icon icon-flag"></i></a>
+                    <a class="btn btn-mini tip-top" title="Print this part" href="#"><i class="icon-print"></i></a>
                     <a title="Add New Attribute" class="btn btn-inverse btn-mini" href="#attribute-modal" data-toggle="modal"><i class="icon-info-sign icon-white"></i> Add Attribute</a>
                 </div>
             </div>
-            {% if attributes %}
-            <div class="widget-content nopadding">
-                <table class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Attribute</th>
-                            <th>Value</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    {% for a in attributes %}
-                    <tr {% if a.id == new_id %}id="new-attribute"{% endif %}>
-                        <td>
-                            <strong>{{ a.key }}:</strong>	
-                        </td>
-                        <td>
-                            {{ a.value }}
-                        </td>
-                        <td width="18%">
-                            {% if user.is_authenticated %}
-                            <div class="btn-group">
-                                <button class="btn btn-mini">Actions</button>
-                                <button class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
-                                    <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu pull-right">
-                                    <a href="#"><i class="icon icon-flag"></i> Flag</a>
-                                </ul>
-                            </div>
-                            {% else %}
-                            {% endif %}
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </table>
+            <div id="attributes">
+                <div id="attribute-table">
+                    {% include 'parts/partials/attribute_table.html' %}
+                </div>
             </div>
-            {% else %}
-            <div class="widget-content">
-                <h3>No additional information available.</h3>
-            </div>
-            {% endif %}
         </div>
 
         <!-- images widget -->
@@ -152,7 +114,7 @@
                 </div>
             </div>
             {% if part.images.all %}
-            <div class="widget-content nopadding">
+            <div class="widget-content">
                 <div id="images">
                     {% if part.images.all %}
                     <ul class="thumbnails">
@@ -298,27 +260,40 @@
                     <a title="Add New Attribute" class="btn btn-inverse btn-mini" href="#add-buylink" data-toggle="modal"><i class="icon-shopping-cart icon-white"></i> Add Purchasing Link</a>
                 </div>
             </div>
-            {% if xrefs %}
+            {% if buylinks %}
             <div class="widget-content nopadding">
-                <table class="table table-striped">
+                <table class="table table-striped table-bordered">
                     <thead>
                         <tr>
-                            <th>Part #</th>
-                            <th>Description</th>
-                            <th>Company</th>
+                            <th>Company &amp; Link</th>
+                            <th>Price</th>
+                            <th>Last checked</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for xref in xrefs %}
+                        {% for buylink in buylinks %}
                         <tr>
                             <td>
-                                <a href="{{ xref.xrefpart.get_absolute_url }}">{{ xref.xrefpart.number }}</a>
+                                <a href="{{ buylink.url }}">{{ buylink.company.name }}</a>
                             </td>
                             <td>
-                                {{ xref.xrefpart.description }}
+                                <b>${{ buylink.price }}</b>
                             </td>
                             <td>
-                                <a href="{{ xref.xrefpart.company.get_absolute_url }}">{{ xref.xrefpart.company }}</a>
+                                {{ buylink.updated_at|date:"SHORT_DATE_FORMAT" }}
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <button class="btn btn-mini">Actions</button>
+                                    <button class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <a href="#">Flag as dead link</a>
+                                        <a href="#">Flag as wrong price</a>
+                                    </ul>
+                                </div>
                             </td>
                         </tr>
                         {% endfor %}
