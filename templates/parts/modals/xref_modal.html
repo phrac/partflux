@@ -41,6 +41,11 @@
 
     </form>
 </div>
+<script language="javascript">
+    $('#add-xref').on('shown', function () {
+        $('#id_part').focus();
+    })
+</script>
 {% else %}
 {% include 'partials/login_modal.html' %}
 {% endif %}

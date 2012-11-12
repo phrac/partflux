@@ -44,6 +44,11 @@
 
         </form>
     </div>
+    <script language="javascript">
+        $('#add-buylink').on('shown', function () {
+            $('#id_url').focus();
+        })
+    </script>
     {% else %}
     {% include 'partials/login_modal.html' %}
     {% endif %}
