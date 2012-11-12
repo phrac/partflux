@@ -5,12 +5,12 @@ class Nsn(models.Model):
     fsc = models.ForeignKey('Fsc', null=True)
     description = models.TextField()
     niin = models.IntegerField(unique=True)
-    codification_country = CharField(max_length=16, null=True)
-    adp_code = CharField(max_length=16, null=True)
-    dml_code = CharField(max_length=16, null=True)
-    hmic = BooleanField(max_length=16, null=True)
-    pmic = BooleanField(max_length=16, null=True)
-    esdc = BooleanField(max_length=16, null=True)
+    codification_country = models.CharField(max_length=16, null=True)
+    adp_code = models.CharField(max_length=16, null=True)
+    dml_code = models.CharField(max_length=16, null=True)
+    hmic = models.NullBooleanField(null=True)
+    pmic = models.NullBooleanField(null=True)
+    esdc = models.NullBooleanField(null=True)
     updated_at = models.DateTimeField(auto_now=True)
      
     def __unicode__(self):
@@ -35,6 +35,6 @@ class Fsc(models.Model):
         
 class Mrc(models.Model):
     nsn = models.ForeignKey(Nsn)
-    mrc = CharField(max_length=10)
-    req = CharField(max_length=64)
-    reply = CharField(max_length=256)
+    mrc = models.CharField(max_length=10)
+    req = models.CharField(max_length=64)
+    reply = models.CharField(max_length=256)

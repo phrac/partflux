@@ -2,23 +2,18 @@
 {% load googlesearch_inclusion_tags %}
 
 {% block breadcrumb_links %}
-    <li>
-        Search
-        <span class="divider">></span>
-    </li>
-    <li class="active">Results</li>
+    <a href="#" class="current">Search</a>
 {% endblock %}
 
+{% block page_title %}Search Results{% endblock %}
+
 {% block content %}
-<div class="container">
-    <div class="page-header">
-        <h1>{% block searchstats %}Search Results{% endblock %}</small></h1>
-    </div>
-    
+<div class="row-fluid">
+    <div class="span9">
     {% googlesearch_results %} 
     {% include "partials/add_part_to_db.html" %}
+    </div>
 </div>
-
 
 {% endblock %}
 
