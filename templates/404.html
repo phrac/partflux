@@ -1,6 +1,26 @@
+{% extends "base/base_MAIN.html" %}
 
+{% block breadcrumb_links %}
+<a href="#" class="current">Page Not Found (404)</a>
+{% endblock %}
 
-<center><h1>whoops, we couldn't find the page you were looking for</h1></center>
+{% block right_buttons %}{% endblock %}
 
+{% block page_title %}Oops, this page is missing!{% endblock %}
 
+{% block content %}
+<div class="row-fluid">
+    <div class="span4 offset2">
+        <img src="{{ STATIC_URL }}img/doh.png" alt="404 image" />
+    </div>
 
+    <div class="span6">
+        <h2>Oops, this page is missing</h2>
+        <p>We couldn't find the page you were looking for, but don't worry, we're
+        working on fixing it.</p>
+        <p>In the mean time, how about <a href="{% url parts.views.index %}">browsing
+        the newest parts in our database</a> or <a href="/">returning to the home page</a>
+        </p>
+    </div>
+</div>
+{% endblock %}
