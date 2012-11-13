@@ -4,7 +4,7 @@
 {% load thumbnail %}
 
 {% block title %}
-{{ company.name|safe }} - Details | Part Engine
+{{ company.name|safe }} - Details - Page {{ parts_list.paginator.current_page }} | Part Engine
 {% endblock %}
 
 {% block companies_active %}class="active"{% endblock %}
