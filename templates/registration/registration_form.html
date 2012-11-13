@@ -2,53 +2,48 @@
 {% load url from future %}
 
 {% block breadcrumb_links %}
-    <li>
-    <a href="/users/">Users</a>
-    <span class="divider">></span>
-    </li>
-    <li class="active">Register/Sign In</li>
+<a href="/users/" title="Users" class="tip-bottom"><i class="icon-user"></i> Users</a>
+<a href="#" class="current">Register/Log In</a>
 {% endblock %}
 
+{% block page_title %}Sign Up or Log In{% endblock %}
+
 {% block content %}
-<div class="container">
-    <div class="page-header">
-        <h1>Sign Up or Sign In</h1>
+<div class="row-fluid">
+    <div class="span5 offset1">
+        <h2>Don't have an account? <br /><small>It takes under a minute to enjoy all the features of <b>Part Engine</b>!</small></h2>
+        {% include 'registration/includes/registration_form.html' %}
     </div>
-    <div class="row">
-        <div class="span6">
-            <h2>Don't have an account? <br /><small>It takes under a minute to enjoy all the features of <b>Part Engine</b>!</small></h2>
-            {% include 'registration/includes/registration_form.html' %}
-        </div>
 
+    <div class="span4">
+        <h2>Already a member?<br /><small>Sign in now</small></h2>
+        {% if form.errors %}
+        <strong>Your username and password didn't match. Please try again.</strong>
+        {% endif %}
 
-        <div class="span4 offset1">
-            <h2>Already a member?<br /><small>Sign in now</small></h2>
-            {% if form.errors %}
-            <h1>Your username and password didn't match. Please try again.</h1>
-            {% endif %}
-            
-            <form class="well form-vertical" method="post" action="{% url 'django.contrib.auth.views.login' %}">
-                {% csrf_token %}
+        <form class="well form-horizontal" method="post" action="{% url 'django.contrib.auth.views.login' %}">
+            {% csrf_token %}
 
-                <div class="control-group">
-                    <div class="controls">
-                        <input id="id_username" type="text" class="span3" name="username" maxlength="30" placeholder="User Name" />
-                    </div>
+            <div class="control-group">
+                <label class="control-label" for="id_username">User name</label>
+                <div class="controls">
+                    <input id="id_username" type="text" name="username" maxlength="30" placeholder="User Name" />
                 </div>
-                <div class="control-group">
-                    <div class="controls">
-                        <input id="id_password" type="password" class="span3" name="password" maxlength="30" placeholder="Password" />
-                    </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="id_username">Password</label>
+                <div class="controls">
+                    <input id="id_password" type="password" name="password" maxlength="30" placeholder="Password" />
                 </div>
+            </div>
 
-                <div class="form-actions">
-                    <input type="hidden" name="next" value="/" />
-                    <button type="submit" class="btn btn-primary">Sign In</button>
-                    <button type="submit" class="btn btn-danger">Forgot Password</button>
-                </div>
+            <div class="form-actions">
+                <input type="hidden" name="next" value="/" />
+                <button type="submit" class="btn btn-primary">Sign In</button>
+                <button type="submit" class="btn btn-danger">Forgot Password</button>
+            </div>
 
-            </form>
-        </div>
+        </form>
     </div>
 </div>
 {% endblock %}
