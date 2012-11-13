@@ -67,17 +67,17 @@
 {% endblock %}
 
 {% block right_buttons %}
-{% include 'partials/share_links.html' %}
+{% include 'includes/share_links.html' %}
 {% endblock %}
 
 
 {% block content %}
 
 <div id="modals">
-    {% include 'parts/modals/attribute_modal.html' %} 
-    {% include 'parts/modals/image_modal.html' %}
-    {% include 'parts/modals/xref_modal.html' %}
-    {% include 'parts/modals/buylink_modal.html' %}
+    {% include 'parts/includes/modals/attribute_modal.html' %} 
+    {% include 'parts/includes/modals/image_modal.html' %}
+    {% include 'parts/includes/modals/xref_modal.html' %}
+    {% include 'parts/includes/modals/buylink_modal.html' %}
 </div>
 
 <div class="row-fluid">
@@ -104,7 +104,7 @@
             </div>
             <div id="attributes">
                 <div id="attribute-table">
-                    {% include 'parts/partials/attribute_table.html' %}
+                    {% include 'parts/includes/attribute_table.html' %}
                 </div>
             </div>
         </div>

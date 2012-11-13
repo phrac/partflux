@@ -6,5 +6,5 @@ syntax: glob
 *.pyc
 *~
 *.swo
-settings.py
+settings_local.py
 
