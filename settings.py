@@ -2,10 +2,6 @@
 import os
 DIRNAME = os.path.dirname(__file__)
 
-
-DEBUG = True
-TEMPLATE_DEBUG = DEBUG
-
 ADMINS = (
      ('Derek Musselmann', 'derek@disflux.com'),
 )
