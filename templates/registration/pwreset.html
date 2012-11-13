@@ -1,31 +1,41 @@
 {% extends "base/base_MAIN.html" %}
 {% load url from future %}
 
-{% block breadcrumbs %}
-> <a href="/users/">Users</a> > Reset password
+{% block breadcrumb_links %}
+<a href="/users/" title="Users" class="tip-bottom"><i class="icon-user"></i> Users</a>
+<a href="#" class="current">Password Reset</a>
 {% endblock %}
 
-{% block content %}
-<div class="center_content">
-	<h2>Reset forgotten password</h2>
-	<p style="font-size:1.3em;">Enter your email address and we'll send you instructions on how to reset your password.</p>
-	{% if form.errors %}
-	<p><b>You must enter your email address</b></p>
-        {% endif %}
-        <form method="post" action="">
-            {% csrf_token %}
-            <table class="input">
-                <tr>
-                    <td class="input_big">{{ form.email.label_tag }}</td>
-                    <td class="input_big">{{ form.email }}</td>
-                </tr>
-                <tr>
-                    <td><input class="submit" type="submit" value="Reset my password" /></td>
-                </tr>
-            </table>
+{% block page_title %}Reset Password{% endblock %}
 
-            <input type="hidden" name="next" value="/" />
+{% block content %}
+<div class="row-fluid">
+    <div class="span3 offset1">
+        <img src="{{ STATIC_URL }}img/doh.png" alt="doh!" />
+    </div>
+    <div class="span5">
+        <h2>Do'h! You forgot your password?</h2>
+        <strong>Don't worry, just give us your email and we'll send you instructions on how to reset it.</strong>
+        {% if form.errors %}
+        <strong>You must enter your email address</strong>
+        {% endif %}
+        <form class="well form-horizontal" method="post" action="">
+            {% csrf_token %}
+            <div class="control-group">
+                <label class="control-label" for="id_username">{{ form.email.label_tag }}</label>
+                <div class="controls">
+                    {{ form.email }}
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <input type="hidden" name="next" value="/" />
+                <button type="submit" class="btn btn-primary">Reset Password</button>
+            </div>
         </form>
+    </div>
+
+    
 </div>
 {% endblock %}
 
