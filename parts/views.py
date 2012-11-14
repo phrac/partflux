@@ -45,23 +45,15 @@ def detail(request, part_id, company_slug, part_slug):
         buylinkform = BuyLinkForm(request.POST)
         if buylinkform.is_valid:
             status = addbuylink(request, p.pk)
-            if status is True:
-                request.flash.success = "URL added successfully"
-            else:
-                request.flash.error = "Adding URL failed: %s" % status
             return HttpResponseRedirect(reverse('parts.views.detail', args=[part_id, c.slug, p.slug]))
 
     if 'metadata_button' in request.POST:
         metaform = MetadataForm(request.POST)
         if metaform.is_valid:
             status, new_id = addmeta(request, p.pk)
-            if status is True:
-                request.flash.success = "Attribute added. Thanks for your contribution!"
-            else:
-                request.flash.error = "Adding attribute failed: %s" % status
                 
             if request.is_ajax():
-                return render_to_response('parts/partials/attribute_table.html',
+                return render_to_response('parts/includes/attribute_table.html',
                                           { 'attributes': attributes,
                                             'new_id': new_id, },
                                          context_instance=RequestContext(request))
@@ -73,10 +65,6 @@ def detail(request, part_id, company_slug, part_slug):
         xrefform = XrefForm(request.POST)
         if xrefform.is_valid:
             status = addxref(request, p.pk)
-            if status is True:
-                request.flash.success = "Cross reference added. Thanks for your contribution!"
-            else:
-                request.flash.error = "Adding cross reference failed: %s" % status
             return HttpResponseRedirect(reverse('parts.views.detail',
                                                 args=[part_id, c.slug, p.slug]))
     
@@ -84,10 +72,6 @@ def detail(request, part_id, company_slug, part_slug):
         imageuploadform = ImageUploadForm(request.POST, request.FILES)
         if imageuploadform.is_valid:
             status = uploadimage(request, p.pk)
-            if status is True:
-                request.flash.success = "Image upload success. Thanks for your contribution!"
-            else:
-                request.flash.error = "Image upload failed: %s" % status
             return HttpResponseRedirect(reverse('parts.views.detail',
                                                 args=[part_id, c.slug, p.slug]))
 
