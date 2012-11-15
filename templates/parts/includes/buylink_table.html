@@ -1,0 +1,46 @@
+{% if buylinks %}
+<div class="widget-content nopadding">
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Company &amp; Link</th>
+                <th>Price</th>
+                <th>Last checked</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for buylink in buylinks %}
+            <tr>
+                <td>
+                    <a href="{{ buylink.url }}">{{ buylink.company.name }}</a>
+                </td>
+                <td>
+                    <b>${{ buylink.price }}</b>
+                </td>
+                <td>
+                    {{ buylink.updated_at|date:"SHORT_DATE_FORMAT" }}
+                </td>
+                <td>
+                    <div class="btn-group">
+                        <button class="btn btn-mini">Actions</button>
+                        <button class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Flag as dead link</a></li>
+                            <li><a href="#">Flag as wrong price</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="widget-content">
+    <h3>No links to purchase this product found.</h3>
+</div>
+{% endif %}
+

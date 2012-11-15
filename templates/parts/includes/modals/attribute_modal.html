@@ -35,15 +35,23 @@
         </div>
         <div class="modal-footer">
             <input type="hidden" name="metadata_button" value="1" />
-            <button id="submit_attribute" data-loading-text="Saving..." data-toggle="button" class="btn btn-inverse">Save Attribute</button>
+            <button id="save-attribute" data-loading-text="Saving..." data-toggle="button" class="btn btn-inverse">Save Attribute</button>
             <button class="btn" data-dismiss="modal">Cancel</button>
         </form>
     </div>
+
+    <script type="text/javascript">
+        $('#save-attribute').click(function() {
+            $('#save-attribute').button('loading');
+        });
+    </script>
+
     <script type="text/javascript">
         $('#attribute-modal').on('shown', function () {
             $('#id_key').focus();
-        })
+        });
     </script>
+
     <script type="text/javascript">
         $(document).ready(function() {
             $('#attribute-form').submit(function() { // catch the form's submit event
@@ -61,13 +69,15 @@
                             title:	'Attribute Added',
                             text:	'Thanks for contributing to Part Engine!',
                             sticky: false
-                        });		
+                        });
+                        $('#save-attribute').button('reset');
                     }
                 });
                 return false;
             });
         });
     </script>
+    
     {% else %}
     {% include 'includes/login_modal.html' %}
     {% endif %}

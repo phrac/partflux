@@ -257,6 +257,7 @@
             </div>
             {% endif %}
         </div>
+
         <div class="widget-box">
             <div class="widget-title">
                 <span class="icon">
@@ -264,55 +265,14 @@
                 </span>
                 <h5>Purchasing Information</h5>
                 <div class="buttons">
-                    <a title="Add New Attribute" class="btn btn-inverse btn-mini" href="#add-buylink" data-toggle="modal"><i class="icon-shopping-cart icon-white"></i> Add Purchasing Link</a>
+                    <a class="btn btn-inverse btn-mini" href="#buylink-modal" data-toggle="modal"><i class="icon-shopping-cart icon-white"></i> Add Purchasing Link</a>
                 </div>
             </div>
-            {% if buylinks %}
-            <div class="widget-content nopadding">
-                <table class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Company &amp; Link</th>
-                            <th>Price</th>
-                            <th>Last checked</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for buylink in buylinks %}
-                        <tr>
-                            <td>
-                                <a href="{{ buylink.url }}">{{ buylink.company.name }}</a>
-                            </td>
-                            <td>
-                                <b>${{ buylink.price }}</b>
-                            </td>
-                            <td>
-                                {{ buylink.updated_at|date:"SHORT_DATE_FORMAT" }}
-                            </td>
-                            <td>
-                                <div class="btn-group">
-                                    <button class="btn btn-mini">Actions</button>
-                                    <button class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <a href="#">Flag as dead link</a>
-                                        <a href="#">Flag as wrong price</a>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+            <div id="buylink-table">
+                {% include 'parts/includes/buylink_table.html' %}
             </div>
-            {% else %}
-            <div class="widget-content">
-                <h3>No links to purchase this product found.</h3>
-            </div>
-            {% endif %}
         </div>
+
         <div class="widget-box">
             <div class="widget-title">
                 <span class="icon">

@@ -22,6 +22,8 @@ def index(request):
     return render_to_response('parts/index.html',
                               {'parts_list': parts_list},
                               context_instance=RequestContext(request))
+
+
 def redirect_new_page(request, company_slug, part_slug):
     c = get_object_or_404(Company, slug=company_slug) 
     p = get_object_or_404(Part, slug=part_slug, company=c)
@@ -45,7 +47,13 @@ def detail(request, part_id, company_slug, part_slug):
         buylinkform = BuyLinkForm(request.POST)
         if buylinkform.is_valid:
             status = addbuylink(request, p.pk)
-            return HttpResponseRedirect(reverse('parts.views.detail', args=[part_id, c.slug, p.slug]))
+
+            if request.is_ajax():
+                return render_to_response('parts/includes/buylink_table.html',
+                                          {'buylinks': buylinks,},
+                                          context_instance=RequestContext(request))
+            else:
+                return HttpResponseRedirect(reverse('parts.views.detail', args=[part_id, c.slug, p.slug]))
 
     if 'metadata_button' in request.POST:
         metaform = MetadataForm(request.POST)
@@ -54,9 +62,8 @@ def detail(request, part_id, company_slug, part_slug):
                 
             if request.is_ajax():
                 return render_to_response('parts/includes/attribute_table.html',
-                                          { 'attributes': attributes,
-                                            'new_id': new_id, },
-                                         context_instance=RequestContext(request))
+                                          {'attributes': attributes,},
+                                          context_instance=RequestContext(request))
             else:
                 return HttpResponseRedirect(reverse('parts.views.detail',
                                                     args=[part_id, c.slug, p.slug]))
@@ -84,8 +91,7 @@ def detail(request, part_id, company_slug, part_slug):
                                'metadata_form': metaform, 
                                'xref_form' : xrefform,
                                'imageuploadform' : imageuploadform,
-                               'buylinkform' : buylinkform,
-                              },
+                               'buylinkform' : buylinkform,},
                               context_instance=RequestContext(request))
 
 @login_required
@@ -106,19 +112,15 @@ def addmeta(request, part_id):
 
 @login_required
 def addbuylink(request, part_id):
-    print request.POST
     p = get_object_or_404(Part, pk=part_id)
     buylinkform = BuyLinkForm(request.POST)
-    print 'in addbuylink()'
     if buylinkform.is_valid():
-        print 'form valid'
         url = buylinkform.cleaned_data['url']
         company = buylinkform.cleaned_data['company'].strip().upper()
         price = buylinkform.cleaned_data['price']
         c, _created = Company.objects.get_or_create(name=company)
         buylink = BuyLink(part=p, company=c, price=price, url=url)
         try:
-            print 'saving link'
             buylink.save()
             return True
         except IntegrityError:
