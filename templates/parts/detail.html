@@ -99,7 +99,7 @@
                     <a class="btn btn-mini tip-top" title="Add To RFQ List"><i class="icon icon-shopping-cart"></i></a>
                     <a class="btn btn-mini tip-top" title="Flag Part"><i class="icon icon-flag"></i></a>
                     <a class="btn btn-mini tip-top" title="Print this part" href="#"><i class="icon-print"></i></a>
-                    <a title="Add New Attribute" class="btn btn-inverse btn-mini" href="#attribute-modal" data-toggle="modal"><i class="icon-info-sign icon-white"></i> Add Attribute</a>
+                    <a class="btn btn-inverse btn-mini tip-bottom" title="New Attribute" href="#attribute-modal" data-toggle="modal"><i class="icon-plus-sign icon-white"></i></a>
                 </div>
             </div>
             <div id="attributes">
@@ -117,7 +117,7 @@
                 </span>
                 <h5>Part Images</h5>
                 <div class="buttons">
-                    <a title="Add New Image" class="btn btn-inverse btn-mini" href="#img-upload" data-toggle="modal"><i class="icon-camera icon-white"></i> Add Image</a>
+                    <a class="btn btn-inverse btn-mini tip-bottom" title="New Image" href="#img-upload" data-toggle="modal"><i class="icon-plus-sign icon-white"></i></a>
                 </div>
             </div>
             {% if part.images.all %}
@@ -155,7 +155,7 @@
                 </span>
                 <h5>Comments</h5>
                 <div class="buttons">
-                    <a title="Add New Image" class="btn btn-inverse btn-mini" href="#comment" data-toggle="modal"><i class="icon-comment icon-white"></i> Add Comment</a>
+                    <a class="btn btn-inverse btn-mini tip-bottom" title="Post Comment" href="#comment" data-toggle="modal"><i class="icon-plus-sign icon-white"></i></a>
                 </div>
             </div>
             <div class="widget-content">
@@ -181,7 +181,7 @@
                 </span>
                 <h5>Cross References</h5>
                 <div class="buttons">
-                    <a title="Add New Attribute" class="btn btn-inverse btn-mini" href="#add-xref" data-toggle="modal"><i class="icon-random icon-white"></i> Add Cross Reference</a>
+                    <a class="btn btn-inverse btn-mini tip-bottom" title="New Cross Reference" href="#add-xref" data-toggle="modal"><i class="icon-plus-sign icon-white"></i></a>
                 </div>
             </div>
             {% if xrefs %}
@@ -265,7 +265,7 @@
                 </span>
                 <h5>Purchasing Information</h5>
                 <div class="buttons">
-                    <a class="btn btn-inverse btn-mini" href="#buylink-modal" data-toggle="modal"><i class="icon-shopping-cart icon-white"></i> Add Purchasing Link</a>
+                    <a class="btn btn-inverse btn-mini tip-bottom" title="New Purchase Link" href="#buylink-modal" data-toggle="modal"><i class="icon-plus-sign icon-white"></i></a>
                 </div>
             </div>
             <div id="buylink-table">
