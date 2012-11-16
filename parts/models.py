@@ -8,7 +8,6 @@ from sorl.thumbnail import ImageField
 
 from companies.models import Company
 from nsn.models import Nsn
-from pyes import *
 
 class Part(models.Model):
     """
@@ -42,7 +41,6 @@ class Part(models.Model):
         self.number = self.number.strip().upper()
         self.description = self.description.strip().upper()
         self.slug = slugify(self.number)
-        #self.update_ES()
         super(Part, self).save(*args, **kwargs)
 
     @models.permalink
@@ -67,9 +65,9 @@ class Attribute(models.Model):
         self.value = self.value.strip().upper()
         if not self.upvotes:
             self.upvotes = 0
-            if not self.downvotes:
-                self.downvotes = 0
-                super(Attribute, self).save(*args, **kwargs)
+        if not self.downvotes:
+            self.downvotes = 0
+        super(Attribute, self).save(*args, **kwargs)
 
 class Xref(models.Model):
     """ Store part number cross references, related to :model:`parts.Part` and
@@ -110,48 +108,6 @@ class BuyLink(models.Model):
 class PartModerator(CommentModerator):
     email_notification = True
 
-
-# functions for updating the ElasticSearch index
-def update_ES(sender, instance, **kwargs):
-    """ 
-    Update the ElasticSearch index with fresh data about the part.
-
-    """
-    es = ES(settings.ES_HOST)
-    attrlist, attrstring = prepare_attrs(instance)
-    es.index(
-        {
-            "pgid" : instance.id, 
-            "number" : instance.number, 
-            "company" : instance.company.name, 
-            "attrstring" : attrstring,
-            "desc" : instance.description,
-            "attributes" : attrlist,
-        }, 
-        "parts", "part-type", instance.id
-    )
-    es.refresh('parts')
-
-def prepare_attrs(instance):
-    """
-    Turn the hstore attribute column into a dict & string for storage in
-    ElasticSearch
-
-    """
-    attrlist = []
-    attrstring = ''
-    attributes = Attribute.objects.filter(part=instance.id)
-    for a in attributes:
-        attr = {}
-        attr['key'] = a.key
-        attr['value'] = a.value
-        attrlist.append(attr)
-        attrstring += "%s " % a.key
-        attrstring += "%s " % a.value
-
-    return attrlist, attrstring
-
-#post_save.connect(update_ES, sender=Part)
 
 #moderator.register(Part, PartModerator)
 

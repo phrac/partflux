@@ -195,10 +195,7 @@ def addxref(request, part_id):
 @login_required
 def uploadimage(request, part_id):
     p = get_object_or_404(Part, pk=part_id)
-    print 'got part'
-    print request.FILES
     if request.FILES.get('file', None):
-        print 'uploading'
         f = request.FILES['file']
     
         """Handle the file upload"""

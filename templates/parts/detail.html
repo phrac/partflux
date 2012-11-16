@@ -19,7 +19,7 @@
     <a href="#" class="current">{{ part.number }}</a>
 {% endblock %}
 
-{% block page_title %}{{ part.number }} by {{ part.company|safe }}{% endblock %}
+{% block page_title %}{{ part.number }}{% endblock %}
 
 {% block html_itemscope %}itemscope itemtype="http://schema.org/Product"{% endblock %}
 
@@ -99,7 +99,7 @@
                     <a class="btn btn-mini tip-top" title="Add To RFQ List"><i class="icon icon-shopping-cart"></i></a>
                     <a class="btn btn-mini tip-top" title="Flag Part"><i class="icon icon-flag"></i></a>
                     <a class="btn btn-mini tip-top" title="Print this part" href="#"><i class="icon-print"></i></a>
-                    <a class="btn btn-inverse btn-mini tip-bottom" title="New Attribute" href="#attribute-modal" data-toggle="modal"><i class="icon-plus-sign icon-white"></i></a>
+                    <a class="btn btn-inverse btn-mini tip-left" title="New Attribute" href="#attribute-modal" data-toggle="modal"><i class="icon-plus-sign icon-white"></i></a>
                 </div>
             </div>
             <div id="attributes">
@@ -117,7 +117,7 @@
                 </span>
                 <h5>Part Images</h5>
                 <div class="buttons">
-                    <a class="btn btn-inverse btn-mini tip-bottom" title="New Image" href="#image-modal" data-toggle="modal"><i class="icon-plus-sign icon-white"></i></a>
+                    <a class="btn btn-inverse btn-mini tip-left" title="New Image" href="#image-modal" data-toggle="modal"><i class="icon-plus-sign icon-white"></i></a>
                 </div>
             </div>
             {% include 'parts/includes/image_table.html' %} 
@@ -132,7 +132,7 @@
                 </span>
                 <h5>Comments</h5>
                 <div class="buttons">
-                    <a class="btn btn-inverse btn-mini tip-bottom" title="Post Comment" href="#comment" data-toggle="modal"><i class="icon-plus-sign icon-white"></i></a>
+                    <a class="btn btn-inverse btn-mini tip-left" title="Post Comment" href="#comment" data-toggle="modal"><i class="icon-plus-sign icon-white"></i></a>
                 </div>
             </div>
             <div class="widget-content">
@@ -158,7 +158,7 @@
                 </span>
                 <h5>Cross References</h5>
                 <div class="buttons">
-                    <a class="btn btn-inverse btn-mini tip-bottom" title="New Cross Reference" href="#add-xref" data-toggle="modal"><i class="icon-plus-sign icon-white"></i></a>
+                    <a class="btn btn-inverse btn-mini tip-left" title="New Cross Reference" href="#add-xref" data-toggle="modal"><i class="icon-plus-sign icon-white"></i></a>
                 </div>
             </div>
             {% if xrefs %}
@@ -242,7 +242,7 @@
                 </span>
                 <h5>Purchasing Information</h5>
                 <div class="buttons">
-                    <a class="btn btn-inverse btn-mini tip-bottom" title="New Purchase Link" href="#buylink-modal" data-toggle="modal"><i class="icon-plus-sign icon-white"></i></a>
+                    <a class="btn btn-inverse btn-mini tip-left" title="New Purchase Link" href="#buylink-modal" data-toggle="modal"><i class="icon-plus-sign icon-white"></i></a>
                 </div>
             </div>
             <div id="buylink-table">
