@@ -1,4 +1,4 @@
-<div class="modal hide" id="img-upload">
+<div class="modal hide" id="image-modal">
     {% if user.is_authenticated %}
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
@@ -8,17 +8,23 @@
         
         <p><span class="label label-important">Warning</span> When uploading an image, please make sure that you are the copyright owner. If images are 
         found to be in violation of copyright, they will be deleted.</p>
-        <form class="form-horizontal" method="post" enctype="multipart/form-data">
+        <form id="image-form" class="form-horizontal" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ imageuploadform.file }}
         </div>
         <div class="modal-footer">
             <input type="hidden" name="image_button" value="1" />
-            <button id="save-button" type="submit" data-loading-text="Saving Image" class="btn btn-inverse"><i class="icon-hdd icon-white"></i> Upload</button>
+            <button id="save-image" type="submit" data-loading-text="Saving..." class="btn btn-inverse"><i class="icon-hdd icon-white"></i> Upload</button>
             <button class="btn" data-dismiss="modal">Cancel</button>
 
         </form>
     </div>
+
+    <script type="text/javascript">
+        $('#save-image').click(function() {
+            $('#save-image').button('loading');
+        });
+    </script>
     {% else %}
     {% include 'includes/login_modal.html' %}
     {% endif %}

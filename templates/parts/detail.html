@@ -3,7 +3,7 @@
 {% load humanize %}
 {% load parttags %}
 {% load comments %}
-{% load thumbnail %}
+
 
 {% block title %}
 {{ part.number }} by {{ part.company.name|safe }} | Part Engine
@@ -117,33 +117,10 @@
                 </span>
                 <h5>Part Images</h5>
                 <div class="buttons">
-                    <a class="btn btn-inverse btn-mini tip-bottom" title="New Image" href="#img-upload" data-toggle="modal"><i class="icon-plus-sign icon-white"></i></a>
+                    <a class="btn btn-inverse btn-mini tip-bottom" title="New Image" href="#image-modal" data-toggle="modal"><i class="icon-plus-sign icon-white"></i></a>
                 </div>
             </div>
-            {% if part.images.all %}
-            <div class="widget-content">
-                <div id="images">
-                    {% if part.images.all %}
-                    <ul class="thumbnails">
-                        {% for image in part.images.all %}
-                        {% thumbnail image.image "160x120" crop="center" as im %}
-                        <li class="span2">
-                        <a id="lightbox" class="thumbnail" href="{{ image.image.url }}"><img src="{{ im.url }}" alt="{{ part.number }} image" /></a>
-                        </li>
-                        {% endthumbnail %}
-                        {% endfor %}
-                    </ul>
-                    {% else %}
-                    <h3>No images available for this part.</h3>
-                    {% endif %}
-                </div>
-            </div>
-
-            {% else %}
-            <div class="widget-content">
-                <h3>No images have been submitted.</h3>
-            </div>
-            {% endif %}
+            {% include 'parts/includes/image_table.html' %} 
         </div>
         <!-- end images widget -->
 

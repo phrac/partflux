@@ -1,0 +1,19 @@
+{% load thumbnail %}
+
+<div class="widget-content">
+    {% if part.images.all %}
+    <div id="images">
+        <ul class="thumbnails">
+            {% for image in part.images.all %}
+            {% thumbnail image.image "160x120" crop="center" as im %}
+            <li class="span2">
+            <a id="lightbox" class="thumbnail" href="{{ image.image.url }}"><img src="{{ im.url }}" alt="{{ part.number }} image" /></a>
+            </li>
+            {% endthumbnail %}
+            {% endfor %}
+        </ul>
+    </div>
+    {% else %}
+    <h3>No images have been submitted.</h3>
+    {% endif %}
+</div>

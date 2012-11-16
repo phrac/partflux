@@ -79,9 +79,16 @@ def detail(request, part_id, company_slug, part_slug):
         imageuploadform = ImageUploadForm(request.POST, request.FILES)
         if imageuploadform.is_valid:
             status = uploadimage(request, p.pk)
-            return HttpResponseRedirect(reverse('parts.views.detail',
-                                                args=[part_id, c.slug, p.slug]))
+            print 'got call'
 
+            if request.is_ajax():
+                return render_to_response('parts/includes/image_table.html',
+                                          {'part': p,},
+                                          context_instance=RequestContext(request))
+            else:
+                return HttpResponseRedirect(reverse('parts.views.detail',
+                                                    args=[part_id, c.slug, p.slug]))
+            
     return render_to_response('parts/detail.html', 
                               {'part': p, 
                                'xrefs': xrefs,
@@ -188,7 +195,10 @@ def addxref(request, part_id):
 @login_required
 def uploadimage(request, part_id):
     p = get_object_or_404(Part, pk=part_id)
-    if request.FILES.get('file', False):
+    print 'got part'
+    print request.FILES
+    if request.FILES.get('file', None):
+        print 'uploading'
         f = request.FILES['file']
     
         """Handle the file upload"""
