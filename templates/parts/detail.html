@@ -54,13 +54,14 @@
             });
         $('#description').editable({
                            type:  'text',
-                           pk:    1,
-                           name:  'username',
-                           url:   'post.php',  
+                           pk:    {{ part.pk }},
+                           name:  'description',
+                           url:   '{% url parts.ajax.update_description %}',  
                            title: 'Enter Part Description',
                            inputclass: 'input',
-                           loading: '',
-                           emptytext: 'No Description'
+                           loading: 'Saving new description...',
+                           emptytext: 'No Description',
+                           params: {csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value},
                         });
     });
 </script>
@@ -82,7 +83,7 @@
 
 <div class="row-fluid">
     <div class="span12">
-    <h2>{{ part.number }} by {{ part.company|safe }}<br /><small><a id="description">{{ part.description }}</a></small></h2>
+        {% include 'parts/includes/description.html' %}
     </div>
 </div>
 

@@ -593,7 +593,7 @@
 
         //text
         text:{
-            template:'<input type="text">',
+            template:'<input type="text" style="text-transform: uppercase" length="30">',
             setInputValue:function () {
                 this.$input.val(this.value);
                 setCursorPosition.call(this.$input, this.$input.val().length);
