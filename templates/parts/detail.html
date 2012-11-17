@@ -83,7 +83,7 @@
 
 <div class="row-fluid">
     <div class="span12">
-        {% include 'parts/includes/description.html' %}
+        <h2>{{ part.number }} by {{ part.company|safe }}<br /><small><a id="description">{{ part.description }}</a></small></h2>
     </div>
 </div>
 
