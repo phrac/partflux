@@ -99,9 +99,9 @@
                 <li class="submenu {% block parts_active %}{% endblock %}">
                 <a href="{% url parts.views.index %}"><i class="icon icon-cog"></i> <span>Parts</span> <span class="label">4</span></a>
                 <ul>
-                    <li><a href="form-wizard.html"><i class="icon icon-star"></i> My Parts</a></li>
-                    <li><a href="{% url parts.views.index %}"><i class="icon icon-inbox"></i> Newest Parts</a></li>
+                    <li><a href="{% url parts.views.index %}"><i class="icon icon-inbox"></i> Recent Parts</a></li>
                     <li><a href="{% url parts.views.addpartform %}"><i class="icon icon-plus-sign"></i> Add a Part</a></li>
+                    <li><a href="form-wizard.html"><i class="icon icon-star"></i> My Parts</a></li>
                     <li><a href="form-wizard.html"><i class="icon icon-list-alt"></i> Part Statistics</a></li>
                 </ul>
                 </li>
@@ -110,9 +110,9 @@
                 <li {% block assemblies_active %}{% endblock %} class="submenu">
                 <a href="#"><i class="icon icon-wrench"></i> <span>Assemblies</span> <span class="label">3</span></a>
                 <ul>
-                    <li><a href="form-wizard.html">My Assemblies</a></li>
-                    <li><a href="form-common.html">Newest Assemblies</a></li>
+                    <li><a href="form-common.html"><i class="icon icon-inbox"></i> Recent Assemblies</a></li>
                     <li><a href="form-validation.html">Browse Assemblies</a></li>
+                    <li><a href="form-wizard.html"><i class="icon icon-star"></i> My Assemblies</a></li>
                 </ul>
                 </li>
                 
