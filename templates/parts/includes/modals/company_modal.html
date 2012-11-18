@@ -1,0 +1,45 @@
+<div class="modal hide" id="company-modal">
+    {% if user.is_authenticated %}
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+        <h3>Edit Company Name</h3>
+    </div>
+    <div class="modal-body">
+        <p>Use this form if you believe that the Company associated with part number <strong>{{ part.number }}</strong> is
+        not correct.</p>
+
+        <form id="company-form" class="form-horizontal" autocomplete="off" method="post" action="{% url parts.ajax.update_company %}">
+
+            {% csrf_token %}
+
+            <div class="control-group">
+                <label class="control-label" for="id_company">New Company Name</label>
+                <div class="controls">
+                    <input id="id_key" name="company" type="text" value="{{ part.company.name }}" class="input-large" placeholder="Key">
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <input type="hidden" name="part_pk" value="{{ part.id }}" />
+            <button id="save-company" data-loading-text="Saving..." data-toggle="button" class="btn btn-inverse">Save Company</button>
+            <button class="btn" data-dismiss="modal">Cancel</button>
+        </form>
+    </div>
+
+    <script type="text/javascript">
+        $('#save-company').click(function() {
+            $('#save-company').button('loading');
+        });
+    </script>
+
+    <script type="text/javascript">
+        $('#company-modal').on('shown', function () {
+            $('#id_name').focus();
+        });
+    </script>
+
+    {% else %}
+    {% include 'includes/login_modal.html' %}
+    {% endif %}
+</div>

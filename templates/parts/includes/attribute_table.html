@@ -16,16 +16,15 @@
             <td>
                 {{ a.value }}
             </td>
-            <td width="18%">
+            <td style="text-align:center;">
                 {% if user.is_authenticated %}
                 <div class="btn-group">
-                    <button class="btn btn-mini">Actions</button>
-                    <button class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu pull-right">
-                        <li><a href="#"><i class="icon icon-flag"></i> Flag</a></li>
-                    </ul>
+                    <a class="btn btn-mini tip-top" title="Flag"><i class="icon icon-flag"></i></a>
+                    <a class="btn btn-mini tip-top" title="Up Vote"><i class="icon icon-thumbs-up"></i></a>
+                    <a class="btn btn-mini tip-top" title="Down Vote"><i class="icon icon-thumbs-down"></i></a>
+                    {% if user.is_staff %}
+                        <a class="btn btn-mini tip-top" title="Delete"><i class="icon icon-trash"></i></a>
+                    {% endif %}
                 </div>
                 {% else %}
                 {% endif %}

@@ -32,8 +32,8 @@ class Company(models.Model):
         #self.update_ES()
 
     def __unicode__(self):
-        return self.name
-    
+        return self.name 
+
     """ Update the ElasticSearch index """
     def update_ES(self):
         es = ES('127.0.0.1:9200')

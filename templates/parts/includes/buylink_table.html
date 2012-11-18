@@ -21,16 +21,15 @@
                 <td>
                     {{ buylink.updated_at|date:"SHORT_DATE_FORMAT" }}
                 </td>
-                <td>
+                <td style="text-align:center;">
                     <div class="btn-group">
-                        <button class="btn btn-mini">Actions</button>
-                        <button class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Flag as dead link</a></li>
-                            <li><a href="#">Flag as wrong price</a></li>
-                        </ul>
+                        <a class="btn btn-mini tip-top" title="Flag"><i class="icon icon-flag"></i></a>
+                        <a class="btn btn-mini tip-top" title="Up Vote"><i class="icon icon-thumbs-up"></i></a>
+                        <a class="btn btn-mini tip-top" title="Down Vote"><i class="icon icon-thumbs-down"></i></a>
+                        {% if user.is_staff %}
+                        <a href = {% url parts.ajax.delete_buylink buylink.id %} class="btn btn-mini tip-top" title="Delete"><i class="icon icon-trash"></i></a>
+                        {% endif %}
+
                     </div>
                 </td>
             </tr>
