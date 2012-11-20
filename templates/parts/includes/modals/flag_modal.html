@@ -1,0 +1,73 @@
+<div class="modal hide" id="flag-modal">
+    {% if user.is_authenticated %}
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+        <h3>Flag Information</h3>
+    </div>
+    <div class="modal-body">
+        <p>Use this form if you believe that the information is not valid or is spam. Use caution when flagging parts! Each flagged piece of information is reviewed by moderators
+        for accuracy. Abuse of the flagging system may result in a suspension of your account.</p>
+
+        <form name="flag-form" id="flag-form" class="form-horizontal" autocomplete="off" method="post" action="{% url parts.ajax.flag %}">
+
+            {% csrf_token %}
+
+            <div class="control-group">
+                <label class="control-label" for="id_company">Reason for flagging</label>
+                <div class="controls">
+                    <input id="reason" name="reason" type="text" value="" class="input-large" placeholder="Reason for flagging">
+                    <p>Provide a complete description of why you think this information is invalid.</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <input type="hidden" id="flag-type" name="flag-type" value="" />
+            <input type="hidden" id="flag-id" name="flag-id" value="" />
+            <button id="save-flag" data-loading-text="Flagging..." data-toggle="button" class="btn btn-danger"><i class="icon-white icon-flag"></i> Flag</button>
+            <button class="btn" data-dismiss="modal">Cancel</button>
+        </form>
+    </div>
+
+    <script type="text/javascript">
+        $('#save-flag').click(function() {
+            $('#save-flag').button('loading');
+        });
+    </script>
+
+    <script type="text/javascript">
+        $('#flag-modal').on('shown', function () {
+            $('#id_reason').focus();
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+                $('#flag-form').submit(function() { // catch the form's submit event
+
+                $.ajax({ // create an AJAX call...
+                    data: $(this).serialize(), // get the form data
+                    type: $(this).attr('method'), // GET or POST
+                    url: $(this).attr('action'), // the file to call
+                    success: function(response) { // on success..
+                        $('#flag-modal').modal('hide');
+                        $('#flag-form').each(function() {
+                            this.reset();
+                        });
+                        $.gritter.add({
+                            title:	'Flagging Saved',
+                            text:	'Thanks for contributing to Part Engine!',
+                            sticky: false
+                            });
+                        $('#save-flag').button('reset');
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
+
+    {% else %}
+    {% include 'includes/login_modal.html' %}
+    {% endif %}
+</div>

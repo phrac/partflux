@@ -19,7 +19,7 @@
             <td style="text-align:center;">
                 {% if user.is_authenticated %}
                 <div class="btn-group">
-                    <a class="btn btn-mini tip-top" title="Flag" href="#flag-modal" data-toggle="modal" onClick="SetFlags('attr', {{ a.id }})"><i class="icon icon-flag"></i></a>
+                    <a class="btn btn-mini tip-top" title="Flag" href="#flag-modal" data-toggle="modal" onClick="SetFlags('attr', {{ a.id }})"><i class="icon icon-flag"></i><span class="label label-important">5</span></a>
                     <a class="btn btn-mini tip-top" title="Up Vote"><i class="icon icon-thumbs-up"></i></a>
                     <a class="btn btn-mini tip-top" title="Down Vote"><i class="icon icon-thumbs-down"></i></a>
                     {% if user.is_staff %}

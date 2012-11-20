@@ -47,6 +47,14 @@ class Part(models.Model):
     def get_absolute_url(self):
         return ('parts.views.detail', [self.id, str(self.company.slug), str(self.slug)])
 
+class PartFlag(models.Model):
+    part = models.ForeignKey('Part')
+    user = models.ForeignKey(User)
+    reason = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    active = models.BooleanField()
+
 class Attribute(models.Model):
     part = models.ForeignKey('Part')
     key = models.CharField(max_length=64)
@@ -68,8 +76,11 @@ class Attribute(models.Model):
         if not self.downvotes:
             self.downvotes = 0
         super(Attribute, self).save(*args, **kwargs)
+        
+    def get_flags():
+        return Attribute.objects.get(attribute=self)
 
-class AttributeFlags(models.Model):
+class AttributeFlag(models.Model):
     attribute = models.ForeignKey('Attribute')
     user = models.ForeignKey(User)
     reason = models.TextField()

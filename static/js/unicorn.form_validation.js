@@ -9,23 +9,12 @@ $(document).ready(function(){
 	$('select').select2();
 	
 	// Form Validation
-    $("#basic_validate").validate({
+    $("#flag-form").validate({
 		rules:{
-			required:{
-				required:true
-			},
-			email:{
+			reason:{
 				required:true,
-				email: true
+                minlength:10
 			},
-			date:{
-				required:true,
-				date: true
-			},
-			url:{
-				required:true,
-				url: true
-			}
 		},
 		errorClass: "help-inline",
 		errorElement: "span",
@@ -38,11 +27,11 @@ $(document).ready(function(){
 		}
 	});
 	
-	$("#number_validate").validate({
+	$("#buylink-form").validate({
 		rules:{
-			min:{
+			url:{
 				required: true,
-				min:10
+				url:true
 			},
 			max:{
 				required:true,

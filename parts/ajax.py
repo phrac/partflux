@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 
-from parts.models import Part, BuyLink, Attribute, AttributeFlags
+from parts.models import Part, BuyLink, Attribute, AttributeFlag
 from companies.models import Company
 
 @login_required
@@ -56,7 +56,7 @@ def flag(request):
 
     if flag_type == 'attr':
         attr = Attribute.objects.get(id=flag_id)
-        attrflag = AttributeFlags(reason=reason, attribute=attr,
+        attrflag = AttributeFlag(reason=reason, attribute=attr,
                                  user=request.user, active=True)
         attrflag.save()
 

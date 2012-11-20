@@ -24,21 +24,6 @@
 {% block html_itemscope %}itemscope itemtype="http://schema.org/Product"{% endblock %}
 
 {% block head %}
-<meta itemprop="name" content="{{ part.number}} by {{ part.company.name }}" />
-<meta itemprop="description" content="{{ part.description }}" />
-<meta itemprop="url" content="{{ current_domain }}{{ current_path }}" />
-<meta itemprop="model" content="{{ part.number }}" />
-<meta itemprop="manufacturer" content="{{ part.company.name }}" />
-<meta itemprop="productID" content="{{ part.number }}" />
-
-{% for image in part.images.all %}
-{% if forloop.first %}
-<meta itemprop="image" content="{{ image.image.url }}" />
-{% endif %}
-{% empty %}
-<meta itemprop="image" content="{{ current_domain }}{{ STATIC_URL }}images/partfindr_logo_big.png" />
-{% endfor %}
-
 <link rel="stylesheet" href="{{ STATIC_URL }}js/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
 <script type="text/javascript" src="{{ STATIC_URL }}js/fancybox/jquery.fancybox.pack.js"></script>
 <link href="{{ STATIC_URL }}css/bootstrap-editable.css" rel="stylesheet">
@@ -303,4 +288,8 @@
         </div>
     </div>
 </div>
+<script src="{{ STATIC_URL }}js/jquery.uniform.js"></script>
+<script src="{{ STATIC_URL }}js/select2.min.js"></script>
+<script src="{{ STATIC_URL }}js/jquery.validate.js"></script>
+<script src="{{ STATIC_URL }}js/unicorn.form_validation.js"></script>
 {% endblock %}
