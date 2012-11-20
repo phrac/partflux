@@ -65,6 +65,13 @@
                            });
             });
 </script>
+<script type="text/javascript">
+    function SetFlags(type, id){
+        document.getElementById("flag-type").value = type;
+        document.getElementById("flag-id").value = id;
+    }
+</script>
+    
 {% endblock %}
 
 {% block right_buttons %}
@@ -80,6 +87,8 @@
     {% include 'parts/includes/modals/xref_modal.html' %}
     {% include 'parts/includes/modals/buylink_modal.html' %}
     {% include 'parts/includes/modals/company_modal.html' %}
+    {% include 'parts/includes/modals/flag_modal.html' %}
+
 </div>
 
 <div class="row-fluid">
@@ -99,7 +108,7 @@
                 <div class="buttons">
                     <a class="btn btn-mini tip-top" title="Add To My Parts"><i class="icon icon-star"></i></a>
                     <a class="btn btn-mini tip-top" title="Add To RFQ List"><i class="icon icon-shopping-cart"></i></a>
-                    <a class="btn btn-mini tip-top" title="Flag Part"><i class="icon icon-flag"></i></a>
+                    <a class="btn btn-mini tip-top" title="Flag Part" href="#flag-modal" data-toggle="modal"><i class="icon icon-flag"></i></a>
                     <a class="btn btn-mini tip-top" title="Print this part" href="#"><i class="icon-print"></i></a>
                     <a class="btn btn-inverse btn-mini tip-left" title="New Attribute" href="#attribute-modal" data-toggle="modal"><i class="icon-plus-sign icon-white"></i></a>
                 </div>

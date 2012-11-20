@@ -69,6 +69,14 @@ class Attribute(models.Model):
             self.downvotes = 0
         super(Attribute, self).save(*args, **kwargs)
 
+class AttributeFlags(models.Model):
+    attribute = models.ForeignKey('Attribute')
+    user = models.ForeignKey(User)
+    reason = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    active = models.BooleanField()
+
 class Xref(models.Model):
     """ Store part number cross references, related to :model:`parts.Part` and
     :model:`auth.User`.

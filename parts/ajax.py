@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 
-from parts.models import Part, BuyLink
+from parts.models import Part, BuyLink, Attribute, AttributeFlags
 from companies.models import Company
 
 @login_required
@@ -39,11 +39,27 @@ def update_company(request):
 
 @login_required
 def delete_buylink(request, buylink_id):
-    bl = get_object_or_404(BuyLink, id=buylink_id)
-    p = get_object_or_404(Part, id=bl.part.id)
-    c = get_object_or_404(Company, id=p.company.id)
-
     if request.user.is_staff:
+        bl = get_object_or_404(BuyLink, id=buylink_id)
+        p = get_object_or_404(Part, id=bl.part.id)
+        c = get_object_or_404(Company, id=p.company.id)
         bl.delete()
+        
         return HttpResponseRedirect(reverse('parts.views.detail', args=[p.id, c.slug, p.slug]))
 
+@login_required
+def flag(request):
+
+    reason = request.POST.get('reason', None)
+    flag_type = request.POST.get('flag-type', None)
+    flag_id = request.POST.get('flag-id', None)
+
+    if flag_type == 'attr':
+        attr = Attribute.objects.get(id=flag_id)
+        attrflag = AttributeFlags(reason=reason, attribute=attr,
+                                 user=request.user, active=True)
+        attrflag.save()
+
+
+    if request.is_ajax:
+        return HttpResponse()
