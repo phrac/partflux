@@ -4,7 +4,6 @@
 {% load parttags %}
 {% load comments %}
 
-
 {% block title %}
 {{ part.number }} by {{ part.company.name|safe }} | Part Engine
 {% endblock %}
@@ -24,6 +23,10 @@
 {% block html_itemscope %}itemscope itemtype="http://schema.org/Product"{% endblock %}
 
 {% block head %}
+<script src="{{ STATIC_URL }}js/jquery.uniform.js"></script>
+<script src="{{ STATIC_URL }}js/select2.min.js"></script>
+<script src="{{ STATIC_URL }}js/jquery.validate.js"></script>
+<script src="{{ STATIC_URL }}js/unicorn.form_validation.js"></script>
 <link rel="stylesheet" href="{{ STATIC_URL }}js/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
 <script type="text/javascript" src="{{ STATIC_URL }}js/fancybox/jquery.fancybox.pack.js"></script>
 <link href="{{ STATIC_URL }}css/bootstrap-editable.css" rel="stylesheet">
@@ -288,8 +291,4 @@
         </div>
     </div>
 </div>
-<script src="{{ STATIC_URL }}js/jquery.uniform.js"></script>
-<script src="{{ STATIC_URL }}js/select2.min.js"></script>
-<script src="{{ STATIC_URL }}js/jquery.validate.js"></script>
-<script src="{{ STATIC_URL }}js/unicorn.form_validation.js"></script>
 {% endblock %}

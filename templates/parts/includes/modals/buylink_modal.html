@@ -7,13 +7,13 @@
     <div class="modal-body">
         <p>Purchase links are links to online retailers. These links assist users in purchasing the parts.
         </p>
-        <form id="buylink-form" class="form-horizontal" autocomplete="off" method="post">
+        <form id="buylink-form" name="buylink-form" class="form-horizontal" autocomplete="off" method="post">
             {% csrf_token %}
 
             <div class="control-group">
                 <label class="control-label" for="id_url">URL</label>
                 <div class="controls">
-                    {{ buylinkform.url }}
+                    <input type="text" name="url" id="url" />
                     <p>Enter the full URL to a page where part # {{ part.number }} can be purchased.</p>
                 </div>
             </div>

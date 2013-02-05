@@ -12,8 +12,8 @@ $(document).ready(function(){
     $("#flag-form").validate({
 		rules:{
 			reason:{
-				required:true,
-                minlength:10
+			    required:true,
+                            minlength:10
 			},
 		},
 		errorClass: "help-inline",
@@ -31,7 +31,7 @@ $(document).ready(function(){
 		rules:{
 			url:{
 				required: true,
-				url:true
+				url: true
 			},
 			max:{
 				required:true,
