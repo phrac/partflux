@@ -3,47 +3,58 @@
 
 {% block breadcrumb_links %}
 <a href="/users/" title="Users" class="tip-bottom"><i class="icon-user"></i> Users</a>
-<a href="#" class="current">Register/Log In</a>
+<a href="#" class="current">Register/Sign In</a>
 {% endblock %}
 
-{% block page_title %}Sign Up or Log In{% endblock %}
+{% block page_title %}Sign Up or Sign In{% endblock %}
 
 {% block content %}
 <div class="row-fluid">
-    <div class="span5 offset1">
-        <h2>Don't have an account? <br /><small>It takes under a minute to enjoy all the features of <b>Part Engine</b>!</small></h2>
-        {% include 'registration/includes/registration_form.html' %}
+    <div class="span7">
+        <div class="widget-box">
+            <div class="widget-title">
+                <h5>Don't have an account? <small>It takes under a minute to enjoy all the features of <b>Part Engine</b>!</small></h5>
+            </div>
+            <div class="widget-content">
+                {% include 'registration/includes/registration_form.html' %}
+            </div>
+        </div>
     </div>
-
-    <div class="span4">
-        <h2>Already a member?<br /><small>Sign in now</small></h2>
-        {% if form.errors %}
-        <strong>Your username and password didn't match. Please try again.</strong>
-        {% endif %}
-
-        <form class="well form-horizontal" method="post" action="{% url 'django.contrib.auth.views.login' %}">
-            {% csrf_token %}
-
-            <div class="control-group">
-                <label class="control-label" for="id_username">User name</label>
-                <div class="controls">
-                    <input id="id_username" type="text" name="username" maxlength="30" placeholder="User Name" />
-                </div>
+    <div class="span5">
+        <div class="widget-box">
+    		<div class="widget-title">
+                <h5>Already a member? <small>Sign in now</small></h5>
             </div>
-            <div class="control-group">
-                <label class="control-label" for="id_username">Password</label>
-                <div class="controls">
-                    <input id="id_password" type="password" name="password" maxlength="30" placeholder="Password" />
-                </div>
+            <div class="widget-content">
+                {% if form.errors %}
+                <p><strong>Your username and password didn't match. Please try again.</strong></p>
+                {% endif %}
+        
+                <form class="form-horizontal" method="post" action="{% url 'django.contrib.auth.views.login' %}">
+                    {% csrf_token %}
+        
+                    <div class="control-group">
+                        <label class="control-label" for="id_username">User name</label>
+                        <div class="controls">
+                            <input id="id_username" type="text" name="username" placeholder="User Name" />
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="id_username">Password</label>
+                        <div class="controls">
+                            <input id="id_password" type="password" name="password" placeholder="Password" />
+                        </div>
+                    </div>
+        
+                    <div class="form-actions">
+                        <input type="hidden" name="next" value="/" />
+                        <button type="submit" class="btn btn-primary">Sign In</button>
+                        <a href="{% url 'django.contrib.auth.views.password_reset' %}" class="btn btn-danger">Forgot Password</a>
+                    </div>
+        
+                </form>
             </div>
-
-            <div class="form-actions">
-                <input type="hidden" name="next" value="/" />
-                <button type="submit" class="btn btn-primary">Sign In</button>
-                <a href="{% url 'django.contrib.auth.views.password_reset' %}" class="btn btn-danger">Forgot Password</a>
-            </div>
-
-        </form>
+        </div>
     </div>
 </div>
 {% endblock %}

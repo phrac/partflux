@@ -67,7 +67,7 @@ class Attribute(models.Model):
 
     class Meta:
         unique_together = ('part', 'key', 'value')
-        ordering = ('key',)
+        ordering = ('value',)
 
     def save(self, *args, **kwargs):
         self.key = self.key.strip().upper()
