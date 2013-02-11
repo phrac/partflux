@@ -27,28 +27,16 @@ class Company(models.Model):
 
     def save(self, *args, **kwargs):
         self.name = self.name.strip().upper()
-        self.slug = slugify(self.name)
-        super(Company, self).save(*args, **kwargs)
-        #self.update_ES()
+        slug = slugify(self.name)
+        if Company.objects.filter(slug=slug).count() > 0:
+            pass
+        else:
+            if not self.slug:
+                self.slug = slug
+            super(Company, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return self.name 
-
-    """ Update the ElasticSearch index """
-    def update_ES(self):
-        es = ES('127.0.0.1:9200')
-        es.index(
-            {
-                "pgid" : str(self.id), 
-                "company_name" : self.name, 
-            }, 
-            "companies", "company-type", self.id
-        )
-        es.refresh('companies')
-
-    @models.permalink
-    def get_absolute_url(self):
-        return ('companies.views.detail', [self.id, str(self.slug)])
 
 class CompanyContact(models.Model):
     SEX = (('M', 'Male'),
