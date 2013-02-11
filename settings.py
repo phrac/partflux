@@ -1,4 +1,6 @@
 # Django settings for partfindr project.
+import os
+DIRNAME = os.path.dirname(__file__)
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
@@ -111,7 +113,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-	"/home/derek/partengine-preview/static",
+    os.path.join(DIRNAME, 'static'),
 )
 
 # List of finder classes that know how to find static files in
@@ -163,7 +165,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-	"/home/derek/partengine-preview/templates"
+	os.path.join(DIRNAME, 'templates')
 )
 
 INSTALLED_APPS = (
@@ -196,6 +198,11 @@ INSTALLED_APPS = (
 )
 
 # django-registration settings
+PAGINATION_SETTINGS = {
+    'PAGE_RANGE_DISPLAYED': 6,
+    'MARGIN_PAGES_DISPLAYED': 2,
+}
+
 ACCOUNT_ACTIVATION_DAYS = 7
 
 # custom user profile module
@@ -231,3 +238,5 @@ LOGGING = {
         },
     }
 }
+
+from settings_local import *
