@@ -48,7 +48,7 @@ def detail(request, part_id, company_slug, part_slug):
 
             if request.is_ajax():
                 return render_to_response('parts/includes/buylink_table.html',
-                                          {'buylinks': buylinks,},
+                                          {'part': p,},
                                           context_instance=RequestContext(request))
             else:
                 return HttpResponseRedirect(reverse('parts.views.detail', args=[part_id, c.slug, p.slug]))
@@ -60,7 +60,7 @@ def detail(request, part_id, company_slug, part_slug):
                 
             if request.is_ajax():
                 return render_to_response('parts/includes/attribute_table.html',
-                                          {'attributes': attributes,},
+                                          {'part': p,},
                                           context_instance=RequestContext(request))
             else:
                 return HttpResponseRedirect(reverse('parts.views.detail',

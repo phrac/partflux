@@ -24,6 +24,7 @@
         <div class="modal-footer">
             <input type="hidden" id="flag-type" name="flag-type" value="" />
             <input type="hidden" id="flag-id" name="flag-id" value="" />
+            <input type="hidden" id="part-id" name="part_pk" value="{{ part.pk }}" />
             <button id="save-flag" data-loading-text="Flagging..." data-toggle="button" class="btn btn-danger"><i class="icon-white icon-flag"></i> Flag</button>
             <button class="btn" data-dismiss="modal">Cancel</button>
         </form>
@@ -54,6 +55,7 @@
                         $('#flag-form').each(function() {
                             this.reset();
                         });
+                        $('#attribute-table').hide().html(response).fadeIn("slow"); // update the DIV
                         $.gritter.add({
                             title:	'Flagging Saved',
                             text:	'Thanks for contributing to Part Engine!',

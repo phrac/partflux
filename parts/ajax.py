@@ -1,7 +1,8 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import render_to_response, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.template import RequestContext
 
 from parts.models import Part, BuyLink, Attribute, AttributeFlag
 from companies.models import Company
@@ -53,7 +54,9 @@ def flag(request):
     reason = request.POST.get('reason', None)
     flag_type = request.POST.get('flag-type', None)
     flag_id = request.POST.get('flag-id', None)
-
+    pk = request.POST.get('part_pk', '')
+    p = get_object_or_404(Part, id=pk)
+    
     if flag_type == 'attr':
         attr = Attribute.objects.get(id=flag_id)
         attrflag = AttributeFlag(reason=reason, attribute=attr,
@@ -62,4 +65,6 @@ def flag(request):
 
 
     if request.is_ajax:
-        return HttpResponse()
+        return render_to_response('parts/includes/attribute_table.html',
+                                          {'part': p, },
+                                          context_instance=RequestContext(request))
