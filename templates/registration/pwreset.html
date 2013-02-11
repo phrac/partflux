@@ -19,10 +19,10 @@
         {% if form.errors %}
         <strong>You must enter your email address</strong>
         {% endif %}
-        <form class="well form-horizontal" method="post" action="">
+        <form class="well form-horizontal" method="post">
             {% csrf_token %}
             <div class="control-group">
-                <label class="control-label" for="id_username">{{ form.email.label_tag }}</label>
+                <label class="control-label" for="id_email">Email Address</label>
                 <div class="controls">
                     {{ form.email }}
                 </div>
