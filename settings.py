@@ -1,9 +1,10 @@
 # Django settings for partfindr project.
-import os
-DIRNAME = os.path.dirname(__file__)
+
+DEBUG = False
+TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-     ('Derek Musselmann', 'derek@disflux.com'),
+     ('Derek Musselmann', 'derek@partfindr.net'),
 )
 
 INTERNAL_IPS = {
@@ -13,11 +14,31 @@ INTERNAL_IPS = {
 
 MANAGERS = ADMINS
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django_orm.backends.postgresql_psycopg2', 		# Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+            'NAME': 'partfindr',                     	                # Or path to database file if using sqlite3.
+            'USER': 'derek',                      				        # Not used with sqlite3.
+            'PASSWORD': '',                  			        # Not used with sqlite3.
+            'HOST': 'localhost',                      	                # Set to empty string for localhost. Not used with sqlite3.
+            'PORT': '',                      					        # Set to empty string for default. Not used with sqlite3.
+            'OPTIONS': {
+                'POOL_ENABLED': True,
+            }
+    }
+}
 
 # ES_HOST should be in a format that pyes understands
 ES_HOST = '127.0.0.1:9200'
 
-# User authentication redirect & URL configuration
+# use gmail for sending email
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'partfindr@partfindr.net'
+EMAIL_HOST_PASSWORD = 'gL7.bT#!'
+EMAIL_PORT = 587
+SERVER_EMAIL = 'web@partfindr.net'
+
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/users/login/'
 LOGOUT_URL = '/users/logout/'
@@ -37,6 +58,7 @@ REP_VALUE_NEW_COMMENT = 3
 REP_VALUE_NEW_IMAGE = 3
 
 GOOGLE_SEARCH_PARTNER_ID = 'partner-pub-3185089159153756:8723235659'
+
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
@@ -63,18 +85,17 @@ USE_L10N = True
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
 MEDIA_ROOT = '/home/derek/web/media/'
-#MEDIA_ROOT = '/home/derek/web/media/' # PRODUCTION
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = '/media/' # DEVELOPMENT
+MEDIA_URL = '/media/'
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = '/static/'
+STATIC_ROOT = '/home/derek/web/previewstatic/static/'
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -83,14 +104,14 @@ STATIC_URL = '/static/'
 # URL prefix for admin static files -- CSS, JavaScript and images.
 # Make sure to use a trailing slash.
 # Examples: "http://foo.com/static/admin/", "/static/admin/".
-ADMIN_MEDIA_PREFIX = '/static/admin/'
+ADMIN_MEDIA_PREFIX = 'http://partfindr.net/static/admin/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join(DIRNAME, 'static'),
+	"/home/derek/partengine-preview/static",
 )
 
 # List of finder classes that know how to find static files in
@@ -117,7 +138,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "partfindr.context_processors.get_current_domain",
     "partfindr.context_processors.part_count",
     "partfindr.context_processors.nsn_count",
-    #"partfindr.context_processors.user_reputation",
     "flashcookie.flash_context",
     "django.core.context_processors.request",
     "django.contrib.auth.context_processors.auth",
@@ -143,7 +163,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join(DIRNAME, 'templates')
+	"/home/derek/partengine-preview/templates"
 )
 
 INSTALLED_APPS = (
@@ -159,16 +179,15 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'django.contrib.sitemaps',
     # external apps
-    'google_analytics',
     'pure_pagination',
     'registration',
     'sorl.thumbnail',
     'django_gravatar',
+    'faq',
     'tastypie',
     'googlesearch',
-    # partfindr apps 
+    # partfindr apps    
     'main',
-    'faq',
     'parts',
     'companies',
     'nsn',
@@ -190,12 +209,6 @@ AWS_STORAGE_BUCKET_NAME = 'partfindr'
 from S3 import CallingFormat
 AWS_CALLING_FORMAT = CallingFormat.SUBDOMAIN
 
-PAGINATION_SETTINGS = {
-    'PAGE_RANGE_DISPLAYED': 6,
-    'MARGIN_PAGES_DISPLAYED': 2,
-}
-
-ACCOUNT_ACTIVATION_DAYS = 7
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error.
@@ -218,5 +231,3 @@ LOGGING = {
         },
     }
 }
-
-from settings_local import *
