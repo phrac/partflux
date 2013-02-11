@@ -35,8 +35,6 @@ def detail(request, part_id, company_slug, part_slug):
     
     xrefs = Xref.objects.filter(part=p.id).exclude(xrefpart=p.id)
     reverse_xrefs = Xref.objects.filter(xrefpart=p.id).exclude(part=p.id)
-    buylinks = BuyLink.objects.filter(part=p.id).order_by('price')[:10]
-    attributes = Attribute.objects.filter(part=p.id).order_by('key', 'value')
 
     metaform = MetadataForm(None)
     xrefform = XrefForm(None)
@@ -92,9 +90,7 @@ def detail(request, part_id, company_slug, part_slug):
     return render_to_response('parts/detail.html', 
                               {'part': p, 
                                'xrefs': xrefs,
-                               'attributes': attributes,
                                'reverse_xrefs': reverse_xrefs,
-                               'buylinks': buylinks,
                                'metadata_form': metaform, 
                                'xref_form' : xrefform,
                                'imageuploadform' : imageuploadform,

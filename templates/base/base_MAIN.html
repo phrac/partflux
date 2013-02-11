@@ -49,13 +49,13 @@
                 <input name="ie" value="ISO-8859-1" type="hidden">
                 <input type="text" placeholder="Search here..."/><button type="submit" class="tip-right" title="Search"><i class="icon-search icon-white"></i></button>
             </form>
-            <script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=cref_iframe"></script>
+            <script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=cref_iframe1"></script>
         </div>
         
         <div id="user-nav" class="navbar navbar-inverse">
             <ul class="nav btn-group">
                 {% if user.is_authenticated %}
-                <li class="btn btn-inverse" ><a title="" href="#"><img src="{% gravatar_url user.email 20 %}" /> <span class="text">Profile</span></a></li>
+                <li class="btn btn-inverse" ><a title="" href="#"><img src="{% gravatar_url user.email 20 %}" alt="gravatar" /> <span class="text">Profile</span></a></li>
                 <li class="btn btn-inverse dropdown" id="menu-messages"><a href="#" data-toggle="dropdown" data-target="#menu-messages" class="dropdown-toggle"><i class="icon icon-envelope"></i> <span class="text">Messages</span> <span class="label label-important">5</span> <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <li><a class="sAdd" title="" href="#">New message</a></li>
