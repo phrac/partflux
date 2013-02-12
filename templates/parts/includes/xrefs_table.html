@@ -1,0 +1,24 @@
+<table id="xrefs-table" class="table table-bordered data-table">
+                    <thead>
+                        <tr>
+                            <th>Part #</th>
+                            <th>Description</th>
+                            <th>Company</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for xref in xrefs %}
+                        <tr>
+                            <td>
+                                <a href="{{ xref.xrefpart.get_absolute_url }}">{{ xref.xrefpart.number }}</a>
+                            </td>
+                            <td>
+                                {{ xref.xrefpart.description }}
+                            </td>
+                            <td>
+                                <a href="{{ xref.xrefpart.company.get_absolute_url }}">{{ xref.xrefpart.company }}</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>

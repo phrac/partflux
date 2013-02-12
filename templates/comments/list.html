@@ -10,7 +10,7 @@
         {% for comment in comment_list %}
         <li>
         <div class="user-thumb">
-            <img src="{% gravatar_url user.email 40 %}" />
+            <img src="{% gravatar_url comment.user.email 40 %}" />
         </div>
         <div class="comments">
             <span class="user-info"> <strong>{{ comment.user }}</strong> @ {{ comment.submit_date|naturalday }} wrote:</span>
