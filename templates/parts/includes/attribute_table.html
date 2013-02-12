@@ -9,7 +9,7 @@
             </tr>
         </thead>
         {% for a in part.attribute_set.all %}
-        <tr {% if a.id == new_id %}id="new-attribute"{% endif %}>
+        <tr>
             <td>
                 <strong>{{ a.key }}</strong>	
             </td>
@@ -19,6 +19,7 @@
             <td style="text-align:center;">
                 {% if user.is_authenticated %}
                 <div class="btn-group">
+                    <a class="btn btn-mini tip-top" title="See detailed attribute information"><i class="icon icon-info-sign"></i></a>
                     <a class="btn btn-mini tip-top" title="Flag" href="#flag-modal" data-toggle="modal" onClick="SetFlags('attr', {{ a.id }})"><i class="icon icon-flag"></i>{% if a.attributeflag_set.count > 0 %}<span class="label label-important">{{ a.attributeflag_set.count }}</span>{% endif %}</a>
                     <a class="btn btn-mini tip-top" title="Up Vote"><i class="icon icon-thumbs-up"></i></a>
                     <a class="btn btn-mini tip-top" title="Down Vote"><i class="icon icon-thumbs-down"></i></a>
