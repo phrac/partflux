@@ -40,13 +40,18 @@
         <div class="modal-footer">
             <input type="hidden" name="buylink_button" value="1" />
             <button id="save-buylink" type="submit" data-loading-text="Saving..." class="btn btn-inverse">Save Link</button>
-            <button class="btn" data-dismiss="modal">Cancel</button>
+            <button id="cancel-buylink" class="btn" data-dismiss="modal">Cancel</button>
         </form>
     </div>
 
     <script type="text/javascript">
         $('#save-buylink').click(function() {
             $('#save-buylink').button('loading');
+        });
+    </script>
+    <script type="text/javascript">
+        $('#cancel-buylink').click(function() {    
+            $('#buylink-form').each(function() {this.reset();});
         });
     </script>
 

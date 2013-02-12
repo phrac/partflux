@@ -36,13 +36,19 @@
         <div class="modal-footer">
             <input type="hidden" name="metadata_button" value="1" />
             <button id="save-attribute" data-loading-text="Saving..." data-toggle="button" class="btn btn-inverse">Save Attribute</button>
-            <button class="btn" data-dismiss="modal">Cancel</button>
+            <button id="cancel-attribute" class="btn" data-dismiss="modal">Cancel</button>
         </form>
     </div>
 
     <script type="text/javascript">
         $('#save-attribute').click(function() {
             $('#save-attribute').button('loading');
+        });
+    </script>
+    
+    <script type="text/javascript">
+        $('#cancel-attribute').click(function() {    
+            $('#attribute-form').each(function() {this.reset();});
         });
     </script>
 

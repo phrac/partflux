@@ -13,7 +13,7 @@ $(document).ready(function(){
 		rules:{
 			reason:{
 			    required:true,
-                            minlength:10
+                minlength:10
 			},
 		},
 		errorClass: "help-inline",
@@ -33,13 +33,15 @@ $(document).ready(function(){
 				required: true,
 				url: true
 			},
-			max:{
-				required:true,
-				max:24
+			company:{
+				required: true,
+				maxlength: 64,
+				minlength: 2
 			},
-			number:{
-				required:true,
-				number:true
+			price:{
+				required: true,
+				number: true,
+				min: .0001
 			}
 		},
 		errorClass: "help-inline",
@@ -53,18 +55,17 @@ $(document).ready(function(){
 		}
 	});
 	
-	$("#password_validate").validate({
+	$("#attribute-form").validate({
 		rules:{
-			pwd:{
+			key:{
 				required: true,
 				minlength:6,
-				maxlength:20
+				maxlength:64
 			},
-			pwd2:{
+			value:{
 				required:true,
-				minlength:6,
-				maxlength:20,
-				equalTo:"#pwd"
+				minlength:1,
+				maxlength:128,
 			}
 		},
 		errorClass: "help-inline",
