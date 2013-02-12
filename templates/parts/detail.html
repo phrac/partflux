@@ -23,6 +23,8 @@
 {% block html_itemscope %}itemscope itemtype="http://schema.org/Product"{% endblock %}
 
 {% block head %}
+<script src="{{ STATIC_URL }}js/jquery.dataTables.min.js"></script>
+<script src="{{ STATIC_URL }}js/unicorn.tables.js"></script>
 <link rel="stylesheet" href="{{ STATIC_URL }}css/uniform.css" type="text/css" media="screen" />
 <script src="{{ STATIC_URL }}js/jquery.uniform.js"></script>
 <script src="{{ STATIC_URL }}js/select2.min.js"></script>
