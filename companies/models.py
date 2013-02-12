@@ -27,16 +27,15 @@ class Company(models.Model):
 
     def save(self, *args, **kwargs):
         self.name = self.name.strip().upper()
-        slug = slugify(self.name)
-        if Company.objects.filter(slug=slug).count() > 0:
-            pass
-        else:
-            if not self.slug:
-                self.slug = slug
-            super(Company, self).save(*args, **kwargs)
+        self.slug = slug
+        super(Company, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return self.name 
+    
+    @models.permalink
+    def get_absolute_url(self):
+        return ('companies.views.detail', [self.id, str(self.slug)])
 
 class CompanyContact(models.Model):
     SEX = (('M', 'Male'),
