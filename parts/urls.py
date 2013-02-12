@@ -11,6 +11,7 @@ urlpatterns = patterns('',
     url(r'^ajax/delete_buylink/(\d+)/$', 'parts.ajax.delete_buylink'),
     url(r'^ajax/update_company/$', 'parts.ajax.update_company'),
     url(r'^ajax/flag/$', 'parts.ajax.flag'),
+    url(r'^ajax/myparts/$', 'parts.ajax.myparts'),
 
     url(r'^(?P<part_id>\d+)/(?P<company_slug>.+)/(?P<part_slug>.+)/$', 'parts.views.detail'),
     url(r'^(?P<company_slug>.+)/(?P<part_slug>.+)/$', 'parts.views.redirect_new_page'),

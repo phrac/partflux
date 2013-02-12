@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.conf import settings
 
+from parts.models import Part
+
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
@@ -31,5 +33,13 @@ class UserProfile(models.Model):
         self.save()
 
 
+class UserFavoritePart(models.Model):
+    user = models.ForeignKey(User)
+    part = models.ForeignKey(Part)
+    created_at = models.DateTimeField(auto_now_add=True)
+    notes = models.TextField(null=True)
+
+    class Meta:
+        unique_together = ('user', 'part',)
 
 

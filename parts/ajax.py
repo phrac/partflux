@@ -6,6 +6,7 @@ from django.template import RequestContext
 
 from parts.models import Part, BuyLink, Attribute, AttributeFlag
 from companies.models import Company
+from users.models import UserFavoritePart
 
 @login_required
 def update_description(request):
@@ -68,3 +69,17 @@ def flag(request):
         return render_to_response('parts/includes/attribute_table.html',
                                           {'part': p, },
                                           context_instance=RequestContext(request))
+
+@login_required
+def myparts(request):
+    pk = request.POST.get('part_pk', '')
+    notes = request.POST.get('notes', '')
+    p = get_object_or_404(Part, id=pk)
+
+    favepart = UserFavoritePart(user=request.user, part=p, notes=notes)
+    favepart.save()
+
+    if request.is_ajax:
+        return HttpResponse()
+
+
