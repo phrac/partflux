@@ -27,7 +27,7 @@ class Company(models.Model):
 
     def save(self, *args, **kwargs):
         self.name = self.name.strip().upper()
-        self.slug = slug
+        self.slug = slugify(self.name)
         super(Company, self).save(*args, **kwargs)
 
     def __unicode__(self):
