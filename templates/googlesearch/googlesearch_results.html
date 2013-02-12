@@ -10,8 +10,9 @@
 {% block content %}
 <div class="row-fluid">
     <div class="span9">
-    {% googlesearch_results %} 
-    {% include "partials/add_part_to_db.html" %}
+    <gcse:searchresults-only></gcse:searchresults-only> 
+    {% include "includes/add_part_to_db.html" %}
+    
     </div>
 </div>
 
