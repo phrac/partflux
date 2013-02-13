@@ -13,7 +13,7 @@ from django.core.files.storage import default_storage
 from parts.models import Part, Xref, PartImage, BuyLink, Attribute
 from companies.models import Company
 from parts.forms import MetadataForm, XrefForm, ImageUploadForm, BuyLinkForm
-from users.models import UserProfile
+from users.models import UserProfile, UserFavoritePart
 import json
 
 def index(request):
@@ -32,6 +32,11 @@ def redirect_new_page(request, company_slug, part_slug):
 def detail(request, part_id, company_slug, part_slug):
     p = get_object_or_404(Part, id=part_id)
     c = get_object_or_404(Company, id=p.company.id)
+
+    if UserFavoritePart.objects.filter(user=request.user, part=p).count() == 1:
+        is_user_favorite = True
+    else:
+        is_user_favorite = False
     
     xrefs = Xref.objects.filter(part=p.id).exclude(xrefpart=p.id)
     reverse_xrefs = Xref.objects.filter(xrefpart=p.id).exclude(part=p.id)
@@ -94,7 +99,9 @@ def detail(request, part_id, company_slug, part_slug):
                                'metadata_form': metaform, 
                                'xref_form' : xrefform,
                                'imageuploadform' : imageuploadform,
-                               'buylinkform' : buylinkform,},
+                               'buylinkform' : buylinkform,
+                               'is_user_favorite' : is_user_favorite,
+                              },
                               context_instance=RequestContext(request))
 
 @login_required

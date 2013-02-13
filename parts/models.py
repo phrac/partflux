@@ -47,6 +47,7 @@ class Part(models.Model):
     def get_absolute_url(self):
         return ('parts.views.detail', [self.id, str(self.company.slug), str(self.slug)])
 
+
 class PartFlag(models.Model):
     part = models.ForeignKey('Part')
     user = models.ForeignKey(User)
