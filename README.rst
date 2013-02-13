@@ -3,7 +3,7 @@ Overview
 ========
 Partfindr is a web application that helps users find information about any part
 number. The application is written in Python using the Django framework. Search
-is provided by Apache Lucene/Solr, and data is stored in PostgreSQL.
+is provided by Google Custom Search, and data is stored in PostgreSQL.
 
 
 Dependencies
@@ -17,18 +17,17 @@ Python
     * pure pagination (http://pypi.python.org/pypi/django-pure-pagination/)
     * sorl-thumbnail https://github.com/sorl/sorl-thumbnail
     * django-storages http://django-storages.readthedocs.org/en/latest/index.html
-    * django-gravatar for user avatars: https://github.com/twaddington/django-gravatar            
+    * django-gravatar for user avatars: https://github.com/twaddington/django-gravatar
+    * django-markdown-deux for notes: https://github.com/trentm/django-markdown-deux                
 
 
 Database
 --------
     * PostgreSQL 9.0+
-    * hstore contrib module (contrib/hstore.sql)
 
 Search
 ------
-    * ElasticSearch (http://www.elasticsearch.org/)
-    * pyes (https://github.com/aparro/pyes)
+    * Googlesearch django module
 
 
 Other Requirements

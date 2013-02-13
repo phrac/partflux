@@ -188,6 +188,7 @@ INSTALLED_APPS = (
     'faq',
     'tastypie',
     'googlesearch',
+    'markdown_deux',
     # partfindr apps    
     'main',
     'parts',
