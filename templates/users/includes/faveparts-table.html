@@ -1,0 +1,32 @@
+{% load markdown_deux_tags %}
+<table class="table table-bordered data-table">
+                    <thead>
+                        <tr>
+                            <th>Part #</th>
+                            <th>Description</th>
+                            <th>Tools</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for f in fave_parts %}
+                        <tr>
+                            <td>
+                                <a href="{{ f.part.get_absolute_url }}">{{ f.part.number }}</a>
+                            </td>
+                            <td>
+                                {{ f.part.description|truncatewords:10 }}
+                                <div class="collapse" id="collapse_{{ f.part.pk }}">
+                                    <p>{{ f.notes|markdown }}</p>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="#collapse_{{ f.part.pk }}" data-toggle="collapse" class="btn btn-mini tip-top" title="View My Notes"><i class="icon icon-list-alt"></i></a>
+                                    <a class="btn btn-mini tip-top" title="Edit My Notes"><i class="icon icon-edit"></i></a>
+                                    <a href="#delete_fave-modal" data-toggle="modal" class="btn btn-mini tip-top" title="Delete From Favorites" onClick="SetFaveId({{ f.id }})"><i class="icon icon-trash"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>

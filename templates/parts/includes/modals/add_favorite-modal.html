@@ -1,4 +1,5 @@
-<div class="modal hide" id="myparts-modal">
+{% load markdown_deux_tags %}
+<div class="modal hide" id="add_favorite-modal">
     {% if user.is_authenticated %}
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
@@ -8,7 +9,7 @@
         <p>Feel free to add any notes you want about this part before adding it to your favorites. You can always add or change notes
         later in your parts dashboard.</p>
 
-        <form name="myparts-form" id="myparts-form" class="form-horizontal" autocomplete="off" method="post" action="{% url parts.ajax.myparts %}">
+        <form name="add_favorite-form" id="add_favorite-form" class="form-horizontal" autocomplete="off" method="post" action="{% url parts.ajax.add_favorite %}">
 
             {% csrf_token %}
 
@@ -16,7 +17,7 @@
                 <label class="control-label" for="id_company">Your notes</label>
                 <div class="controls">
                     <textarea rows="8" name="notes" id="notes"></textarea>
-                    <p{{ markdown_allowed }}</p>
+                    <p>{% markdown_allowed %}</p>
                 </div>
             </div>
 
@@ -35,22 +36,22 @@
     </script>
 
     <script type="text/javascript">
-        $('#myparts-modal').on('shown', function () {
+        $('#add_favorite-modal').on('shown', function () {
             $('#id_notes').focus();
         });
     </script>
 
     <script type="text/javascript">
         $(document).ready(function() {
-                $('#myparts-form').submit(function() { // catch the form's submit event
+                $('#add_favorite-form').submit(function() { // catch the form's submit event
 
                 $.ajax({ // create an AJAX call...
                     data: $(this).serialize(), // get the form data
                     type: $(this).attr('method'), // GET or POST
                     url: $(this).attr('action'), // the file to call
                     success: function(response) { // on success..
-                        $('#myparts-modal').modal('hide');
-                        $('#myparts-form').each(function() {
+                        $('#add_favorite-modal').modal('hide');
+                        $('#add_favorite-form').each(function() {
                             this.reset();
                         });
                         $('#mynotes-table').hide().html(response).fadeIn("slow"); // update the DIV

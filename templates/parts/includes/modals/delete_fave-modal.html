@@ -1,0 +1,57 @@
+<div class="modal hide" id="delete_fave-modal">
+    {% if user.is_authenticated %}
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+        <h3>Delete Favorite</h3>
+    </div>
+    <div class="modal-body">
+        <p>Are you sure you wish to delete this part from your favorites? <strong>All notes will be lost and this action is not reversible!</strong></p>
+
+        <form name="del_fave-form" id="del_fave-form" class="form-horizontal" autocomplete="off" method="post" action="{% url parts.ajax.delete_favorite %}">
+
+            {% csrf_token %}
+
+
+    </div>
+    <div class="modal-footer">
+        <input type="hidden" id="fave-id" name="fave-id" value="" />
+        <button id="confirm_delete" data-loading-text="Deleting..." data-toggle="button" class="btn btn-danger"><i class="icon-white icon-flag"></i> Delete Favorite</button>
+        <button class="btn" data-dismiss="modal">Cancel</button>
+        </form>
+    </div>
+
+    <script type="text/javascript">
+        $('#confirm_delete').click(function() {
+            $('#confirm_delete').button('loading');
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+                $('#del_fave-form').submit(function() { // catch the form's submit event
+                
+                $.ajax({ // create an AJAX call...
+                    data: $(this).serialize(), // get the form data
+                    type: $(this).attr('method'), // GET or POST
+                    url: $(this).attr('action'), // the file to call
+                    success: function(response) { // on success..
+                        $('#delete_fave-modal').modal('hide');
+                        $('#faveparts-table').hide().html(response).fadeIn("slow"); // update the DIV
+                        $.gritter.add({
+                            title:	'Favorite Deleted',
+                            text:	'All personal notes and information also deleted.',
+                            sticky: false
+                            });
+                        $('#confirm_delete').button('reset');
+                        $.getScript('{{STATIC_URL}}js/unicorn.tables.js');
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
+
+    {% else %}
+    {% include 'includes/login_modal.html' %}
+    {% endif %}
+</div>

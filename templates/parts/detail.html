@@ -83,7 +83,7 @@
     {% include 'parts/includes/modals/buylink_modal.html' %}
     {% include 'parts/includes/modals/company_modal.html' %}
     {% include 'parts/includes/modals/flag_modal.html' %}
-    {% include 'parts/includes/modals/myparts-modal.html' %}
+    {% include 'parts/includes/modals/add_favorite-modal.html' %}
 </div>
 
 <div class="row-fluid">
@@ -106,7 +106,7 @@
                 {% if is_user_favorite %} 
                 <a class="btn btn-mini btn-warning tip-top" title="Delete From Favorites" id="delfave"><i class="icon icon-star"></i></a>
                 {% else %}
-                <a class="btn btn-mini tip-top" title="Add To My Parts" href="#myparts-modal" data-toggle="modal"><i class="icon icon-star"></i></a>
+                <a class="btn btn-mini tip-top" title="Add To My Parts" href="#add_favorite-modal" data-toggle="modal"><i class="icon icon-star"></i></a>
                 {% endif %}
 
                 <a class="btn btn-mini tip-top" title="Add To RFQ List"><i class="icon icon-shopping-cart"></i></a>

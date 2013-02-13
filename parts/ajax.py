@@ -71,7 +71,7 @@ def flag(request):
                                           context_instance=RequestContext(request))
 
 @login_required
-def myparts(request):
+def add_favorite(request):
     pk = request.POST.get('part_pk', '')
     notes = request.POST.get('notes', '')
     p = get_object_or_404(Part, id=pk)
@@ -81,5 +81,18 @@ def myparts(request):
 
     if request.is_ajax:
         return HttpResponse()
+        
+@login_required
+def delete_favorite(request):
+    fave_id = request.POST.get('fave-id', '')
+    fave = get_object_or_404(UserFavoritePart, id=fave_id, user=request.user)
+    fave.delete()
+    
+    fave_parts = UserFavoritePart.objects.filter(user=request.user)
+
+    if request.is_ajax:
+        return render_to_response('users/includes/faveparts-table.html',
+                                 {'fave_parts': fave_parts,},
+                                 context_instance=RequestContext(request))
 
 
