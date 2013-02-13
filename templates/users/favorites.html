@@ -35,6 +35,17 @@
         document.getElementById("fave-id").value = id;
     }
 </script>
+<script type="text/javascript">
+$(document).ready(function(){
+        
+        $('.data-table-small').dataTable({
+                "bJQueryUI": true,
+                "sPaginationType": "two_button",
+                "sDom": '<""l>t<"F"p>',
+                "bLengthChange": false,
+        });
+        });
+</script>
 {% endblock %}
 
 {% block content %}
@@ -77,49 +88,28 @@
                 <span class="icon">
                     <i class="icon-random"></i>
                 </span>
-                <h5>Cross References</h5>
+                <h5>Parts Added By Me</h5>
                 <div class="buttons">
-                    <a class="btn btn-inverse btn-mini tip-left" title="New Cross Reference" href="#add-xref" data-toggle="modal"><i class="icon-plus-sign icon-white"></i></a>
+                    <a class="btn btn-inverse btn-mini tip-left" title="Add a Part" href="#add-xref" data-toggle="modal"><i class="icon-plus-sign icon-white"></i></a>
                 </div>
             </div>
-            {% if xrefs %}
+            {% if user_parts %}
             <div class="widget-content nopadding">
-                {% include 'parts/includes/xrefs_table.html' %}
-            </div>
-            {% else %}
-            <div class="widget-content">
-                <h3>No cross references.</h3>
-            </div>
-            {% endif %}
-        </div>
-        <div class="widget-box">
-            <div class="widget-title">
-                <span class="icon">
-                    <i class="icon-random"></i>
-                </span>
-                <h5>Reverse Cross References (parts that cross reference this part)</h5>
-            </div>
-            {% if reverse_xrefs %}
-            <div class="widget-content nopadding">
-                <table class="table table-bordered data-table">
+                <table class="table table-bordered data-table-small">
                     <thead>
                         <tr>
                             <th>Part #</th>
-                            <th>Description</th>
-                            <th>Company</th>
+                            <th>Tools</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for rxref in reverse_xrefs %}
+                        {% for p in user_parts %}
                         <tr>
                             <td>
-                                <a href="{{ rxref.part.get_absolute_url }}">{{ rxref.part.number }}</a>
+                                <a href="{{ p.get_absolute_url }}">{{ p.number }}</a>
                             </td>
                             <td>
-                                {{ rxref.part.description }}
-                            </td>
-                            <td>
-                                <a href="{{ rxref.part.company.get_absolute_url }}">{{ rxref.part.company }}</a>
+                                <a href="#">tools</a>
                             </td>
                         </tr>
                         {% endfor %}
@@ -128,10 +118,10 @@
             </div>
             {% else %}
             <div class="widget-content">
-                <h3>No reverse cross references.</h3>
+                <h5>You haven't added any parts.</h5>
             </div>
             {% endif %}
-        </div>
+        </div>       
     </div>
 </div>
 </div>

@@ -1,8 +1,10 @@
-from users.models import UserProfile, UserFavoritePart
 from django.contrib.auth.models import User
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
+
+from users.models import UserProfile, UserFavoritePart
+from parts.models import Part
 
 @login_required
 def view_profile(request, username):
@@ -17,9 +19,11 @@ def view_profile(request, username):
 @login_required
 def view_favorites(request):
     fave_parts = UserFavoritePart.objects.filter(user=request.user)
+    user_parts = Part.objects.filter(user=request.user)
     
     return render_to_response('users/favorites.html',
                               {'fave_parts': fave_parts,
+                               'user_parts': user_parts,
                               },
                               context_instance=RequestContext(request))
                               
