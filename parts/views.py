@@ -33,7 +33,7 @@ def detail(request, part_id, company_slug, part_slug):
     p = get_object_or_404(Part, id=part_id)
     c = get_object_or_404(Company, id=p.company.id)
 
-    if UserFavoritePart.objects.filter(user=request.user, part=p).count() == 1:
+    if request.user.is_authenticated() and UserFavoritePart.objects.filter(user=request.user, part=p).count() == 1:
         is_user_favorite = True
     else:
         is_user_favorite = False
