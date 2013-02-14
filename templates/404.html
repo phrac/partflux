@@ -10,17 +10,17 @@
 
 {% block content %}
 <div class="row-fluid">
-    <div class="span4 offset2">
+    <div class="span4">
         <img src="{{ STATIC_URL }}img/doh.png" alt="404 image" />
     </div>
-
-    <div class="span6">
-        <h2>Oops, this page is missing</h2>
-        <p>We couldn't find the page you were looking for, but don't worry, we're
-        working on fixing it.</p>
+    <br /><br /><br /><br />
+    <div class="well span6">
+        <h2>D'oh! That's a big <strong>404</strong></h2>
+        <p>We couldn't find the page you were looking for, but don't worry, it must have vanished from our server.</p>
         <p>In the mean time, how about <a href="{% url parts.views.index %}">browsing
         the newest parts in our database</a> or <a href="/">returning to the home page</a>
         </p>
     </div>
+
 </div>
 {% endblock %}

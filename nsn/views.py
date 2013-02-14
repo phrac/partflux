@@ -20,7 +20,7 @@ def index(request):
                               context_instance=RequestContext(request))
                               
 def detail(request, nsn_id, nsn_number):
-    nsn = get_object_or_404(Nsn, id=nsn_id)
+    nsn = get_object_or_404(Nsn, id=nsn_id, number=nsn_number)
     
     return render_to_response('nsn/detail.html',
                               {'nsn': nsn},

@@ -4,7 +4,7 @@
 
 <div id="comments">
     {% if comment_count == 0 %}
-    <h3 class="add">No comments, be the first to add one.</h3>
+    <div class="alert alert-error">No comments, be the first to add one!</div>
     {% else %}
     <ul class="recent-comments">
         {% for comment in comment_list %}
