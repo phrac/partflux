@@ -13,21 +13,11 @@ from parts.models import Part
 import os
 
 def index(request):
-    companies = Company.objects.all().order_by('name')
+    companies = Company.objects.all()
 
-    try:
-        page = int(request.GET.get('page', '1'))
-    except ValueError:
-        page = 1
-
-    p = Paginator(companies, 25, request=request)
-    try:
-        results_list = p.page(page)
-    except (PageNotAnInteger, EmptyPage):
-        results_list = p.page(1)
 
     return render_to_response('companies/index.html', 
-                              {'results_list': results_list}, 
+                              {'companies': companies}, 
                               context_instance=RequestContext(request))
                               
 def redirect_new_page(request, company_slug):

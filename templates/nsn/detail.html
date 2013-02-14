@@ -1,0 +1,161 @@
+{% extends "base/base_MAIN.html" %}
+
+{% block title %}
+NSN {{ nsn.number }} Details | Part Engine
+{% endblock %}
+
+{% block nsn_active %}active open{% endblock %}
+
+{% block breadcrumb_links %}
+    <a href="{% url nsn.views.index %}" title="NSN Listing" class="tip-bottom"><i class="icon-plane"></i> NSN</a>
+    <a href="#" class="current">{{ nsn.number }}</a>
+{% endblock %}
+
+{% block page_title %}{{ nsn.number }}{% endblock %}
+
+{% block content %}
+<div class="row-fluid">
+    <div class="span8">
+        <div class="widget-box collapsible">
+            <div class="widget-title">
+            <a href="#attributes" data-toggle="collapse">
+                <span class="icon">
+                    <i class="icon-list-alt"></i>
+                </span>
+                <h5>NSN {{ nsn.number }} Details</h5>
+            </a>
+            
+            </div>
+            <div id="attributes">
+                <div id="attribute-table">
+                    <div class="widget-content nopadding">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td><strong>NSN</strong></td>
+                                <td>{{ nsn.number }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>FSC</strong></td>
+                                <td>
+                                    {% if nsn.fsc %}
+                                        {{ nsn.fsc }}
+                                    {% else %}
+                                        {{ nsn.number|truncatechars:7 }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Description</strong></td>
+                                <td>{{ nsn.description }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>NIIN</strong></td>
+                                <td>
+                                {% if nsn.niin %}
+                                {{ nsn.niin }}
+                                {% else %}
+                                <span class="label label-important">NO DATA</span>
+                                {% endif %}
+                                </td>
+                                
+                            </tr>
+                            <tr>
+                                <td><strong>Codification Country</strong></td>
+                                <td>
+                                {% if nsn.codification_country %}
+                                {{ nsn.codification_country }}
+                                {% else %}
+                                <span class="label label-important">NO DATA</span>
+                                {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>ADP</strong></td>
+                                <td>
+                                {% if nsn.adp_code %}
+                                {{ nsn.adp_code }}
+                                {% else %}
+                                <span class="label label-important">NO DATA</span>
+                                {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>DML</strong></td>
+                                <td>
+                                {% if nsn.dml_code %}
+                                {{ nsn.dml_code }}
+                                {% else %}
+                                <span class="label label-important">NO DATA</span>
+                                {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>HMIC</strong></td>
+                                <td>
+                                {% if nsn.hmic %}
+                                {{ nsn.hmic }}
+                                {% else %}
+                                <span class="label label-important">NO DATA</span>
+                                {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>PMIC</strong></td>
+                                <td>
+                                {% if nsn.pmic %}
+                                {{ nsn.pmic }}
+                                {% else %}
+                                <span class="label label-important">NO DATA</span>
+                                {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>ESDC</strong></td>
+                                <td>
+                                {% if nsn.esdc %}
+                                {{ nsn.esdc }}
+                                {% else %}
+                                <span class="label label-important">NO DATA</span>
+                                {% endif %}
+                                </td>
+                            </tr>
+                    
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="widget-box collapsible">
+            <div class="widget-title">
+                <span class="icon">
+                    <i class="icon-list-alt"></i>
+                </span>
+                <h5>Characteristics</h5>
+            </div>
+
+            {% if nsn.mrc_set.all %}
+            <div class="widget-content nopadding">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>MRC</th>
+                        <th>REQ</th>
+                        <th>REPLY</th>
+                    </tr>
+                    {% for mrc in nsn.mrc_set.all %}
+                    <tr>
+                        <td>{{ mrc.mrc }}</td>
+                        <td>{{ mrc.req }}</td>
+                        <td>{{ mrc.reply }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            {% else %}
+            <div class="widget-content">
+                <div class="alert alert-error">No Characteristic data available at this time.</div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

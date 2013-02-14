@@ -4,7 +4,7 @@ class Nsn(models.Model):
     number = models.CharField(max_length=16, unique=True)
     fsc = models.ForeignKey('Fsc', null=True)
     description = models.TextField()
-    niin = models.IntegerField(unique=True)
+    niin = models.IntegerField(null=True)
     codification_country = models.CharField(max_length=16, null=True)
     adp_code = models.CharField(max_length=16, null=True)
     dml_code = models.CharField(max_length=16, null=True)
