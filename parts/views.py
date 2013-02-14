@@ -34,9 +34,11 @@ def detail(request, part_id, company_slug, part_slug):
     c = get_object_or_404(Company, id=p.company.id)
 
     if request.user.is_authenticated() and UserFavoritePart.objects.filter(user=request.user, part=p).count() == 1:
+        fave = UserFavoritePart.objects.get(user=request.user, part=p)
         is_user_favorite = True
     else:
         is_user_favorite = False
+        fave = None
     
     xrefs = Xref.objects.filter(part=p.id).exclude(xrefpart=p.id)
     reverse_xrefs = Xref.objects.filter(xrefpart=p.id).exclude(part=p.id)
@@ -101,6 +103,7 @@ def detail(request, part_id, company_slug, part_slug):
                                'imageuploadform' : imageuploadform,
                                'buylinkform' : buylinkform,
                                'is_user_favorite' : is_user_favorite,
+                               'fave': fave,
                               },
                               context_instance=RequestContext(request))
 

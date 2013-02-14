@@ -11,6 +11,8 @@ $(document).ready(function(){
 		"bLengthChange": false,
 	});
 	
+	$.fn.dataTableExt.sErrMode = 'throw';
+	
 	$('input[type=checkbox],input[type=radio],input[type=file]').uniform();
 	
 	$('select').select2();

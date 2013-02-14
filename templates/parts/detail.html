@@ -103,8 +103,14 @@
             </a>
             <div class="buttons">
 
-                {% if is_user_favorite %} 
-                <a class="btn btn-mini btn-warning tip-top" title="Delete From Favorites" id="delfave"><i class="icon icon-star"></i></a>
+                {% if is_user_favorite %}
+                {% include 'parts/includes/modals/delete_fave-modal.html' %}
+                <script type="text/javascript">
+                    function SetFaveId(id){
+                        document.getElementById("fave-id").value = id;
+                    }
+                </script>
+                <a href="#delete_fave-modal" data-toggle="modal" class="btn btn-mini btn-warning tip-top" title="Delete From Favorites" onClick="SetFaveId({{ fave.id }})"><i class="icon icon-star"></i></a> 
                 {% else %}
                 <a class="btn btn-mini tip-top" title="Add To My Parts" href="#add_favorite-modal" data-toggle="modal"><i class="icon icon-star"></i></a>
                 {% endif %}
