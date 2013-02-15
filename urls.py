@@ -32,8 +32,7 @@ urlpatterns = patterns('',
     url(r'^nsn/', include('nsn.urls')),
     
     # URLs for search
-    #url(r'^search/', include('search.urls')),
-    url(r'^search/', include('googlesearch.urls')),
+    url(r'^search/', include('search.urls')),
 
     # URLs for part groups
     url(r'^partgroups/$', 'partgroups.views.index'),

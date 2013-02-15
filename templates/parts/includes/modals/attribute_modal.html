@@ -49,6 +49,8 @@
     <script type="text/javascript">
         $('#cancel-attribute').click(function() {    
             $('#attribute-form').each(function() {this.reset();});
+            var validator = $("#attribute-form").validate();
+            validator.resetForm();
         });
     </script>
 

@@ -187,7 +187,6 @@ INSTALLED_APPS = (
     'django_gravatar',
     'faq',
     'tastypie',
-    'googlesearch',
     'markdown_deux',
     # partfindr apps    
     'main',
@@ -216,6 +215,7 @@ AWS_SECRET_ACCESS_KEY = 'R0xdimxYRSFdCOoAV7nv/kzviSWCj8WirklTFVKC'
 AWS_STORAGE_BUCKET_NAME = 'partfindr'
 from S3 import CallingFormat
 AWS_CALLING_FORMAT = CallingFormat.SUBDOMAIN
+
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

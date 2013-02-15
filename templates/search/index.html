@@ -5,30 +5,31 @@ Advanced Search | partfindr
 {% endblock %}
 
 {% block breadcrumb_links %}
-<li class="active">Advanced Search</li>
+<a href="{% url search.views.index %}">Search</a>
+<a class="active">Advanced Search</a>
 {% endblock %}
 
+{% block search_active %}active{% endblock %}
+
+{% block page_title %}Advanced Search{% endblock %}
 
 {% block content %}
 <div class="container">
-    <div class="page-header">
-        <h1>Advanced Search</h1>
-    </div>
-    <div class="row">
-        <div class="span10">
+    <div class="row-fluid">
+        <div class="well span10">
             <p>We are continually working to improve our search experience by adding more features and capabilities. This page
             is intended to document our search system to help you find exactly the parts you are looking for.
             </p>
         </div>
     </div>
     
-    <div class="page-header">
+    <div class="well">
         <h2>Queries <small>How to use the search box to find what you are looking for</small></h2>
-    </div>
+    
         
 
     <div class="row">
-        <div class="span6">
+        <div class="well span5">
         <h3>Standard search</h3>
         <p>We implement all of the standard search features that you would expect to find
         on any major search engine. These include exact phrase, keyword, or, and none types.</p>
@@ -59,7 +60,7 @@ Advanced Search | partfindr
 
 
     <div class="row">
-        <div class="span6">
+        <div class="well span5">
         <h3>Wildcard search</h3>
         <p>Wildcards are helpful specifically when you are searching by part number.
         Wildcards help find the part you're looking for if you don't know the full part number.
@@ -84,6 +85,7 @@ Advanced Search | partfindr
         </dl>
         </p>
         </div>
+    </div>
     </div>
 </div>
 {% endblock %}

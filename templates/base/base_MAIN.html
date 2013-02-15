@@ -57,7 +57,7 @@
         </div>
 
         <div id="search">
-            <form action="/search/results/" id="cref_iframe">
+            <form action="/search/" id="cref_iframe">
                 <input name="cx" value="partner-pub-3185089159153756:8723235659" type="hidden">
                 <input name="cof" value="FORID:11" type="hidden">
                 <input name="ie" value="ISO-8859-1" type="hidden">
@@ -119,7 +119,7 @@
                     </ul>
                 </li>
                 
-                <li {% block search_active %}{% endblock %} ><a href="interface.html"><i class="icon icon-search"></i> <span>Search</span></a></li>
+                <li class="{% block search_active %}{% endblock %}" ><a href="{% url search.views.index %}"><i class="icon icon-search"></i> <span>Search</span></a></li>
                 
                 <li {% block sourcing_active %}{% endblock %} ><a href="interface.html"><i class="icon icon-magnet"></i> <span>Sourcing Dashboard</span></a></li>
                 

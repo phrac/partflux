@@ -42,6 +42,11 @@ class Part(models.Model):
         self.description = self.description.strip().upper()
         self.slug = slugify(self.number)
         super(Part, self).save(*args, **kwargs)
+           
+    def get_all_xrefs(self):
+        forward = Xref.objects.filter(part=self)
+        reverse = Xref.objects.filter(xrefpart=self)
+        return dict(forward.items() + reverse.items())
 
     @models.permalink
     def get_absolute_url(self):
