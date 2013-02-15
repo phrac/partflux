@@ -28,6 +28,7 @@
                     {% endif %}
                 </div>
                 {% else %}
+                <a href="{% url django.contrib.auth.views.login %}?next={{request.path}}">Sign In</a>
                 {% endif %}
             </td>
         </tr>

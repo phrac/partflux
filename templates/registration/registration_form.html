@@ -30,7 +30,7 @@
                 <p><strong>Your username and password didn't match. Please try again.</strong></p>
                 {% endif %}
         
-                <form class="form-horizontal" method="post" action="{% url 'django.contrib.auth.views.login' %}">
+                <form class="form-horizontal" method="post" action="">
                     {% csrf_token %}
         
                     <div class="control-group">
