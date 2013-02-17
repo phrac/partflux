@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.template.defaultfilters import slugify
 
 from parts.models import Part
 
@@ -21,7 +22,7 @@ class PartGroup(models.Model):
     
     @models.permalink
     def get_absolute_url(self):
-        return ('partgroups.views.detail', [self.id])
+        return ('partgroups.views.detail', [self.id, str(slugify(self.name))])
 
 class PartGroupItem(models.Model):
     part = models.ForeignKey(Part)

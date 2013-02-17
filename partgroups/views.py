@@ -23,7 +23,7 @@ def index(request):
                               context_instance=RequestContext(request))
 
 
-def detail(request, partgroup_id):
+def detail(request, partgroup_id, slug):
     pg = get_object_or_404(PartGroup, pk=partgroup_id)
 
     return render_to_response('partgroups/detail.html',
