@@ -21,7 +21,7 @@ class PartGroup(models.Model):
     
     @models.permalink
     def get_absolute_url(self):
-        return ('partgroups.views.detail', None, { 'partgroup_id': str(self.id) })
+        return ('partgroups.views.detail', [self.id])
 
 class PartGroupItem(models.Model):
     part = models.ForeignKey(Part)
