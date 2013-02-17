@@ -19,16 +19,16 @@
                                     <p>{{ f.notes|markdown }}</p>
                                 </div>
                                 <div class="collapse" id="collapse_xref_{{ f.part.pk }}">
-                                    {% for x in f.part.get_all_xrefs %}
+                                    <!--{% for x in f.part.get_all_xrefs %}
                                     {{ x.part.number }}
-                                    {% endfor %}
+                                    {% endfor %}-->
                                     
                                 </div>
                             </td>
                             <td>
                                 <div class="btn-group">
                                     <a href="#collapse_{{ f.part.pk }}" data-toggle="collapse" class="btn btn-mini tip-top" title="View My Notes"><i class="icon icon-list-alt"></i></a>
-                                    <a class="btn btn-mini tip-top" title="Edit My Notes"><i class="icon icon-edit"></i></a>
+                                    <a class="btn btn-mini tip-top" title="Edit My Notes"><i data-emptytext="" data-autotext="never" data-value="{{ f.notes }}" data-name="notes" data-type="textarea" data-inputclass="input input-large" data-pk="{{ f.pk }}" data-url="#" data-emptyclass="icon iconedit" class="notes icon icon-edit"></i></a>
                                     <a href="#collapse_xref_{{ f.part.pk }}" data-toggle="collapse" class="btn btn-mini tip-top" title="View Know Cross References"><i class="icon icon-random"></i></a>
                                     <a href="#delete_fave-modal" data-toggle="modal" class="btn btn-mini tip-top" title="Delete From Favorites" onClick="SetFaveId({{ f.id }})"><i class="icon icon-trash"></i></a>
                                 </div>

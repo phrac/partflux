@@ -30,6 +30,8 @@
 <script src="{{ STATIC_URL }}js/select2.min.js"></script>
 <script src="{{ STATIC_URL }}js/jquery.dataTables.min.js"></script>
 <script src="{{ STATIC_URL }}js/unicorn.tables.js"></script>
+<link href="{{ STATIC_URL }}css/bootstrap-editable.css" rel="stylesheet">
+<script src="{{ STATIC_URL }}js/bootstrap-editable.min.js"></script>
 <script type="text/javascript">
     function SetFaveId(id){
         document.getElementById("fave-id").value = id;
@@ -37,14 +39,16 @@
 </script>
 <script type="text/javascript">
 $(document).ready(function(){
-        
         $('.data-table-small').dataTable({
                 "bJQueryUI": true,
                 "sPaginationType": "two_button",
                 "sDom": '<""l>t<"F"p>',
                 "bLengthChange": false,
+                });
+        $('.notes').editable({
+            params: {csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value},
         });
-        });
+    });
 </script>
 {% endblock %}
 
