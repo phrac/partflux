@@ -44,15 +44,8 @@
             'overlayShow'   :   false
             });
         {% if user.is_authenticated %}
+        $.fn.editable.defaults.mode = 'inline';
         $('#description').editable({
-                           type:  'text',
-                           pk:    {{ part.pk }},
-                           name:  'description',
-                           url:   '{% url parts.ajax.update_description %}',  
-                           title: 'Enter Part Description',
-                           inputclass: 'input',
-                           loading: 'Saving new description...',
-                           emptytext: 'No Description',
                            params: {csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value},
                            });
         {% endif %}
@@ -88,7 +81,8 @@
 
 <div class="row-fluid">
     <div class="span12">
-        <h2>{{ part.number }} by <a class="tip-bottom" title="Click to edit" id="company" href="#company-modal" data-toggle="modal">{{ part.company|safe }}</a><br /><small><a id="description">{{ part.description }}</a></small></h2>
+        <h2>{{ part.number }} by <a class="tip-bottom" title="Click to edit" id="company" href="#company-modal" data-toggle="modal">{{ part.company|safe }}</a></h2>
+        <h4><a id="description" data-name="description" data-placeholder="No Description" data-type="text" data-inputclass="input input-large" data-pk="{{ part.pk }}" data-url="{% url parts.ajax.update_description %}">{{ part.description }}</a></small></h4>
     </div>
 </div>
 <div class="row-fluid">
