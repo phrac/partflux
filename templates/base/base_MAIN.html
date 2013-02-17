@@ -1,4 +1,4 @@
-<!DOCTYPE html>{% load cache %}{% load rss %}{% load humanize %}{% load gravatar %} {% load googlesearch_inclusion_tags %}
+<!DOCTYPE html>{% load cache %}{% load rss %}{% load humanize %}{% load gravatar %}
 <html lang="en">
     <head>
         <title>{% block title %}Part Engine | The Part Number Search Engine {% endblock %}</title>
@@ -104,8 +104,7 @@
                 <li class="submenu" {% block assemblies_active %}{% endblock %}>
                 <a href="#"><i class="icon icon-wrench"></i> <span>Assemblies</span> <span class="label">3</span></a>
                 <ul>
-                    <li><a href="form-common.html"><i class="icon icon-inbox"></i> Recent Assemblies</a></li>
-                    <li><a href="form-validation.html">Browse Assemblies</a></li>
+                    <li><a href="{% url partgroups.views.index %}"><i class="icon icon-list-alt"></i> Browse Assemblies</a></li>
                     <li><a href="form-wizard.html"><i class="icon icon-star"></i> My Assemblies</a></li>
                 </ul>
                 </li>

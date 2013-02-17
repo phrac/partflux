@@ -35,8 +35,7 @@ urlpatterns = patterns('',
     url(r'^search/', include('search.urls')),
 
     # URLs for part groups
-    url(r'^partgroups/$', 'partgroups.views.index'),
-    url(r'^partgroups/(?P<partgroup_id>\d+)/$', 'partgroups.views.detail'), 
+    url(r'^partgroups/', include('partgroups.urls')),
     
     # URLs for companies
     url(r'^companies/', include('companies.urls')),
