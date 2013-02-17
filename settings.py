@@ -19,8 +19,8 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django_orm.backends.postgresql_psycopg2', 		# Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-            'NAME': 'partfindr',                     	                # Or path to database file if using sqlite3.
-            'USER': 'derek',                      				        # Not used with sqlite3.
+            'NAME': '',                     	                # Or path to database file if using sqlite3.
+            'USER': '',                      				        # Not used with sqlite3.
             'PASSWORD': '',                  			        # Not used with sqlite3.
             'HOST': 'localhost',                      	                # Set to empty string for localhost. Not used with sqlite3.
             'PORT': '',                      					        # Set to empty string for default. Not used with sqlite3.
@@ -30,16 +30,6 @@ DATABASES = {
     }
 }
 
-# ES_HOST should be in a format that pyes understands
-ES_HOST = '127.0.0.1:9200'
-
-# use gmail for sending email
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'partfindr@partfindr.net'
-EMAIL_HOST_PASSWORD = 'gL7.bT#!'
-EMAIL_PORT = 587
-SERVER_EMAIL = 'web@partfindr.net'
 
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/users/login/'
@@ -58,8 +48,6 @@ REP_VALUE_NEW_ATTRIBUTE = 2
 REP_VALUE_NEW_COMMENT = 3
 # how many rep points should user get for new image
 REP_VALUE_NEW_IMAGE = 3
-
-GOOGLE_SEARCH_PARTNER_ID = 'partner-pub-3185089159153756:8723235659'
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -124,8 +112,6 @@ STATICFILES_FINDERS = (
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = 'kr-5zw7w8l9d(9$-r79xjj%dw92d_%(1^@@6g^etp_x(k7z7=)'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -210,9 +196,9 @@ AUTH_PROFILE_MODULE = 'users.UserProfile'
 
 # django-storages settings
 DEFAULT_FILE_STORAGE = 'storages.backends.s3.S3Storage'
-AWS_ACCESS_KEY_ID = 'AKIAJEBQFIW46J5LFB3Q'
-AWS_SECRET_ACCESS_KEY = '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'
-AWS_STORAGE_BUCKET_NAME = 'partfindr'
+AWS_ACCESS_KEY_ID = ''
+AWS_SECRET_ACCESS_KEY = ''
+AWS_STORAGE_BUCKET_NAME = ''
 from S3 import CallingFormat
 AWS_CALLING_FORMAT = CallingFormat.SUBDOMAIN
 
