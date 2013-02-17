@@ -126,10 +126,16 @@
                         </div>
                     </div>
                     <div class="form-actions">
-                        <button type="submit" class="btn btn-inverse">Update Details</button>
+                        <button id="save" data-loading-text="Saving..." data-toggle="button" type="submit" class="btn btn-inverse">Update Details</button>
                         <button type="submit" class="btn btn-default" onclick="this.form.reset()">Clear Form</button>
                     </div>
                 </form>
+
+                <script type="text/javascript">
+                    $('#save').click(function() {
+                            $('#save').button('loading');
+                            });
+                </script>
 
                 {% else %}
                 <h3 class="add">{% include "includes/sign_in.html" with action="to edit company details." %}</h3>
@@ -141,10 +147,8 @@
     <div class="well span6">
         <h3>Tips For Updating Companies</h3>
         <ul class="bullets">
-            <li>Make sure your part number is complete and accurate</li>
+            <li>Enter a <strong>great</strong> company description that tells a lot about the company in a short amount of space.</li>
             <li>Make sure the company name is correct</li>
-            <li>Enter a great description so others are able to easily find your part</li>
-            <li>After adding a new part, enter any information about the part that may help others identify it correctly</li>
         </ul>
     </div>
 </div>
