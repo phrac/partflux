@@ -19,7 +19,9 @@
                                     <p>{{ f.notes|markdown }}</p>
                                 </div>
                                 <div class="collapse" id="collapse_xref_{{ f.part.pk }}">
-                                    {{ f.part.get_all_xrefs }}
+                                    {% for x in f.part.get_all_xrefs %}
+                                    {{ x.part.number }}
+                                    {% endfor %}
                                     
                                 </div>
                             </td>

@@ -44,9 +44,10 @@ class Part(models.Model):
         super(Part, self).save(*args, **kwargs)
            
     def get_all_xrefs(self):
+        from itertools import chain
         forward = Xref.objects.filter(part=self)
         reverse = Xref.objects.filter(xrefpart=self)
-        return dict(forward.items() + reverse.items())
+        return chain(forward, reverse)
 
     @models.permalink
     def get_absolute_url(self):
