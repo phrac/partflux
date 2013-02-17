@@ -6,6 +6,7 @@ from parts.models import Part
 
 class PartGroup(models.Model):
     name = models.CharField(max_length=128)
+    slug = models.CharField(max_length=64, null=True)
     description = models.TextField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -19,6 +20,11 @@ class PartGroup(models.Model):
     
     def __unicode__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super(PartGroup, self).save(*args, **kwargs)
     
     @models.permalink
     def get_absolute_url(self):
