@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.conf import settings
 
-from parts.models import Part
+from parts.models import Part, Attribute, PartImage
 
 
 class UserProfile(models.Model):
