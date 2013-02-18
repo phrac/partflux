@@ -12,7 +12,6 @@ class UserProfile(models.Model):
     facebook_profile = models.URLField()
     twitter_profile = models.URLField()
     linkedin_profile = models.URLField()
-    api_key = models.CharField(max_length=128)
     location = models.CharField(max_length=64)
     
 
