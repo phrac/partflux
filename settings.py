@@ -18,12 +18,12 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django_orm.backends.postgresql_psycopg2', 		# Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django_orm.backends.postgresql_psycopg2', 	# Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
             'NAME': '',                     	                # Or path to database file if using sqlite3.
-            'USER': '',                      				        # Not used with sqlite3.
+            'USER': '',                      				    # Not used with sqlite3.
             'PASSWORD': '',                  			        # Not used with sqlite3.
-            'HOST': 'localhost',                      	                # Set to empty string for localhost. Not used with sqlite3.
-            'PORT': '',                      					        # Set to empty string for default. Not used with sqlite3.
+            'HOST': 'localhost',                      	        # Set to empty string for localhost. Not used with sqlite3.
+            'PORT': '',                      					# Set to empty string for default. Not used with sqlite3.
             'OPTIONS': {
                 'POOL_ENABLED': True,
             }
@@ -126,7 +126,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "partfindr.context_processors.get_current_domain",
     "partfindr.context_processors.part_count",
     "partfindr.context_processors.nsn_count",
-    "flashcookie.flash_context",
     "django.core.context_processors.request",
     "django.contrib.auth.context_processors.auth",
     "django.core.context_processors.debug",
