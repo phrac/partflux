@@ -32,21 +32,16 @@
              var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
              })();
         </script>
-        
-        <!-- Put the following javascript before the closing </head> tag. -->
-  
-<script>
-  (function() {
-    var cx = 'partner-pub-3185089159153756:8723235659';
-    var gcse = document.createElement('script'); gcse.type = 'text/javascript'; gcse.async = true;
-    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
-        '//www.google.com/cse/cse.js?cx=' + cx;
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(gcse, s);
-  })();
-</script>
-<!-- Place this tag where you want the search results to render -->
-
-            
+        <!-- Google Custom Search -->
+        <script>
+            (function() {
+                var cx = 'partner-pub-3185089159153756:8723235659';
+                var gcse = document.createElement('script'); gcse.type = 'text/javascript'; gcse.async = true;
+                gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+                    '//www.google.com/cse/cse.js?cx=' + cx;
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(gcse, s);
+            })();
+        </script>
     </head>
     <body>
 
@@ -147,7 +142,7 @@
                 {% endblock %}
 
                 <div class="row-fluid">
-                    <div id="footer" class="span12">
+                    <div id="footer" class="span12" style="margin-top:65px;">
                         &copy; {% now "Y" %} Part Engine 
                             | <a href="/faq/">FAQ</a>
                             | <a href="/search/">Advanced Search</a>
