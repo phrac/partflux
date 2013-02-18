@@ -88,19 +88,20 @@
                 <li class="submenu {% block parts_active %}{% endblock %}">
                 <a href="{% url parts.views.index %}"><i class="icon icon-cog"></i> <span>Parts</span> <span class="label">3</span></a>
                 <ul>
-                    <li><a href="{% url parts.views.index %}"><i class="icon icon-inbox"></i> Recent Parts</a></li>
-                    <li><a href="{% url parts.views.addpartform %}"><i class="icon icon-plus-sign"></i> Add a Part</a></li>
+                    <li><a href="{% url parts.views.index %}"><i class="icon icon-inbox"></i> Browse Parts</a></li>
+                    <li><a href="{% url parts.views.addpartform %}"><i class="icon icon-plus-sign"></i> Create Part</a></li>
                     <li><a href="{% url users.views.view_favorites %}"><i class="icon icon-star"></i> My Parts</a></li>
                     <!-- <li><a href="form-wizard.html"><i class="icon icon-list-alt"></i> Part Statistics</a></li> -->
                 </ul>
                 </li>
                 
                 <!-- assemblies sub-menu -->
-                <li class="submenu" {% block assemblies_active %}{% endblock %}>
+                <li class="submenu {% block assemblies_active %}{% endblock %}"">
                 <a href="#"><i class="icon icon-wrench"></i> <span>Assemblies</span> <span class="label">3</span></a>
                 <ul>
                     <li><a href="{% url partgroups.views.index %}"><i class="icon icon-list-alt"></i> Browse Assemblies</a></li>
-                    <li><a href="form-wizard.html"><i class="icon icon-star"></i> My Assemblies</a></li>
+                    <li><a href="#"><i class="icon icon-plus-sign"></i> Create Assembly</a></li>
+                    <li><a href="#"><i class="icon icon-star"></i> My Assemblies</a></li>
                 </ul>
                 </li>
                 
