@@ -117,8 +117,6 @@ def addmeta(request, part_id):
         attr = Attribute(key=key, value=value, user=request.user, part=p)
         try:
             attr.save()
-            profile = request.user.get_profile()
-            profile.increment_reputation(settings.REP_VALUE_NEW_ATTRIBUTE)
             return True, attr.pk
         except IntegrityError:
             return 'Attribute already exists'
