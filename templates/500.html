@@ -1,0 +1,26 @@
+{% extends "base/base_MAIN.html" %}
+
+{% block breadcrumb_links %}
+<a href="#" class="current">Internal Server Error</a>
+{% endblock %}
+
+{% block right_buttons %}{% endblock %}
+
+{% block page_title %}Oh my, we have a problem!{% endblock %}
+
+{% block content %}
+<div class="row-fluid">
+    <div class="span4 offset2">
+        <img src="{{ STATIC_URL }}img/doh.png" alt="50x image" />
+    </div>
+
+    <div class="span6">
+        <h2>Something bad happened to our server!</h2>
+        <p>We aren't sure what exactly happened, but rest assured, we are looking
+        into it.</p>
+        <p>In the mean time, how about <a href="{% url parts.views.index %}">browsing
+        the newest parts in our database</a> or <a href="/">returning to the home page</a>
+        </p>
+    </div>
+</div>
+{% endblock %}
