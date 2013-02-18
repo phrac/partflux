@@ -69,6 +69,8 @@ def flag(request):
         return render_to_response('parts/includes/attribute_table.html',
                                           {'part': p, },
                                           context_instance=RequestContext(request))
+    else:
+        return HttpResponseRedirect(reverse('parts.views.detail', args=[part.id, c.slug, p.slug]))
 
 @login_required
 def add_favorite(request):
@@ -81,6 +83,8 @@ def add_favorite(request):
 
     if request.is_ajax:
         return HttpResponse()
+    else:
+        return HttpResponseRedirect(reverse('parts.views.detail', args=[part.id, c.slug, p.slug]))
         
 @login_required
 def delete_favorite(request):
@@ -94,5 +98,7 @@ def delete_favorite(request):
         return render_to_response('users/includes/faveparts-table.html',
                                  {'fave_parts': fave_parts,},
                                  context_instance=RequestContext(request))
+    else:
+        return HttpResponseRedirect(reverse('parts.views.detail', args=[part.id, c.slug, p.slug]))
 
 
