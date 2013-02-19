@@ -173,6 +173,7 @@ INSTALLED_APPS = (
     'faq',
     'tastypie',
     'markdown_deux',
+    'haystack',
     # partfindr apps    
     'main',
     'parts',
