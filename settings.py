@@ -194,12 +194,10 @@ ACCOUNT_ACTIVATION_DAYS = 7
 AUTH_PROFILE_MODULE = 'users.UserProfile'
 
 # django-storages settings
-DEFAULT_FILE_STORAGE = 'storages.backends.s3.S3Storage'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 AWS_ACCESS_KEY_ID = ''
 AWS_SECRET_ACCESS_KEY = ''
 AWS_STORAGE_BUCKET_NAME = ''
-from S3 import CallingFormat
-AWS_CALLING_FORMAT = CallingFormat.SUBDOMAIN
 
 
 # A sample logging configuration. The only tangible logging
