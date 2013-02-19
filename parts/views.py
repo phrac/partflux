@@ -140,8 +140,11 @@ def addbuylink(request, part_id):
 @login_required
 def addpart(request, part_number, company, desc):
     c, _created = Company.objects.get_or_create(name=company)
-    newpart = Part(number=part_number, company=c, user=request.user, description=desc, hits=0)
-    newpart.save()
+    if Part.objects.filter(number=part_number, company=c).exists():
+        newpart = Part.objects.get(number=part_number, company=c)
+    else: 
+        newpart = Part(number=part_number, company=c, user=request.user, description=desc, hits=0)
+        newpart.save()
     return newpart
 
 @login_required
