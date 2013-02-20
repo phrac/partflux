@@ -1229,6 +1229,9 @@ div.dataTables_wrapper .ui-widget-header {
 .nopadding .table-bordered {
 	border: 0;
 }
+.thumbnail-caption {
+    font-size:11px;
+}
 .thumbnails {
 	margin-left: -2.12766% !important;
 }

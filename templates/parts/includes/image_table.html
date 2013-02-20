@@ -7,7 +7,12 @@
             {% for image in part.images.all %}
             {% thumbnail image.image "160x120" crop="center" as im %}
             <li class="span2">
-            <a id="lightbox" class="thumbnail" href="{{ image.image.url }}"><img src="{{ im.url }}" alt="{{ part.number }} image" /></a>
+                <div class="thumbnail">
+                    <a id="lightbox" class="thumbnail" href="{{ image.image.url }}"><img src="{{ im.url }}" alt="{{ part.number }} image" /></a>
+                    <div class="thumbnail-caption">
+                        by: {{ image.user }}
+                    </div>
+                </div>
             </li>
             {% endthumbnail %}
             {% endfor %}
