@@ -1,10 +1,12 @@
+SITE_DIR = '/home/derek/pp/partengine'
+import site
+site.addsitedir(SITE_DIR)
 import os
 import sys
 
-sys.path.append('/home/derek')
-sys.path.append('/home/derek/partengine-preview')
+sys.path.append(SITE_DIR)
 
-os.environ['DJANGO_SETTINGS_MODULE'] = 'partengine-preview.settings'
+os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 
 import django.core.handlers.wsgi
 

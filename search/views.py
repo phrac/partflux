@@ -8,7 +8,6 @@ from django.contrib.auth.models import User
 from django.template.defaultfilters import truncatechars
 from django.conf import settings
 
-from pyes import *
 from parts.models import Part, Xref
 from companies.models import Company
 from search.forms import SearchForm

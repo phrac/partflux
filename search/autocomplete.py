@@ -2,7 +2,6 @@ from django.http import HttpResponse, HttpResponseNotFound
 from django.template.defaultfilters import truncatechars
 from django.conf import settings
 
-from pyes import *
 import json
 
 def autocomplete(request):
