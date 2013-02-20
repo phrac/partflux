@@ -8,7 +8,6 @@ from parts.models import Part, Attribute, PartImage
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
-    reputation = models.IntegerField(default=0)
     facebook_profile = models.URLField()
     twitter_profile = models.URLField()
     linkedin_profile = models.URLField()
