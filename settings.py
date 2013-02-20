@@ -48,6 +48,12 @@ REP_VALUE_NEW_ATTRIBUTE = 2
 REP_VALUE_NEW_COMMENT = 3
 # how many rep points should user get for new image
 REP_VALUE_NEW_IMAGE = 3
+# rep points for flagging an attribute (and the inverse if your attr is flagged)
+REP_VALUE_FLAG_ATTR = 1
+REP_VALUE_FLAGGED_ATTR = -1
+# rep points if flag a part (and the inverse if your part is flagged)
+REP_VALUE_FLAG_PART = 1
+REP_VALUE_FLAGGED_PART -1
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -178,6 +184,7 @@ INSTALLED_APPS = (
     'nsn',
     'partgroups',
     'users',
+    'reputation',
 )
 
 # django-registration settings

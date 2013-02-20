@@ -25,31 +25,7 @@ class UserProfile(models.Model):
         if self.reputation >= settings.MINIMUM_VOTE_REPUTATION:
             return True
         else:
-            return False
-
-    def increment_reputation(self, rep_points):
-        self.reputation += rep_points
-        self.save()
-        
-    def rep_signal(sender, instance, created, **kwargs):
-        if sender is Part:
-            inc = settings.REP_VALUE_NEW_PART
-        elif sender is Attribute:
-            inc = settings.REP_VALUE_NEW_ATTRIBUTE
-        elif sender is PartImage:
-            inc = settings.REP_VALUE_NEW_IMAGE
-        else:
-            pass
-        
-        if created:
-            profile = UserProfile.objects.get(user=instance.user)
-            profile.increment_reputation(inc)
-        else:
-            pass
-        
-    post_save.connect(rep_signal, sender=Part)
-    post_save.connect(rep_signal, sender=Attribute)
-    post_save.connect(rep_signal, sender=PartImage)        
+            return False        
 
 
 class UserFavoritePart(models.Model):
