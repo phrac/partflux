@@ -78,4 +78,22 @@ $(document).ready(function(){
 			$(element).parents('.control-group').addClass('success');
 		}
 	});
+
+        $("#image-form").validate({
+		rules:{
+			file:{
+				required: true,
+				accept: "png|jpe?g|gif"
+			}
+		},
+                errorClass: "help-inline",
+                errorElement: "div",
+		highlight:function(element, errorClass, validClass) {
+			$(element).parents('.control-group').addClass('error');
+		},
+		unhighlight: function(element, errorClass, validClass) {
+			$(element).parents('.control-group').removeClass('error');
+			$(element).parents('.control-group').addClass('success');
+		}
+	});
 });
