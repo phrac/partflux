@@ -2,7 +2,7 @@ from django.conf.urls.defaults import patterns, include, url
 from django.contrib.sitemaps import FlatPageSitemap, GenericSitemap
 from django.contrib import admin
 from tastypie.api import Api
-from partfindr.api import PartResource, AttributeResource, CompanyResource, UserResource
+from api import PartResource, AttributeResource, CompanyResource, UserResource
 
 from parts.feeds import LatestPartsFeed
 
