@@ -60,7 +60,7 @@ items: 5,
 
         <div id="search">
             <form method="get" action="{% url search.views.results %}">
-                    <input name="q" type="text" placeholder="Search here..." value="{{ searchterm }}" /><button type="submit" class="tip-right" title="Search"><i class="icon-search icon-white"></i></button>
+                    <input autocomplete="off" name="q" type="text" placeholder="Search here..." value="{{ searchterm }}" /><button type="submit" class="tip-right" title="Search"><i class="icon-search icon-white"></i></button>
             </form>
         </div>
         

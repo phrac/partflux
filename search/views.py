@@ -39,8 +39,8 @@ def results(request):
         nsn = re.findall(r'\[(.+?)\]', q)
 
         if q:
-            sqs = SearchQuerySet().facet('company').facet('attributes')
-            results = sqs.filter(content=AutoQuery(no_partial_q))
+            sqs = SearchQuerySet()
+            results = sqs.filter(content=AutoQuery(no_partial_q))[:100]
 
             # check for a partial part number search
             if partial:
@@ -81,7 +81,7 @@ def results(request):
                               { 
                                   'results_list': results_list, 
                                   'searchterm': q,
-                                  'facets': results.facet_counts(),
+                                 # 'facets': results.facet_counts(),
                               },
                               context_instance=RequestContext(request))
 
