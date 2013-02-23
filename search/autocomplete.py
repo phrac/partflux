@@ -8,7 +8,7 @@ import json
 
 def autocomplete(request):
     q = request.GET.get('q', '')
-    sqs = SearchQuerySet().filter(number__contains=q)[:25]
+    sqs = SearchQuerySet().autocomplete(q)[:25]
     print q
     print sqs
     #results = sqs.filter(number__startswith=q)[:5]

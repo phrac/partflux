@@ -4,7 +4,8 @@ from django.utils.encoding import smart_str
 
 class PartIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, use_template=True)
-    number = indexes.NgramField(model_attr='number', boost=3)
+    number = indexes.NgramField(model_attr='number', boost=3, indexed=True,
+                                index_fieldname='number', stored=True)
     company = indexes.CharField(model_attr='company', faceted=True)
     attributes = indexes.MultiValueField(faceted=True)  
     
