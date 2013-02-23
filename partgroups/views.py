@@ -53,17 +53,14 @@ def addgroupform(request):
                               {'partgroupform': partgroupform,},
                               context_instance=RequestContext(request))
 
+
 @login_required
 def update_description(request):
     if request.method == 'POST':
         desc = request.POST.get('description', '')
-        print desc
         pg_id = request.POST.get('partgroup_id', '')
-        print pg_id
         pg = get_object_or_404(PartGroup, pk=pg_id)
-        print '1'
         if request.user == pg.user:
-            print '2'
             pg.description = desc
             pg.save()
             if request.is_ajax():

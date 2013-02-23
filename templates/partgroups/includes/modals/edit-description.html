@@ -45,15 +45,13 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $('#partgroup-desc-form').submit(function() { // catch the form's submit event
+                var values = $(this).serialize();
                 $.ajax({ // create an AJAX call...
                     data: $(this).serialize(), // get the form data
                     type: $(this).attr('method'), // GET or POST
                     url: $(this).attr('action'), // the file to call
                     success: function(response) { // on success..
                         $('#edit-description-modal').modal('hide');
-                        $('#partgroup-desc-form').each(function() {
-                            this.reset();
-                        });
                         $('#partgroup-desc').hide().html(response).fadeIn("slow"); // update the DIV
                         $.gritter.add({
                             title:	'Description Updated',
