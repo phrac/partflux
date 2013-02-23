@@ -1,9 +1,10 @@
 from django import forms
+from django.forms import ModelForm
 from parts.models import Part
 
-class PartGroupForm(forms.Form):
+class PartGroupForm(ModelForm):
     name = forms.CharField(max_length=32)
-    description = forms.CharField(max_length=128, required=True)
+    description = forms.CharField(required=True, widget=forms.Textarea)
     private = forms.BooleanField(required=False)
 
 

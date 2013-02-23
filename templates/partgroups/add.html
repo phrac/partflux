@@ -1,47 +1,87 @@
 {% extends "base/base_MAIN.html" %}
 
-{% block breadcrumbs %}
-> <a href="/parts/">Parts</a> > Add new part
+{% load markdown_deux_tags %}
+
+{% block breadcrumb_links %}
+<a href="{% url partgroups.views.index %}" title="Parts" class="tip-bottom"><i class="icon-wrench"></i> Assemblies</a>
+<a href="#" class="current">Create an Assembly</a>
 {% endblock %}
 
+{% block right_buttons %}{% endblock %}
+
+{% block assemblies_active %}active open{% endblock %}
+
+{% block page_title %}Create New Part Group / Assembly{% endblock %}
+
 {% block content %}
-<div class="left">
-    <h2>Add a new Part Group</h2>
-    {% if user.is_authenticated %}
-    <form action="" method="post">
-        {% csrf_token %}
-        <dl class="add_part_form">
-            {{ partform.part.errors }}
-            <dt><label for="id_part">Part Number:</label></dt>
-            <dd>{{ partform.part }}</dd>
+<div class="row-fluid">
+    <div class="span6">
+        {% if user.is_authenticated %}
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon">
+                    <i class="icon-th"></i>
+                </span>
+                <h5>Add a new part</h5>
+            </div>
+            <div class="widget-content nopadding">
+                <form class="well form-horizontal" action="" method="post" autocomplete="off">
+                    {% csrf_token %}
+                    <div class="control-group">
+                        <label class="control-label" for="id_part">Name</label>
+                        <div class="controls">
+                            {{ partgroupform.name }}
+                            <p>A descriptive name for your assembly or group</p>
+                        </div>
+                    </div>
 
-            {{ partform.company.errors }}
-            <dt><label for="id_company">Company:</label></dt>
-            <dd>{{ partform.company }}</dd>
+                    <div class="control-group">
+                        <label class="control-label" for="id_company">Description</label>
+                        <div class="controls">
+                            {{ partgroupform.description }}
+                            <p>{% markdown_allowed %}</p>
+                        </div>
+                    </div>
 
-            {{ partform.desc.errors }}
-            <dt><label for="id_desc">Part Description:</label></dt>
-            <dd>{{ partform.desc }}</dd>
-        </dl>
+                    <div class="control-group">
+                        <label class="control-label" for="id_description">Private?</label>
+                        <div class="controls">
+                            {{ partgroupform.private }}
+                            <p>Allow other users to view this assembly/group?</p>
+                        </div>
+                    </div>
 
-        <input type="submit" value="Add new part" class="submit" name="metadata_button" />
-    </form>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-inverse">Add Part</button>
+                        <button type="submit" class="btn btn-default" onclick="this.form.reset()">Clear Form</button>
+                    </div>
+                </form>
+            </div>
+        </div>
 
-    {% else %}
-    <h4 class="signin">please <a href="/users/login/">sign in</a> or <a href="/users/register/">register</a> to add a cross reference.</h4>
-    {% endif %}
+        {% else %}
+        <h3 class="add">{% include "includes/sign_in.html" with action="add a new part." %}</h3>
+        {% endif %}
+    </div>
 
-</div>
 
-<div class="right">
-    <h3>Tips for adding parts</h3>
-    <div class="right_articles">
-        <ul class="bullets">
-            <li>Make sure your part number is complete and accurate</li>
-            <li>Make sure the company name is correct</li>
-            <li>Enter a great description so others are able to easily find your part</li>
-            <li>After adding a new part, enter any information about the part that may help others identify it correctly</li>
-        </ul>
+    <div class="well span6">
+        <h2>Tips for adding parts <br /><small>Make it easy for users to find the information they need.</h2>
+            <div>
+                <dl class="dl-horizontal">
+                    <dt>Part #:</dt>
+                    <dd>Make sure the new part has the correct part number, including any spaces,
+                    dashes, periods, etc.</dd>
+                    <dt>Company:</dt>
+                    <dd>Double check the manufacturer of the part and ensure that it is complete and spelled correctly.</dd>
+                    <dt>Description:</dt>
+                    <dd>Provide as much detail as possible so that users can easily find your part in search results.</dd>
+                    <dt>Attributes:</dt>
+                    <dd>After creating a part number, be sure to enter key information such as
+                    <strong>weight</strong>, <strong>finish</strong>, <strong>color</strong>, etc.</dd>
+                </dl>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
