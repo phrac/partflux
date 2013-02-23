@@ -75,6 +75,9 @@ class Attribute(models.Model):
     class Meta:
         unique_together = ('part', 'key', 'value')
         ordering = ('value',)
+        
+    def get_attr_string(self):
+        return u"%s: %s" % (self.key, self.value)
 
     def save(self, *args, **kwargs):
         self.key = self.key.strip().upper()
