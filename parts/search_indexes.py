@@ -12,8 +12,7 @@ class PartIndex(indexes.SearchIndex, indexes.Indexable):
         return Part
 
     def prepare_attributes(self, obj):
-        attr = [str("%s: %s" % (a.key, a.value)) for a in obj.attribute_set.all()]
-	return smart_str(attr)
+        return ["%s: %s" % (smart_str(a.key), smart_str(a.value)) for a in obj.attribute_set.all()]
 
     def get_updated_field(self):
         return 'updated_at'
