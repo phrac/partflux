@@ -91,7 +91,7 @@ MEDIA_URL = '/media/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = '/home/derek/web/previewstatic/static/'
+STATIC_ROOT = '/home/derek/web/partengine/static/'
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -127,8 +127,6 @@ TEMPLATE_LOADERS = (
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
-    "partfindr.context_processors.get_current_path",
-    "partfindr.context_processors.get_current_domain",
     "django.core.context_processors.request",
     "django.contrib.auth.context_processors.auth",
     "django.core.context_processors.debug",
@@ -152,8 +150,8 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-	"/usr/home/derek/pp/partengine/templates",
-    #os.path.join(DIRNAME, 'templates')
+#	"/usr/home/derek/pp/partengine/templates",
+    os.path.join(DIRNAME, 'templates')
 )
 
 INSTALLED_APPS = (

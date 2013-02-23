@@ -13,6 +13,7 @@
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <script src="{{ STATIC_URL }}js/jquery.ui.custom.js"></script>
+        <script src="{{ STATIC_URL }}js/bootstrap-typeahead.js"></script>
         <script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
         <script src="{{ STATIC_URL }}js/jquery.gritter.min.js"></script>
         <script src="{{ STATIC_URL }}js/jquery.peity.min.js"></script>
@@ -32,16 +33,20 @@
              var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
              })();
         </script>
-        <!-- Google Custom Search -->
-        <script>
-            (function() {
-                var cx = 'partner-pub-3185089159153756:8723235659';
-                var gcse = document.createElement('script'); gcse.type = 'text/javascript'; gcse.async = true;
-                gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
-                    '//www.google.com/cse/cse.js?cx=' + cx;
-                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(gcse, s);
-            })();
+        
+        <!-- search typeahead -->
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $("#search input[type=text]").typeahead({
+                    source: function (query, process) {
+                        $.get('/search/autocomplete', { q: query }, function (data) {
+                            process(data)
+                        })
+                    }
+                })
+            });
         </script>
+          
     </head>
     <body>
 
@@ -52,13 +57,9 @@
         </div>
 
         <div id="search">
-            <form action="/search/" id="cref_iframe">
-                <input name="cx" value="partner-pub-3185089159153756:8723235659" type="hidden">
-                <input name="cof" value="FORID:11" type="hidden">
-                <input name="ie" value="ISO-8859-1" type="hidden">
-                <input name="q" type="text" placeholder="Search here..."/><button type="submit" class="tip-right" title="Search"><i class="icon-search icon-white"></i></button>
+            <form method="get" action="/search/">
+                    <input type="text" placeholder="Search here..." value="{{ searchterm }}" /><button type="submit" class="tip-right" title="Search"><i class="icon-search icon-white"></i></button>
             </form>
-            <script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=cref_iframe1"></script>
         </div>
         
         <div id="user-nav" class="navbar navbar-inverse">

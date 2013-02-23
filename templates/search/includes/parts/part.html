@@ -1,12 +1,12 @@
 <tr>
     <td><p style="font-weight:bold; font-size:.7em">PART</p></td>
     <td>
-        <a href="{{ result.get_absolute_url }}">{{ result.number }}</a>
+        <a href="{{ result.object.get_absolute_url }}">{{ result.object.number }}</a>
     </td>
     <td>
-        {{ result.description|truncatewords:10 }}
+        {{ result.object.description|truncatewords:10 }}
     </td>
     <td>
-        <a href="{{ result.company.get_absolute_url }}">{{ result.company.name }}</a>
+        <a href="{{ result.object.company.get_absolute_url }}">{{ result.object.company.name }}</a>
     </td>
 </tr>
