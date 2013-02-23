@@ -13,6 +13,7 @@
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <script src="{{ STATIC_URL }}js/jquery.ui.custom.js"></script>
+        <script src="{{ STATIC_URL }}js/bootstrap-typeahead.js"></script>
         <script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
         <script src="{{ STATIC_URL }}js/jquery.gritter.min.js"></script>
         <script src="{{ STATIC_URL }}js/jquery.peity.min.js"></script>
@@ -32,6 +33,20 @@
              var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
              })();
         </script>
+        
+        <!-- search typeahead -->
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $("#search input[type=text]").typeahead({
+                    source: function (query, process) {
+                        $.get('/search/autocomplete', { q: query }, function (data) {
+                            process(data)
+                        })
+                    }
+                })
+            });
+        </script>
+          
     </head>
     <body>
 
@@ -43,7 +58,7 @@
 
         <div id="search">
             <form method="get" action="/search/">
-                    <input name="q" type="text" placeholder="Search here..." value="{{ searchterm }}" /><button type="submit" class="tip-right" title="Search"><i class="icon-search icon-white"></i></button>
+                    <input type="text" placeholder="Search here..." value="{{ searchterm }}" /><button type="submit" class="tip-right" title="Search"><i class="icon-search icon-white"></i></button>
             </form>
         </div>
         

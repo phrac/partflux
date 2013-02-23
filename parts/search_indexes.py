@@ -1,5 +1,6 @@
 from haystack import indexes
 from parts.models import Part, Attribute
+from django.utils.encoding import smart_str
 
 class PartIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, use_template=True)
@@ -11,7 +12,8 @@ class PartIndex(indexes.SearchIndex, indexes.Indexable):
         return Part
 
     def prepare_attributes(self, obj):
-        return [str("%s: %s" % (a.key, a.value)) for a in obj.attribute_set.all()]
+        attr = [str("%s: %s" % (a.key, a.value)) for a in obj.attribute_set.all()]
+	return smart_str(attr)
 
     def get_updated_field(self):
         return 'updated_at'
