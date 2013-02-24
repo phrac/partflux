@@ -7,7 +7,7 @@
     <div class="modal-body">
         <p>Attributes are pieces of information that describe a part in greater detail.</p>
 
-        <form id="attribute-form" class="form-horizontal" autocomplete="off" method="post">
+        <form data-div-update="#attribute-table" data-gritter-title-success="Attribute Added" data-gritter-msg-success="Thanks for contributing! Your reputation has been incremented" data-gritter-error-title="Something went wrong" id="attribute-form" class="modal-form form-horizontal" autocomplete="off" method="post">
 
             {% csrf_token %}
 
@@ -35,17 +35,11 @@
         </div>
         <div class="modal-footer">
             <input type="hidden" name="metadata_button" value="1" />
-            <button id="save-attribute" data-loading-text="Saving..." class="btn btn-inverse">Save Attribute</button>
+            <button id="save-attribute" data-loading-text="Saving..." class="modal-form-submit btn btn-inverse">Save Attribute</button>
             <button id="cancel-attribute" class="btn" data-dismiss="modal">Cancel</button>
         </form>
     </div>
 
-    <script type="text/javascript">
-        $('#save-attribute').click(function() {
-            $('#save-attribute').button('loading');
-        });
-    </script>
-    
     <script type="text/javascript">
         $('#cancel-attribute').click(function() {    
             $('#attribute-form').each(function() {this.reset();});
@@ -60,32 +54,7 @@
         });
     </script>
 
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#attribute-form').submit(function() { // catch the form's submit event
-                $.ajax({ // create an AJAX call...
-                    data: $(this).serialize(), // get the form data
-                    type: $(this).attr('method'), // GET or POST
-                    url: $(this).attr('action'), // the file to call
-                    success: function(response) { // on success..
-                        $('#attribute-modal').modal('hide');
-                        $('#attribute-form').each(function() {
-                            this.reset();
-                        });
-                        $('#attribute-table').hide().html(response).fadeIn("slow"); // update the DIV
-                        $.gritter.add({
-                            title:	'Attribute Added',
-                            text:	'Thanks for contributing to Part Engine!',
-                            sticky: false
-                        });
-                        $('#save-attribute').button('reset');
-                        $.getScript('{{STATIC_URL}}js/unicorn.tables.js');
-                    }
-                });
-                return false;
-            });
-        });
-    </script>
+    
     
     {% else %}
     {% include 'includes/login_modal.html' %}

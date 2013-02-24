@@ -9,7 +9,7 @@
         <p>Feel free to add any notes you want about this part before adding it to your favorites. You can always add or change notes
         later in your parts dashboard.</p>
 
-        <form name="add_favorite-form" id="add_favorite-form" class="form-horizontal" autocomplete="off" method="post" action="{% url parts.ajax.add_favorite %}">
+        <form data-div-update="#mynotes-table" data-gritter-title-success="Saved to your parts dashboard" data-gritter-msg-success="You can view your saved parts in your parts dashboard" data-gritter-error-title="Something went wrong" name="add_favorite-form" id="add_favorite-form" class="modal-form form-horizontal" autocomplete="off" method="post" action="{% url parts.ajax.add_favorite %}">
 
             {% csrf_token %}
 
@@ -24,16 +24,10 @@
         </div>
         <div class="modal-footer">
             <input type="hidden" id="part-id" name="part_pk" value="{{ part.pk }}" />
-            <button id="save-mypart" data-loading-text="Saving..." class="btn btn-inverse"><i class="icon-white icon-star"></i> Add to my parts</button>
+            <button id="save-mypart" data-loading-text="Saving..." class="modal-form-submit btn btn-inverse"><i class="icon-white icon-star"></i> Add to my parts</button>
             <button class="btn" data-dismiss="modal">Cancel</button>
         </form>
     </div>
-
-    <script type="text/javascript">
-        $('#save-mypart').click(function() {
-            $('#save-mypart').button('loading');
-        });
-    </script>
 
     <script type="text/javascript">
         $('#add_favorite-modal').on('shown', function () {
@@ -41,34 +35,7 @@
         });
     </script>
 
-    <script type="text/javascript">
-        $(document).ready(function() {
-                $('#add_favorite-form').submit(function() { // catch the form's submit event
-
-                $.ajax({ // create an AJAX call...
-                    data: $(this).serialize(), // get the form data
-                    type: $(this).attr('method'), // GET or POST
-                    url: $(this).attr('action'), // the file to call
-                    success: function(response) { // on success..
-                        $('#add_favorite-modal').modal('hide');
-                        $('#add_favorite-form').each(function() {
-                            this.reset();
-                        });
-                        $('#mynotes-table').hide().html(response).fadeIn("slow"); // update the DIV
-                        $.gritter.add({
-                            title:	'Saved to your parts dashboard',
-                            text:	'You can view your saved parts in your parts dashboard',
-                            sticky: false
-                            });
-                        $('#save-mypart').button('reset');
-                    }
-                });
-                return false;
-            });
-        });
-    </script>
-
-    {% else %}
-    {% include 'includes/login_modal.html' %}
-    {% endif %}
+{% else %}
+{% include 'includes/login_modal.html' %}
+{% endif %}
 </div>
