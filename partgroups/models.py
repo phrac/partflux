@@ -13,7 +13,6 @@ class PartGroup(models.Model):
     user = models.ForeignKey(User)
     private = models.NullBooleanField(default=False, null=True)
     parent_group = models.ForeignKey('PartGroup', null=True)
-    parts = models.ManyToManyField('PartGroupItem')
     
     class Meta:
         unique_together = ('name', 'user',)
@@ -32,7 +31,11 @@ class PartGroup(models.Model):
 
 class PartGroupItem(models.Model):
     part = models.ForeignKey(Part)
+    partgroup = models.ForeignKey(PartGroup)
     quantity = models.IntegerField(default=1)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     required = models.BooleanField(default=True)
+
+    class Meta:
+        unique_together = ('part', 'partgroup')

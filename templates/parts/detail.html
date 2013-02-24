@@ -50,11 +50,6 @@
                            params: {csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value},
                            });
         {% endif %}
-        $("#add-part-to-assembly").modal({show: false});
-        $("#add-part-to-assembly-button").click(function(){
-            $("#add-part-to-assembly").modal("show");
-            $("#asm-select").select2();
-        });
     });
 </script>
 <script type="text/javascript">
@@ -116,7 +111,7 @@
                 <a class="btn btn-mini tip-top" title="Add To My Parts" href="#add_favorite-modal" data-toggle="modal"><i class="icon icon-star"></i></a>
                 {% endif %}
 
-                <a class="btn btn-mini tip-top" title="Add part to assembly" id="add-part-to-assembly-button" ><i class="icon-wrench"></i></a>
+                <a class="btn btn-mini tip-top" title="Add Part to Assembly" href="#add-part-to-assembly" data-toggle="modal" id="add-part-to-assembly-button" ><i class="icon-wrench"></i></a>
                 <a class="btn btn-mini tip-top" title="Add To RFQ List"><i class="icon icon-shopping-cart"></i></a>
                 <a class="btn btn-mini tip-top" title="Flag Part" href="#flag-modal" data-toggle="modal"><i class="icon icon-flag"></i></a>
                 <a class="btn btn-mini tip-top" title="Print this part" href="#"><i class="icon-print"></i></a>

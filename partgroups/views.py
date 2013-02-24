@@ -6,9 +6,9 @@ from django.db.models import Q
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.http import Http404
+from django.http import Http404, HttpResponseBadRequest
 from django.forms import ModelForm
-
+from django.db import IntegrityError
 
 from parts.models import Part, Xref
 from partgroups.models import PartGroup, PartGroupItem
@@ -61,9 +61,12 @@ def add_to_asm(request):
         part_id = request.POST.get('part_id', '')
         asm = get_object_or_404(PartGroup, pk=asm_id)
         part = get_object_or_404(Part, pk=part_id)
-        item = PartGroupItem(part=part, quantity=1, required=True)
-        item.save()
-        asm.parts.add(item)
+        item = PartGroupItem(part=part, partgroup=asm, quantity=1, required=True)
+        try:
+            item.save()
+        except IntegrityError:
+            return HttpResponseBadRequest("Duplicate Part in Assembly")
+
         if request.is_ajax():
             return HttpResponse()
         else:
