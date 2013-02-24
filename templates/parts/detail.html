@@ -28,7 +28,7 @@
 <link rel="stylesheet" href="{{ STATIC_URL }}css/uniform.css" type="text/css" media="screen" />
 <script src="{{ STATIC_URL }}js/jquery.uniform.js"></script>
 <link href="{{ STATIC_URL }}css/select2.css" rel="stylesheet" />
-<script src="{{ STATIC_URL }}js/select2.min.js"></script>
+<script src="http://ivaynberg.github.com/select2/select2-master/select2.js"></script>
 <script src="{{ STATIC_URL }}js/jquery.validate.js"></script>
 <script src="{{ STATIC_URL }}js/unicorn.form_validation.js"></script>
 <link rel="stylesheet" href="{{ STATIC_URL }}js/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
@@ -53,7 +53,7 @@
         $("#add-part-to-assembly").modal({show: false});
         $("#add-part-to-assembly-button").click(function(){
             $("#add-part-to-assembly").modal("show");
-            //$("#asm-select").select2();
+            $("#asm-select").select2();
         });
     });
 </script>

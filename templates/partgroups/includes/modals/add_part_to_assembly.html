@@ -1,19 +1,22 @@
 {% load markdown_deux_tags %}
-<div class="modal hide" id="add-part-to-assembly">
+<div data-backdrop="static" class="modal hide" id="add-part-to-assembly">
     {% if user.is_authenticated %}
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
         <h3>Update Assembly Description</h3>
     </div>
-    <div style="height:100px; " class="modal-body">
+    <div class="modal-body" style="height:100px">
+        <p>Select the assembly you would like to add this part to.</p>
 
         <form id="partgroup-desc-form" class="form-horizontal" autocomplete="off" method="post" action="{% url partgroups.views.add_to_asm %}">
 
             {% csrf_token %}
-            <select id="asm-select" name="asm_id">
+            <select id="asm-select" name="asm_id" class="span4">
+                <optgroup label="My Assemblies">
                 {% for a in user_assemblies %}
                 <option value="{{ a.pk }}">{{ a.name }}</option>
                 {% endfor %}
+            </optgroup>
             </select>
         </div>
         <div class="modal-footer">
