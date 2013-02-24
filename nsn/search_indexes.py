@@ -6,3 +6,6 @@ class NsnIndex(indexes.SearchIndex, indexes.Indexable):
 
     def get_model(self):
         return Nsn
+
+    def get_updated_field(self):
+        return 'updated_at'
