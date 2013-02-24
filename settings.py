@@ -175,6 +175,7 @@ INSTALLED_APPS = (
     'tastypie',
     'markdown_deux',
     'haystack',
+    'storages',
     # partfindr apps    
     'main',
     'parts',
@@ -198,10 +199,6 @@ AUTH_PROFILE_MODULE = 'users.UserProfile'
 
 # django-storages settings
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-AWS_ACCESS_KEY_ID = ''
-AWS_SECRET_ACCESS_KEY = ''
-AWS_STORAGE_BUCKET_NAME = ''
-
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
