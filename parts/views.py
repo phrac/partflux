@@ -12,6 +12,7 @@ from django.core.files.storage import default_storage
 
 from parts.models import Part, Xref, PartImage, BuyLink, Attribute
 from companies.models import Company
+from partgroups.models import PartGroup
 from parts.forms import MetadataForm, XrefForm, ImageUploadForm, BuyLinkForm
 from users.models import UserProfile, UserFavoritePart
 import json
@@ -39,6 +40,11 @@ def detail(request, part_id, company_slug, part_slug):
     else:
         is_user_favorite = False
         fave = None
+    
+    if request.user.is_authenticated():
+        user_asm = PartGroup.objects.filter(user=request.user)
+    else:
+        user_asm = None
     
     xrefs = Xref.objects.filter(part=p.id).exclude(xrefpart=p.id)
     reverse_xrefs = Xref.objects.filter(xrefpart=p.id).exclude(part=p.id)
@@ -104,6 +110,7 @@ def detail(request, part_id, company_slug, part_slug):
                                'buylinkform' : buylinkform,
                                'is_user_favorite' : is_user_favorite,
                                'fave': fave,
+                               'user_assemblies': user_asm,
                               },
                               context_instance=RequestContext(request))
 

@@ -32,6 +32,7 @@ class PartGroup(models.Model):
 
 class PartGroupItem(models.Model):
     part = models.ForeignKey(Part)
+    quantity = models.IntegerField(default=1)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     required = models.BooleanField(default=True)

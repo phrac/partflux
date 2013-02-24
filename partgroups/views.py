@@ -1,6 +1,6 @@
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
 from django.db.models import Q
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
@@ -11,7 +11,7 @@ from django.forms import ModelForm
 
 
 from parts.models import Part, Xref
-from partgroups.models import PartGroup
+from partgroups.models import PartGroup, PartGroupItem
 from companies.models import Company
 from partgroups.forms import PartGroupForm
 
@@ -53,6 +53,24 @@ def addgroupform(request):
                               {'partgroupform': partgroupform,},
                               context_instance=RequestContext(request))
 
+
+@login_required
+def add_to_asm(request):
+    if request.method == 'POST':
+        asm_id = request.POST.get('asm_id', '')
+        part_id = request.POST.get('part_id', '')
+        asm = get_object_or_404(PartGroup, pk=asm_id)
+        part = get_object_or_404(Part, pk=part_id)
+        item = PartGroupItem(part=part, quantity=1, required=True)
+        item.save()
+        asm.parts.add(item)
+        if request.is_ajax():
+            return HttpResponse()
+        else:
+            return HttpResponseRedirect(asm.get_absolute_url())
+    else:
+        raise Http404
+       
 
 @login_required
 def update_description(request):

@@ -1,0 +1,58 @@
+{% load markdown_deux_tags %}
+<div class="modal hide" id="add-part-to-assembly">
+    {% if user.is_authenticated %}
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+        <h3>Update Assembly Description</h3>
+    </div>
+    <div style="height:100px; " class="modal-body">
+
+        <form id="partgroup-desc-form" class="form-horizontal" autocomplete="off" method="post" action="{% url partgroups.views.add_to_asm %}">
+
+            {% csrf_token %}
+            <select id="asm-select" name="asm_id">
+                {% for a in user_assemblies %}
+                <option value="{{ a.pk }}">{{ a.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="modal-footer">
+            <input type="hidden" name="part_id" value="{{ part.pk }}" />
+            <button id="save-asm-part" data-loading-text="Saving..." class="btn btn-inverse">Save Assembly</button>
+            <button id="cancel-desc" class="btn" data-dismiss="modal">Cancel</button>
+        </form>
+    </div>
+
+    <script type="text/javascript">
+        $('#save-asm-part').click(function() {
+            $('#save-asm-part').button('loading');
+        });
+    </script>
+    
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#partgroup-desc-form').submit(function() { // catch the form's submit event
+                var values = $(this).serialize();
+                $.ajax({ // create an AJAX call...
+                    data: $(this).serialize(), // get the form data
+                    type: $(this).attr('method'), // GET or POST
+                    url: $(this).attr('action'), // the file to call
+                    success: function(response) { // on success..
+                        $('#add-part-to-assembly').modal('hide');
+                        $.gritter.add({
+                            title:	'Part Added To Assembly',
+                            text:	'You can view the assembly in the My Assemblies Tab',
+                            sticky: false
+                        });
+                        $('#save-asm-part').button('reset');
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
+    
+    {% else %}
+    {% include 'includes/login_modal.html' %}
+    {% endif %}
+</div>
