@@ -89,15 +89,9 @@ def detail(request, part_id, company_slug, part_slug):
     if 'image_button' in request.POST:
         imageuploadform = ImageUploadForm(request.POST, request.FILES)
         if imageuploadform.is_valid:
-            status = uploadimage(request, p.pk)
-            print 'got call'
+            status = uploadimage(request, p.pk, imageuploadform)
 
-            if request.is_ajax():
-                return render_to_response('parts/includes/image_table.html',
-                                          {'part': p,},
-                                          context_instance=RequestContext(request))
-            else:
-                return HttpResponseRedirect(reverse('parts.views.detail',
+            return HttpResponseRedirect(reverse('parts.views.detail',
                                                     args=[part_id, c.slug, p.slug]))
             
     return render_to_response('parts/detail.html', 
@@ -203,21 +197,32 @@ def addxref(request, part_id):
             return 'Cross Reference already exists'
             
 @login_required
-def uploadimage(request, part_id):
-    p = get_object_or_404(Part, pk=part_id)
-    if request.FILES.get('file', None):
-        f = request.FILES['file']
+def uploadimage(request, part_id, form):
+    import hashlib
+    from django.core.files.base import ContentFile
     
-        """Handle the file upload"""
-        new_filename = "%s_%s" % (str(part_id), f.name)
-        print new_filename
-        image = PartImage()
-        image.user = request.user
-        image.image.save(new_filename, f)
-        image.save()
-        p.images.add(image)
-        p.save()
-        return True
+    p = get_object_or_404(Part, pk=part_id)
+    if form.is_valid():
+        if request.FILES.get('file', None):
+            f = request.FILES['file']
+            
+            """ hash the image so we can keep them unique """
+            content = ContentFile(f.read()).read()
+            h = hashlib.sha512()
+            h.update(content)
+            
+            """Handle the file upload"""
+            new_filename = "%s_%s" % (str(part_id), f.name)
+            image = PartImage()
+            image.user = request.user
+            image.hash = h.hexdigest()
+            try:
+                image.image.save(new_filename, f)
+                image.save()
+                p.images.add(image)
+                p.save()
+            except IntegrityError:
+                return False
 
             
     

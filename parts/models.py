@@ -118,6 +118,7 @@ class Xref(models.Model):
 class PartImage(models.Model):
     image = ImageField(upload_to='part_images')
     user = models.ForeignKey(User, null=False)
+    hash = models.CharField(max_length=1000, unique=True)
     approved = models.BooleanField(default=True)
     album_cover = models.BooleanField(default=False)
 

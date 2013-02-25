@@ -45,7 +45,11 @@ def addgroupform(request):
             private = partgroupform.cleaned_data['private']
             partgroup = PartGroup(name=name, description=desc, private=private,
                                   user=request.user)
-            partgroup.save()
+            try:
+                partgroup.save()
+            except IntegrityError:
+                return HttpResponseBadRequest("Error creating new assembly")
+                
             return HttpResponseRedirect(partgroup.get_absolute_url())
     else:
         partgroupform = PartGroupForm()
