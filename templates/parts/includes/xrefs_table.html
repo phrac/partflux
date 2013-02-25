@@ -1,24 +1,24 @@
 <table id="xrefs-table" class="table table-bordered data-table">
-                    <thead>
-                        <tr>
-                            <th>Part #</th>
-                            <th>Description</th>
-                            <th>Company</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for xref in xrefs %}
-                        <tr>
-                            <td>
-                                <a href="{{ xref.xrefpart.get_absolute_url }}">{{ xref.xrefpart.number }}</a>
-                            </td>
-                            <td>
-                                {{ xref.xrefpart.description }}
-                            </td>
-                            <td>
-                                <a href="{{ xref.xrefpart.company.get_absolute_url }}">{{ xref.xrefpart.company }}</a>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+    <thead>
+        <tr>
+            <th>Part #</th>
+            <th>Description</th>
+            <th>Company</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for x in part.get_all_xrefs %}
+        <tr>
+            {% if x.part.number == part.number %}
+            <td><a href="{{ x.xrefpart.get_absolute_url }}">{{ x.xrefpart.number }}</a></td>
+            <td>{{ x.xrefpart.description }}</td>
+            <td><a href="{{ x.xrefpart.company.get_absolute_url }}">{{ x.xrefpart.company.name }}</a></td>
+            {% else %}
+            <td><a href="{{ x.part.get_absolute_url }}">{{ x.part.number }}</a></td>
+            <td>{{ x.part.description }}</td>
+            <td><a href="{{ x.part.company.get_absolute_url }}">{{ x.part.company.name }}</a></td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

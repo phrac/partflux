@@ -184,7 +184,7 @@
                     <a class="btn btn-inverse btn-mini tip-left" title="New Cross Reference" href="#add-xref" data-toggle="modal"><i class="icon-plus-sign icon-white"></i></a>
                 </div>
             </div>
-            {% if xrefs %}
+            {% if part.get_all_xrefs %}
             <div class="widget-content nopadding">
                 {% include 'parts/includes/xrefs_table.html' %}
             </div>
@@ -194,53 +194,13 @@
             </div>
             {% endif %}
         </div>
-        <div class="widget-box">
-            <div class="widget-title">
-                <span class="icon">
-                    <i class="icon-random"></i>
-                </span>
-                <h5>Reverse Cross References (parts that cross reference this part)</h5>
-            </div>
-            {% if reverse_xrefs %}
-            <div class="widget-content nopadding">
-                <table class="table table-bordered data-table">
-                    <thead>
-                        <tr>
-                            <th>Part #</th>
-                            <th>Description</th>
-                            <th>Company</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for rxref in reverse_xrefs %}
-                        <tr>
-                            <td>
-                                <a href="{{ rxref.part.get_absolute_url }}">{{ rxref.part.number }}</a>
-                            </td>
-                            <td>
-                                {{ rxref.part.description }}
-                            </td>
-                            <td>
-                                <a href="{{ rxref.part.company.get_absolute_url }}">{{ rxref.part.company }}</a>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-            {% else %}
-            <div class="widget-content">
-                <div class="alert alert-error">No reverse cross references.</div>
-            </div>
-            {% endif %}
-        </div>
 
         <div class="widget-box">
             <div class="widget-title">
                 <span class="icon">
                     <i class="icon-shopping-cart"></i>
                 </span>
-                <h5>Purchasing Information</h5>
+                <h5>Online Purchasing Information</h5>
                 <div class="buttons">
                     <a class="btn btn-inverse btn-mini tip-left" title="New Purchase Link" href="#buylink-modal" data-toggle="modal"><i class="icon-plus-sign icon-white"></i></a>
                 </div>
