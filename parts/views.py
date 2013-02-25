@@ -213,9 +213,7 @@ def uploadimage(request, part_id, form):
             
             """Handle the file upload"""
             new_filename = "%s_%s" % (str(part_id), f.name)
-            image = PartImage()
-            image.user = request.user
-            image.hash = h.hexdigest()
+            image = PartImage(user=request.user, hash=h.hexdigest())
             try:
                 image.image.save(new_filename, f)
                 image.save()
