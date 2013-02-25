@@ -21,6 +21,7 @@
         <script src="{{ STATIC_URL }}js/unicorn.interface.js"></script>
         {% block head %}
         {% endblock %}
+        
         <!-- analytics asynchrous -->
         <script type="text/javascript">
             var _gaq = _gaq || [];
@@ -38,8 +39,7 @@
         <script type="text/javascript">
             $(document).ready(function() {
                 $("#search input[type=text]").typeahead({
-//source: ['Dashboard','Form elements','Common Elements','Validation','Wizard','Buttons','Icons','Interface elements','Support','Calendar','Gallery','Reports','Charts','Graphs','Widgets'],
-items: 5,
+                    items: 5,
                     source: function (query, process) {
                         $.get('/search/autocomplete', { q: query }, function (data) {
                             process(data)
@@ -157,7 +157,7 @@ items: 5,
 
                 <div class="row-fluid">
                     <div id="footer" class="span12" style="margin-top:65px;">
-                        &copy; {% now "Y" %} Part Engine 
+                        &copy; 2012 - {% now "Y" %} Part Engine 
                             | <a href="/faq/">FAQ</a>
                             | <a href="/search/">Advanced Search</a>
                             | <a href="/privacy/">Privacy Policy</a>
