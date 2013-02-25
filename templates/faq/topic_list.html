@@ -11,7 +11,6 @@ Frequently Asked Questions | Part Engine
 {% block breadcrumb_links %}
 <a href="#">Help</a>
 <a href="#" class="current">Frequently Asked Questions</a>
-</li>
 {% endblock %}
 
 {% block content %}
@@ -28,7 +27,7 @@ Frequently Asked Questions | Part Engine
             {% for topic in topics %}
             <h2>{{ topic }}</h2>
             {% for q in topic.questions.all %}
-            <h3><a name="{{ q.slug }}">{{ q.text }}</a></h3>
+            <h3><a id="{{ q.slug }}">{{ q.text }}</a></h3>
             <p class="justify">{{ q.answer|safe }}</p>
             {% endfor %}
             {% endfor %}
@@ -48,7 +47,6 @@ Frequently Asked Questions | Part Engine
                 {% endfor %}
             </div>
         </div>
-    </div>
     </div>
 
 {% endblock %}

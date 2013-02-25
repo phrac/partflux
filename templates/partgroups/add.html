@@ -15,7 +15,7 @@
 
 {% block content %}
 <div class="row-fluid">
-    <div class="span6">
+    <div class="span7">
         {% if user.is_authenticated %}
         <div class="widget-box">
             <div class="widget-title">
@@ -65,20 +65,16 @@
     </div>
 
 
-    <div class="well span6">
-        <h2>Tips for adding parts <br /><small>Make it easy for users to find the information they need.</h2>
+    <div class="well span5">
+        <h2>Tips for adding assemblies</h2>
+        <p><strong>Make it easy for users to find the information they need.</strong></p>
             <div>
                 <dl class="dl-horizontal">
-                    <dt>Part #:</dt>
-                    <dd>Make sure the new part has the correct part number, including any spaces,
-                    dashes, periods, etc.</dd>
-                    <dt>Company:</dt>
-                    <dd>Double check the manufacturer of the part and ensure that it is complete and spelled correctly.</dd>
+                    <dt>Name:</dt>
+                    <dd>Make your name short yet descriptive.</dd>
                     <dt>Description:</dt>
-                    <dd>Provide as much detail as possible so that users can easily find your part in search results.</dd>
-                    <dt>Attributes:</dt>
-                    <dd>After creating a part number, be sure to enter key information such as
-                    <strong>weight</strong>, <strong>finish</strong>, <strong>color</strong>, etc.</dd>
+                    <dd>Fully describe your assembly. What it does, why you made it, etc. <strong>Markdown is allowed so take advantage!</strong></dd>
+                    
                 </dl>
             </div>
         </div>
