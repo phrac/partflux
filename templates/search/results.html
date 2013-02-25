@@ -5,6 +5,10 @@
 <a href="#">"{{ searchterm }}"</a>
 {% endblock %}
 
+{% block page_title %}
+Search Results
+{% endblock %}
+
 {% block content %}
 <div class="row-fluid">
     <div class="span12">
@@ -35,8 +39,10 @@
                 <div class="pagination">
                     {{ results_list.render }}
                 </div>
-                {% include "includes/add_part_to_db.html" %}
             </div>
+        </div>
+        <div class="widget-box well">
+            {% include "includes/add_part_to_db.html" %}
         </div>
     </div>
 
