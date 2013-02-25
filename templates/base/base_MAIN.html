@@ -45,7 +45,16 @@
                             process(data)
                         })
                     }
-                })
+                    })
+                {% if messages %}
+                {% for message in messages %}
+                $.gritter.add({
+                    title: 'Status Message',
+                    text: '{{ message }}',
+                    sticky: false
+                    });
+                {% endfor %}
+                {% endif %}
             });
         </script>
           

@@ -5,6 +5,7 @@ from django.template import RequestContext
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
+from django.contrib import messages
 from pure_pagination import Paginator, PageNotAnInteger, EmptyPage
 
 from django.contrib.auth.models import User
@@ -90,6 +91,11 @@ def detail(request, part_id, company_slug, part_slug):
         imageuploadform = ImageUploadForm(request.POST, request.FILES)
         if imageuploadform.is_valid:
             status = uploadimage(request, p.pk, imageuploadform)
+
+            if status is True:
+                messages.success(request, 'Image upload successful. Thanks for contributing!')
+            else:
+                messages.error(request, 'Image upload failed. Most likely it was not an image file or it was a duplicate.')
 
             return HttpResponseRedirect(reverse('parts.views.detail',
                                                     args=[part_id, c.slug, p.slug]))
@@ -213,12 +219,14 @@ def uploadimage(request, part_id, form):
             
             """Handle the file upload"""
             new_filename = "%s_%s" % (str(part_id), f.name)
+            f.seek(0)
             image = PartImage(user=request.user, hash=h.hexdigest())
             try:
                 image.image.save(new_filename, f)
                 image.save()
                 p.images.add(image)
                 p.save()
+                return True
             except IntegrityError:
                 return False
 
