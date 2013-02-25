@@ -6,6 +6,7 @@ $(document).ready(function() {
         var successMsg = $(this).attr('data-gritter-msg-success');
         var errorTitle = $(this).attr('data-gritter-title-error');
         var divUpdate = $(this).attr('data-div-update');
+        var formReset = $(this).attr('data-form-reset');
 
         $.ajax({ // create an AJAX call...
             data: $(this).serialize(), // get the form data
@@ -13,9 +14,11 @@ $(document).ready(function() {
             url: $(this).attr('action'), // the file to call
             success: function(response) { // on success..
                 $('.modal').modal('hide');
-                $('.modal-form').each(function() {
-                    this.reset();
-                });
+                if(!formReset) {
+                    $('.modal-form').each(function() {
+                        this.reset();
+                    });
+                };
                 if(divUpdate){
                     $(divUpdate).hide().html(response).fadeIn("slow");
                 };
