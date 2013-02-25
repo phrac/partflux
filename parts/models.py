@@ -12,7 +12,6 @@ from nsn.models import Nsn
 class Part(models.Model):
     """
     Stores a unique part number and related information
-
     """
     number = models.CharField(max_length=48)
     slug = models.CharField(max_length=64)
@@ -36,7 +35,6 @@ class Part(models.Model):
     def save(self, *args, **kwargs):
         """
         Slugify the part number and upcase the number and description. 
-
         """
         self.number = self.number.strip().upper()
         self.description = self.description.strip().upper()
@@ -44,6 +42,9 @@ class Part(models.Model):
         super(Part, self).save(*args, **kwargs)
            
     def get_all_xrefs(self):
+        """
+        Returns all cross references, both forward and reverse
+        """
         forward = Xref.objects.filter(part=self)
         reverse = Xref.objects.filter(xrefpart=self)
         if forward.count() == 0 and reverse.count() == 0:
