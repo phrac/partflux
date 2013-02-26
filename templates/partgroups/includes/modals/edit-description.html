@@ -7,64 +7,18 @@
     </div>
     <div class="modal-body">
 
-        <form id="partgroup-desc-form" class="form-horizontal" autocomplete="off" method="post" action="{% url partgroups.views.update_description %}">
-
+        <form data-form-reset="false" data-div-update="#partgroup-desc" data-gritter-title-success="Description Updated!" data-gritter-msg-success="Your assembly description has been updated and should now be reflected in the description field." data-gritter-error-title="Something went wrong" id="partgroup-desc-form" class="modal-form form-horizontal" autocomplete="off" method="post" action="{% url partgroups.views.update_description %}">
             {% csrf_token %}
-
             {{ partgroupform.description }} 
-                    <p>{% markdown_allowed %}</p>
+            <p>{% markdown_allowed %}</p>
 
         </div>
         <div class="modal-footer">
             <input type="hidden" name="partgroup_id" value="{{ partgroup.pk }}" />
-            <button id="save-desc" data-loading-text="Saving..." class="btn btn-inverse">Save Description</button>
+            <button id="save-desc" data-loading-text="Saving..." class="modal-form-submit btn btn-inverse">Save Description</button>
             <button id="cancel-desc" class="btn" data-dismiss="modal">Cancel</button>
         </form>
     </div>
-
-    <script type="text/javascript">
-        $('#save-desc').click(function() {
-            $('#save-desc').button('loading');
-        });
-    </script>
-    
-    <script type="text/javascript">
-        $('#cancel-attribute').click(function() {    
-            $('#attribute-form').each(function() {this.reset();});
-            var validator = $("#attribute-form").validate();
-            validator.resetForm();
-        });
-    </script>
-
-    <script type="text/javascript">
-        $('#attribute-modal').on('shown', function () {
-            $('#id_key').focus();
-        });
-    </script>
-
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#partgroup-desc-form').submit(function() { // catch the form's submit event
-                var values = $(this).serialize();
-                $.ajax({ // create an AJAX call...
-                    data: $(this).serialize(), // get the form data
-                    type: $(this).attr('method'), // GET or POST
-                    url: $(this).attr('action'), // the file to call
-                    success: function(response) { // on success..
-                        $('#edit-description-modal').modal('hide');
-                        $('#partgroup-desc').hide().html(response).fadeIn("slow"); // update the DIV
-                        $.gritter.add({
-                            title:	'Description Updated',
-                            text:	'Description been saved to the assembly',
-                            sticky: false
-                        });
-                        $('#save-desc').button('reset');
-                    }
-                });
-                return false;
-            });
-        });
-    </script>
     
     {% else %}
     {% include 'includes/login_modal.html' %}
