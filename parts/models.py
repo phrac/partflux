@@ -45,13 +45,9 @@ class Part(models.Model):
         """
         Returns all cross references, both forward and reverse
         """
-        forward = Xref.objects.filter(part=self)
-        reverse = Xref.objects.filter(xrefpart=self)
-        if forward.count() == 0 and reverse.count() == 0:
-            return None
-        else:
-            from itertools import chain
-            return chain(reverse, forward)
+        from django.db.models import Q
+        xrefs = Xref.objects.filter(Q(part=self) | Q(xrefpart=self)).distinct()
+        return xrefs
 
     @models.permalink
     def get_absolute_url(self):

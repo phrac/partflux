@@ -1,7 +1,7 @@
 {% load thumbnail %}
 
 <div class="widget-content">
-    {% if part.images.all %}
+    {% if part.images.count > 0 %}
     <div id="images">
         <ul class="thumbnails">
             {% for image in part.images.all %}

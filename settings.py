@@ -12,13 +12,14 @@ ADMINS = (
 INTERNAL_IPS = {
 	'192.168.2.2',
 	'127.0.0.1',
+    '68.13.156.23',
 }
 
 MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django_orm.backends.postgresql_psycopg2', 	# Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.postgresql_psycopg2', 	# Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
             'NAME': '',                     	                # Or path to database file if using sqlite3.
             'USER': '',                      				    # Not used with sqlite3.
             'PASSWORD': '',                  			        # Not used with sqlite3.
@@ -142,6 +143,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 ROOT_URLCONF = 'partengine.urls'
@@ -184,6 +186,7 @@ INSTALLED_APPS = (
     'partgroups',
     'users',
     'reputation',
+    'debug_toolbar',
 )
 
 # django-registration settings

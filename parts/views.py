@@ -33,7 +33,7 @@ def redirect_new_page(request, company_slug, part_slug):
     
 def detail(request, part_id, company_slug, part_slug):
     p = get_object_or_404(Part, id=part_id)
-    c = get_object_or_404(Company, id=p.company.id)
+    #c = get_object_or_404(Company, id=p.company.id)
 
     if request.user.is_authenticated() and UserFavoritePart.objects.filter(user=request.user, part=p).count() == 1:
         fave = UserFavoritePart.objects.get(user=request.user, part=p)
