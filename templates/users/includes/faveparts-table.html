@@ -1,62 +1,58 @@
 {% load markdown_deux_tags %}
 <table class="table table-bordered data-table">
-                    <thead>
+    <thead>
+        <tr>
+            <th>Part #</th>
+            <th>Description</th>
+            <th>Tools</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for f in fave_parts %}
+        <tr>
+            <td>
+                <a href="{{ f.part.get_absolute_url }}">{{ f.part.number }}</a>
+            </td>
+            <td>
+                {{ f.part.description|truncatewords:10 }}
+                <div class="collapse" id="collapse_{{ f.part.pk }}">
+                    <p>{{ f.notes|markdown }}</p>
+                </div>
+                <div class="collapse" id="collapse_xref_{{ f.part.pk }}">
+                    <h5>Cross References for {{ f.part.number }}</h5>
+                    <table class="table table-bordered">
                         <tr>
                             <th>Part #</th>
-                            <th>Description</th>
-                            <th>Tools</th>
+                            <th>Company</th>
                         </tr>
-                    </thead>
-                    <tbody>
-                        {% for f in fave_parts %}
-                        <tr>
-                            <td>
-                                <a href="{{ f.part.get_absolute_url }}">{{ f.part.number }}</a>
-                            </td>
-                            <td>
-                                {{ f.part.description|truncatewords:10 }}
-                                <div class="collapse" id="collapse_{{ f.part.pk }}">
-                                    <p>{{ f.notes|markdown }}</p>
-                                </div>
-                                <div class="collapse" id="collapse_xref_{{ f.part.pk }}">
-                                    <h5>Cross References for {{ f.part.number }}</h5>
-                                    <table class="table table-bordered">
-                                        <tr>
-                                            <th>Part #</th>
-                                            <th>Company</th>
-                                        </tr>
 
-                                        {% for x in f.part.get_all_xrefs %}
-                                        <tr>
-                                            {% if x.part.number == f.part.number %}
-                                            <td><a href="{{ x.xrefpart.get_absolute_url }}">{{ x.xrefpart.number }}</a></td>
-                                            <td><a href="{{ x.xrefpart.company.get_absolute_url }}">{{ x.xrefpart.company.name }}</a></td>
-                                            {% else %}
-                                            <td><a href="{{ x.part.get_absolute_url }}">{{ x.part.number }}</a></td>
-                                            <td><a href="{{ x.part.company.get_absolute_url }}">{{ x.part.company.name }}</a></td>
-                                            {% endif %}
-                                        </tr>
-                                        {% endfor %}
-                                    </table>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="btn-group">
-                                    <a href="#collapse_{{ f.part.pk }}" data-toggle="collapse" class="btn btn-mini tip-top" title="View My Notes"><i class="icon icon-list-alt"></i></a>
-                                    <a class="btn btn-mini tip-top" title="Edit My Notes">
-                                        <i data-position="left" data-emptytext="" data-autotext="never" data-value="{{ f.notes }}" data-name="notes" 
-                                            data-type="textarea" data-inputclass="input input-large" data-pk="{{ f.pk }}" data-url="#" 
-                                            data-emptyclass="icon iconedit" class="notes icon icon-edit"></i>
-                                    </a>
-                                    <a href="#collapse_xref_{{ f.part.pk }}" data-toggle="collapse" class="btn btn-mini tip-top" title="View Known Cross References">
-                                        <i class="icon icon-random"></i>
-                                    </a>
-                                    <a href="#delete_fave-modal" data-toggle="modal" class="btn btn-mini tip-top" title="Delete From Favorites" onClick="SetFaveId({{ f.id }})">
-                                        <i class="icon icon-trash"></i>
-                                    </a>
-                                </div>
-                            </td>
+                        {% for x in f.part.get_all_xrefs %}
+                        <tr>
+                            {% if x.part.number == f.part.number %}
+                            <td><a href="{{ x.xrefpart.get_absolute_url }}">{{ x.xrefpart.number }}</a></td>
+                            <td><a href="{{ x.xrefpart.company.get_absolute_url }}">{{ x.xrefpart.company.name }}</a></td>
+                            {% else %}
+                            <td><a href="{{ x.part.get_absolute_url }}">{{ x.part.number }}</a></td>
+                            <td><a href="{{ x.part.company.get_absolute_url }}">{{ x.part.company.name }}</a></td>
+                            {% endif %}
                         </tr>
                         {% endfor %}
-                    </tbody>
-                </table>
+                    </table>
+                </div>
+            </td>
+            <td>
+                <div class="btn-group">
+                    <a href="#collapse_{{ f.part.pk }}" data-toggle="collapse" class="btn btn-mini tip-top" title="View My Notes"><i class="icon icon-list-alt"></i></a>
+                    <a class="open-notes-modal btn btn-mini tip-top" data-id="{{ f.pk }}" data-notes="{{ f.notes }}" title="Edit My Notes" data-toggle="modal"><i class="icon-edit"></i></a>
+                    <a href="#collapse_xref_{{ f.part.pk }}" data-toggle="collapse" class="btn btn-mini tip-top" title="View Known Cross References">
+                        <i class="icon icon-random"></i>
+                    </a>
+                    <a href="#delete_fave-modal" data-toggle="modal" class="btn btn-mini tip-top" title="Delete From Favorites" onClick="SetFaveId({{ f.id }})">
+                        <i class="icon icon-trash"></i>
+                    </a>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

@@ -14,6 +14,7 @@ urlpatterns = patterns('',
     url(r'^profile/([a-zA-Z0-9]+)/$', 'users.views.view_profile'),
     
     url(r'^favorites/$', 'users.views.view_favorites'),
+    url(r'^favorites/edit_notes/$', 'users.views.edit_favorite_notes'),
     
     url(r'^password/reset/$',
        auth_views.password_reset,

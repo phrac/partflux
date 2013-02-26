@@ -1,0 +1,26 @@
+{% load markdown_deux_tags %}
+<div class="modal hide" id="edit-notes-modal">
+    {% if user.is_authenticated %}
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+        <h3>Edit My Notes</h3>
+    </div>
+    <div class="modal-body">
+
+        <form data-form-reset="false" data-div-update="#faveparts-table" data-gritter-title-success="Notes Updated!" data-gritter-msg-success="Your notes have been updated!" data-gritter-error-title="Something went wrong" id="partgroup-desc-form" class="modal-form form-horizontal" autocomplete="off" method="post" action="{% url users.views.edit_favorite_notes %}">
+            {% csrf_token %}
+            <textarea id="id_notes_ta" rows="10" cols="40" name="notes"></textarea> 
+            <p>{% markdown_allowed %}</p>
+
+        </div>
+        <div class="modal-footer">
+            <input type="hidden" id="fave-id-hidden" name="fave-id" value="" />
+            <button id="save-desc" data-loading-text="Saving..." class="modal-form-submit btn btn-inverse">Save Description</button>
+            <button id="cancel-desc" class="btn" data-dismiss="modal">Cancel</button>
+        </form>
+    </div>
+    
+    {% else %}
+    {% include 'includes/login_modal.html' %}
+    {% endif %}
+</div>
