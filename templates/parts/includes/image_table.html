@@ -5,6 +5,7 @@
     <div id="images">
         <ul class="thumbnails">
             {% for image in part.images.all %}
+            {% if image.image %}
             {% thumbnail image.image "160x120" crop="center" as im %}
             <li class="span3">
                 <div class="thumbnail">
@@ -15,6 +16,7 @@
                 </div>
             </li>
             {% endthumbnail %}
+            {% endif %}
             {% endfor %}
         </ul>
     </div>
