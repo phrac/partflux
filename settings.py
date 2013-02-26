@@ -96,7 +96,7 @@ STATIC_ROOT = '/home/derek/web/partengine/static/'
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
-STATIC_URL = '/static/'
+STATIC_URL = 'http://static.partengine.org/'
 
 # URL prefix for admin static files -- CSS, JavaScript and images.
 # Make sure to use a trailing slash.
@@ -118,7 +118,6 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
-
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -202,6 +201,7 @@ AUTH_PROFILE_MODULE = 'users.UserProfile'
 
 # django-storages settings
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+AWS_IS_GZIPPED = True
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

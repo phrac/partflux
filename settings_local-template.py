@@ -41,3 +41,6 @@ AWS_ACCESS_KEY_ID = ''
 AWS_SECRET_ACCESS_KEY = ''
 AWS_STORAGE_BUCKET_NAME = ''
 
+AWS_IS_GZIPPED = True
+STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+
