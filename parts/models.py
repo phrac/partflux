@@ -3,6 +3,7 @@ from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 from django.contrib.comments.moderation import CommentModerator, moderator
 from django.template.defaultfilters import slugify
+from django.utils.encoding import smart_str
 from django.conf import settings
 from sorl.thumbnail import ImageField
 
@@ -77,7 +78,7 @@ class Attribute(models.Model):
         ordering = ('value',)
         
     def get_attr_string(self):
-        return u"%s: %s" % (self.key, self.value)
+        return u"%s: %s" % (smart_str(self.key), smart_str(self.value))
 
     def save(self, *args, **kwargs):
         self.key = self.key.strip().upper()

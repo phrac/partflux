@@ -1,3 +1,6 @@
 {{ object.number }}
 {{ object.description }}
 {{ object.company.name }}
+{% for a in object.attribute_set.all %}
+    {{ a.get_attr_string }}
+{% endfor %}

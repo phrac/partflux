@@ -4,7 +4,7 @@
         <a href="{{ result.object.get_absolute_url }}">{{ result.object.number }}</a>
     </td>
     <td>
-        {{ result.object.description|truncatewords:10 }}
+        {{ result.object.description|truncatewords:20 }}
     </td>
     <td>
         <a href="{{ result.object.company.get_absolute_url }}">{{ result.object.company.name }}</a>

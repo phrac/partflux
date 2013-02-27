@@ -2,12 +2,14 @@
 
 {% block breadcrumb_links %}
 <a href="{% url search.views.index %}"><i class="icon-search"></i> Search</a>
-<a href="#">"{{ searchterm }}"</a>
+<a href="#">"<em>{{ searchterm }}</em>"</a>
 {% endblock %}
 
 {% block page_title %}
 Search Results
 {% endblock %}
+
+{% block search_active %}active{% endblock %}
 
 {% block content %}
 <div class="row-fluid">
@@ -16,7 +18,7 @@ Search Results
     </div>
 </div>
 <div class="row-fluid">
-    <div class="span9">
+    <div class="span12">
         <div class="widget-box">
             <div class="widget-title">
                 <span class="icon">

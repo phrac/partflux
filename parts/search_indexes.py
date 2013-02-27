@@ -6,14 +6,10 @@ class PartIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, use_template=True)
     number = indexes.EdgeNgramField(model_attr='number', boost=3, indexed=True,
                                 index_fieldname='number', stored=True)
-    company = indexes.CharField(model_attr='company', faceted=True)
-    attributes = indexes.MultiValueField(faceted=True)  
+    company = indexes.CharField(model_attr='company')  
     
     def get_model(self):
         return Part
-
-    def prepare_attributes(self, obj):
-        return ["%s: %s" % (smart_str(a.key), smart_str(a.value)) for a in obj.attribute_set.all()]
 
     def get_updated_field(self):
         return 'updated_at'
