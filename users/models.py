@@ -1,9 +1,10 @@
-from django.db import models
-from django.contrib.auth.models import User
-from django.db.models.signals import post_save
 from django.conf import settings
+from django.contrib.auth.models import User
+from django.db import models
+from django.db.models import Sum
+from django.db.models.signals import post_save
 
-from parts.models import Part, Attribute, PartImage
+from parts.models import Attribute, Part, PartImage
 from reputation.models import ReputationAction
 
 class UserProfile(models.Model):
@@ -26,7 +27,6 @@ class UserProfile(models.Model):
             return False
 
     def update_total_rep(sender, instance, created, **kwargs):
-        from django.db.models import Sum
         r = ReputationAction.objects.filter(user=instance.user).aggregate(total_rep=Sum('point_value'))
         self.reputation = r.get('total_rep')
         self.save()
