@@ -5,18 +5,6 @@ from django.conf import settings
 
 from parts.models import Part, Attribute, PartImage
 
-class ReputationProfile(models.Model):
-    user = models.OneToOneField(User)
-    reputation_sum = models.IntegerField(default=0)
-    badges = models.ManyToManyField('Badge', related_name='rep_badges')
-    
-    def create_user_reputation_profile(sender, instance, created, **kwargs):
-        if created:
-            ReputationProfile.objects.create(user=instance)
-
-    post_save.connect(create_user_reputation_profile, sender=User)
-    
-
 class ReputationAction(models.Model):
     user = models.ForeignKey(User)
     created = models.DateTimeField(auto_now_add=True)

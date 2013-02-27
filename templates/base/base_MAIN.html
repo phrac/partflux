@@ -10,9 +10,9 @@
         <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.gritter.css" />
         <link rel="stylesheet" href="{{ STATIC_URL }}css/unicorn.main.css" />
         <link rel="stylesheet" href="{{ STATIC_URL }}css/unicorn.grey.css" class="skin-color" />
-
+        
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-        <script src="{{ STATIC_URL }}js/jquery.ui.custom.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"></script>
         <script src="{{ STATIC_URL }}js/bootstrap-typeahead.js"></script>
         <script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
         <script src="{{ STATIC_URL }}js/jquery.gritter.min.js"></script>
@@ -76,7 +76,7 @@
         <div id="user-nav" class="navbar navbar-inverse">
             <ul class="nav btn-group">
                 {% if user.is_authenticated %}
-                <li class="btn btn-inverse" ><a title="" href="#"><img src="{% gravatar_url user.email 20 %}" alt="gravatar" /> <span class="text">Profile</span></a></li>
+                <li class="btn btn-inverse" ><a title="" href="#"><img src="{% gravatar_url user.email 20 %}" alt="gravatar" /> {{ user_reputation }}</a></li>
                 
                 <li class="btn btn-inverse"><a title="" href="#"><i class="icon-cog"></i> <span class="text">Settings</span></a></li>
                 <li class="btn btn-inverse"><a title="" href="{% url django.contrib.auth.views.logout %}?next={{request.path}}"><i class="icon-share-alt"></i> <span class="text">Logout</span></a></li>

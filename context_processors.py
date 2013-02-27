@@ -36,10 +36,10 @@ def get_current_domain(request):
         'current_domain': 'http://%s' % Site.objects.get_current().domain
     }
 
-#def user_reputation(request):
-#    from django.contrib.auth.models import User
-#    if request.user.is_authenticated():
-#        profile = request.user.get_profile()
-#        return { 'user_reputation': profile.reputation }
-#    else:
-#        return {None}
+def user_reputation(request):
+    from django.contrib.auth.models import User
+    if request.user.is_authenticated():
+        profile = request.user.get_profile()
+        return { 'user_reputation': profile.reputation }
+    else:
+        return { 'user_reputation': None }
