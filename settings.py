@@ -134,7 +134,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.media",
     "django.core.context_processors.static",
     "django.contrib.messages.context_processors.messages",
-    "partfindr.context_processors.user_reputation",
+    "context_processors.user_reputation",
     )
 
 MIDDLEWARE_CLASSES = (
