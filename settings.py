@@ -135,6 +135,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.static",
     "django.contrib.messages.context_processors.messages",
     "context_processors.user_reputation",
+    "context_processors.part_count",
+    "context_processors.nsn_count",
     )
 
 MIDDLEWARE_CLASSES = (

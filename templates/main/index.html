@@ -1,97 +1,171 @@
-{% extends "base/base_MAIN.html" %}
-
-{% block home_active %}class="active"{% endblock %}
-
-{% block content %}
 {% load humanize %}
-<div class="container">
-    <div class="row-center">
-        <div class="hero-unit-white hero-unit">
-            <h1>Search {{ part_count|intcomma }} part numbers</h1><br />
-            <form id="frmSearch" action="/search/results/" id="cref_iframe" class="form-inline">
-                <input name="cx" value="partner-pub-3185089159153756:8723235659" type="hidden">
-                <input name="cof" value="FORID:11" type="hidden">
-                <input name="ie" value="ISO-8859-1" type="hidden">
-                <input type="text" name="q" value="Search Parts" class="input-huge" style="height:45px; font-size:2.0em;" onfocus="if (this.value == 'Search Parts') {this.value = '';}" onblur="if (this.value == '') {this.value = '';}" />
-                <button class="btn btn-huge btn-primary" type="submit">Find It!</button>
-            </form><!--/search-->
-            <script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=cref_iframe"></script>
-            
-        </div>
-    </div>
-
-</div>
-
-
-<div class="stripe">
-    <div class="container">
-        <div class="row">
-            <div class="span3">
-                <h2>Our mission</h2>
-                <p class="justify">Part Engine's goals are lofty: <strong>index every part number in the world.</strong>
-                This goal is only possible with help from our users. We need help to enter parts,
-                verify data, and ensure that all information is of the utmost quality.</p>
-                <p>
-                Interested in helping? <a href="/users/register/">Register for a free account</a>.
-                </p>
-            </div>
-
-            <div class="span8 offset1">
-                <h2>Part Engine Indexes:</h2>
-                <div class="row">
-                    <div class="span2">
-                        <dl>
-                            <dt><h4><i class="icon-cog"></i> Part Information</h4></dt>
-                            <ul>
-                                <li>Part attributes</li>
-                                <li>Cross references</li>
-                                <li>Images</li>
-                                <li>Purchasing information</li>
-                            </ul>
-                        </dl>
-                    </div>
-                    <div class="span2">
-                        <dl>
-                            <dt><h4><i class="icon-briefcase"></i> Company Information</h4></dt>
-                            <ul>
-                                <li>Addresses</li>
-                                <li>Phone &amp; fax numbers</li>
-                                <li>Sales contacts</li>
-                                <li>Branch Locations</li>
-                                <li>Part Listings</li>
-                            </ul>
-                        </dl>
-                    </div>
-                    <div class="span2">
-                        <dl> 
-                            <dt><h4><i class="icon-wrench"></i> Assemblies & <a href="#" rel="tooltip" title="Bill of Material"> B.O.M.s</a></h4></dt>
-                            <ul>
-                                <li>Assemblies and sub-assemblies</li>
-                                <li>Lists of parts</li>
-                                <li>Public and private assemblies &amp; lists</li>
-                            </ul>
-                        </dl>
-                    </div>
-                    <div class="span2">
-                        <dl>
-                            <dt><h4><i class="icon-barcode"></i><a href="#" rel="tooltip" title="National/NATO Stock Number"> NSN</a> Information</h4></dt>
-                            <ul>
-                                <li><a href="#" rel="tooltip" title="Federal Supply Class">FSC</a> Codes</li>
-                                <li>Manufacturers</li>
-                                <li>Associated Part Numbers</li>
-                            </ul>
-                        </dl>
-                    </div>
-                </div>
-                <script type="text/javascript">
-                    $("[rel=tooltip]").tooltip();
-                </script>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-{% endblock %}
-
-
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Part Engine | The Part Number Search Engine</title>
+		<meta name="description" content="StackLayer is a landing page theme for Twitter Bootstrap.">
+		<meta name="viewport" content="width=1024">
+		<!--[if lt IE 9]><script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+		<link rel="stylesheet" media="screen,print" type="text/css" href="{{ STATIC_URL }}css/bootstrap.min.css">
+		<link rel="stylesheet" media="screen,print" type="text/css" href="{{ STATIC_URL }}css/screen.css">
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+		<script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+		<link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.ico">
+		<link rel="apple-touch-icon" href="{{ STATIC_URL }}img/apple-touch-icon.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="{{ STATIC_URL }}img/apple-touch-icon-72x72.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="{{ STATIC_URL }}img/apple-touch-icon-114x114.png">
+	</head>
+	<body>
+		<div id="main">
+			<div id="head" class="container">
+				<p id="logo">
+					<a href="/" title="Part Engine"><img src="{{ STATIC_URL }}img/logo.png" width="265" height="39" alt="Part Engine" title="Part Engine"></a>
+				</p>
+				<p id="privacy" class="pull-right">
+					<a data-toggle="modal" href="/privacy/" title="Privacy policy">We respect <strong>everyone's</strong> privacy</a>
+				</p>
+			</div>
+			<div id="attention">
+				<div id="headline">
+					<h1 class="container">
+						<span>How much <strong>money</strong> does your business <strong>lose</strong> when a cookie gets deleted?</span>
+					</h1>
+				</div>
+				
+			</div>
+			<div id="newsletter">
+				<div class="container">
+					<div class="share">
+						<div class="twitter"><a href="http://twitter.com/share" class="twitter-share-button" data-size="large" data-url="" data-text="" data-count="none">Tweet</a></div>
+					</div>
+					<h2 class="title">
+						Search <strong>{{ part_count|intcomma }}</strong> parts and <strong>{{ nsn_count|intcomma }} NSNs
+					</h2>
+					<h4 class="pitch">
+						<span>We're launching soon! Enter your email address to receive updates about opening day!</span>
+					</h4>
+					<form class="search" method="get" action="{% url search.views.results %}">
+						<input id="iemail" autocomplete="off" name="q" type="text" placeholder="Search parts or NSNs"><input class="btn btn-subscribe btn-xlarge" type="submit" value="Search!">
+					</form>
+				</div>
+			</div>
+			<div id="features" class="container">
+				<div class="row">
+					<p class="span3 a">
+						<strong>StackLayer is charts</strong><br>
+						Kohlrabi radish chard garlic grape dulse garbanzo turnip bunya nuts peanut salsify pea sprouts.
+					</p>
+					<p class="span3 b">
+						<strong>StackLayer is people</strong><br>
+						Turnip green melon celery bean eggplant arugula garlic beetroot desert raisin artichoke.
+					</p>
+					<p class="span3 c">
+						<strong>StackLayer is secure</strong><br>
+						Okra tomatillo salad watercress epazote spring broccoli onion tigernut peanut earthnut.
+					</p>
+				</div>
+			</div>
+			<div id="about">
+				<div class="container">
+					<div class="row">
+						<div id="points" class="span5">
+							<ul>
+								<li class="a">
+									<strong>Peanut taro fennel radish raisin</strong><br>
+									Avocado water spinach potato groundnut cucumber pumpkin quandong radicchio daikon melon.
+								</li>
+								<li class="b">
+									<strong>Eggplant leek endive pea spring</strong><br>
+									Turnip radish cucumber napa cabbage chickweed ricebean onion tigernut epazote salad.
+									</li>
+								<li class="c">
+									<strong>Tomato radish pumpkin pepper</strong><br>
+									Garlic maize amaranth potato cabbage watercress courgette tomato horseradish celery soko.
+								</li>
+							</ul>
+						</div>
+						<div id="nutshell" class="span5">
+							<h5>More about onion-peanut veggies</h5>
+							<p>Garlic grape peanut salsify bok choy pea sprouts cress beet komatsuna greens. Arugula arugula spinach burdock corn brussels kohlrabi sprout. Earthnut pea winter purslane tomato rutabaga fava bean salad.</p>
+							<p>Amaranth tomato radish pumpkin bell pepper horseradish kakadu plum kombu turnip greens komatsuna sierra leone bologi gumbo celery soko &mdash; sorrel bok choy sea lettuce garlic maize amaranth potato garlic.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="follow" class="container">
+				<div class="row">
+					<div class="span5 twitter">
+						<a href="#" title="Follow us on Twitter" rel="nofollow" target="_blank">Follow us on Twitter</a>
+					</div>
+					<div class="span5 facebook">
+						<a href="#" title="Join us on Facebook" rel="nofollow" target="_blank">Join us on Facebook</a>
+					</div>
+				</div>
+			</div>
+			<div class="push"></div>
+		</div>
+		<div id="foot">
+			<div class="container">
+				<div class="row">
+					<div class="span5">
+						<ul class="links">
+							<li><a data-toggle="modal" href="/privacy/" title="Privacy policy">Privacy policy</a></li>
+							<li><a data-toggle="modal" href="#" title="Contact us">Contact us</a></li>
+						</ul>
+					</div>
+					<div class="span5">
+						<p class="copyright">&copy; 2012 - {% now "Y" %} Part Engine</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="privacy_policy" class="modal hide fade">
+			<div class="modal-header">
+				<a class="close" data-dismiss="modal">×</a>
+				<h3>Privacy policy</h3>
+			</div>
+			<div class="modal-body">
+				<p>Welsh onion sea lettuce mung bean garbanzo asparagus seakale fennel tomato beetroot radicchio. Taro sweet pepper chicory mustard lettuce arugula spinach zucchini horseradish turnip greens bitterleaf tigernut jícama. Sweet pepper celtuce cabbage scallion cauliflower garbanzo leek swiss chard soybean broccoli gumbo bush tomato. Jícama broccoli kohlrabi bunya nuts napa cabbage watercress cress amaranth courgette. Green bean quandong maize prairie turnip aubergine welsh onion celery broccoli rabe.</p>
+				<p>Seakale fava bean swiss chard rock melon coriander turnip cabbage tomato. Water chestnut azuki bean pea salsify winter purslane chickweed garlic gram peanut bell pepper. Desert raisin lotus root dandelion seakale jícama soko bush tomato prairie turnip burdock zucchini nori courgette sea lettuce cress celery bok choy broccoli asparagus.</p>
+				<p>Komatsuna eggplant pumpkin asparagus chard daikon fava bean amaranth gram. Nori grape quandong avocado parsley taro lotus root maize mustard. Salad spinach catsear plantain soko nori peanut bell pepper gourd.</p>
+				<p>Lotus root beetroot maize tomatillo komatsuna parsley bush tomato celtuce summer purslane epazote mung bean chickweed yarrow bitterleaf. Collard greens rutabaga onion bok choy water chestnut tomatillo lotus root mustard komatsuna yarrow horseradish endive napa cabbage cauliflower brussels sprout beetroot. Pea green bean salsify spinach lettuce cucumber aubergine bok choy celtuce nori artichoke maize fennel kohlrabi. Salsify turnip greens radish bamboo shoot groundnut avocado horseradish leek salad spring onion maize gram celtuce eggplant. Parsley sorrel kombu beetroot horseradish burdock chickpea cabbage bush tomato carrot chicory coriander courgette kale endive.</p>
+			</div>
+		</div>
+		<div id="contact_us" class="modal hide fade">
+			<div class="modal-header">
+				<a class="close" data-dismiss="modal">×</a>
+				<h3>Contact us</h3>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal">
+					<fieldset>
+						<div class="control-group">
+							<label class="control-label" for="icontact_name">Name:</label>
+							<div class="controls">
+								<input type="text" class="input-xlarge" id="icontact_name" name="name">
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="icontact_email">Email:</label>
+							<div class="controls">
+								<input type="text" class="input-xlarge" id="icontact_email" name="email">
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="icontact_message">Message</label>
+							<div class="controls">
+								<textarea class="input-xlarge" id="icontact_message" name="message" rows="3"></textarea>
+							</div>
+						</div>
+						<div class="form-actions">
+							<button type="submit" class="btn btn-primary">Send message</button>
+							<button class="btn" data-dismiss="modal">Cancel</button>
+						</div>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+		<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+	</body>
+</html>

@@ -11,8 +11,8 @@
         <link rel="stylesheet" href="{{ STATIC_URL }}css/unicorn.main.css" />
         <link rel="stylesheet" href="{{ STATIC_URL }}css/unicorn.grey.css" class="skin-color" />
         
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"></script>
         <script src="{{ STATIC_URL }}js/bootstrap-typeahead.js"></script>
         <script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
         <script src="{{ STATIC_URL }}js/jquery.gritter.min.js"></script>
@@ -38,7 +38,7 @@
         <!-- search typeahead -->
         <script type="text/javascript">
             $(document).ready(function() {
-                $("#search input[type=text]").typeahead({
+                $(".search input[type=text]").typeahead({
                     items: 5,
                     source: function (query, process) {
                         $.get('/search/autocomplete', { q: query }, function (data) {
@@ -60,14 +60,14 @@
           
     </head>
     <body>
-
+        
         <div id="gritter-notify" class="notify-ui">
         </div>
         <div id="header">
             <h1><a href="/">Part Engine</a></h1>		
         </div>
 
-        <div id="search">
+        <div class="search" id="search">
             <form method="get" action="{% url search.views.results %}">
                     <input autocomplete="off" name="q" type="text" placeholder="Search here..." value="{{ searchterm }}" /><button type="submit" class="tip-right" title="Search"><i class="icon-search icon-white"></i></button>
             </form>
@@ -90,6 +90,7 @@
             </ul>
         </div>
 
+        {% block no_sidebar %}
         <div id="sidebar">
             <ul>
                 <li {% block home_active %}{% endblock %}><a href="/"><i class="icon-home"></i> <span>Home</span></a></li>
@@ -145,6 +146,7 @@
             </ul>
 
         </div>
+        {% endblock %}
 
         <div id="content">
             <div id="content-header">
@@ -155,10 +157,12 @@
                 {% endblock %}
             </div>
             
+            {% block no_breadcrumb %}
             <div id="breadcrumb">
                 <a href="/" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a>
                 {% block breadcrumb_links %} {% endblock %}
             </div>
+            {% endblock %}
             <div class="container-fluid">
                 {% block content %}
                 
