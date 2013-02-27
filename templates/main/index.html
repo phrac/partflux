@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Part Engine | The Part Number Search Engine</title>
-		<meta name="description" content="StackLayer is a landing page theme for Twitter Bootstrap.">
+		<meta name="description" content="Part Engine is the part number search engine.">
 		<meta name="viewport" content="width=1024">
 		<!--[if lt IE 9]><script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 		<link rel="stylesheet" media="screen,print" type="text/css" href="{{ STATIC_URL }}css/bootstrap.min.css">
@@ -20,49 +20,48 @@
 		<div id="main">
 			<div id="head" class="container">
 				<p id="logo">
-					<a href="/" title="Part Engine"><img src="{{ STATIC_URL }}img/logo.png" width="265" height="39" alt="Part Engine" title="Part Engine"></a>
+					<a href="/" title="Part Engine"><img src="{{ STATIC_URL }}img/logo-black.png" width="265" height="39" alt="Part Engine" title="Part Engine"></a>
 				</p>
-				<p id="privacy" class="pull-right">
-					<a data-toggle="modal" href="/privacy/" title="Privacy policy">We respect <strong>everyone's</strong> privacy</a>
-				</p>
+				
 			</div>
 			<div id="attention">
 				<div id="headline">
 					<h1 class="container">
-						<span>How much <strong>money</strong> does your business <strong>lose</strong> when a cookie gets deleted?</span>
+						Having trouble finding part information?<br />
+						Part Engine can help.
 					</h1>
 				</div>
 				
 			</div>
 			<div id="newsletter">
 				<div class="container">
-					<div class="share">
-						<div class="twitter"><a href="http://twitter.com/share" class="twitter-share-button" data-size="large" data-url="" data-text="" data-count="none">Tweet</a></div>
-					</div>
+					
 					<h2 class="title">
-						Search <strong>{{ part_count|intcomma }}</strong> parts and <strong>{{ nsn_count|intcomma }} NSNs
+						Search <strong>{{ part_count|intcomma }}</strong> parts and <strong>{{ nsn_count|intcomma }}</strong> NSNs
 					</h2>
 					<h4 class="pitch">
-						<span>We're launching soon! Enter your email address to receive updates about opening day!</span>
+						Search by part number, part description, NSN number, or any other information.
 					</h4>
 					<form class="search" method="get" action="{% url search.views.results %}">
-						<input id="iemail" autocomplete="off" name="q" type="text" placeholder="Search parts or NSNs"><input class="btn btn-subscribe btn-xlarge" type="submit" value="Search!">
+						<input id="iemail" autocomplete="off" name="q" type="text" placeholder="Search parts or NSNs"><input style="margin-top:-10px;" class="btn btn-subscribe btn-xlarge" type="submit" value="Search!">
 					</form>
 				</div>
 			</div>
 			<div id="features" class="container">
 				<div class="row">
 					<p class="span3 a">
-						<strong>StackLayer is charts</strong><br>
-						Kohlrabi radish chard garlic grape dulse garbanzo turnip bunya nuts peanut salsify pea sprouts.
-					</p>
+					<strong>Control Your Information</strong><br />
+					Create your own part numbers, lists, purchasing information, and images.
+					Add your favorites to your dashboard, create notes on parts, create assemblies.
+                    </p>
 					<p class="span3 b">
-						<strong>StackLayer is people</strong><br>
-						Turnip green melon celery bean eggplant arugula garlic beetroot desert raisin artichoke.
+						<strong>Join the Community</strong><br />
+						Flag bad information, vote on attributes, comment on parts and assemblies and <b>earn reputation points
+                        based on your community involvement.</b> 
 					</p>
 					<p class="span3 c">
-						<strong>StackLayer is secure</strong><br>
-						Okra tomatillo salad watercress epazote spring broccoli onion tigernut peanut earthnut.
+						<strong>Source Your Parts</strong><br />
+						Issue RFQ's to vendors of <b>your choice</b>. Create frequently bought item lists. Get the latest pricing on products.
 					</p>
 				</div>
 			</div>
@@ -70,36 +69,45 @@
 				<div class="container">
 					<div class="row">
 						<div id="points" class="span5">
+						<h4>What do we index?</h4>
 							<ul>
 								<li class="a">
-									<strong>Peanut taro fennel radish raisin</strong><br>
-									Avocado water spinach potato groundnut cucumber pumpkin quandong radicchio daikon melon.
+									<strong>Part Information</strong><br>
+									Part attributes, Cross references, Images, Purchasing information
 								</li>
 								<li class="b">
-									<strong>Eggplant leek endive pea spring</strong><br>
-									Turnip radish cucumber napa cabbage chickweed ricebean onion tigernut epazote salad.
+									<strong>Assemblies and BOMs</strong><br>
+									Assemblies and sub-assemblies, Lists of parts, Public and private assemblies &amp; lists
 									</li>
+								<li class="b">
+									<strong>Company Information</strong><br>
+									Addresses, Phone &amp; fax numbers, Sales contacts, Branch Locations,Part Listings
+								</li>
 								<li class="c">
-									<strong>Tomato radish pumpkin pepper</strong><br>
-									Garlic maize amaranth potato cabbage watercress courgette tomato horseradish celery soko.
+									<strong>NSN Information</strong><br>
+									NSN numbers, FSC codes, MRC information, and more
 								</li>
 							</ul>
 						</div>
 						<div id="nutshell" class="span5">
-							<h5>More about onion-peanut veggies</h5>
-							<p>Garlic grape peanut salsify bok choy pea sprouts cress beet komatsuna greens. Arugula arugula spinach burdock corn brussels kohlrabi sprout. Earthnut pea winter purslane tomato rutabaga fava bean salad.</p>
-							<p>Amaranth tomato radish pumpkin bell pepper horseradish kakadu plum kombu turnip greens komatsuna sierra leone bologi gumbo celery soko &mdash; sorrel bok choy sea lettuce garlic maize amaranth potato garlic.</p>
-						</div>
+							<h4>Our Mission</h4>
+							<p class="justify">Part Engine's goals are lofty: <strong>index every part number in the world.</strong>
+                            This goal is only possible with help from our users. We need help to enter parts,
+                            verify data, and ensure that all information is of the utmost quality.</p>
+                            <p>
+                            Interested in helping? <a href="/users/register/">Register for a free account</a>.
+                            </p>
+                        </div>
 					</div>
 				</div>
 			</div>
 			<div id="follow" class="container">
 				<div class="row">
 					<div class="span5 twitter">
-						<a href="#" title="Follow us on Twitter" rel="nofollow" target="_blank">Follow us on Twitter</a>
+						<a href="http://twitter.com/partfindr" title="Follow us on Twitter" rel="nofollow" target="_blank">Follow us on Twitter</a>
 					</div>
-					<div class="span5 facebook">
-						<a href="#" title="Join us on Facebook" rel="nofollow" target="_blank">Join us on Facebook</a>
+					<div class="span5 gplus">
+						<a href="https://plus.google.com/108549216163192075170/" title="Join us on Google+" rel="nofollow" target="_blank">Join us on Google+</a>
 					</div>
 				</div>
 			</div>
