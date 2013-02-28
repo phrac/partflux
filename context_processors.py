@@ -38,8 +38,12 @@ def get_current_domain(request):
 
 def user_reputation(request):
     from django.contrib.auth.models import User
+    from users.models import UserProfile
     if request.user.is_authenticated():
-        profile = request.user.get_profile()
+        try:
+            profile = request.user.get_profile()
+        except:
+            profile = UserProfile.objects.create(user=request.user)
         return { 'user_reputation': profile.reputation }
     else:
         return { 'user_reputation': None }
