@@ -6,6 +6,7 @@ from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from pure_pagination import Paginator, PageNotAnInteger, EmptyPage
+from haystack.query import SearchQuerySet
 
 from django.contrib.auth.models import User
 
@@ -21,7 +22,10 @@ def index(request):
                               
 def detail(request, nsn_id, nsn_number):
     nsn = get_object_or_404(Nsn, id=nsn_id, number=nsn_number)
+    mlt = SearchQuerySet().more_like_this(nsn)[:20]
     
     return render_to_response('nsn/detail.html',
-                              {'nsn': nsn},
+                              {'nsn': nsn,
+                               'mlt': mlt,
+                               },
                               context_instance=RequestContext(request))

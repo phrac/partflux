@@ -54,7 +54,6 @@ def edit(request, company_id, company_slug):
             if request.FILES.get('logo', False):
                 status = uploadlogo(request, c.pk)
             
-            request.flash.success = "Company details successfully saved."
             return HttpResponseRedirect(reverse('companies.views.detail',
                                                 args=[c.id, c.slug]))
         else:
