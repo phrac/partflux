@@ -65,7 +65,7 @@ def detail(request, part_id, company_slug, part_slug):
                                           {'part': p,},
                                           context_instance=RequestContext(request))
             else:
-                return HttpResponseRedirect(reverse('parts.views.detail', args=[part_id, c.slug, p.slug]))
+                return HttpResponseRedirect(reverse('parts.views.detail', args=[part_id, p.company.slug, p.slug]))
 
     if 'metadata_button' in request.POST:
         metaform = MetadataForm(request.POST)
@@ -78,14 +78,14 @@ def detail(request, part_id, company_slug, part_slug):
                                           context_instance=RequestContext(request))
             else:
                 return HttpResponseRedirect(reverse('parts.views.detail',
-                                                    args=[part_id, c.slug, p.slug]))
+                                                    args=[part_id, p.company.slug, p.slug]))
 
     if 'xref_button' in request.POST:
         xrefform = XrefForm(request.POST)
         if xrefform.is_valid:
             status = addxref(request, p.pk)
             return HttpResponseRedirect(reverse('parts.views.detail',
-                                                args=[part_id, c.slug, p.slug]))
+                                                args=[part_id, p.company.slug, p.slug]))
     
     if 'image_button' in request.POST:
         imageuploadform = ImageUploadForm(request.POST, request.FILES)
@@ -98,7 +98,7 @@ def detail(request, part_id, company_slug, part_slug):
                 messages.error(request, 'Image upload failed. Most likely it was not an image file or it was a duplicate.')
 
             return HttpResponseRedirect(reverse('parts.views.detail',
-                                                    args=[part_id, c.slug, p.slug]))
+                                                    args=[part_id, p.company.slug, p.slug]))
             
     return render_to_response('parts/detail.html', 
                               {'part': p, 

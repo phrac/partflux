@@ -28,8 +28,9 @@ class UserProfile(models.Model):
 
     def update_total_rep(sender, instance, created, **kwargs):
         r = ReputationAction.objects.filter(user=instance.user).aggregate(total_rep=Sum('point_value'))
-        self.reputation = r.get('total_rep')
-        self.save()
+        profile = UserProfile.objects.get(user=instance.user)
+        profile.reputation = r.get('total_rep')
+        profile.save()
 
     post_save.connect(create_user_profile, sender=User)
     post_save.connect(update_total_rep, sender=ReputationAction)
