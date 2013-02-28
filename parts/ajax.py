@@ -3,8 +3,9 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
+from django.core.files.storage import default_storage
 
-from parts.models import Part, BuyLink, Attribute, AttributeFlag
+from parts.models import Part, PartImage, BuyLink, Attribute, AttributeFlag
 from companies.models import Company
 from users.models import UserFavoritePart
 
@@ -49,6 +50,21 @@ def delete_buylink(request, buylink_id):
         
         return HttpResponseRedirect(reverse('parts.views.detail', args=[p.id, c.slug, p.slug]))
 
+@login_required
+def delete_image(request):
+    if request.user.is_staff:
+        image_id = request.POST.get('image-id', '')
+        part_id = request.POST.get('part-id', None)
+        img = get_object_or_404(PartImage, pk=image_id)
+        part = get_object_or_404(Part, pk=part_id)
+        part.images.remove(img)
+        img.delete()
+        if request.is_ajax:
+            return render_to_response('parts/includes/image_table.html',
+                                      {'part': part, },
+                                      context_instance=RequestContext(request))
+        
+        
 @login_required
 def flag(request):
 

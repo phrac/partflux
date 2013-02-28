@@ -1,5 +1,4 @@
 {% load thumbnail %}
-
 <div class="widget-content">
     {% if part.images.count > 0 %}
     <div id="images">
@@ -12,6 +11,11 @@
                     <a id="lightbox" class="thumbnail" href="{{ image.image.url }}"><img src="{{ im.url }}" alt="{{ part.number }} image" /></a>
                     <div class="thumbnail-caption">
                         by: {{ image.user }}
+                        {% if user.is_staff %}
+                        <div class="push-right">
+                            <a class="open-image-delete-modal btn btn-mini tip-top push-right" data-id="{{ image.pk }}" data-toggle="modal" title="Delete"><i class="icon icon-trash"></i></a>
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
             </li>

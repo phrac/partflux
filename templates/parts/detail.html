@@ -54,6 +54,14 @@
     });
 </script>
 <script type="text/javascript">
+    $(document).on("click", ".open-image-delete-modal", function () {
+     var id = $(this).data('id');
+     console.log('Image ID: ' + id)
+     $("#image-id-hidden").val( id );
+     $('#delete-image-modal').modal('show');
+});
+</script>
+<script type="text/javascript">
     function SetFlags(type, id){
         document.getElementById("flag-type").value = type;
         document.getElementById("flag-id").value = id;
@@ -78,6 +86,7 @@
     {% include 'parts/includes/modals/company_modal.html' %}
     {% include 'parts/includes/modals/flag_modal.html' %}
     {% include 'parts/includes/modals/add_favorite-modal.html' %}
+    {% include 'parts/includes/modals/delete_image_modal.html' %}
     {% include 'partgroups/includes/modals/add_part_to_assembly.html' %}
 </div>
 
@@ -137,7 +146,9 @@
                     <a class="btn btn-inverse btn-mini tip-left" title="New Image" href="#image-modal" data-toggle="modal"><i class="icon-plus-sign icon-white"></i></a>
                 </div>
             </div>
-            {% include 'parts/includes/image_table.html' %} 
+            <div id="images-table">
+            {% include 'parts/includes/image_table.html' %}
+            </div> 
         </div>
         <!-- end images widget -->
 
