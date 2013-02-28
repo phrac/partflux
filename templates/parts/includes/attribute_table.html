@@ -15,14 +15,31 @@
             </td>
             <td>
                 {{ a.value }}
+                <div class="collapse" id="collapse_{{ a.pk }}">
+                    <h5>Attribute Information</h5>
+                    <ul class="unstyled">
+                        <li><strong>Created By:</strong> <a href="{{ a.user.get_absolute_url }}">{{ a.user }}</a></li>
+                        <li><strong>Created On:</strong> {{ a.created_at }}</li>
+                        <li><strong>Last Update:</strong> {{ a.updated_at }}</li>
+                        <li><strong>Flagged:</strong> {{ a.attributeflag_set.count }} times
+                            {% if a.attributeflag_set.count > 0 %}
+                            <ul>
+                                {% for f in a.attributeflag_set.all %}
+                                <li>By <a href="{{ f.user.get_absolute_url }}">{{ f.user }}</a> for: <strong><em>{{ f.reason }}</em></strong></li>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                        </li>
+                    </ul>
+                </div>
             </td>
             <td style="text-align:center;">
                 {% if user.is_authenticated %}
                 <div class="btn-group">
-                    <a class="btn btn-mini tip-top" title="See detailed attribute information"><i class="icon icon-info-sign"></i></a>
-                    <a class="btn btn-mini tip-top" title="Flag" href="#flag-modal" data-toggle="modal" onClick="SetFlags('attr', {{ a.id }})"><i class="icon icon-flag"></i>{% if a.attributeflag_set.count > 0 %}<span class="label label-important">{{ a.attributeflag_set.count }}</span>{% endif %}</a>
-                    <a class="btn btn-mini tip-top" title="Up Vote"><i class="icon icon-thumbs-up"></i></a>
-                    <a class="btn btn-mini tip-top" title="Down Vote"><i class="icon icon-thumbs-down"></i></a>
+                    <a href="#collapse_{{ a.pk }}" data-toggle="collapse" class="btn btn-mini tip-top" title="See detailed attribute information"><i class="icon icon-info-sign"></i></a>
+                    <a class="btn btn-mini tip-top" title="Flag" href="#flag-modal" data-toggle="modal" onClick="SetFlags('attr', {{ a.id }})"><i class="icon icon-flag"></i></a>
+                    <!--<a class="btn btn-mini tip-top" title="Up Vote"><i class="icon icon-thumbs-up"></i></a>-->
+                    <!--<a class="btn btn-mini tip-top" title="Down Vote"><i class="icon icon-thumbs-down"></i></a>-->
                     {% if user.is_staff %}
                         <a class="btn btn-mini tip-top" title="Delete"><i class="icon icon-trash"></i></a>
                     {% endif %}
@@ -32,6 +49,7 @@
                 {% endif %}
             </td>
         </tr>
+        
         {% endfor %}
     </table>
 </div>
