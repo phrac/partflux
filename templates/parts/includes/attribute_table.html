@@ -34,7 +34,6 @@
                 </div>
             </td>
             <td style="text-align:center;">
-                {% if user.is_authenticated %}
                 <div class="btn-group">
                     <a href="#collapse_{{ a.pk }}" data-toggle="collapse" class="btn btn-mini tip-top" title="See detailed attribute information"><i class="icon icon-info-sign"></i></a>
                     <a class="btn btn-mini tip-top" title="Flag" href="#flag-modal" data-toggle="modal" onClick="SetFlags('attr', {{ a.id }})"><i class="icon icon-flag"></i></a>
@@ -44,9 +43,6 @@
                         <a class="btn btn-mini tip-top" title="Delete"><i class="icon icon-trash"></i></a>
                     {% endif %}
                 </div>
-                {% else %}
-                <a href="{% url django.contrib.auth.views.login %}?next={{request.path}}">Sign In</a>
-                {% endif %}
             </td>
         </tr>
         
