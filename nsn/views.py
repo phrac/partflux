@@ -13,11 +13,23 @@ from django.contrib.auth.models import User
 from nsn.models import Nsn, Fsc, Mrc
 
 def index(request):
-    nsn_list = Nsn.objects.all()[:250]
+    nsns = Nsn.objects.all().only('number').order_by('number')
     
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+
+    p = Paginator(nsns, 25, request=request)
+    try:
+        nsn_list = p.page(page)
+    except (PageNotAnInteger, EmptyPage):
+        nsn_list = p.page(1)
 
     return render_to_response('nsn/index.html',
-                              {'nsn_list': nsn_list},
+                              {'nsn_list': nsn_list,
+                               'page_num': page,
+                              },
                               context_instance=RequestContext(request))
                               
 def detail(request, nsn_id, nsn_number):

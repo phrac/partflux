@@ -88,48 +88,21 @@
 
     </div>
 
-
     <div class="span3">
         <div class="widget-box">
             <div class="widget-title">
                 <span class="icon">
                     <i class="icon-random"></i>
                 </span>
-                <h5>Parts Added By Me</h5>
+                <h5>Stats</h5>
                 <div class="buttons">
                     <a class="btn btn-inverse btn-mini tip-left" title="Add a Part" href="#add-xref" data-toggle="modal"><i class="icon-plus-sign icon-white"></i></a>
                 </div>
             </div>
-            {% if user_parts %}
             <div class="widget-content nopadding">
-                <table class="table table-bordered data-table-small">
-                    <thead>
-                        <tr>
-                            <th>Part #</th>
-                            <th>Tools</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for p in user_parts %}
-                        <tr>
-                            <td>
-                                <a href="{{ p.get_absolute_url }}">{{ p.number }}</a>
-                            </td>
-                            <td>
-                                <a href="#">tools</a>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-            {% else %}
-            <div class="widget-content">
-                <h5>You haven't added any parts.</h5>
-            </div>
-            {% endif %}
-        </div>       
+
+            </div>       
+        </div>
     </div>
-</div>
 </div>
 {% endblock %}

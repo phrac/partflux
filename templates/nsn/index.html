@@ -14,6 +14,8 @@
 
 {% block page_title %}NSN Listing{% endblock %}
 
+{% block title %}NSN Listing - Page {{ page_num }} | Part Engine {% endblock %}
+
 {% block content %}
 <div class="row-fluid">
     <div class="span12">
@@ -25,7 +27,7 @@
                 <h5>NSN Listing</h5>
             </div>
             <div class="widget-content nopadding">
-                <table class="table table-bordered data-table">
+                <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th>Part #</th>
@@ -34,7 +36,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for nsn in nsn_list %}
+                        {% for nsn in nsn_list.object_list %}
                         <tr>
                             <td>
                                 <a href="{{ nsn.get_absolute_url }}">{{ nsn.number }}</a>
@@ -48,7 +50,8 @@
                         </tr>
                         {% endfor %}
                     </tbody>
-                </table>							
+                </table>
+                {{ nsn_list.render }}							
             </div>
         </div>
     </div>
