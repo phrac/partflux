@@ -20,7 +20,7 @@ def index(request):
     except ValueError:
         page = 1
 
-    p = Paginator(nsns, 25, request=request)
+    p = Paginator(nsns, 25, request=request, relname='nsn_nsn')
     try:
         nsn_list = p.page(page)
     except (PageNotAnInteger, EmptyPage):
