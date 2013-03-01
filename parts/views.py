@@ -19,10 +19,23 @@ from users.models import UserProfile, UserFavoritePart
 import json
 
 def index(request):
-    parts_list = Part.objects.all().order_by('-created_at')[:100]
+    parts = Part.objects.all().order_by('-created_at')
+
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+
+    p = Paginator(parts, 25, request=request, relname='parts_part')
+    try:
+        parts_list = p.page(page)
+    except (PageNotAnInteger, EmptyPage):
+        parts_list = p.page(1)
 
     return render_to_response('parts/index.html',
-                              {'parts_list': parts_list},
+                              {'parts_list': parts_list,
+                               'page_num': page,
+                              },
                               context_instance=RequestContext(request))
 
 
