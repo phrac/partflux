@@ -160,6 +160,9 @@ em { font-style: italic; }
 #follow .gplus { color: #999; text-align: center; border-radius: 6px; }
 #follow .gplus a { color: #999; padding: 10px 0 10px 37px; background: transparent url("../images/glyphicons/glyphicons_362_googleplus_alt.png") no-repeat left center; }
 #follow .gplus a:hover { color: #F90101; }
+#follow .blog { color: #999; text-align: center; border-radius: 6px; }
+#follow .blog a { color: #999; padding: 10px 0 10px 37px; background: transparent url("../images/glyphicons/glyphicons_330_blog.png") no-repeat left center; }
+#follow .blog a:hover { color: #F90101; }
 
 .push { height: 37px; } /* height of #foot */
 

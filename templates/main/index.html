@@ -53,6 +53,9 @@
 					<form class="search" method="get" action="{% url search.views.results %}">
 						<input id="iemail" autocomplete="off" name="q" type="text" placeholder="Search parts or NSNs"><input style="margin-top:-10px;" class="btn btn-subscribe btn-xlarge" type="submit" value="Search!">
 					</form>
+					<h4 class="pitch">
+					   Or you can <a href="{% url parts.views.index %}">browse parts</a>, <a href="{% url nsn.views.index %}">NSN data</a>, or <a href="{% url partgroups.views.index %}">assemblies</a>. Also <a href="/faq/">check out our F.A.Q.</a>
+					</h4>
 				</div>
 			</div>
 			<div id="features" class="container">
@@ -112,10 +115,13 @@
 			<div id="follow" class="container">
 				<div class="row">
 					<div class="span5 twitter">
-						<a href="http://twitter.com/partfindr" title="Follow us on Twitter" rel="nofollow" target="_blank">Follow us on Twitter</a>
+						<a href="http://twitter.com/partengine" title="Follow us on Twitter" rel="nofollow" target="_blank">Follow us on Twitter</a>
 					</div>
 					<div class="span5 gplus">
 						<a href="https://plus.google.com/108549216163192075170/" title="Join us on Google+" rel="nofollow" target="_blank">Join us on Google+</a>
+					</div><br />
+					<div class="span5 blog offset2">
+						<a href="http://blog.partengine.org" title="Check out our blog" rel="nofollow" target="_blank">Check out our blog</a>
 					</div>
 				</div>
 			</div>
@@ -134,52 +140,6 @@
 						<p class="copyright">&copy; 2012 - {% now "Y" %} Part Engine</p>
 					</div>
 				</div>
-			</div>
-		</div>
-		<div id="privacy_policy" class="modal hide fade">
-			<div class="modal-header">
-				<a class="close" data-dismiss="modal">×</a>
-				<h3>Privacy policy</h3>
-			</div>
-			<div class="modal-body">
-				<p>Welsh onion sea lettuce mung bean garbanzo asparagus seakale fennel tomato beetroot radicchio. Taro sweet pepper chicory mustard lettuce arugula spinach zucchini horseradish turnip greens bitterleaf tigernut jícama. Sweet pepper celtuce cabbage scallion cauliflower garbanzo leek swiss chard soybean broccoli gumbo bush tomato. Jícama broccoli kohlrabi bunya nuts napa cabbage watercress cress amaranth courgette. Green bean quandong maize prairie turnip aubergine welsh onion celery broccoli rabe.</p>
-				<p>Seakale fava bean swiss chard rock melon coriander turnip cabbage tomato. Water chestnut azuki bean pea salsify winter purslane chickweed garlic gram peanut bell pepper. Desert raisin lotus root dandelion seakale jícama soko bush tomato prairie turnip burdock zucchini nori courgette sea lettuce cress celery bok choy broccoli asparagus.</p>
-				<p>Komatsuna eggplant pumpkin asparagus chard daikon fava bean amaranth gram. Nori grape quandong avocado parsley taro lotus root maize mustard. Salad spinach catsear plantain soko nori peanut bell pepper gourd.</p>
-				<p>Lotus root beetroot maize tomatillo komatsuna parsley bush tomato celtuce summer purslane epazote mung bean chickweed yarrow bitterleaf. Collard greens rutabaga onion bok choy water chestnut tomatillo lotus root mustard komatsuna yarrow horseradish endive napa cabbage cauliflower brussels sprout beetroot. Pea green bean salsify spinach lettuce cucumber aubergine bok choy celtuce nori artichoke maize fennel kohlrabi. Salsify turnip greens radish bamboo shoot groundnut avocado horseradish leek salad spring onion maize gram celtuce eggplant. Parsley sorrel kombu beetroot horseradish burdock chickpea cabbage bush tomato carrot chicory coriander courgette kale endive.</p>
-			</div>
-		</div>
-		<div id="contact_us" class="modal hide fade">
-			<div class="modal-header">
-				<a class="close" data-dismiss="modal">×</a>
-				<h3>Contact us</h3>
-			</div>
-			<div class="modal-body">
-				<form class="form-horizontal">
-					<fieldset>
-						<div class="control-group">
-							<label class="control-label" for="icontact_name">Name:</label>
-							<div class="controls">
-								<input type="text" class="input-xlarge" id="icontact_name" name="name">
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label" for="icontact_email">Email:</label>
-							<div class="controls">
-								<input type="text" class="input-xlarge" id="icontact_email" name="email">
-							</div>
-						</div>
-						<div class="control-group">
-							<label class="control-label" for="icontact_message">Message</label>
-							<div class="controls">
-								<textarea class="input-xlarge" id="icontact_message" name="message" rows="3"></textarea>
-							</div>
-						</div>
-						<div class="form-actions">
-							<button type="submit" class="btn btn-primary">Send message</button>
-							<button class="btn" data-dismiss="modal">Cancel</button>
-						</div>
-					</fieldset>
-				</form>
 			</div>
 		</div>
 		<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
