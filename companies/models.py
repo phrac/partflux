@@ -9,7 +9,7 @@ class Company(models.Model):
     url = models.URLField(null=True, blank=True)
     wikipedia_url = models.URLField(null=True, blank=True)
     facebook_url = models.URLField(null=True, blank=True)
-    twitter_url = models.URLField(null=True, blank=True)
+    twitter_name = models.CharField(max_length=32, null=True, blank=True)
     linkedin_url = models.URLField(null=True, blank=True) 
     email = models.EmailField(max_length=32, null=True, blank=True)
     phone = models.CharField(max_length=16, null=True, blank=True)

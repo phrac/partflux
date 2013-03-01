@@ -182,6 +182,7 @@ INSTALLED_APPS = (
     'markdown_deux',
     'haystack',
     'storages',
+    'twitter_tag',
     # partfindr apps    
     'main',
     'parts',
@@ -207,6 +208,16 @@ AUTH_PROFILE_MODULE = 'users.UserProfile'
 # django-storages settings
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 AWS_IS_GZIPPED = True
+
+#Twitter OAuth Settings
+# Your access token: Access token
+TWITTER_OAUTH_TOKEN = '1228693177-QdV2B5cgs4zM4rt43QgdRH1XcIjBQr8ne32g86I'
+# Your access token: Access token secret
+TWITTER_OAUTH_SECRET = 'bcDxxq6ocaBNBQRMJyYvQXsbmpCxumTH9BBuhOqmUM'
+# OAuth settings: Consumer key
+TWITTER_CONSUMER_KEY = 'vGm8CZhCn1T4bbdvL99A'
+# OAuth settings: Consumer secret
+TWITTER_CONSUMER_SECRET = 'D0oseP8Rg1FXoJycv9qh2lUTAH8sNfGkD8YWEStuL5o'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

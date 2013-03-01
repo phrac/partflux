@@ -84,7 +84,7 @@
                 {% thumbnail company.logo "200" as im %}
                 <img class="push-right" src="{{ im.url }}" alt="{{ company.name }} logo" />
                 {% endthumbnail %}
-                {% endif %}
+                {% endif %}<br />
                 {% if company.url %}{{ company.url|urlize }}<br />{% endif %}
                 {% if company.address1 %}{{ company.address1 }}<br />{% endif %}
                 {% if company.address2 %}{{ company.address2 }}<br />{% endif %}
@@ -101,6 +101,22 @@
             </div>
         </div>
 
+        <!-- twitter -->
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon">
+                    <img src="{{ STATIC_URL }}images/glyphicons/glyphicons_392_twitter.png" alt="twitter" />
+                </span>
+                <h5>Recent tweets by {{ company.name }}</h5>
+            </div>
+            <div class="widget-content">
+                {% load twitter_tag %}
+                {% get_tweets for "{{ company.twitter_url }}" as tweets limit 10 %}
+                {% for tweet in tweets %}
+                <div class="alert alert-info alert-block">{{ tweet.html|safe }}</div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
