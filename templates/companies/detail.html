@@ -95,7 +95,7 @@
                 {% if company.wikipedia_url %}<a href="{{ company.wikipedia_url }}">Wikipedia Page</a><br />{% endif %}
                 <br /><br />
                 <table>
-                {% if company.twitter_url %}<tr><td><a href="{{ company.twitter_url }}"><img src="{{ STATIC_URL }}images/glyphicons/glyphicons_392_twitter.png" alt="twitter" /></td><td><a href="{{ company.twitter_url }}">Follow on Twitter</a></td></tr>{% endif %}
+                {% if company.twitter_name %}<tr><td><a href="http://twitter.com/{{ company.twitter_name }}"><img src="{{ STATIC_URL }}images/glyphicons/glyphicons_392_twitter.png" alt="twitter" /></td><td><a href="http://twitter.com/{{ company.twitter_name }}">Follow on Twitter</a></td></tr>{% endif %}
                 {% if company.facebook_url %}<tr><td><a href="{{ company.facebook_url }}"><img src="{{ STATIC_URL }}images/glyphicons/glyphicons_390_facebook.png" alt="twitter" /></td><td>&nbsp;<a href="{{ company.twitter_url }}">Like on Facebook</a></li></td></tr>{% endif %}
                 </table>
             </div>
@@ -111,7 +111,7 @@
             </div>
             <div class="widget-content">
                 {% load twitter_tag %}
-                {% get_tweets for "{{ company.twitter_url }}" as tweets limit 10 %}
+                {% get_tweets for company.twitter_name as tweets limit 10 %}
                 {% for tweet in tweets %}
                 <div class="alert alert-info alert-block">{{ tweet.html|safe }}</div>
                 {% endfor %}
