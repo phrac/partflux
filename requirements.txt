@@ -9,7 +9,7 @@ django-debug-toolbar==0.9.4
 -e git://github.com/toastdriven/django-haystack.git@ac6bbfbcd30f16768b4bfda1f0b1abf7a0aa34ff#egg=django_haystack-dev
 django-markdown-deux==1.0.3
 django-orm==2.0.5
--e git://github.com/partengine/django-pure-pagination.git@a4975d3f2d1377ae046d55ad125e0a4dc3bd4c45#egg=django_pure_pagination-dev
+-e git://github.com/partengine/django-pure-pagination@9265315c7c27bc4d870547a419d99ef7f009ccff#egg=django_pure_pagination-dev
 django-registration==0.8
 django-storages==1.1.6
 django-tastypie==0.9.12

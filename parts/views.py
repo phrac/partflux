@@ -26,7 +26,7 @@ def index(request):
     except ValueError:
         page = 1
 
-    p = Paginator(parts, 25, request=request, relname='parts_part')
+    p = Paginator(parts, 25, request=request, reltuple=True )
     try:
         parts_list = p.page(page)
     except (PageNotAnInteger, EmptyPage):
