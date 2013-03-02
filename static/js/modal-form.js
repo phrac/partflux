@@ -28,6 +28,8 @@ $(document).ready(function() {
                     sticky: false
                 });
                 $('button').button('reset');
+                $('.control-group').removeClass('success');
+                $('.control-group').removeClass('error');
                 $.getScript('/static/js/unicorn.tables.js');
             },
             error: function(xhr, textStatus, error) {
@@ -38,7 +40,9 @@ $(document).ready(function() {
                     sticky: false
                 });
                 $('button').button('reset');
-                
+                $('.control-group').removeClass('success');
+                $('.control-group').removeClass('error');
+
             }
         });
         return false;

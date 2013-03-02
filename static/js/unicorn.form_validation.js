@@ -18,6 +18,7 @@ $(document).ready(function(){
         errorClass: "help-inline",
         errorElement: "span",
         highlight:function(element, errorClass, validClass) {
+            $(element).parents('.control-group').removeClass('success');
             $(element).parents('.control-group').addClass('error');
         },
         unhighlight: function(element, errorClass, validClass) {
@@ -46,6 +47,7 @@ $(document).ready(function(){
         errorClass: "help-inline",
         errorElement: "span",
         highlight:function(element, errorClass, validClass) {
+            $(element).parents('.control-group').removeClass('success');
             $(element).parents('.control-group').addClass('error');
         },
         unhighlight: function(element, errorClass, validClass) {
@@ -58,24 +60,25 @@ $(document).ready(function(){
         rules:{
             key:{
                 required: true,
-        minlength:6,
-        maxlength:64
+                minlength:4,
+                maxlength:64
             },
-        value:{
-            required:true,
-        minlength:1,
-        maxlength:128,
-        }
+            value:{
+                required:true,
+                minlength:2,
+                maxlength:128,
+            }
         },
         errorClass: "help-inline",
         errorElement: "span",
         highlight:function(element, errorClass, validClass) {
+            $(element).parents('.control-group').removeClass('success');
             $(element).parents('.control-group').addClass('error');
         },
         unhighlight: function(element, errorClass, validClass) {
             $(element).parents('.control-group').removeClass('error');
             $(element).parents('.control-group').addClass('success');
-        }
+        },
     });
 
     $("#image-form").validate({
@@ -88,11 +91,20 @@ $(document).ready(function(){
         errorClass: "help-inline",
         errorElement: "div",
         highlight:function(element, errorClass, validClass) {
+            $(element).parents('.control-group').removeClass('success');
             $(element).parents('.control-group').addClass('error');
         },
         unhighlight: function(element, errorClass, validClass) {
             $(element).parents('.control-group').removeClass('error');
             $(element).parents('.control-group').addClass('success');
+        }
+    });
+
+    $('.modal-form').bind('change keyup', function() {
+        if($(this).validate().checkForm()) {
+            $('.modal-form-submit').attr('disabled', false);
+        } else {
+            $('.modal-form-submit').attr('disabled', true);
         }
     });
 });
