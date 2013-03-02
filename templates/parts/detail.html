@@ -192,13 +192,6 @@
             {% if mlt %}
             <div class="widget-content nopadding">
                 <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Part #</th>
-                            <th>Description</th>
-                            <th>Company</th>
-                        </tr>
-                    </thead>
                     <tbody>
                         {% for p in mlt %}
                         <tr>
@@ -206,7 +199,7 @@
                                 <a href="{{ p.object.get_absolute_url }}">{{ p.object.number }}</a>
                             </td>
                             <td>
-                                {{ p.object.description }}
+                                {{ p.object.description|truncatewords:5 }}
                             </td>
                             <td>
                                 <a href="{{ p.object.company.get_absolute_url }}">{{ p.object.company }}</a>
