@@ -7,7 +7,7 @@
     <div class="modal-body">
         <p>Purchase links are links to online retailers. These links assist users in purchasing the parts.
         </p>
-        <form id="buylink-form" name="buylink-form" class="form-horizontal" autocomplete="off" method="post">
+        <form id="buylink-form" name="buylink-form" class="modal-form form-horizontal" autocomplete="off" method="post">
             {% csrf_token %}
 
             <div class="control-group">
@@ -39,7 +39,11 @@
 
         <div class="modal-footer">
             <input type="hidden" name="buylink_button" value="1" />
+<<<<<<< local
             <button id="save-buylink" disabled="disabled" type="submit" data-loading-text="Saving..." class="modal-form-submit btn btn-inverse">Save Link</button>
+=======
+            <button id="save-buylink" type="submit" data-loading-text="Saving..." class="modal-form-submit btn btn-inverse">Save Link</button>
+>>>>>>> other
             <button id="cancel-buylink" class="btn" data-dismiss="modal">Cancel</button>
         </form>
     </div>
