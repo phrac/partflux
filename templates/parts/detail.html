@@ -187,9 +187,9 @@
                 <span class="icon">
                     <i class="icon-th"></i>
                 </span>
-                <h5>Part Statistics</h5>
+                <h5>Similar Parts</h5>
             </div>
-            {% if statistics %}
+            {% if mlt %}
             <div class="widget-content nopadding">
                 <table class="table table-striped">
                     <thead>
@@ -200,16 +200,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for xref in xrefs %}
+                        {% for p in mlt %}
                         <tr>
                             <td>
-                                <a href="{{ xref.xrefpart.get_absolute_url }}">{{ xref.xrefpart.number }}</a>
+                                <a href="{{ p.object.get_absolute_url }}">{{ p.object.number }}</a>
                             </td>
                             <td>
-                                {{ xref.xrefpart.description }}
+                                {{ p.object.description }}
                             </td>
                             <td>
-                                <a href="{{ xref.xrefpart.company.get_absolute_url }}">{{ xref.xrefpart.company }}</a>
+                                <a href="{{ p.object.company.get_absolute_url }}">{{ p.object.company }}</a>
                             </td>
                         </tr>
                         {% endfor %}
@@ -218,7 +218,7 @@
             </div>
             {% else %}
             <div class="widget-content">
-                <div class="alert alert-error">Part statistics coming soon.</div>
+                <div class="alert alert-error">No similar parts found</div>
             </div>
             {% endif %}
         </div>

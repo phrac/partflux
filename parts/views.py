@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.contrib import messages
 from pure_pagination import Paginator, PageNotAnInteger, EmptyPage
+from haystack.query import SearchQuerySet
 
 from django.contrib.auth.models import User
 from django.core.files.storage import default_storage
@@ -46,7 +47,7 @@ def redirect_new_page(request, company_slug, part_slug):
     
 def detail(request, part_id, company_slug, part_slug):
     p = get_object_or_404(Part, id=part_id)
-    #c = get_object_or_404(Company, id=p.company.id)
+    mlt = SearchQuerySet().more_like_this(p)[:10]
 
     if request.user.is_authenticated() and UserFavoritePart.objects.filter(user=request.user, part=p).count() == 1:
         fave = UserFavoritePart.objects.get(user=request.user, part=p)
@@ -124,6 +125,7 @@ def detail(request, part_id, company_slug, part_slug):
                                'is_user_favorite' : is_user_favorite,
                                'fave': fave,
                                'user_assemblies': user_asm,
+                               'mlt': mlt,
                               },
                               context_instance=RequestContext(request))
 
