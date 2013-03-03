@@ -1,0 +1,59 @@
+{% extends "base/base_MAIN.html" %}
+
+{% block head %}
+<script src="{{ STATIC_URL }}js/jquery.dataTables.min.js"></script>
+<script src="{{ STATIC_URL }}js/unicorn.tables.js"></script>
+{% endblock %}
+
+{% block nsn_active %}active open{% endblock %}
+
+{% block breadcrumb_links %}
+    <a href="{% url nsn.views.index %}" title="NSN Listing" class="tip-bottom"><i class="icon-plane"></i> NSN</a>
+    <a href="#" class="current">NSN Listing</a>
+{% endblock %}
+
+{% block page_title %}NSN Listing{% endblock %}
+
+{% block title %}NSN Listing - Page {{ page_num }} | Part Engine {% endblock %}
+
+{% block content %}
+<div class="row-fluid">
+    <div class="span12">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon">
+                    <i class="icon-th"></i>
+                </span>
+                <h5>NSN Listing</h5>
+            </div>
+            <div class="widget-content nopadding">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Part #</th>
+                            <th>Description</th>
+                            <th>Federal Supply Code (FSC)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for nsn in nsn_list.object_list %}
+                        <tr>
+                            <td>
+                                <a href="{{ nsn.get_absolute_url }}">{{ nsn.number }}</a>
+                            </td>
+                            <td>
+                                {{ nsn.description|truncatewords:10 }}
+                            </td>
+                            <td>
+                                <a href="#">{{ nsn.fsc }}</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {{ nsn_list.render }}							
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

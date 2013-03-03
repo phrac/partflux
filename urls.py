@@ -2,7 +2,7 @@ from django.conf.urls.defaults import patterns, include, url
 from django.contrib.sitemaps import FlatPageSitemap, GenericSitemap
 from django.contrib import admin
 from tastypie.api import Api
-from partfindr.api import PartResource, AttributeResource, CompanyResource, UserResource
+from api import PartResource, AttributeResource, CompanyResource, UserResource
 
 from parts.feeds import LatestPartsFeed
 
@@ -29,15 +29,13 @@ urlpatterns = patterns('',
     (r'^comments/', include('django.contrib.comments.urls')),
     
     # URLs for NSN
-    #url(r'^nsn/', include('nsn.urls')),
+    url(r'^nsn/', include('nsn.urls')),
     
     # URLs for search
-    #url(r'^search/', include('search.urls')),
-    url(r'^search/', include('googlesearch.urls')),
+    url(r'^search/', include('search.urls')),
 
     # URLs for part groups
-    url(r'^partgroups/$', 'partgroups.views.index'),
-    url(r'^partgroups/(?P<partgroup_id>\d+)/$', 'partgroups.views.detail'), 
+    url(r'^partgroups/', include('partgroups.urls')),
     
     # URLs for companies
     url(r'^companies/', include('companies.urls')),

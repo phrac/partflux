@@ -1,10 +1,11 @@
 syntax: glob
 
+.nfs*
 *.swp
 *.lock
 *.out
 *.pyc
 *~
 *.swo
-settings.py
+settings_local.py
 

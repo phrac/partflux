@@ -1,0 +1,62 @@
+<div class="modal hide" id="buylink-modal">
+    {% if user.is_authenticated %}
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+        <h3>Add a new purchase link</h3>
+    </div>
+    <div class="modal-body">
+        <p>Purchase links are links to online retailers. These links assist users in purchasing the parts.
+        </p>
+        <form data-div-update="#buylink-table" data-gritter-title-success="Purchasing Information Added" data-gritter-msg-success="Thanks for contributing! Your reputation has been incremented" data-gritter-error-title="Something went wrong" id="buylink-form" name="buylink-form" class="modal-form form-horizontal" autocomplete="off" method="post">
+            {% csrf_token %}
+
+            <div class="control-group">
+                <label class="control-label" for="id_url">URL</label>
+                <div class="controls">
+                    <input type="text" name="url" id="url" />
+                    <p>Enter the full URL to a page where part # {{ part.number }} can be purchased.</p>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="id_company">Company Name</label>
+                <div class="controls">
+                    {{ buylinkform.company }}
+                    <p>Enter the name of the company selling the part, <strong>not the manufacturer of the part!</strong></p>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="id_price">Current Price</label>
+                <div class="controls">
+                    <div class="input-prepend">
+                        <span class="add-on">$</span><input name="price" class="span2" id="id_price" size="16" type="text">
+                        <p>Enter the price of the item.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <input type="hidden" name="buylink_button" value="1" />
+            <button id="save-buylink" disabled="disabled" type="submit" data-loading-text="Saving..." class="modal-form-submit btn btn-inverse">Save Link</button>
+            <button id="cancel-buylink" class="btn" data-dismiss="modal">Cancel</button>
+        </form>
+    </div>
+
+    <script type="text/javascript">
+        $('#cancel-buylink').click(function() {    
+            $('#buylink-form').each(function() {this.reset();});
+        });
+    </script>
+
+    <script type="text/javascript">
+        $('#buylink-modal').on('shown', function () {
+            $('#id_url').focus();
+        })
+    </script>
+    
+    {% else %}
+    {% include 'includes/login_modal.html' %}
+    {% endif %}
+</div>

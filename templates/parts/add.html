@@ -1,72 +1,81 @@
 {% extends "base/base_MAIN.html" %}
 
 {% block breadcrumb_links %}
-    <li>
-        <a href="{% url parts.views.index %}">Parts</a>
-        <span class="divider">></span>
-    </li>
-    <li class="active">Add new part</li>
+<a href="{% url parts.views.index %}" title="Parts" class="tip-bottom"><i class="icon-cog"></i> Parts</a>
+<a href="#" class="current">Add a part</a>
 {% endblock %}
 
+{% block right_buttons %}{% endblock %}
+
+{% block parts_active %}active open{% endblock %}
+
+{% block page_title %}Add a new part{% endblock %}
+
 {% block content %}
-<div class="container">
-    <div class="page-header">
-        <h1>Add a new part</h1>
-    </div>
-    <div class="row">
-        <div class="span6">
-            {% if user.is_authenticated %}
-            <form class="well form-horizontal" action="" method="post" autocomplete="off">
-                {% csrf_token %}
-                <div class="control-group">
-                    <label class="control-label" for="id_part">Part #</label>
-                    <div class="controls">
-                        {{ partform.part }}
+<div class="row-fluid">
+    <div class="span7">
+        {% if user.is_authenticated %}
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon">
+                    <i class="icon-th"></i>
+                </span>
+                <h5>Add a new part</h5>
+            </div>
+            <div class="widget-content nopadding">
+                <form class="well form-horizontal" action="" method="post" autocomplete="off">
+                    {% csrf_token %}
+                    <div class="control-group">
+                        <label class="control-label" for="id_part">Part #</label>
+                        <div class="controls">
+                            {{ partform.part }}
+                        </div>
                     </div>
-                </div>
-                
-                <div class="control-group">
-                    <label class="control-label" for="id_company">Company Name</label>
-                    <div class="controls">
-                        {{ partform.company }}
+
+                    <div class="control-group">
+                        <label class="control-label" for="id_company">Company Name</label>
+                        <div class="controls">
+                            {{ partform.company }}
+                        </div>
                     </div>
-                </div>
-                
-                <div class="control-group">
-                    <label class="control-label" for="id_description">Description</label>
-                    <div class="controls">
-                        {{ partform.desc }}
+
+                    <div class="control-group">
+                        <label class="control-label" for="id_description">Description</label>
+                        <div class="controls">
+                            {{ partform.desc }}
+                        </div>
                     </div>
-                </div>
-                
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">Add Part</button>
-                    <button type="submit" class="btn btn-default">Clear Form</button>
-                </div>
-            </form>
-        
-            {% else %}
-            <h3 class="add">{% include "partials/sign_in.html" with action="add a new part." %}</h3>
-            {% endif %}
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-inverse">Add Part</button>
+                        <button type="submit" class="btn btn-default" onclick="this.form.reset()">Clear Form</button>
+                    </div>
+                </form>
+            </div>
         </div>
 
+        {% else %}
+        <h3 class="add">{% include "includes/sign_in.html" with action="add a new part." %}</h3>
+        {% endif %}
+    </div>
 
-        <div class="span6">
-                <h3>Tips for adding parts <br /><small>Make it easy for users to find the information they need.</h3>
-                <div class="right_articles">
-                    <dl class="dl-horizontal">
-                        <dt>Part #:</dt>
-                        <dd>Make sure the new part has the correct part number, including any spaces,
-                        dashes, periods, etc.</dd>
-                        <dt>Company:</dt>
-                        <dd>Double check the manufacturer of the part and ensure that it is complete and spelled correctly.</dd>
-                        <dt>Description:</dt>
-                        <dd>Provide as much detail as possible so that users can easily find your part in search results.</dd>
-                        <dt>Attributes:</dt>
-                        <dd>After creating a part number, be sure to enter key information such as
-                        <strong>weight</strong>, <strong>finish</strong>, <strong>color</strong>, etc.</dd>
-                    </dl>
-                </div>
+
+    <div class="well span5">
+        <h2>Tips for adding parts <small>Make it easy for users to find the information they need.</small></h2>
+            <div>
+                <dl class="dl-horizontal">
+                    <dt>Part #:</dt>
+                    <dd>Make sure the new part has the correct part number, including any spaces,
+                    dashes, periods, etc.</dd>
+                    <dt>Company:</dt>
+                    <dd>Double check the manufacturer of the part and ensure that it is complete and spelled correctly.</dd>
+                    <dt>Description:</dt>
+                    <dd>Provide as much detail as possible so that users can easily find your part in search results.</dd>
+                    <dt>Attributes:</dt>
+                    <dd>After creating a part number, be sure to enter key information such as
+                    <strong>weight</strong>, <strong>finish</strong>, <strong>color</strong>, etc.</dd>
+                </dl>
+            </div>
         </div>
     </div>
 </div>

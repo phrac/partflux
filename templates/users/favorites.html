@@ -1,0 +1,135 @@
+{% extends "base/base_MAIN.html" %}
+
+{% load humanize %}
+{% load parttags %}
+
+
+{% block title %}
+{{ request.user }}'s Favorites | Part Engine
+{% endblock %}
+
+{% block meta_description %}{{ part.number }} by {{ part.company.name|safe }} : {{ part.description }}{% endblock %}
+
+{% block parts_active %}active open{% endblock %}
+
+{% block breadcrumb_links %}
+    <a href="{% url users.views.index %}" title="Users" class="tip-bottom"><i class="icon-user"></i> Users</a>
+    <a href="{% url users.views.index %}" title="{{ request.user }}'s Profile" class="tip-bottom"><i class="icon-user"></i> {{ request.user }}</a>
+    <a href="#" class="current"><i class="icon-star"></i>Favorites</a>
+{% endblock %}
+
+{% block page_title %}{{ request.user }}'s Favorites Dashboard{% endblock %}
+
+
+{% block right_buttons %}
+{% include 'includes/share_links.html' %}
+{% endblock %}
+
+{% block head %}
+<link href="{{ STATIC_URL }}css/bootstrap-editable.css" rel="stylesheet">
+<script src="{{ STATIC_URL }}js/jquery.uniform.js"></script>
+<script src="{{ STATIC_URL }}js/select2.min.js"></script>
+<script src="{{ STATIC_URL }}js/jquery.dataTables.min.js"></script>
+<script src="{{ STATIC_URL }}js/unicorn.tables.js"></script>
+<script src="{{ STATIC_URL }}js/bootstrap-editable.min.js"></script>
+<script src="{{ STATIC_URL }}js/modal-form.js"></script>
+<script type="text/javascript">
+    $(document).on("click", ".open-notes-modal", function () {
+     var notes = $(this).data('notes');
+     var id = $(this).data('id');
+     $("#id_notes_ta").val( notes );
+     $("#fave-id-hidden").val( id );
+     $('#edit-notes-modal').modal('show');
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+        $('.data-table-small').dataTable({
+                "bJQueryUI": true,
+                "sPaginationType": "two_button",
+                "sDom": '<""l>t<"F"p>',
+                "bLengthChange": false,
+                });
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+
+<div id="modals">
+    {% csrf_token %}
+    {% include 'parts/includes/modals/delete_fave-modal.html' %}
+    {% include 'users/includes/modals/edit-notes.html' %}
+</div>
+
+<div class="row-fluid">
+
+</div>
+<div class="row-fluid">
+    <div class="span9">
+        <div class="widget-box collapsible">
+            <div class="widget-title">
+            <a href="#faveparts" data-toggle="collapse">
+                <span class="icon">
+                    <i class="icon-list-alt"></i>
+                </span>
+                <h5>My Starred Parts</h5>
+            </a>
+            <div class="buttons">
+                <a class="btn btn-inverse btn-mini tip-left" title="New Attribute" href="#attribute-modal" data-toggle="modal"><i class="icon-plus-sign icon-white"></i></a>
+            </div>
+            </div>
+            <div id="faveparts">
+                <div id="faveparts-table">
+                    {% include 'users/includes/faveparts-table.html' %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="span3">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon">
+                    <i class="icon-random"></i>
+                </span>
+                <h5>Parts Added By Me</h5>
+                <div class="buttons">
+                    <a class="btn btn-inverse btn-mini tip-left" title="Add a Part" href="#add-xref" data-toggle="modal"><i class="icon-plus-sign icon-white"></i></a>
+                </div>
+            </div>
+            {% if user_parts %}
+            <div class="widget-content nopadding">
+                <table class="table table-bordered data-table-small">
+                    <thead>
+                        <tr>
+                            <th>Part #</th>
+                            <th>Tools</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for p in user_parts %}
+                        <tr>
+                            <td>
+                                <a href="{{ p.get_absolute_url }}">{{ p.number }}</a>
+                            </td>
+                            <td>
+                                <a href="#">tools</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="widget-content">
+                <h5>You haven't added any parts.</h5>
+            </div>
+            {% endif %}
+        </div>       
+    </div>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends "base/base_MAIN.html" %}
+
+{% block home_active %}class="active"{% endblock %}
+
+{% block no_breadcrumb %} {% endblock %}
+{% block no_sidebar %} {% endblock %}
+
+{% block content %}
+{% load humanize %}
+<div class="container">
+    <div class="row-fluid">
+        <div class="search hero-unit-white hero-unit" style="text-align:center">
+            <h2>Search {{ part_count|intcomma }} parts and {{ nsn_count|intcomma }} NSNs</h2><br />
+            <form class="search" method="get" action="{% url search.views.results %}">
+                <input style="width:75%; height:45px; font-size:1.5em;" autocomplete="off" name="q" type="text" /> <button style="height:45px; margin-bottom:10px;" class="btn btn-huge btn-primary" type="submit"><i class="icon-search icon-white"></i> Search</button>
+            </form>
+        </div>
+    </div>
+    
+    <div class="row-fluid">
+        <div class="well span10 offset1">
+            <h2>Our mission</h2>
+            <p class="justify">Part Engine's goals are lofty: <strong>index every part number in the world.</strong>
+            This goal is only possible with help from our users. We need help to enter parts,
+            verify data, and ensure that all information is of the utmost quality.</p>
+            <p>
+            Interested in helping? <a href="/users/register/">Register for a free account</a>.
+            </p>
+        </div>
+    </div>
+    
+    <div class="row-fluid">
+        <h3 class="offset1" >Part Engine Indexes:</h3>
+        <div class="well span3 offset1">
+  
+            <strong><i class="icon-cog"></i> Part Information</strong>
+                <ul>
+                    <li>Part attributes</li>
+                    <li>Cross references</li>
+                    <li>Images</li>
+                    <li>Purchasing information</li>
+                </ul>
+                <strong><i class="icon-wrench"></i> Assemblies & <a href="#" class="tip-top" title="Bill of Material"> B.O.M.s</a></strong>
+                <ul>
+                    <li>Assemblies and sub-assemblies</li>
+                    <li>Lists of parts</li>
+                    <li>Public and private assemblies &amp; lists</li>
+                </ul>
+
+        </div>
+        <div class="well span3">
+            
+                    <strong><i class="icon-briefcase"></i> Company Information</strong>
+                    <ul>    
+                        <li>Addresses</li>
+                        <li>Phone &amp; fax numbers</li>
+                        <li>Sales contacts</li>
+                        <li>Branch Locations</li>
+                        <li>Part Listings</li>
+                    </ul>
+
+        </div>
+        
+        <div class="well span3">
+        
+            <strong><i class="icon-barcode"></i><a href="#" class="tip-top" title="National/NATO Stock Number"> NSN</a> Information</strong>
+                <ul>
+                    <li><a href="#" class="tip-top" title="Federal Supply Class">FSC</a> Codes</li>
+                    <li>Manufacturers</li>
+                    <li>Associated Part Numbers</li>
+                </ul>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
+
+

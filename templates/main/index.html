@@ -1,99 +1,147 @@
-{% extends "base/base_MAIN.html" %}
-
-{% block home_active %}class="active"{% endblock %}
-{% block breadcrumbs %}
-{% endblock %}
-
-{% block content %}
-{% load humanize %}
-<div class="container">
-    <div class="row-center">
-        <div class="hero-unit-white hero-unit">
-            <h1>Search {{ part_count|intcomma }} part numbers</h1><br />
-            <form id="frmSearch" action="/search/results/" id="cref_iframe" class="form-inline">
-                <input name="cx" value="partner-pub-3185089159153756:8723235659" type="hidden">
-                <input name="cof" value="FORID:11" type="hidden">
-                <input name="ie" value="ISO-8859-1" type="hidden">
-                <input type="text" name="q" value="Search Parts" class="input-huge" style="height:45px; font-size:2.0em;" onfocus="if (this.value == 'Search Parts') {this.value = '';}" onblur="if (this.value == '') {this.value = '';}" />
-                <button class="btn btn-huge btn-primary" type="submit">Find It!</button>
-            </form><!--/search-->
-            <script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=cref_iframe"></script>
-            
-        </div>
-    </div>
-
-</div>
-
-
-<div class="stripe">
-    <div class="container">
-        <div class="row">
-            <div class="span3">
-                <h2>Our mission</h2>
-                <p class="justify">Part Engine's goals are lofty: <strong>index every part number in the world.</strong>
-                This goal is only possible with help from our users. We need help to enter parts,
-                verify data, and ensure that all information is of the utmost quality.</p>
-                <p>
-                Interested in helping? <a href="/users/register/">Register for a free account</a>.
-                </p>
-            </div>
-
-            <div class="span8 offset1">
-                <h2>Part Engine Indexes:</h2>
-                <div class="row">
-                    <div class="span2">
-                        <dl>
-                            <dt><h4><i class="icon-cog"></i> Part Information</h4></dt>
-                            <ul>
-                                <li>Part attributes</li>
-                                <li>Cross references</li>
-                                <li>Images</li>
-                                <li>Purchasing information</li>
-                            </ul>
-                        </dl>
-                    </div>
-                    <div class="span2">
-                        <dl>
-                            <dt><h4><i class="icon-briefcase"></i> Company Information</h4></dt>
-                            <ul>
-                                <li>Addresses</li>
-                                <li>Phone &amp; fax numbers</li>
-                                <li>Sales contacts</li>
-                                <li>Branch Locations</li>
-                                <li>Part Listings</li>
-                            </ul>
-                        </dl>
-                    </div>
-                    <div class="span2">
-                        <dl> 
-                            <dt><h4><i class="icon-wrench"></i> Assemblies & <a href="#" rel="tooltip" title="Bill of Material"> B.O.M.s</a></h4></dt>
-                            <ul>
-                                <li>Assemblies and sub-assemblies</li>
-                                <li>Lists of parts</li>
-                                <li>Public and private assemblies &amp; lists</li>
-                            </ul>
-                        </dl>
-                    </div>
-                    <div class="span2">
-                        <dl>
-                            <dt><h4><i class="icon-barcode"></i><a href="#" rel="tooltip" title="National/NATO Stock Number"> NSN</a> Information</h4></dt>
-                            <ul>
-                                <li><a href="#" rel="tooltip" title="Federal Supply Class">FSC</a> Codes</li>
-                                <li>Manufacturers</li>
-                                <li>Associated Part Numbers</li>
-                            </ul>
-                        </dl>
-                    </div>
-                </div>
-                <script type="text/javascript">
-                    $("[rel=tooltip]").tooltip();
-                </script>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-{% endblock %}
-
-
+{% load humanize %} {% load gravatar %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Part Engine | The Part Number Search Engine</title>
+		<meta name="description" content="Part Engine is the part number search engine.">
+		<meta name="viewport" content="width=1024">
+		<!--[if lt IE 9]><script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+		<link rel="stylesheet" media="screen,print" type="text/css" href="{{ STATIC_URL }}css/bootstrap.min.css">
+		<link rel="stylesheet" media="screen,print" type="text/css" href="{{ STATIC_URL }}css/screen.css">
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+		<script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+		<link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.ico">
+		<link rel="apple-touch-icon" href="{{ STATIC_URL }}img/apple-touch-icon.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="{{ STATIC_URL }}img/apple-touch-icon-72x72.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="{{ STATIC_URL }}img/apple-touch-icon-114x114.png">
+	</head>
+	<body>
+		<div id="main">
+			<div id="head" class="container">
+				<p id="logo">
+					<a href="/" title="Part Engine"><img src="{{ STATIC_URL }}img/logo-black.png" width="265" height="39" alt="Part Engine" title="Part Engine"></a>
+				</p>
+				{% if user.is_authenticated %}
+                <h4 class="pull-right"><a title="" href="#"><img src="{% gravatar_url user.email 40 %}" alt="gravatar" /> Welcome back {{ user }}</a></h4>
+                
+                {% else %}
+                <h4 class="pull-right">
+					<a href="{% url django.contrib.auth.views.login %}?next={{request.path}}">Sign In</a>
+                </h4>
+                {% endif %}
+				
+			</div>
+			<div id="attention">
+				<div id="headline">
+					<h1 class="container">
+						Having trouble finding part information?<br />
+						Part Engine can help.
+					</h1>
+				</div>
+				
+			</div>
+			<div id="newsletter">
+				<div class="container">
+					
+					<h2 class="title">
+						Search <strong>{{ part_count|intcomma }}</strong> parts and <strong>{{ nsn_count|intcomma }}</strong> NSNs
+					</h2>
+					<h4 class="pitch">
+						Search by part number, part description, NSN number, or any other information.
+					</h4>
+					<form class="search" method="get" action="{% url search.views.results %}">
+						<input id="iemail" autocomplete="off" name="q" type="text" placeholder="Search parts or NSNs"><input style="margin-top:-10px;" class="btn btn-subscribe btn-xlarge" type="submit" value="Search!">
+					</form>
+					<h4 class="pitch">
+					   Or you can <a href="{% url parts.views.index %}">browse parts</a>, <a href="{% url nsn.views.index %}">NSN data</a>, or <a href="{% url partgroups.views.index %}">assemblies</a>. Also check out our <a href="/faq/">F.A.Q.</a>
+					</h4>
+				</div>
+			</div>
+			<div id="features" class="container">
+				<div class="row">
+					<p class="span3 a">
+					<strong>Control Your Information</strong><br />
+					Create your own part numbers, lists, purchasing information, and images.
+					Add your favorites to your dashboard, create notes on parts, create assemblies.
+                    </p>
+					<p class="span3 b">
+						<strong>Join the Community</strong><br />
+						Flag bad information, vote on attributes, comment on parts and assemblies and <b>earn reputation points
+                        based on your community involvement.</b> 
+					</p>
+					<p class="span3 c">
+						<strong>Source Your Parts</strong><br />
+						Issue RFQ's to vendors of <b>your choice</b>. Create frequently bought item lists. Get the latest pricing on products.
+					</p>
+				</div>
+			</div>
+			<div id="about">
+				<div class="container">
+					<div class="row">
+						<div id="points" class="span5">
+						<h4>What do we index?</h4>
+							<ul>
+								<li class="a">
+									<strong>Part Information</strong><br>
+									Part attributes, Cross references, Images, Purchasing information
+								</li>
+								<li class="b">
+									<strong>Assemblies and BOMs</strong><br>
+									Assemblies and sub-assemblies, Lists of parts, Public and private assemblies &amp; lists
+									</li>
+								<li class="b">
+									<strong>Company Information</strong><br>
+									Addresses, Phone &amp; fax numbers, Sales contacts, Branch Locations,Part Listings
+								</li>
+								<li class="c">
+									<strong>NSN Information</strong><br>
+									NSN numbers, FSC codes, MRC information, and more
+								</li>
+							</ul>
+						</div>
+						<div id="nutshell" class="span5">
+							<h4>Our Mission</h4>
+							<p class="justify">Part Engine's goals are lofty: <strong>index every part number in the world.</strong>
+                            This goal is only possible with help from our users. We need help to enter parts,
+                            verify data, and ensure that all information is of the utmost quality.</p>
+                            <p>
+                            Interested in helping? <a href="/users/register/">Register for a free account</a>.
+                            </p>
+                        </div>
+					</div>
+				</div>
+			</div>
+			<div id="follow" class="container">
+				<div class="row">
+					<div class="span5 twitter">
+						<a href="http://twitter.com/partengine" title="Follow us on Twitter" rel="nofollow" target="_blank">Follow us on Twitter</a>
+					</div>
+					<div class="span5 gplus">
+						<a href="https://plus.google.com/108549216163192075170/" title="Join us on Google+" rel="nofollow" target="_blank">Join us on Google+</a>
+					</div><br />
+					<div class="span5 blog offset2">
+						<a href="http://blog.partengine.org" title="Check out our blog" rel="nofollow" target="_blank">Check out our blog</a>
+					</div>
+				</div>
+			</div>
+			<div class="push"></div>
+		</div>
+		<div id="foot">
+			<div class="container">
+				<div class="row">
+					<div class="span5">
+						<ul class="links">
+							<li><a data-toggle="modal" href="/privacy/" title="Privacy policy">Privacy policy</a></li>
+							<li><a data-toggle="modal" href="#" title="Contact us">Contact us</a></li>
+						</ul>
+					</div>
+					<div class="span5">
+						<p class="copyright">&copy; 2012 - {% now "Y" %} Part Engine</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+	</body>
+</html>

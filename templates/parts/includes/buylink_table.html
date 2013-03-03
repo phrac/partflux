@@ -1,0 +1,45 @@
+{% if part.buylink_set.count > 0 %}
+<div class="widget-content nopadding">
+    <table class="table table-bordered data-table">
+        <thead>
+            <tr>
+                <th>Company &amp; Link</th>
+                <th>Price</th>
+                <th>Last checked</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for buylink in part.buylink_set.all %}
+            <tr>
+                <td>
+                    <a href="{{ buylink.url }}">{{ buylink.company.name }}</a>
+                </td>
+                <td>
+                    <b>${{ buylink.price }}</b>
+                </td>
+                <td>
+                    {{ buylink.updated_at|date:"SHORT_DATE_FORMAT" }}
+                </td>
+                <td style="text-align:center;">
+                    <div class="btn-group">
+                        <a class="btn btn-mini tip-top" title="Flag"><i class="icon icon-flag"></i></a>
+                        <a class="btn btn-mini tip-top" title="Up Vote"><i class="icon icon-thumbs-up"></i></a>
+                        <a class="btn btn-mini tip-top" title="Down Vote"><i class="icon icon-thumbs-down"></i></a>
+                        {% if user.is_staff %}
+                        <a href = {% url parts.ajax.delete_buylink buylink.id %} class="btn btn-mini tip-top" title="Delete"><i class="icon icon-trash"></i></a>
+                        {% endif %}
+
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="widget-content">
+    <div class="alert alert-error">No purchase information.</div>
+</div>
+{% endif %}
+

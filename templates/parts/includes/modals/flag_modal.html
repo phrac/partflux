@@ -1,0 +1,42 @@
+<div class="modal hide" id="flag-modal">
+    {% if user.is_authenticated %}
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+        <h3>Flag Information</h3>
+    </div>
+    <div class="modal-body">
+        <p>Use this form if you believe that the information is not valid or is spam. Use caution when flagging parts! Each flagged piece of information is reviewed by moderators
+        for accuracy. Abuse of the flagging system may result in a suspension of your account.</p>
+
+        <form data-div-update="#attribute-table" data-gritter-title-success="Flagging Saved" data-gritter-msg-success="You can view your saved parts in your parts dashboard" data-gritter-error-title="Something went wrong" name="flag-form" id="flag-form" class="modal-form form-horizontal" autocomplete="off" method="post" action="{% url parts.ajax.flag %}">
+
+            {% csrf_token %}
+
+            <div class="control-group">
+                <label class="control-label" for="id_company">Reason for flagging</label>
+                <div class="controls">
+                    <input id="reason" name="reason" type="text" value="" class="input-large" placeholder="Reason for flagging">
+                    <p>Provide a complete description of why you think this information is invalid.</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <input type="hidden" id="flag-type" name="flag-type" value="" />
+            <input type="hidden" id="flag-id" name="flag-id" value="" />
+            <input type="hidden" id="part-id" name="part_pk" value="{{ part.pk }}" />
+            <button id="save-flag" disabled="disabled" data-loading-text="Flagging..." class="modal-form-submit btn btn-danger"><i class="icon-white icon-flag"></i> Flag</button>
+            <button class="btn" data-dismiss="modal">Cancel</button>
+        </form>
+    </div>
+
+    <script type="text/javascript">
+        $('#flag-modal').on('shown', function () {
+            $('#id_reason').focus();
+        });
+    </script>
+
+    {% else %}
+    {% include 'includes/login_modal.html' %}
+    {% endif %}
+</div>

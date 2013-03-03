@@ -1,0 +1,32 @@
+{% if part.get_all_xrefs %}
+<div class="widget-content nopadding">
+    <table id="xrefs-table" class="table table-bordered data-table">
+        <thead>
+            <tr>
+                <th>Part #</th>
+                <th>Description</th>
+                <th>Company</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for x in part.get_all_xrefs %}
+            <tr>
+                {% if x.part.number == part.number %}
+                <td><a href="{{ x.xrefpart.get_absolute_url }}">{{ x.xrefpart.number }}</a></td>
+                <td>{{ x.xrefpart.description }}</td>
+                <td><a href="{{ x.xrefpart.company.get_absolute_url }}">{{ x.xrefpart.company.name }}</a></td>
+                {% else %}
+                <td><a href="{{ x.part.get_absolute_url }}">{{ x.part.number }}</a></td>
+                <td>{{ x.part.description }}</td>
+                <td><a href="{{ x.part.company.get_absolute_url }}">{{ x.part.company.name }}</a></td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="widget-content">
+    <div class="alert alert-error">No cross references.</div>
+</div>
+{% endif %}

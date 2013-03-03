@@ -1,0 +1,22 @@
+<div class="btn-group">
+    <a class="btn btn-large tip-bottom" title="Share on Google+" href="https://plus.google.com/share?url={{ current_domain }}{{ current_path }}" onclick="javascript:window.open(this.href,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"><img src="{{ STATIC_URL }}images/glyphicons/glyphicons_362_googleplus_alt.png" alt="g+" /></a>
+    <a class="btn btn-large tip-bottom" title="Pin to Pintrest" href="http://pinterest.com/pin/create/button/?url={{ current_domain }}{{ current_path }}" ><img src="{{ STATIC_URL }}images/glyphicons/glyphicons_360_pinterest.png" alt="pinterest" /></a>
+    <a class="btn btn-large tip-bottom" title="Share on LinkedIn" href="http://www.linkedin.com/shareArticle?mini=true"><img src="{{ STATIC_URL }}images/glyphicons/glyphicons_377_linked_in.png" alt="linked in"></a>
+    <script type="text/javascript">
+        function printpage() {
+            window.print()
+        }
+</script>
+
+<script type="text/javascript">
+    $("[rel=tooltip]").tooltip();
+    </script>
+
+    <script type="text/javascript">
+        (function() {
+         var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+         po.src = 'https://apis.google.com/js/plusone.js';
+         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+         })();
+</script>
+ </div>

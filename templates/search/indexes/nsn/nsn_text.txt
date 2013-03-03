@@ -1,0 +1,4 @@
+{% load nsntags %}
+{{ object.number }}
+{{ object.number|strip_dashes }}
+{{ object.description }}

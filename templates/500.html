@@ -1,0 +1,26 @@
+<!DOCTYPE html>{% load cache %}{% load rss %}{% load humanize %}{% load gravatar %}
+<html lang="en">
+    <head>
+        <title>Internal Server Error | The Part Number Search Engine {% endblock %}</title>
+    </head>
+<body>
+    <div id="content">
+        <div id="content-header">
+            <div class="row-fluid">
+                <div class="span4">
+                    <img src="/static/img/doh.png" alt="50x image" />
+                </div>
+                
+                <div class="well span6">
+                    <h2>Something bad happened to our server!</h2>
+                    <p>We aren't sure what exactly happened, but rest assured, we are looking
+                    into it.</p>
+                    <p>In the mean time, how about <a href="{% url parts.views.index %}">browsing
+                    the newest parts in our database</a> or <a href="/">returning to the home page</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

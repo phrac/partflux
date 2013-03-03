@@ -3,4 +3,7 @@ Crawl-delay: 2
 Disallow: /cgi-bin/
 Disallow: /users/
 Disallow: /search/
+Disallow: /parts/add/
+Disallow: /partgroups/add/
+Disallow: /parts/ajax/
 

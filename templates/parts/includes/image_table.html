@@ -1,0 +1,30 @@
+{% load thumbnail %}
+<div class="widget-content">
+    {% if part.images.count > 0 %}
+    <div id="images">
+        <ul class="thumbnails">
+            {% for image in part.images.all %}
+            {% if image.image %}
+            {% thumbnail image.image "160x120" crop="center" as im %}
+            <li class="span3">
+                <div class="thumbnail">
+                    <a id="lightbox" class="thumbnail" href="{{ image.image.url }}"><img src="{{ im.url }}" alt="{{ part.number }} image" /></a>
+                    <div class="thumbnail-caption">
+                        by: {{ image.user }}
+                        {% if user.is_staff %}
+                        <div class="push-right">
+                            <a class="open-image-delete-modal btn btn-mini tip-top push-right" data-id="{{ image.pk }}" data-toggle="modal" title="Delete"><i class="icon icon-trash"></i></a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </li>
+            {% endthumbnail %}
+            {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+    {% else %}
+    <div class="alert alert-error">No images have been submitted.</div>
+    {% endif %}
+</div>

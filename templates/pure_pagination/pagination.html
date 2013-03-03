@@ -1,5 +1,5 @@
 {% load i18n %}
-<div class="pagination pagination-centered">
+<div class="pagination alternate pagination-centered">
     <ul>
     {% if current_page.has_previous %}
     <li><a href="?{{ current_page.previous_page_number.querystring }}">&laquo;</a></li>
@@ -14,14 +14,13 @@
             <li><a href="?{{ page.querystring }}" class="page">{{ page }}</a></li>
             {% endifequal %}
         {% else %}
-        <li class="disabled"><a href="#">...</a></li>
         {% endif %}
     {% endfor %}
     {% if current_page.has_next %}
     <li><a href="?{{ current_page.next_page_number.querystring }}">&raquo;</a></li>
     {% else %}
     <li class="disabled"><a href="#">&raquo;</a></li>
-        {% endif %}
+    {% endif %}
     </ul>
 </div>
 

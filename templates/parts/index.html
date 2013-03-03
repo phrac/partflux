@@ -1,57 +1,58 @@
 {% extends "base/base_MAIN.html" %}
 
-{% block parts_active %}active{% endblock %}
-
-{% block breadcrumb_links %}
-    <li>
-        <a href="{% url parts.views.index %}">Parts</a>
-        <span class="divider">></span>
-    </li>
-    <li class="active">Newest parts</li>
+{% block head %}
+<script src="{{ STATIC_URL }}js/jquery.dataTables.min.js"></script>
+<script src="{{ STATIC_URL }}js/unicorn.tables.js"></script>
 {% endblock %}
 
-{% block content %}
-<div class="container">
-    <div class="page-header">
-        <h1>Newest parts added to the database</h1>
-    </div>
-    <div class="adsense">
-        <script type="text/javascript"><!--
-            google_ad_client = "ca-pub-3185089159153756";
-            /* details */
-            google_ad_slot = "5226656636";
-            google_ad_width = 728;
-            google_ad_height = 90;
-        //-->
-        </script>
-        <script type="text/javascript"
-        src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-        </script>
-    </div>
+{% block parts_active %}active open{% endblock %}
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Part #</th>
-                <th>Description</th>
-                <th>Company</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for part in parts_list %}
-        <tr>
-            <td style="width:20%">
-                <a href="{{ part.get_absolute_url }}">{{ part.number }}</a>
-            </td>
-            <td>
-                {{ part.description|truncatewords:10 }}
-            </td>
-            <td>
-                <a href="{{ part.company.get_absolute_url }}">{{ part.company.name }}</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-    </table>
+{% block breadcrumb_links %}
+    <a href="{% url parts.views.index %}" title="Parts" class="tip-bottom"><i class="icon-cog"></i> Parts</a>
+    <a href="#" class="current">Newest Parts</a>
+{% endblock %}
+
+{% block page_title %}Browse Parts{% endblock %}
+{% block title %}Part Listing - Page {{ page_num }} | Part Engine {% endblock %}
+
+{% block content %}
+<div class="row-fluid">
+    <div class="span12">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon">
+                    <i class="icon-th"></i>
+                </span>
+                <h5>Newest Parts Listing</h5>
+            </div>
+            <div class="widget-content nopadding">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Part #</th>
+                            <th>Description</th>
+                            <th>Company</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for part in parts_list.object_list %}
+                        <tr>
+                            <td>
+                                <a href="{{ part.get_absolute_url }}">{{ part.number }}</a>
+                            </td>
+                            <td>
+                                {{ part.description|truncatewords:10 }}
+                            </td>
+                            <td>
+                                <a href="{{ part.company.get_absolute_url }}">{{ part.company.name }}</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {{ parts_list.render }}							
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

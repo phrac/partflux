@@ -3,21 +3,20 @@ from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 from django.contrib.comments.moderation import CommentModerator, moderator
 from django.template.defaultfilters import slugify
+from django.utils.encoding import smart_str
 from django.conf import settings
 from sorl.thumbnail import ImageField
 
 from companies.models import Company
 from nsn.models import Nsn
-from pyes import *
 
 class Part(models.Model):
     """
     Stores a unique part number and related information
-
     """
     number = models.CharField(max_length=48)
     slug = models.CharField(max_length=64)
-    description = models.TextField()
+    description = models.TextField(null=False)
     company = models.ForeignKey(Company)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -37,17 +36,32 @@ class Part(models.Model):
     def save(self, *args, **kwargs):
         """
         Slugify the part number and upcase the number and description. 
-
         """
         self.number = self.number.strip().upper()
         self.description = self.description.strip().upper()
         self.slug = slugify(self.number)
-        #self.update_ES()
         super(Part, self).save(*args, **kwargs)
+           
+    def get_all_xrefs(self):
+        """
+        Returns all cross references, both forward and reverse
+        """
+        from django.db.models import Q
+        xrefs = Xref.objects.filter(Q(part=self) | Q(xrefpart=self)).distinct()
+        return xrefs
 
     @models.permalink
     def get_absolute_url(self):
         return ('parts.views.detail', [self.id, str(self.company.slug), str(self.slug)])
+
+
+class PartFlag(models.Model):
+    part = models.ForeignKey('Part')
+    user = models.ForeignKey(User)
+    reason = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    active = models.BooleanField()
 
 class Attribute(models.Model):
     part = models.ForeignKey('Part')
@@ -61,15 +75,30 @@ class Attribute(models.Model):
 
     class Meta:
         unique_together = ('part', 'key', 'value')
+        ordering = ('value',)
+        
+    def get_attr_string(self):
+        return u"%s: %s" % (smart_str(self.key), smart_str(self.value))
 
     def save(self, *args, **kwargs):
         self.key = self.key.strip().upper()
         self.value = self.value.strip().upper()
         if not self.upvotes:
             self.upvotes = 0
-            if not self.downvotes:
-                self.downvotes = 0
-                super(Attribute, self).save(*args, **kwargs)
+        if not self.downvotes:
+            self.downvotes = 0
+        super(Attribute, self).save(*args, **kwargs)
+        
+    def get_flags():
+        return Attribute.objects.get(attribute=self)
+
+class AttributeFlag(models.Model):
+    attribute = models.ForeignKey('Attribute')
+    user = models.ForeignKey(User)
+    reason = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    active = models.BooleanField()
 
 class Xref(models.Model):
     """ Store part number cross references, related to :model:`parts.Part` and
@@ -90,6 +119,7 @@ class Xref(models.Model):
 class PartImage(models.Model):
     image = ImageField(upload_to='part_images')
     user = models.ForeignKey(User, null=False)
+    hash = models.CharField(max_length=1000, unique=True)
     approved = models.BooleanField(default=True)
     album_cover = models.BooleanField(default=False)
 
@@ -110,48 +140,6 @@ class BuyLink(models.Model):
 class PartModerator(CommentModerator):
     email_notification = True
 
-
-# functions for updating the ElasticSearch index
-def update_ES(sender, instance, **kwargs):
-    """ 
-    Update the ElasticSearch index with fresh data about the part.
-
-    """
-    es = ES(settings.ES_HOST)
-    attrlist, attrstring = prepare_attrs(instance)
-    es.index(
-        {
-            "pgid" : instance.id, 
-            "number" : instance.number, 
-            "company" : instance.company.name, 
-            "attrstring" : attrstring,
-            "desc" : instance.description,
-            "attributes" : attrlist,
-        }, 
-        "parts", "part-type", instance.id
-    )
-    es.refresh('parts')
-
-def prepare_attrs(instance):
-    """
-    Turn the hstore attribute column into a dict & string for storage in
-    ElasticSearch
-
-    """
-    attrlist = []
-    attrstring = ''
-    attributes = Attribute.objects.filter(part=instance.id)
-    for a in attributes:
-        attr = {}
-        attr['key'] = a.key
-        attr['value'] = a.value
-        attrlist.append(attr)
-        attrstring += "%s " % a.key
-        attrstring += "%s " % a.value
-
-    return attrlist, attrstring
-
-#post_save.connect(update_ES, sender=Part)
 
 #moderator.register(Part, PartModerator)
 

@@ -1,0 +1,59 @@
+<div class="modal hide" id="add-xref">
+    {% if user.is_authenticated %}
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+        <h3>Add part cross reference</h3>
+    </div>
+    <form data-div-update="#xrefs-table" data-gritter-title-success="Cross Reference Added" data-gritter-msg-success="Thanks for contributing! Your reputation has been incremented" data-gritter-error-title="Something went wrong" class="modal-form form-horizontal" id="xref-form" autocomplete="off" method="post">
+        <div class="modal-body">
+            {% csrf_token %}
+
+            <div class="control-group">
+                <label class="control-label" for="id_part">Part #</label>
+                <div class="controls">
+                    {{ xref_form.part }}
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="id_company">Company</label>
+                <div class="controls">
+                    {{ xref_form.company }}
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="id_description">Description</label>
+                <div class="controls">
+                    {{ xref_form.desc }}
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="id_copy_attrs">Copy Attributes?</label>
+                <div class="controls">
+                    {{ xref_form.copy_attrs }}
+                    <p>If you copy attributes, all attributes for <strong>{{ part.number }}</strong>
+                    will be copied to the new part if it doesn't exist.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <input type="hidden" name="xref_button" value="1" />
+            <button type="submit" disabled="disabled" class="modal-form-submit btn btn-inverse">Save Cross Reference</button>
+            <button class="btn" data-dismiss="modal">Cancel</button>
+        </div>
+
+    </form>
+
+<script type="text/javascript">
+    $('#add-xref').on('shown', function () {
+        $('#id_part').focus();
+    })
+</script>
+{% else %}
+{% include 'includes/login_modal.html' %}
+{% endif %}
+</div>

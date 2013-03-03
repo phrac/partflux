@@ -4,34 +4,38 @@
 Frequently Asked Questions | Part Engine
 {% endblock %}
 
-{% block help_active %}active{% endblock %}
+{% block help_active %}active open{% endblock %}
+
+{% block page_title %}Frequently Asked Questions{% endblock %}
 
 {% block breadcrumb_links %}
-<li>
-<a href="#">Help</a> <span class="divider">></span>
-</li>
-<li class="active">
-Frequently Asked Questions
-</li>
+<a href="#">Help</a>
+<a href="#" class="current">Frequently Asked Questions</a>
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="page-header">
-        <h1>Frequently Asked Questions</h1>
-    </div>
-    <div class="row">
+    <div class="row-fluid">
         <div class="span8">
+            <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon">
+                    <i class="icon-list-alt"></i>
+                </span>
+                <h5>Frequently Asked Questions</h5>
+            </div>
+            <div class="widget-content">
             {% for topic in topics %}
             <h2>{{ topic }}</h2>
             {% for q in topic.questions.all %}
-            <h3><a name="{{ q.slug }}">{{ q.text }}</a></h3>
+            <h3><a id="{{ q.slug }}">{{ q.text }}</a></h3>
             <p class="justify">{{ q.answer|safe }}</p>
             {% endfor %}
             {% endfor %}
+            </div>
+        </div>
         </div>
 
-        <div class="well span3">
+        <div class="well span4">
             <div class="right_articles" style="font-size:1.2em">
                 {% for topic in topics %}
                 <h3>{{ topic }}</h3>
@@ -44,6 +48,5 @@ Frequently Asked Questions
             </div>
         </div>
     </div>
-</div>
 
 {% endblock %}
