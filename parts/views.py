@@ -101,7 +101,7 @@ def detail(request, part_id, company_slug, part_slug):
 
             if request.is_ajax():
                 return render_to_response('parts/includes/xrefs_table.html',
-                                          {'part', p,},
+                                          {'part': p,},
                                           context_instance=RequestContext(request))
             else:
                 return HttpResponseRedirect(reverse('parts.views.detail',
