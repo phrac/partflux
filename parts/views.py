@@ -199,6 +199,7 @@ def addxref(request, part_id):
     if xrefform.is_valid():
         part_number = xrefform.cleaned_data['part'].strip().upper()
         company = xrefform.cleaned_data['company'].strip().upper()
+        description = xrefform.cleaned_data['desc'].strip().upper()
         copy_attrs = xrefform.cleaned_data['copy_attrs']
         """Check if the company exists and create it if it does not"""
         c, _created = Company.objects.get_or_create(name=company)
@@ -206,7 +207,7 @@ def addxref(request, part_id):
         newpart, _created = Part.objects.get_or_create(number=part_number, company=c)
         if _created == True:
             newpart.user = request.user
-            newpart.description = p.description
+            newpart.description = description
             newpart.hits = 0
             if copy_attrs == True:
                 attributes = Attribute.objects.filter(part=part_id)
