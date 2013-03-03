@@ -24,7 +24,7 @@ class ReputationAction(models.Model):
         else:
             pass
         
-        if created:
+        if created and instance.user is not None:
             ra = ReputationAction(user=instance.user, point_value=points, action=action)
             ra.save()
         else:

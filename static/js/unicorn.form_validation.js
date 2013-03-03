@@ -85,7 +85,32 @@ $(document).ready(function(){
         rules:{
             file:{
                 required: true,
-        accept: "png|jpe?g|gif"
+                accept: "png|jpe?g|gif"
+            }
+        },
+        errorClass: "help-inline",
+        errorElement: "div",
+        highlight:function(element, errorClass, validClass) {
+            $(element).parents('.control-group').removeClass('success');
+            $(element).parents('.control-group').addClass('error');
+        },
+        unhighlight: function(element, errorClass, validClass) {
+            $(element).parents('.control-group').removeClass('error');
+            $(element).parents('.control-group').addClass('success');
+        }
+    });
+
+    $("#xref-form").validate({
+        rules:{
+            part:{
+                required: true,
+                minlength: "2",
+                maxlength: 64
+            },
+            company:{
+                required: true,
+                minlength: 2,
+                maxlength: 64
             }
         },
         errorClass: "help-inline",

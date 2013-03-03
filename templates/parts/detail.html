@@ -156,15 +156,9 @@
                     <a class="btn btn-inverse btn-mini tip-left" title="New Cross Reference" href="#add-xref" data-toggle="modal"><i class="icon-plus-sign icon-white"></i></a>
                 </div>
             </div>
-            {% if part.get_all_xrefs %}
-            <div class="widget-content nopadding">
+            <div id="xrefs-table">
                 {% include 'parts/includes/xrefs_table.html' %}
             </div>
-            {% else %}
-            <div class="widget-content">
-                <div class="alert alert-error">No cross references.</div>
-            </div>
-            {% endif %}
         </div>
 
         <div class="widget-box">

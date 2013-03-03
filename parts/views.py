@@ -98,7 +98,13 @@ def detail(request, part_id, company_slug, part_slug):
         xrefform = XrefForm(request.POST)
         if xrefform.is_valid:
             status = addxref(request, p.pk)
-            return HttpResponseRedirect(reverse('parts.views.detail',
+
+            if request.is_ajax():
+                return render_to_response('parts/includes/xrefs_table.html',
+                                          {'part', p,},
+                                          context_instance=RequestContext(request))
+            else:
+                return HttpResponseRedirect(reverse('parts.views.detail',
                                                 args=[part_id, p.company.slug, p.slug]))
     
     if 'image_button' in request.POST:

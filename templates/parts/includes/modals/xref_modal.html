@@ -4,7 +4,7 @@
         <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
         <h3>Add part cross reference</h3>
     </div>
-    <form class="form-horizontal" autocomplete="off" method="post">
+    <form data-div-update="#xrefs-table" data-gritter-title-success="Cross Reference Added" data-gritter-msg-success="Thanks for contributing! Your reputation has been incremented" data-gritter-error-title="Something went wrong" class="modal-form form-horizontal" id="xref-form" autocomplete="off" method="post">
         <div class="modal-body">
             {% csrf_token %}
 
@@ -35,7 +35,7 @@
 
         <div class="modal-footer">
             <input type="hidden" name="xref_button" value="1" />
-            <button type="submit" class="btn btn-inverse">Save Cross Reference</button>
+            <button type="submit" disabled="disabled" class="modal-form-submit btn btn-inverse">Save Cross Reference</button>
             <button class="btn" data-dismiss="modal">Cancel</button>
         </div>
 
