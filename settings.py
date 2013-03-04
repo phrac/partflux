@@ -220,6 +220,10 @@ TWITTER_CONSUMER_KEY = 'vGm8CZhCn1T4bbdvL99A'
 # OAuth settings: Consumer secret
 TWITTER_CONSUMER_SECRET = 'D0oseP8Rg1FXoJycv9qh2lUTAH8sNfGkD8YWEStuL5o'
 
+ABSOLUTE_URL_OVERRIDES = {
+    'auth.user': lambda o: "/users/profile/%s/" % o.username,
+}
+
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error.

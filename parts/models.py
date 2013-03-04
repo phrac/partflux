@@ -123,6 +123,7 @@ class PartImage(models.Model):
     approved = models.BooleanField(default=True)
     album_cover = models.BooleanField(default=False)
 
+
 class BuyLink(models.Model):
     part = models.ForeignKey('Part')
     company = models.ForeignKey(Company)
