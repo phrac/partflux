@@ -2,6 +2,7 @@ from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect, HttpResponse
 from django.template import RequestContext
+from django.template.defaultfilters import slugify
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
@@ -161,7 +162,7 @@ def addbuylink(request, part_id):
         url = buylinkform.cleaned_data['url']
         company = buylinkform.cleaned_data['company'].strip().upper()
         price = buylinkform.cleaned_data['price']
-        c, _created = Company.objects.get_or_create(name=company)
+        c, _created = Company.objects.get_or_create(slug=slugify(company))
         buylink = BuyLink(part=p, company=c, price=price, url=url, user=request.user)
         try:
             buylink.save()
@@ -206,7 +207,7 @@ def addxref(request, part_id):
         description = xrefform.cleaned_data['desc'].strip().upper()
         copy_attrs = xrefform.cleaned_data['copy_attrs']
         """Check if the company exists and create it if it does not"""
-        c, _created = Company.objects.get_or_create(name=company)
+        c, _created = Company.objects.get_or_create(slug=slugify(company))
         """Check if the cross referenced part exists and create it if it does not"""
         newpart, _created = Part.objects.get_or_create(number=part_number, company=c)
         if _created == True:
