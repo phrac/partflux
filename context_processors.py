@@ -40,10 +40,7 @@ def user_reputation(request):
     from django.contrib.auth.models import User
     from users.models import UserProfile
     if request.user.is_authenticated():
-        try:
-            profile = request.user.get_profile()
-        except:
-            profile = UserProfile.objects.create(user=request.user)
+        profile = request.user.get_profile()
         return { 'user_reputation': profile.reputation }
     else:
         return { 'user_reputation': None }
