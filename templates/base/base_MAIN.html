@@ -77,7 +77,7 @@
         <div id="user-nav" class="navbar navbar-inverse">
             <ul class="nav btn-group">
                 {% if user.is_authenticated %}
-                <li class="btn btn-inverse" ><a title="" href="#"><img src="{% gravatar_url user.email 20 %}" alt="gravatar" /> [{{ user_reputation }}]</a></li>
+                <li class="btn btn-inverse" ><a title="View My Profile" href="{{ request.user.get_absolute_url }}"><img src="{% gravatar_url user.email 20 %}" alt="gravatar" /> [{{ user_reputation }}]</a></li>
                 
                 <li class="btn btn-inverse"><a title="" href="#"><i class="icon-cog"></i> <span class="text">Settings</span></a></li>
                 <li class="btn btn-inverse"><a title="" href="{% url django.contrib.auth.views.logout %}?next={{request.path}}"><i class="icon-share-alt"></i> <span class="text">Logout</span></a></li>

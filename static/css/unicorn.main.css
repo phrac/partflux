@@ -1219,6 +1219,12 @@ div.dataTables_wrapper .ui-widget-header {
 .table tr.checked td {
 	background-color: #FFFFE3 !important;
 }
+.table-centered {
+        margin: 0 auto !important;
+        float: none !important;
+}
+
+
 /* Misc */
 .nopadding {	
 	padding: 0 !important;
