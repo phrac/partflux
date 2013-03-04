@@ -23,7 +23,7 @@
 					<a href="/" title="Part Engine"><img src="{{ STATIC_URL }}img/logo-black.png" width="265" height="39" alt="Part Engine" title="Part Engine"></a>
 				</p>
 				{% if user.is_authenticated %}
-                <h4 class="pull-right"><a title="" href="#"><img src="{% gravatar_url user.email 40 %}" alt="gravatar" /> Welcome back {{ user }}</a></h4>
+                <h4 class="pull-right"><a title="" href="{{ request.user.get_absolute_url }}"><img src="{% gravatar_url user.email 40 %}" alt="gravatar" /> Welcome back {{ user }}</a></h4>
                 
                 {% else %}
                 <h4 class="pull-right">
