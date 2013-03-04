@@ -158,7 +158,7 @@ def addbuylink(request, part_id):
         company = buylinkform.cleaned_data['company'].strip().upper()
         price = buylinkform.cleaned_data['price']
         c, _created = Company.objects.get_or_create(name=company)
-        buylink = BuyLink(part=p, company=c, price=price, url=url)
+        buylink = BuyLink(part=p, company=c, price=price, url=url, user=request.user)
         try:
             buylink.save()
             return True

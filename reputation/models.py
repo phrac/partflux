@@ -5,7 +5,7 @@ from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
-from parts.models import Part, Attribute, PartImage
+from parts.models import Part, Attribute, PartImage, BuyLink
 
 class ReputationAction(models.Model):
     user = models.ForeignKey(User)
@@ -23,6 +23,8 @@ class ReputationAction(models.Model):
             action = 'Added an attribute'
         elif self.action == 'NEW_IMG':
             action = 'Uploaded a new image'
+        elif self.action == 'NEW_BUYLINK':
+            action = 'Added a new purchase link'
         else:
             action = 'Unknown action'
         return action
@@ -37,6 +39,8 @@ class ReputationAction(models.Model):
                 return part[0].get_absolute_url()
             elif self.content_type.name == 'part':
                 return self.content_object.get_absolute_url()
+            elif self.content_type.name == 'buy link':
+                return self.content_object.part.get_absolute_url()
 
     def get_object_name(self):
         if self.content_object is not None and self.object_id is not None:
@@ -47,6 +51,8 @@ class ReputationAction(models.Model):
                 return part[0].number
             elif self.content_type.name == 'part':
                 return self.content_object.number
+            elif self.content_type.name == 'buy link':
+                return self.content_object.part.number
 
     
     def reputation_event(sender, instance, created, **kwargs):
@@ -59,6 +65,9 @@ class ReputationAction(models.Model):
         elif sender is PartImage:
             points = settings.REP_VALUE_NEW_IMAGE
             action = 'NEW_IMG'
+        elif sender is BuyLink:
+            points = settings.REP_VALUE_NEW_BUYLINK
+            action = 'NEW_BUYLINK'
         else:
             pass
         
@@ -72,6 +81,7 @@ class ReputationAction(models.Model):
     post_save.connect(reputation_event, sender=Part)
     post_save.connect(reputation_event, sender=Attribute)
     post_save.connect(reputation_event, sender=PartImage)
+    post_save.connect(reputation_event, sender=BuyLink)
     
 class Badge(models.Model):
     name = models.CharField(max_length=32)

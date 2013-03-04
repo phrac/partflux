@@ -127,6 +127,7 @@ class PartImage(models.Model):
 class BuyLink(models.Model):
     part = models.ForeignKey('Part')
     company = models.ForeignKey(Company)
+    user = models.ForeignKey(User, null=True)
     url = models.URLField(null=False)
     price = models.DecimalField(max_digits=16, decimal_places=4)
     created_at = models.DateTimeField(auto_now_add=True)

@@ -43,7 +43,7 @@ MINIMUM_VOTE_REPUTATION = 50
 # how many reputation points should the user get for a new part
 REP_VALUE_NEW_PART = 10
 # how many reputation points should the user get for a new buylink
-REP_VALUE_NEW_BUYLINK = 4
+REP_VALUE_NEW_BUYLINK = 1
 # how many rep points should user get for new attribute
 REP_VALUE_NEW_ATTRIBUTE = 2
 # how many rep points should user get for new comment
