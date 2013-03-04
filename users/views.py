@@ -3,6 +3,7 @@ from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest
+from pure_pagination import Paginator, PageNotAnInteger, EmptyPage
 
 from users.models import UserProfile, UserFavoritePart
 from reputation.models import ReputationAction
@@ -57,10 +58,21 @@ def edit_favorite_notes(request):
                               
 @login_required
 def index(request):
-    users = UserFavoritePart.objects.filter(user=request.user)
+    users = UserProfile.objects.all().order_by('user__username')
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+
+    p = Paginator(users, 10, request=request)
+    try:
+        results_list = p.page(page)
+    except (PageNotAnInteger, EmptyPage):
+        results_list = p.page(1)
     
     return render_to_response('users/index.html',
-                              {'userlist': users,
+                              {'userlist': results_list,
+                               'page_num': page,
                               },
                               context_instance=RequestContext(request))
 

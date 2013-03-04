@@ -1,0 +1,75 @@
+{% extends "base/base_MAIN.html" %}
+
+{% load humanize %}
+{% load markdown_deux_tags %}
+{% load gravatar %}
+
+{% block title %}
+User Directory - Page {{ page_num }} | Part Engine
+{% endblock %}
+
+{% block assemblies_active %}active open{% endblock %}
+
+{% block breadcrumb_links %}
+    <a class="current" href="{% url users.views.index %}" title="Users" class="tip-bottom"><i class="icon-user"></i> Users</a>
+{% endblock %}
+
+{% block page_title %}User Directory {% endblock %}
+
+
+{% block right_buttons %}
+{% include 'includes/share_links.html' %}
+{% endblock %}
+
+{% block head %}
+<link href="{{ STATIC_URL }}css/bootstrap-editable.css" rel="stylesheet">
+<link href="{{ STATIC_URL }}css/select2.css" rel="stylesheet" />
+<script src="{{ STATIC_URL }}js/jquery.uniform.js"></script>
+<script src="{{ STATIC_URL }}js/select2.min.js"></script>
+<script src="{{ STATIC_URL }}js/jquery.dataTables.min.js"></script>
+<script src="{{ STATIC_URL }}js/unicorn.tables.js"></script>
+<script src="{{ STATIC_URL }}js/bootstrap-editable.min.js"></script>
+<script src="{{ STATIC_URL }}js/modal-form.js"></script>
+{% endblock %}
+
+{% block content %}
+
+<div class="row-fluid">
+    <div class="span8 offset2">
+        <div class="widget-box widget-content">
+            {% for u in userlist.object_list %}
+            <div class="row-fluid">
+                <div class="span2">
+                    <a href="{{ u.user.get_absolute_url }}"><img class="thumbnail" src="{% gravatar_url u.user.email 150 %}" alt="avatar image" />
+                    <h5 style="text-align:center">{{ u.user }}</h5></a>
+                </div>
+                <div class="span6">
+                    <dl class="dl-horizontal">
+                        <dt>member since</dt>
+                        <dd>{{ u.user.date_joined }}</dd>
+
+                        <dt>total rep</dt>
+                        <dd><strong>{{ u.reputation }}</strong></dd>
+
+                        <dt>account status</dt>
+                        {% if u.user.is_active %}
+                        <dd>active user {% if u.user.is_staff %} [staff member] {% endif %}</dd>
+                        {% else %}
+                        <dd>not active</dd>
+                        {% endif %}
+                        
+                        <dt>last seen</dt>
+                        <dd>{{ u.last_seen_on|naturaltime }}</dd>
+                        
+                        <dt>profile views</dt>
+                        <dd>{{ u.profile_views|intcomma }}</dd>
+
+                    </dl>
+                </div>
+            </div>
+            {% endfor %}
+            {{ userlist.render }}
+        </div>
+    </div>
+</div>
+{% endblock %}
