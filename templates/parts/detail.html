@@ -76,10 +76,10 @@
 
 
 {% block content %}
-<div class="row-fluid">
+<div class="row-fluid" itemscope itemtype="http://data-vocabulary.org/Product">
     <div class="span12">
-        <h2>{{ part.number }} by <a class="tip-bottom" title="Click to edit" id="company" href="#company-modal" data-toggle="modal">{{ part.company|safe }}</a></h2>
-        <h4><a id="description" data-name="description" data-placeholder="No Description" data-type="text" data-inputclass="input input-large" data-pk="{{ part.pk }}" data-url="{% url parts.ajax.update_description %}">{{ part.description }}</a></h4>
+        <h2><span itemprop="name">{{ part.number }}</span> by <a class="tip-bottom" title="Click to edit" id="company" href="#company-modal" data-toggle="modal" itemprop="brand">{{ part.company|safe }}</a></h2>
+        <h4><a id="description" data-name="description" data-placeholder="No Description" data-type="text" data-inputclass="input input-large" data-pk="{{ part.pk }}" data-url="{% url parts.ajax.update_description %}" itemprop="description" >{{ part.description }}</a></h4>
         
     </div>
     {% include 'includes/adsense_728x90.html' %}
