@@ -41,8 +41,12 @@ def index(request):
 
 
 def redirect_new_page(request, company_slug, part_slug):
-    c = get_object_or_404(Company, slug=company_slug) 
-    p = get_object_or_404(Part, slug=part_slug, company=c)
+    try:
+        c = get_object_or_404(Company, slug=company_slug) 
+        p = get_object_or_404(Part, slug=part_slug, company=c)
+    except:
+        p = get_object_or_404(Part, slug=part_slug)
+        c = p.company
     return HttpResponsePermanentRedirect(reverse('parts.views.detail', args=[p.id, c.slug, p.slug]))
     
 def detail(request, part_id, company_slug, part_slug):
