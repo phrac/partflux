@@ -56,6 +56,8 @@ REP_VALUE_FLAGGED_ATTR = -1
 # rep points if flag a part (and the inverse if your part is flagged)
 REP_VALUE_FLAG_PART = 1
 REP_VALUE_FLAGGED_PART = -1
+# rep points for cross references
+REP_VALUE_NEW_XREF = 5
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name

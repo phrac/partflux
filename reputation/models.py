@@ -5,7 +5,7 @@ from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
-from parts.models import Part, Attribute, PartImage, BuyLink
+from parts.models import Part, Attribute, PartImage, BuyLink, Xref
 
 class ReputationAction(models.Model):
     user = models.ForeignKey(User)
@@ -25,6 +25,8 @@ class ReputationAction(models.Model):
             action = 'Uploaded a new image'
         elif self.action == 'NEW_BUYLINK':
             action = 'Added a new purchase link'
+        elif self.action == 'NEW_XREF':
+            action = 'Added a cross reference'
         else:
             action = 'Unknown action'
         return action
@@ -41,6 +43,8 @@ class ReputationAction(models.Model):
                 return self.content_object.get_absolute_url()
             elif self.content_type.name == 'buy link':
                 return self.content_object.part.get_absolute_url()
+            elif self.content_type.name == 'xref':
+                return self.content_object.part.get_absolute_url()
 
     def get_object_name(self):
         if self.content_object is not None and self.object_id is not None:
@@ -52,6 +56,8 @@ class ReputationAction(models.Model):
             elif self.content_type.name == 'part':
                 return self.content_object.number
             elif self.content_type.name == 'buy link':
+                return self.content_object.part.number
+            elif self.content_type.name == 'xref':
                 return self.content_object.part.number
 
     
@@ -68,11 +74,13 @@ class ReputationAction(models.Model):
         elif sender is BuyLink:
             points = settings.REP_VALUE_NEW_BUYLINK
             action = 'NEW_BUYLINK'
+        elif sender is Xref:
+            points = settings.REP_VALUE_NEW_XREF
+            action = 'NEW_XREF'
         else:
             pass
         
         if created and instance.user is not None:
-            print dir(sender._meta)
             ra = ReputationAction(content_object=instance, user=instance.user, point_value=points, action=action)
             ra.save()
         else:
@@ -82,6 +90,7 @@ class ReputationAction(models.Model):
     post_save.connect(reputation_event, sender=Attribute)
     post_save.connect(reputation_event, sender=PartImage)
     post_save.connect(reputation_event, sender=BuyLink)
+    post_save.connect(reputation_event, sender=Xref)
     
 class Badge(models.Model):
     name = models.CharField(max_length=32)
