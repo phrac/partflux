@@ -12,6 +12,8 @@ from parts.models import Part
 def view_profile(request, username):
     user = get_object_or_404(User, username=username)
     profile = user.get_profile()
+    profile.profile_views += 1
+    profile.save()
     reputation_actions = ReputationAction.objects.filter(user=user)
 
     return render_to_response('users/profile.html',

@@ -58,19 +58,29 @@
                 </div>
                 <div class="span6">
                     <dl class="dl-horizontal">
+                        {% if request.user.is_staff or request.user == profile.user %}
+                        <dt>last ip</dt>
+                        <dd>{{ profile.last_activity_ip }}
+                        {% endif %}
+                        
                         <dt>member since</dt>
                         <dd>{{ profile.user.date_joined }}</dd>
 
                         <dt>total rep</dt>
-                        <dd>{{ profile.reputation }}</dd>
+                        <dd><strong>{{ profile.reputation }}</strong></dd>
 
                         <dt>account status</dt>
                         {% if profile.user.is_active %}
-                        <dd>active user</dd>
+                        <dd>active user {% if profile.user.is_staff %} [staff member] {% endif %}</dd>
                         {% else %}
                         <dd>not active</dd>
                         {% endif %}
-
+                        
+                        <dt>last seen</dt>
+                        <dd>{{ profile.last_seen_on|naturaltime }}</dd>
+                        
+                        <dt>profile views</dt>
+                        <dd>{{ profile.profile_views|intcomma }}</dd>
 
                     </dl>
                 </div>
@@ -91,6 +101,7 @@
                 <table class="table table-bordered data-table-rep table-condensed table-centered">
                     <thead>
                         <tr>
+                            <th style="display:none">Formatted Date</th>
                             <th>Date</th>
                             <th>Points</th>
                             <th>Action</th>
@@ -103,7 +114,8 @@
                             {% else %}
                             <tr class="error">
                                 {% endif %}
-                                <td style="text-align:center;">{{ a.created }}</td>
+                                <td style="display:none">{{ a.created|date:"Y-m-d H:i:sO" }}</td>
+                                <td style="text-align:center">{{ a.created|naturalday }}</td>
                                 <td>
                                     {% if a.point_value > 0 %}
                                     <span class="badge badge-success">+

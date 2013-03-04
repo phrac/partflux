@@ -151,6 +151,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'users.middleware.LastSeen',
 )
 
 ROOT_URLCONF = 'partengine.urls'
