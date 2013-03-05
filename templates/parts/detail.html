@@ -23,17 +23,17 @@
 {% block html_itemscope %}itemscope itemtype="http://schema.org/Product"{% endblock %}
 
 {% block head %}
+<link href="{{ STATIC_URL }}css/bootstrap-editable.css" rel="stylesheet">
+<link rel="stylesheet" href="{{ STATIC_URL }}css/uniform.css" type="text/css" media="screen" />
+<link href="{{ STATIC_URL }}css/select2.css" rel="stylesheet" />
+<link rel="stylesheet" href="{{ STATIC_URL }}js/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
 <script src="{{ STATIC_URL }}js/jquery.dataTables.min.js"></script>
 <script src="{{ STATIC_URL }}js/unicorn.tables.js"></script>
-<link rel="stylesheet" href="{{ STATIC_URL }}css/uniform.css" type="text/css" media="screen" />
-<script src="{{ STATIC_URL }}js/jquery.uniform.js"></script>
-<link href="{{ STATIC_URL }}css/select2.css" rel="stylesheet" />
+<script src="{{ STATIC_URL }}js/jquery.uniform.js"></script>>
 <script src="http://ivaynberg.github.com/select2/select2-master/select2.js"></script>
 <script src="{{ STATIC_URL }}js/jquery.validate.js"></script>
 <script src="{{ STATIC_URL }}js/unicorn.form_validation.js"></script>
-<link rel="stylesheet" href="{{ STATIC_URL }}js/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
 <script src="{{ STATIC_URL }}js/fancybox/jquery.fancybox.pack.js"></script>
-<link href="{{ STATIC_URL }}css/bootstrap-editable.css" rel="stylesheet">
 <script src="{{ STATIC_URL }}js/bootstrap-editable.min.js"></script>
 <script src="{{ STATIC_URL }}js/modal-form.js"></script>
 <script type="text/javascript">

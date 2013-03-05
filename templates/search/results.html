@@ -35,6 +35,9 @@ Search Results
                     {% if result.content_type == "nsn.nsn" %}
                         {% include "search/includes/nsn/nsn.html" %}
                     {% endif %}
+                    {% if result.content_type == "companies.company" %}
+                        {% include "search/includes/companies/company.html" %}
+                    {% endif %}
                     {% endfor %}
                 </table>
             

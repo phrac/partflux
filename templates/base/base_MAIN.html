@@ -95,8 +95,6 @@
         <div id="sidebar">
             <ul>
                 <li {% block home_active %}{% endblock %}><a href="/"><i class="icon-home"></i> <span>Home</span></a></li>
-
-                <li {% block companies_active %}{% endblock %} ><a href="{% url companies.views.index %}"><i class="icon-briefcase"></i> <span>Companies</span></a></li>
                 
                 <!-- parts sub-menu -->
                 <li class="submenu {% block parts_active %}{% endblock %}">
@@ -128,7 +126,21 @@
                     </ul>
                 </li>
                 
+                <li {% block companies_active %}{% endblock %} ><a href="{% url companies.views.index %}"><i class="icon-briefcase"></i> <span>Companies</span></a></li>
+                
                 <li class="{% block search_active %}{% endblock %}" ><a href="{% url search.views.index %}"><i class="icon-search"></i> <span>Search</span></a></li>
+                
+                <li class="submenu {% block users_active %}{% endblock %}" >
+                    <a href="#"><i class="icon-user"></i> <span>Users</span>  <span class="label">2</span></a>
+                        <ul>
+                            <li><a href="{% url users.views.index %}"><i class="icon-user"></i> User Directory</a></li>
+                            {% if request.user.is_authenticated %}
+                            <li><a href="{{ request.user.get_absolute_url }}"><i class="icon-star"></i> My Profile</a></li>
+                            {% else %}
+                            <li><a href="{% url django.contrib.auth.views.login %}?next={{request.path}}"><i class="icon-star"></i> My Profile</a></li>
+                            {% endif %}
+                        </ul>
+                </li>
                 
                 <!--<li {% block sourcing_active %}{% endblock %} ><a href="interface.html"><i class="icon-magnet"></i> <span>Sourcing Dashboard</span></a></li>-->
                 
