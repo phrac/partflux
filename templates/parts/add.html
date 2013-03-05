@@ -1,4 +1,19 @@
 {% extends "base/base_MAIN.html" %}
+{% block head %}
+<!-- search typeahead -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".company-ta input[type=text]").typeahead({
+            items: 5,
+            source: function (query, process) {
+                $.get('/search/autocomplete?type=company', { q: query }, function (data) {
+                    process(data)
+                })
+            }
+        });
+    });
+</script>
+{% endblock %}
 
 {% block breadcrumb_links %}
 <a href="{% url parts.views.index %}" title="Parts" class="tip-bottom"><i class="icon-cog"></i> Parts</a>
@@ -34,7 +49,7 @@
 
                     <div class="control-group">
                         <label class="control-label" for="id_company">Company Name</label>
-                        <div class="controls">
+                        <div class="company-ta controls">
                             {{ partform.company }}
                         </div>
                     </div>

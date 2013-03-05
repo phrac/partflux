@@ -9,9 +9,16 @@ import json
 
 def autocomplete(request):
     if request.is_ajax():
+        type = request.GET.get('type', '')
         q = request.GET.get('q', '')
-        sqs = SearchQuerySet().filter(content__startswith=q)[:5]
-        suggestions = [result.object.number for result in sqs]
+        suggestions = []
+        if type == 'company':
+            sqs = SearchQuerySet().filter(name__startswith=q)[:5]
+            suggestions = [result.object.name for result in sqs]
+        else:
+            sqs = SearchQuerySet().filter(content__startswith=q)[:5]
+            suggestions = [result.object.number for result in sqs]
+        
         the_data = json.dumps(suggestions)
         return HttpResponse(the_data, content_type='application/json')
 
