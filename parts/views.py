@@ -7,6 +7,7 @@ from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.contrib import messages
+from django.core.exceptions import ObjectDoesNotExist
 from pure_pagination import Paginator, PageNotAnInteger, EmptyPage
 from haystack.query import SearchQuerySet
 
@@ -162,7 +163,11 @@ def addbuylink(request, part_id):
         url = buylinkform.cleaned_data['url']
         company = buylinkform.cleaned_data['company'].strip().upper()
         price = buylinkform.cleaned_data['price']
-        c, _created = Company.objects.get_or_create(slug=slugify(company))
+        try:
+            c = Company.objects.get(slug=slugify(company))
+        except ObjectDoesNotExist:
+            c = Company(name=company, slug=slugify(company))
+            c.save()
         buylink = BuyLink(part=p, company=c, price=price, url=url, user=request.user)
         try:
             buylink.save()
@@ -172,7 +177,11 @@ def addbuylink(request, part_id):
 
 @login_required
 def addpart(request, part_number, company, desc):
-    c, _created = Company.objects.get_or_create(name=company)
+    try:
+        c = Company.objects.get(slug=slugify(company))
+    except ObjectDoesNotExist:
+        c = Company(name=company, slug=slugify(company))
+        c.save()
     if Part.objects.filter(number=part_number, company=c).exists():
         newpart = Part.objects.get(number=part_number, company=c)
     else: 
@@ -206,8 +215,14 @@ def addxref(request, part_id):
         company = xrefform.cleaned_data['company'].strip().upper()
         description = xrefform.cleaned_data['desc'].strip().upper()
         copy_attrs = xrefform.cleaned_data['copy_attrs']
+        
         """Check if the company exists and create it if it does not"""
-        c, _created = Company.objects.get_or_create(slug=slugify(company))
+        try:
+            c = Company.objects.get(slug=slugify(company))
+        except ObjectDoesNotExist:
+            c = Company(name=company, slug=slugify(company))
+            c.save() 
+        
         """Check if the cross referenced part exists and create it if it does not"""
         newpart, _created = Part.objects.get_or_create(number=part_number, company=c)
         if _created == True:
