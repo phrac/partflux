@@ -40,7 +40,10 @@ def results(request):
 
         if q:
             sqs = SearchQuerySet()
-            results = sqs.filter(content=AutoQuery(no_partial_q))[:250]
+            if '*' in q or '?' in q:
+                results = sqs.filter(number=q)[:250]
+            else:
+                results = sqs.filter(content=AutoQuery(no_partial_q))[:250]
 
             # check for a partial part number search
             if partial:

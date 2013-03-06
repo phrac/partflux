@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.gritter.css" />
         <link rel="stylesheet" href="{{ STATIC_URL }}css/unicorn.main.css" />
         <link rel="stylesheet" href="{{ STATIC_URL }}css/unicorn.grey.css" class="skin-color" />
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/print.css" type="text/css" media="print" />
         <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.ico" type="image/x-icon" />
         
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
@@ -74,7 +75,7 @@
             </form>
         </div>
         
-        <div id="user-nav" class="navbar navbar-inverse">
+        <div id="user-nav" class="navbar navbar-inverse noprint">
             <ul class="nav btn-group">
                 {% if user.is_authenticated %}
                 <li class="btn btn-inverse" ><a title="View My Profile" href="{{ request.user.get_absolute_url }}"><img src="{% gravatar_url user.email 20 %}" alt="gravatar" /> [{{ user_reputation }}]</a></li>
@@ -171,7 +172,7 @@
             </div>
             
             {% block no_breadcrumb %}
-            <div id="breadcrumb">
+            <div id="breadcrumb" class="noprint">
                 <a href="/" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a>
                 {% block breadcrumb_links %} {% endblock %}
             </div>
@@ -181,8 +182,8 @@
                 
                 {% endblock %}
 
-                <div class="row-fluid">
-                    <div id="footer" class="span12" style="margin-top:65px;">
+                <div class="noprint row-fluid">
+                    <div id="footer" class="noprint span12" style="margin-top:65px;">
                             <a href="/faq/">FAQ</a>
                             | <a href="/search/">Advanced Search</a>
                             | <a href="/privacy/">Privacy Policy</a>

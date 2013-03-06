@@ -19,14 +19,14 @@ body, #content, #container {
 
 /* SECTION 2: Remove any elements not needed in print. 
    This would include navigation, ads, sidebars, etc. */
-#topnav, #navbar, #nav, #sidebar, .ad, .noprint {
+#topnav, #navbar, #nav, #sidebar, .ad, .noprint, .buttons, .btn-group, .modal, .dataTables_filter, .dataTables_paginate {
    display: none; 
 }
 
 /* SECTION 3: Set body font face, size, and color.
    Consider using a serif font for readability. */
 body {
-   font: 1em Georgia, "Times New Roman", Times, serif;
+   font: 1em monospace;
    color: #000; 
 }
 
@@ -60,6 +60,4 @@ a:link, a:visited {
    color: #00c;
    font-weight: bold;
    text-decoration: underline; }
-#content a:link:after, #content a:visited:after {
-   content: " (" attr(href) ") ";
-}
+
