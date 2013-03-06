@@ -48,9 +48,15 @@
         {% if user.is_authenticated %}
         $.fn.editable.defaults.mode = 'inline';
         $('#description').editable({
-                           params: {csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value},
-                           });
+            params: {csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value},
+        });
         {% endif %}
+        $.gritter.add({
+            title: 'Help Us Out',
+            text: 'If you have information about part # {{ part.number }}, <a href="{% url django.contrib.auth.views.logout %}?next={{request.path}}">Sign Up</a> and start entering data!',
+            image: '{{ STATIC_URL }}img/icons/32/survey.png',
+            sticky: true
+        });
     });
 </script>
 <script type="text/javascript">
