@@ -15,4 +15,8 @@ urlpatterns = patterns('',
     url(r'^privacy/$',
        'django.views.generic.simple.direct_to_template',
        {'template': 'main/privacy.html'}),
+       
+    url(r'^contest/$',
+        'django.views.generic.simple.direct_to_template',
+        {'template': 'main/contest.html'}),
 )

@@ -2,7 +2,7 @@ from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect, HttpResponse
 from django.template import RequestContext
-from django.template.defaultfilters import slugify
+from django.template.defaultfilters import slugify, truncatechars
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
@@ -54,6 +54,8 @@ def redirect_new_page(request, company_slug, part_slug):
 def detail(request, part_id, company_slug, part_slug):
     p = get_object_or_404(Part, id=part_id)
     mlt = SearchQuerySet().more_like_this(p)[:10]
+    
+    title = "%s by %s - %s | Part Engine" % (p.number, p.company.name, truncatechars(p.description, (100 - (len(p.number) + len(p.company.name) + 22))))
 
     if request.user.is_authenticated() and UserFavoritePart.objects.filter(user=request.user, part=p).count() == 1:
         fave = UserFavoritePart.objects.get(user=request.user, part=p)
@@ -138,6 +140,7 @@ def detail(request, part_id, company_slug, part_slug):
                                'fave': fave,
                                'user_assemblies': user_asm,
                                'mlt': mlt,
+                               'page_title': title,
                               },
                               context_instance=RequestContext(request))
 

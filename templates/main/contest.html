@@ -1,0 +1,64 @@
+{% extends "base/base_MAIN.html" %}
+
+{% block title %}
+Contest Details | Part Engine
+{% endblock %}
+
+{% block help_active %}active open{% endblock %}
+
+{% block page_title %}Contest Details{% endblock %}
+
+{% block breadcrumb_links %}
+<a href="#" class="current"><i class="icon-lock"></i> Contest Details</a>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="row-fluid">
+    <div class="widget-box well span12">
+        <img class="thumbnail span3 pull-right" src="{{ STATIC_URL }}images/amazon-50.jpg" alt="amazon gift card" />
+        <div class="span8">
+            <h1 class="center-text">Win a $50 Amazon Gift Card!</h1>
+            <p>
+            Every month we give away a $50 Amazon gift card just for contributing to Part Engine!
+            We put eligible users in a hat and draw the name on the last day of every month and
+            then announce the contest winner here.</p>
+            
+            <h3>So how do you enter to win?</h3>
+            <p>It's pretty simple actually. Here are the steps:</p>
+            
+            <h4>Create an Account</h4>
+            <p>If you don't already have one, you need to <a href="{{ django.contrib.auth.view.login }}">create an account</a>.
+            Don't worry, its free and easy, and we aren't going to spam you with junk you don't need</p>
+            
+            <h4>Earn Some Reputation Points</h4>
+            <p>Start earning reputation points. You can get points for creating new parts,
+            uploading images, adding part attributes, and lots of other actions. These
+            points are used to determine your community <em>trust</em> levels.</p>
+            <strong>Here's a quick breakdown of point values:</strong>
+            <dl class="dl-horizontal">
+                <dt>Create a new part</dt>
+                <dd>10 points</dd>
+                <dt>Add a part cross ref</dt>
+                <dd>5 points</dd>
+                <dt>Upload an image</dt>
+                <dd>3 points</dd>
+                <dt>Add a part attribute</dt>
+                <dd>2 points</dd>
+                <dt>Add a purchasing link</dt>
+                <dd>1 point</dd><br />
+            <p>As you can see, you can easily get a large number of reputation points just by creating a part,
+            adding an image, and adding some attributes to the new part.</p>
+            </dl>
+            
+            <h4>Cross Your Fingers</h4>
+            <p>On the last day of each month we will randomly select a user that has
+            gained at least 50 reputation points within the month. You will be contacted
+            via email so that we can work out where to send the prize.</p>
+            <h3>Good luck, and thanks for being a part of the community!</h3> 
+        </div>
+    </div>
+</div>
+    
+{% endblock %}

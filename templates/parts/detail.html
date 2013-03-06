@@ -5,7 +5,7 @@
 {% load comments %}
 
 {% block title %}
-{{ part.number }} by {{ part.company.name|safe }} | Part Engine
+{{ page_title|safe }}
 {% endblock %}
 
 {% block meta_description %}{{ part.number }} by {{ part.company.name|safe }} : {{ part.description }}{% endblock %}
@@ -52,8 +52,8 @@
         });
         {% endif %}
         $.gritter.add({
-            title: 'Help Us Out',
-            text: 'If you have information about part # {{ part.number }}, <a href="{% url django.contrib.auth.views.logout %}?next={{request.path}}">Sign Up</a> and start entering data!',
+            title: 'Help Build Part Engine!',
+            text: 'If you have information about part # {{ part.number }}, <a href="{% url django.contrib.auth.views.login %}?next={{request.path}}">Sign Up</a> and start entering data, its free and easy! <strong>You could win a $50 Amazon gift card!</strong> <a href="/contest/">Details</a>.',
             image: '{{ STATIC_URL }}img/icons/32/survey.png',
             sticky: true
         });
