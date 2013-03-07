@@ -21,9 +21,9 @@ def index(request):
         datelist.append(current_date)
         current_date -= td
 
-    return render(request, 'sitemaps/index.xml',
+    return render(request, 'sitemaps/index.txt',
                   { 'dates': datelist },
-                  content_type='application/xml')
+                  content_type='text/plain')
     
 def object_index(request, sitemap_type, sitemap_date):
     current_date = datetime.strptime(sitemap_date, '%Y-%m-%d')
@@ -47,14 +47,13 @@ def object_index(request, sitemap_type, sitemap_date):
         obj_list = p.page(1)
         
     results_list = []
-    print p.num_pages
     for page in range(1, p.num_pages + 1):
-        results_list.append("http://partengine.org/sitemap-%s-index-%s.xml?page=%s" % (sitemap_type, sitemap_date, page))    
-    
-    return render(request, 'sitemaps/object_index.xml',
+        results_list.append("http://partengine.org/sitemap-%s-index-%s.txt?page=%s" % (sitemap_type, sitemap_date, page))    
+        
+    return render(request, 'sitemaps/object_index.txt',
                  {'objects_list': results_list,
-                  'current_domain': 'http://partengine.org',
-                 }, content_type='application/xml')
+                  'sitemap_date': sitemap_date,
+                 }, content_type='text/plain')
     
 
 def sitemap(request, sitemap_type, sitemap_date):
@@ -77,8 +76,8 @@ def sitemap(request, sitemap_type, sitemap_date):
         obj_list = p.page(page)
     except (PageNotAnInteger, EmptyPage):
         obj_list = p.page(1)    
-    return render(request, 'sitemaps/sitemap.xml',
+    return render(request, 'sitemaps/sitemap.txt',
                  {'objects_list': obj_list,
                   'current_domain': 'http://partengine.org',
-                 }, content_type='application/xml')
+                 }, content_type='text/plain')
 
