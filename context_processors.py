@@ -44,3 +44,11 @@ def user_reputation(request):
         return { 'user_reputation': profile.reputation }
     else:
         return { 'user_reputation': None }
+
+def get_current_version(request):
+    from subprocess import call
+    
+    try:
+        return { 'current_version': call(["/usr/local/bin/hg", "id"]) }
+    except:
+        return { 'current_verions': None }
