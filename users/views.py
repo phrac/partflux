@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponsePermanentRedirect, HttpResponseRedirect, HttpResponse, HttpResponseBadRequest
 from pure_pagination import Paginator, PageNotAnInteger, EmptyPage
 
 from users.models import UserProfile, UserFavoritePart
@@ -12,6 +12,8 @@ from parts.models import Part
 @login_required
 def view_profile(request, username):
     user = get_object_or_404(User, username=username)
+    if username == 'partbot':
+        return HttpResponsePermanentRedirect('/partbot/')    
     profile = user.get_profile()
     profile.profile_views += 1
     profile.save()
