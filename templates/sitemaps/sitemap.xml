@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
-{% for object in objects %}
+<urlset 
+    xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+    xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
+{% for object in objects_list.object_list %}
     <url>
     <loc>{{ current_domain }}{{ object.get_absolute_url }}</loc>
         <lastmod>{{ object.updated_at|date:"Y-m-d" }}</lastmod>
@@ -9,6 +10,21 @@
         <priority>.5</priority>
     </url>
 {% endfor %}
+
+{% if objects_list.has_previous %}
+<sitemap>
+    <loc>{{ current_domain }}{{ request.path }}?{{ objects_list.previous_page_number.querystring }}</loc>
+    <lastmod>{{ date|date:"Y-m-d" }}</lastmod>
+</sitemap>
+{% endif %}
+
+{% if objects_list.has_next %}
+<sitemap>
+    <loc>{{ current_domain }}{{ request.path }}?{{ objects_list.next_page_number.querystring }}</loc>
+    <lastmod>{{ date|date:"Y-m-d" }}</lastmod>
+</sitemap>
+{% endif %}
+
 
 </urlset>
 
