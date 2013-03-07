@@ -1,0 +1,8 @@
+{% for object in objects_list.object_list %}{{ current_domain }}{{ object.get_absolute_url }}
+{% endfor %}
+
+
+
+
+
+
