@@ -10,21 +10,9 @@
         <priority>.5</priority>
     </url>
 {% endfor %}
-
-{% if objects_list.has_previous %}
-<sitemap>
-    <loc>{{ current_domain }}{{ request.path }}?{{ objects_list.previous_page_number.querystring }}</loc>
-    <lastmod>{{ date|date:"Y-m-d" }}</lastmod>
-</sitemap>
-{% endif %}
-
-{% if objects_list.has_next %}
-<sitemap>
-    <loc>{{ current_domain }}{{ request.path }}?{{ objects_list.next_page_number.querystring }}</loc>
-    <lastmod>{{ date|date:"Y-m-d" }}</lastmod>
-</sitemap>
-{% endif %}
-
-
 </urlset>
+
+
+
+
 
