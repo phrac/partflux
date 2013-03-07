@@ -1,5 +1,4 @@
-{% for o in objects_list %}
-{{ o }}
+{% for o in objects_list %}{{ o }}
 {% endfor %}
 
 

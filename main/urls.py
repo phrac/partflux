@@ -8,10 +8,6 @@ urlpatterns = patterns('',
        'django.views.generic.simple.direct_to_template',
        {'template': 'main/partbot.html'}),
     
-    url(r'^contact/$',
-       'django.views.generic.simple.direct_to_template',
-       {'template': 'main/contact.html'}),
-    
     url(r'^privacy/$',
        'django.views.generic.simple.direct_to_template',
        {'template': 'main/privacy.html'}),
