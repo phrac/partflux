@@ -8,6 +8,8 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
+from django.conf import settings
+from django.contrib.sites.models import get_current_site
 from pure_pagination import Paginator, PageNotAnInteger, EmptyPage
 from haystack.query import SearchQuerySet
 
@@ -54,8 +56,14 @@ def redirect_new_page(request, company_slug, part_slug):
 def detail(request, part_id, company_slug, part_slug):
     p = get_object_or_404(Part, id=part_id)
     mlt = SearchQuerySet().more_like_this(p)[:10]
-    
-    title = "%s by %s - %s | Part Engine" % (p.number, p.company.name, truncatechars(p.description, (100 - (len(p.number) + len(p.company.name) + 22))))
+    current_site = get_current_site(request)
+    title = "%s by %s - %s | %s" % (p.number, p.company.name,
+                                    truncatechars(p.description,
+                                    (settings.MAX_PAGE_TITLE_LENGTH
+                                     - (len(p.number) +
+                                     len(p.company.name)
+                                     + 22))),
+                                    current_site.name)
 
     if request.user.is_authenticated() and UserFavoritePart.objects.filter(user=request.user, part=p).count() == 1:
         fave = UserFavoritePart.objects.get(user=request.user, part=p)
