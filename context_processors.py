@@ -46,9 +46,11 @@ def user_reputation(request):
         return { 'user_reputation': None }
 
 def get_current_version(request):
-    from subprocess import call
+    import subprocess
     
     try:
-        return { 'current_version': call(["/usr/local/bin/hg", "id"]) }
+        proc = subprocess.Popen('cd /home/derek/partengine/partengine; /usr/local/bin/hg id', shell=True, stdout=subprocess.PIPE, )
+	ver = proc.communicate()[0]
     except:
-        return { 'current_verions': None }
+	ver = None
+    return { 'current_version': ver }
