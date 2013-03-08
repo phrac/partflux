@@ -19,13 +19,13 @@
 {% block content %}  
 <div class="row-fluid">
     <div class="well span12">
+    {% include 'includes/adsense_728x90.html' %}
         {% if company.description %}
         <p>{{ company.description|linebreaksbr|truncatewords:150 }}</p>
         {% else %}
         <p>No company description available</p>
         {% endif %}
     </div>
-    {% include 'includes/adsense_728x90.html' %}
 </div>
 <div class="row-fluid">
     
