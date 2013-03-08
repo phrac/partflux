@@ -8,7 +8,7 @@
             {% thumbnail image.image "160x120" crop="center" as im %}
             <li class="span3">
                 <div class="thumbnail">
-                    <a id="lightbox" class="thumbnail" href="{{ image.image.url }}"><img src="{{ im.url }}" alt="{{ part.number }} image" /></a>
+                    <a id="lightbox" class="thumbnail" href="{{ image.image.url }}"><img src="{{ im.url }}" alt="{{ part.number }} image" itemprop="image" /></a>
                     <div class="thumbnail-caption">
                         by: {{ image.user }}
                         {% if user.is_staff %}

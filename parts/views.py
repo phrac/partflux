@@ -2,10 +2,14 @@ from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect, HttpResponse
 from django.template import RequestContext
+from django.template.defaultfilters import slugify, truncatechars
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.contrib import messages
+from django.core.exceptions import ObjectDoesNotExist
+from django.conf import settings
+from django.contrib.sites.models import get_current_site
 from pure_pagination import Paginator, PageNotAnInteger, EmptyPage
 from haystack.query import SearchQuerySet
 
@@ -41,13 +45,25 @@ def index(request):
 
 
 def redirect_new_page(request, company_slug, part_slug):
-    c = get_object_or_404(Company, slug=company_slug) 
-    p = get_object_or_404(Part, slug=part_slug, company=c)
+    try:
+        c = get_object_or_404(Company, slug=company_slug) 
+        p = get_object_or_404(Part, slug=part_slug, company=c)
+    except:
+        p = get_object_or_404(Part, slug=part_slug)
+        c = p.company
     return HttpResponsePermanentRedirect(reverse('parts.views.detail', args=[p.id, c.slug, p.slug]))
     
 def detail(request, part_id, company_slug, part_slug):
     p = get_object_or_404(Part, id=part_id)
     mlt = SearchQuerySet().more_like_this(p)[:10]
+    current_site = get_current_site(request)
+    title = "%s by %s - %s | %s" % (p.number, p.company.name,
+                                    truncatechars(p.description,
+                                    (settings.MAX_PAGE_TITLE_LENGTH
+                                     - (len(p.number) +
+                                     len(p.company.name)
+                                     + 22))),
+                                    current_site.name)
 
     if request.user.is_authenticated() and UserFavoritePart.objects.filter(user=request.user, part=p).count() == 1:
         fave = UserFavoritePart.objects.get(user=request.user, part=p)
@@ -132,6 +148,7 @@ def detail(request, part_id, company_slug, part_slug):
                                'fave': fave,
                                'user_assemblies': user_asm,
                                'mlt': mlt,
+                               'page_title': title,
                               },
                               context_instance=RequestContext(request))
 
@@ -157,8 +174,12 @@ def addbuylink(request, part_id):
         url = buylinkform.cleaned_data['url']
         company = buylinkform.cleaned_data['company'].strip().upper()
         price = buylinkform.cleaned_data['price']
-        c, _created = Company.objects.get_or_create(name=company)
-        buylink = BuyLink(part=p, company=c, price=price, url=url)
+        try:
+            c = Company.objects.get(slug=slugify(company))
+        except ObjectDoesNotExist:
+            c = Company(name=company, slug=slugify(company))
+            c.save()
+        buylink = BuyLink(part=p, company=c, price=price, url=url, user=request.user)
         try:
             buylink.save()
             return True
@@ -167,7 +188,11 @@ def addbuylink(request, part_id):
 
 @login_required
 def addpart(request, part_number, company, desc):
-    c, _created = Company.objects.get_or_create(name=company)
+    try:
+        c = Company.objects.get(slug=slugify(company))
+    except ObjectDoesNotExist:
+        c = Company(name=company, slug=slugify(company))
+        c.save()
     if Part.objects.filter(number=part_number, company=c).exists():
         newpart = Part.objects.get(number=part_number, company=c)
     else: 
@@ -201,8 +226,14 @@ def addxref(request, part_id):
         company = xrefform.cleaned_data['company'].strip().upper()
         description = xrefform.cleaned_data['desc'].strip().upper()
         copy_attrs = xrefform.cleaned_data['copy_attrs']
+        
         """Check if the company exists and create it if it does not"""
-        c, _created = Company.objects.get_or_create(name=company)
+        try:
+            c = Company.objects.get(slug=slugify(company))
+        except ObjectDoesNotExist:
+            c = Company(name=company, slug=slugify(company))
+            c.save() 
+        
         """Check if the cross referenced part exists and create it if it does not"""
         newpart, _created = Part.objects.get_or_create(number=part_number, company=c)
         if _created == True:

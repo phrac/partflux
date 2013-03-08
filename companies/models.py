@@ -4,7 +4,7 @@ from sorl.thumbnail import ImageField
 
 class Company(models.Model):
     name = models.CharField(max_length=128, unique=True)
-    slug = models.CharField(max_length=64, blank=True)
+    slug = models.CharField(max_length=64, blank=True, unique=True)
     description = models.TextField(null=True, blank=True)
     url = models.URLField(null=True, blank=True)
     wikipedia_url = models.URLField(null=True, blank=True)

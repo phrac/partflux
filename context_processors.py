@@ -40,10 +40,17 @@ def user_reputation(request):
     from django.contrib.auth.models import User
     from users.models import UserProfile
     if request.user.is_authenticated():
-        try:
-            profile = request.user.get_profile()
-        except:
-            profile = UserProfile.objects.create(user=request.user)
+        profile = request.user.get_profile()
         return { 'user_reputation': profile.reputation }
     else:
         return { 'user_reputation': None }
+
+def get_current_version(request):
+    import subprocess
+    
+    try:
+        proc = subprocess.Popen('cd /home/derek/partengine/partengine; /usr/local/bin/hg id', shell=True, stdout=subprocess.PIPE, )
+	ver = proc.communicate()[0]
+    except:
+	ver = None
+    return { 'current_version': ver }

@@ -13,7 +13,7 @@ from django.db import IntegrityError
 from parts.models import Part, Xref
 from partgroups.models import PartGroup, PartGroupItem
 from companies.models import Company
-from partgroups.forms import PartGroupForm
+from partgroups.forms import PartGroupForm, PartGroupAddForm
 
 
 def index(request):
@@ -38,7 +38,7 @@ def detail(request, partgroup_id, slug):
 @login_required
 def addgroupform(request):
     if request.method == 'POST':
-        partgroupform = PartGroupForm(request.POST)
+        partgroupform = PartGroupAddForm(request.POST)
         if partgroupform.is_valid():
             name = partgroupform.cleaned_data['name']
             desc = partgroupform.cleaned_data['description']
@@ -51,6 +51,8 @@ def addgroupform(request):
                 return HttpResponseBadRequest("Error creating new assembly")
                 
             return HttpResponseRedirect(partgroup.get_absolute_url())
+        else:
+            print partgroupform.errors
     else:
         partgroupform = PartGroupForm()
     return render_to_response('partgroups/add.html',

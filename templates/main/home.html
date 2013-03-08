@@ -1,0 +1,139 @@
+{% extends "base/base_MAIN.html" %}
+
+{% load humanize %}
+{% load rss %}
+{% load gravatar %}
+{% load cache %}
+{% load datestr %}
+
+
+{% block title %}
+Home | Part Engine
+{% endblock %}
+
+{% block home_active %}active open{% endblock %}
+
+{% block page_title %}My Dashboard{% endblock %}
+
+
+{% block right_buttons %}
+{% include 'includes/share_links.html' %}
+{% endblock %}
+
+{% block head %}
+<link href="{{ STATIC_URL }}css/bootstrap-editable.css" rel="stylesheet">
+<link href="{{ STATIC_URL }}css/select2.css" rel="stylesheet" />
+<script src="{{ STATIC_URL }}js/jquery.uniform.js"></script>
+<script src="{{ STATIC_URL }}js/select2.min.js"></script>
+<script src="{{ STATIC_URL }}js/jquery.dataTables.min.js"></script>
+<script src="{{ STATIC_URL }}js/unicorn.tables.js"></script>
+<script src="{{ STATIC_URL }}js/bootstrap-editable.min.js"></script>
+<script src="{{ STATIC_URL }}js/modal-form.js"></script>
+
+<script type="text/javascript">
+    function SetFaveId(id){
+        document.getElementById("fave-id").value = id;
+    }
+</script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.data-table-small').dataTable({
+            "bJQueryUI": true,
+            "sPaginationType": "two_button",
+            "sDom": '<""l>t<"F"p>',
+            "bLengthChange": false,
+        });
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+
+<div class="row-fluid">
+    <div class="span6">
+        <div class="widget-box">
+			<div class="widget-title">
+				<span class="icon">
+					<i class="icon-refresh"></i>
+				</span>	
+				<h5>From the blog</h5>
+			</div>
+			    {% cache 3 rss_display %}
+			    {% get_rss "http://blog.partengine.org/feeds/posts/default?alt=rss" as rss %}
+				{% for entry in rss.entries|slice:"5" %}
+                <div class="new-update clearfix">
+					<i class="icon-ok-sign"></i>
+					<div class="update-done">
+                        {% for link in entry.links %}
+                        {% if forloop.first %}										
+						<a title="" href="{{ link.href }}"><strong>{{ entry.title }}</strong></a>
+						{% endif %}
+						{% endfor %}
+						<span>{{ entry.description|truncatewords:30|safe }}</span>
+					</div>
+					<div class="update-date"><span class="update-day">{{ entry.published|strtotime|date:"d"}}</span>{{ entry.published|strtotime|date:"M"}}</div>
+				
+				</div>
+				{% endfor %}
+				{% endcache %}
+			<div class="widget-content nopadding updates">
+			    
+			</div>
+		</div>
+	</div>
+    <div class="span6">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon">
+                    <i class="icon-repeat"></i>
+                </span>
+                <h5>Recently updated parts</h5>
+            </div>
+            <div class="widget-content nopadding">
+                <div id="recent_parts">
+                    <ul class="activity-list">
+                        {% for p in recent_parts %}
+                        <li>
+                            <a href="{{ p.get_absolute_url }}">
+                                <i class="icon-cog"></i>
+                                <strong>{{ p.number }}</strong>
+                                by
+                                <strong>{{ p.company.name }}</strong>
+                                <span>was updated {{ p.updated_at|naturaltime }}</span>
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="span6">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon">
+                    <i class="icon-repeat"></i>
+                </span>
+                <h5>Recent Reputation Points Awarded</h5>
+            </div>
+            <div class="widget-content nopadding">
+                <ul class="activity-list">
+                    {% for a in recent_action %}
+                    <li>
+                        <a href="{{ a.get_object_url }}">
+                            <img src="{% gravatar_url a.user.email 25 %}" alt="avatar image" />
+                            <strong>{{ a.user }}</strong>
+                            {{ a.get_human_action }} : <strong>{{ a.get_object_name }}</strong> worth 
+                            <strong>{{ a.point_value }} points</strong>
+                            <span>{{ a.created|naturaltime }}</span>
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>       
+        </div>
+    </div>
+</div>
+
+{% endblock %}

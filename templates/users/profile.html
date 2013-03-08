@@ -1,0 +1,158 @@
+{% extends "base/base_MAIN.html" %}
+
+{% load humanize %}
+{% load markdown_deux_tags %}
+{% load gravatar %}
+
+{% block title %}
+{{ profile.user.username }}'s Profile | Part Engine
+{% endblock %}
+
+{% block users_active %}active open{% endblock %}
+
+{% block breadcrumb_links %}
+    <a href="{% url users.views.index %}" title="Users" class="tip-bottom"><i class="icon-user"></i> Users</a>
+    <a href="#" class="current">{{ profile.user.username }}</a>
+{% endblock %}
+
+{% block page_title %}{{ profile.user.username }}'s Profile {% endblock %}
+
+
+{% block right_buttons %}
+{% include 'includes/share_links.html' %}
+{% endblock %}
+
+{% block head %}
+<link href="{{ STATIC_URL }}css/bootstrap-editable.css" rel="stylesheet">
+<link href="{{ STATIC_URL }}css/select2.css" rel="stylesheet" />
+<script src="{{ STATIC_URL }}js/jquery.uniform.js"></script>
+<script src="{{ STATIC_URL }}js/select2.min.js"></script>
+<script src="{{ STATIC_URL }}js/jquery.dataTables.min.js"></script>
+<script src="{{ STATIC_URL }}js/unicorn.tables.js"></script>
+<script src="{{ STATIC_URL }}js/bootstrap-editable.min.js"></script>
+<script src="{{ STATIC_URL }}js/modal-form.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.data-table-rep').dataTable({
+            "bJQueryUI": true,
+            "sPaginationType": "full_numbers",
+            "sDom": '<""l>t<"F"p>',
+            "bLengthChange": false,
+            "aaSorting": [[ 0, "desc"]],
+            "iDisplayLength": 15,
+        });
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+
+<div class="row-fluid">
+    <div class="span8">
+        <div class="widget-box widget-content">
+            <div class="row-fluid">
+                <div class="span2">
+                    <img class="thumbnail" src="{% gravatar_url profile.user.email 150 %}" alt="avatar image" />
+                    <h3 style="text-align:center">{{ profile.reputation }}<br /><small>total rep</small></h3>
+                </div>
+                <div class="span6">
+                    <dl class="dl-horizontal">
+                        {% if request.user.is_staff or request.user == profile.user %}
+                        <dt>last ip</dt>
+                        <dd>{{ profile.last_activity_ip }}
+                        {% endif %}
+                        
+                        <dt>member since</dt>
+                        <dd>{{ profile.user.date_joined }}</dd>
+
+                        <dt>total rep</dt>
+                        <dd><strong>{{ profile.reputation }}</strong></dd>
+
+                        <dt>account status</dt>
+                        {% if profile.user.is_active %}
+                        <dd>active user {% if profile.user.is_staff %} [staff member] {% endif %}</dd>
+                        {% else %}
+                        <dd>not active</dd>
+                        {% endif %}
+                        
+                        <dt>last seen</dt>
+                        <dd>{{ profile.last_seen_on|naturaltime }}</dd>
+                        
+                        <dt>profile views</dt>
+                        <dd>{{ profile.profile_views|intcomma }}</dd>
+
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <div class="widget-box collapsible">
+            <div class="widget-title">
+                <a href="#faveparts" data-toggle="collapse">
+                    <span class="icon">
+                        <i class="icon-list-alt"></i>
+                    </span>
+                    <h5>Activity</h5>
+                </a>
+                <div class="buttons">
+                </div>
+            </div>
+            <div class="widget-content nopadding">
+                <table class="table table-bordered data-table-rep table-condensed table-centered">
+                    <thead>
+                        <tr>
+                            <th style="display:none">Formatted Date</th>
+                            <th>Date</th>
+                            <th>Points</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for a in reputation_actions %}
+                        {% if a.point_value > 0 %}
+                        <tr>
+                            {% else %}
+                            <tr class="error">
+                                {% endif %}
+                                <td style="display:none">{{ a.created|date:"Y-m-d H:i:sO" }}</td>
+                                <td style="text-align:center">{{ a.created|naturalday }}</td>
+                                <td>
+                                    {% if a.point_value > 0 %}
+                                    <span class="badge badge-success">+
+                                        {% else %}
+                                        <span class="badge badge-error">-
+                                            {% endif %}
+                                            {{ a.point_value }}</span> points</td>
+                                    <td>
+                                        {{ a.get_human_action }}
+                                        {% if a.content_object %}
+                                        - part # <a href="{{ a.get_object_url }}">{{ a.get_object_name }}</a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="span4">
+                <div class="widget-box">
+                    <div class="widget-title">
+                        <span class="icon">
+                            <i class="icon-random"></i>
+                        </span>
+                        <h5>Stats</h5>
+                        <div class="buttons">
+                            <a class="btn btn-inverse btn-mini tip-left" title="Add a Part" href="#add-xref" data-toggle="modal"><i class="icon-plus-sign icon-white"></i></a>
+                        </div>
+                    </div>
+                    <div class="widget-content nopadding">
+
+                    </div>       
+                </div>
+            </div>
+        </div>
+        {% endblock %}

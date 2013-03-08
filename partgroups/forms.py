@@ -10,6 +10,11 @@ class PartGroupForm(ModelForm):
     
     class Meta:
         model = PartGroup
+        
+class PartGroupAddForm(forms.Form):
+    name = forms.CharField(max_length=32)
+    description = forms.CharField(required=True, widget=forms.Textarea)
+    private = forms.BooleanField(required=False)
 
 
 

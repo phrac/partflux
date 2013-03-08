@@ -1,24 +1,51 @@
 {% extends "base/base_MAIN.html" %}
 
-{% block sitesearch %}
+{% load humanize %}
+{% load markdown_deux_tags %}
+{% load gravatar %}
+
+{% block title %}
+Part Bot | Part Engine
+{% endblock %}
+
+{% block users_active %}active open{% endblock %}
+
+{% block breadcrumb_links %}
+    <a href="#" class="current">Part Bot</a>
+{% endblock %}
+
+{% block page_title %}About Part Bot{% endblock %}
+
+
+{% block right_buttons %}
+{% include 'includes/share_links.html' %}
+{% endblock %}
+
+{% block head %}
+<link href="{{ STATIC_URL }}css/bootstrap-editable.css" rel="stylesheet">
+<link href="{{ STATIC_URL }}css/select2.css" rel="stylesheet" />
+<script src="{{ STATIC_URL }}js/jquery.uniform.js"></script>
+<script src="{{ STATIC_URL }}js/select2.min.js"></script>
+<script src="{{ STATIC_URL }}js/jquery.dataTables.min.js"></script>
+<script src="{{ STATIC_URL }}js/unicorn.tables.js"></script>
+<script src="{{ STATIC_URL }}js/bootstrap-editable.min.js"></script>
 {% endblock %}
 
 {% block content %}
 
-<div class="center_content" style="text-align:center">
-	<br /><br />
-
-	
-	<h1 class="clear">search {{ part_count }} part numbers</h1>
-	<form method="get" action="/parts/search/"><p class="clear">
-		<input class="bigsearch" type="text" name="q" id="idxsearch" size="45" maxlength="100" />
-		<input type="submit" class="submit"  value="find it"/></p>
-	</form>
-	<small>
-		<p>search for any full or partial part number</p>
-	</small>
-
-</div>
-{% endblock %}
-
-
+<div class="row-fluid">
+    <div class="span8 offset2">
+        <div class="widget-box widget-content">
+            <div class="row-fluid">
+                <div class="span2">
+                    <img class="thumbnail" src="{{ STATIC_URL }}images/logo-big.png" alt="partbot" />
+                </div>
+                <div class="span8">
+                    <p>Part Bot is Part Engine's web spider that actively crawls the web looking
+                    for part information. When information is found he cleans
+                    the data and inserts it into the database where it is then
+                    indexed and made available to users.</p>
+                </div>
+            </div>
+        </div>
+        {% endblock %}

@@ -14,6 +14,9 @@ class UserProfile(models.Model):
     linkedin_profile = models.URLField()
     location = models.CharField(max_length=64)
     reputation = models.IntegerField(default=0)
+    last_seen_on = models.DateTimeField(auto_now_add=True, null=True)
+    last_activity_ip = models.IPAddressField(null=True)
+    profile_views = models.IntegerField(default=0)
     
 
     def create_user_profile(sender, instance, created, **kwargs):

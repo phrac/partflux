@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.gritter.css" />
         <link rel="stylesheet" href="{{ STATIC_URL }}css/unicorn.main.css" />
         <link rel="stylesheet" href="{{ STATIC_URL }}css/unicorn.grey.css" class="skin-color" />
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/print.css" type="text/css" media="print" />
         <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.ico" type="image/x-icon" />
         
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
@@ -46,7 +47,7 @@
                             process(data)
                         })
                     }
-                    })
+                    });
                 {% if messages %}
                 {% for message in messages %}
                 $.gritter.add({
@@ -74,10 +75,10 @@
             </form>
         </div>
         
-        <div id="user-nav" class="navbar navbar-inverse">
+        <div id="user-nav" class="navbar navbar-inverse noprint">
             <ul class="nav btn-group">
                 {% if user.is_authenticated %}
-                <li class="btn btn-inverse" ><a title="" href="#"><img src="{% gravatar_url user.email 20 %}" alt="gravatar" /> [{{ user_reputation }}]</a></li>
+                <li class="btn btn-inverse" ><a title="View My Profile" href="{{ request.user.get_absolute_url }}"><img src="{% gravatar_url user.email 20 %}" alt="gravatar" /> [{{ user_reputation }}]</a></li>
                 
                 <li class="btn btn-inverse"><a title="" href="#"><i class="icon-cog"></i> <span class="text">Settings</span></a></li>
                 <li class="btn btn-inverse"><a title="" href="{% url django.contrib.auth.views.logout %}?next={{request.path}}"><i class="icon-share-alt"></i> <span class="text">Logout</span></a></li>
@@ -95,8 +96,6 @@
         <div id="sidebar">
             <ul>
                 <li {% block home_active %}{% endblock %}><a href="/"><i class="icon-home"></i> <span>Home</span></a></li>
-
-                <li {% block companies_active %}{% endblock %} ><a href="{% url companies.views.index %}"><i class="icon-briefcase"></i> <span>Companies</span></a></li>
                 
                 <!-- parts sub-menu -->
                 <li class="submenu {% block parts_active %}{% endblock %}">
@@ -111,11 +110,11 @@
                 
                 <!-- assemblies sub-menu -->
                 <li class="submenu {% block assemblies_active %}{% endblock %}">
-                <a href="#"><i class="icon-wrench"></i> <span>Assemblies</span> <span class="label">3</span></a>
+                <a href="#"><i class="icon-wrench"></i> <span>Assemblies/Lists</span> <span class="label">3</span></a>
                 <ul>
-                    <li><a href="{% url partgroups.views.index %}"><i class="icon-list-alt"></i> Browse Assemblies</a></li>
-                    <li><a href="{% url partgroups.views.addgroupform %}"><i class="icon-plus-sign"></i> Create Assembly</a></li>
-                    <li><a href="#"><i class="icon-star"></i> My Assemblies</a></li>
+                    <li><a href="{% url partgroups.views.index %}"><i class="icon-list-alt"></i> Browse Assemblies/Lists</a></li>
+                    <li><a href="{% url partgroups.views.addgroupform %}"><i class="icon-plus-sign"></i> Create Assembly/List</a></li>
+                    <li><a href="#"><i class="icon-star"></i> My Assemblies/Lists</a></li>
                 </ul>
                 </li>
                 
@@ -128,7 +127,21 @@
                     </ul>
                 </li>
                 
+                <li {% block companies_active %}{% endblock %} ><a href="{% url companies.views.index %}"><i class="icon-briefcase"></i> <span>Companies</span></a></li>
+                
                 <li class="{% block search_active %}{% endblock %}" ><a href="{% url search.views.index %}"><i class="icon-search"></i> <span>Search</span></a></li>
+                
+                <li class="submenu {% block users_active %}{% endblock %}" >
+                    <a href="#"><i class="icon-user"></i> <span>Users</span>  <span class="label">2</span></a>
+                        <ul>
+                            <li><a href="{% url users.views.index %}"><i class="icon-user"></i> User Directory</a></li>
+                            {% if request.user.is_authenticated %}
+                            <li><a href="{{ request.user.get_absolute_url }}"><i class="icon-star"></i> My Profile</a></li>
+                            {% else %}
+                            <li><a href="{% url django.contrib.auth.views.login %}?next={{request.path}}"><i class="icon-star"></i> My Profile</a></li>
+                            {% endif %}
+                        </ul>
+                </li>
                 
                 <!--<li {% block sourcing_active %}{% endblock %} ><a href="interface.html"><i class="icon-magnet"></i> <span>Sourcing Dashboard</span></a></li>-->
                 
@@ -159,7 +172,7 @@
             </div>
             
             {% block no_breadcrumb %}
-            <div id="breadcrumb">
+            <div id="breadcrumb" class="noprint">
                 <a href="/" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a>
                 {% block breadcrumb_links %} {% endblock %}
             </div>
@@ -169,17 +182,18 @@
                 
                 {% endblock %}
 
-                <div class="row-fluid">
-                    <div id="footer" class="span12" style="margin-top:65px;">
+                <div class="noprint row-fluid">
+                    <div id="footer" class="noprint span12" style="margin-top:65px;">
                             <a href="/faq/">FAQ</a>
                             | <a href="/search/">Advanced Search</a>
                             | <a href="/privacy/">Privacy Policy</a>
-                            | <a href="/privacy/#contact">Contact</a>
+                            | <a href="/contact/">Contact</a>
                             | <a href="/sitemap.xml">Sitemap</a>
                             | <a href="http://validator.w3.org/check?uri=http://preview.partengine.org{{ request.get_full_path }}">Valid HTML5</a>
                             <br />
-                            &copy; 2012 - {% now "Y" %} Part Engine
-                    </div>
+                            &copy; 2012 - {% now "Y" %} Part Engine ( {{ current_version }} )
+                            <br /><br />
+                            </div>
                 </div>
             </div>
         </div>

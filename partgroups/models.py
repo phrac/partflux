@@ -6,13 +6,13 @@ from parts.models import Part
 
 class PartGroup(models.Model):
     name = models.CharField(max_length=128)
-    slug = models.CharField(max_length=64, null=True)
+    slug = models.CharField(max_length=64, null=True, blank=True)
     description = models.TextField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User)
     private = models.NullBooleanField(default=False, null=True)
-    parent_group = models.ForeignKey('PartGroup', null=True)
+    parent_group = models.ForeignKey('PartGroup', null=True, blank=True)
     
     class Meta:
         unique_together = ('name', 'user',)

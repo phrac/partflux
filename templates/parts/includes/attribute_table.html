@@ -5,7 +5,7 @@
             <tr>
                 <th>Attribute</th>
                 <th>Value</th>
-                <th>Actions</th>
+                <th class="noprint">Actions</th>
             </tr>
         </thead>
         {% for a in part.attribute_set.all %}
@@ -33,8 +33,8 @@
                     </ul>
                 </div>
             </td>
-            <td style="text-align:center;">
-                <div class="btn-group">
+            <td class="noprint" style="text-align:center;">
+                <div class="btn-group noprint">
                     <a href="#collapse_{{ a.pk }}" data-toggle="collapse" class="btn btn-mini tip-top" title="See detailed attribute information"><i class="icon icon-info-sign"></i></a>
                     <a class="btn btn-mini tip-top" title="Flag" href="#flag-modal" data-toggle="modal" onClick="SetFlags('attr', {{ a.id }})"><i class="icon icon-flag"></i></a>
                     <!--<a class="btn btn-mini tip-top" title="Up Vote"><i class="icon icon-thumbs-up"></i></a>-->

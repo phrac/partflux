@@ -32,6 +32,17 @@ DATABASES = {
     }
 }
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
+
+CACHE_MIDDLEWARE_ALIAS = 'default'
+CACHE_MIDDLEWARE_SECONDS = 600
+CACHE_MIDDLEWARE_KEY_PREFIX = ''
+
 
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/users/login/'
@@ -43,7 +54,7 @@ MINIMUM_VOTE_REPUTATION = 50
 # how many reputation points should the user get for a new part
 REP_VALUE_NEW_PART = 10
 # how many reputation points should the user get for a new buylink
-REP_VALUE_NEW_BUYLINK = 4
+REP_VALUE_NEW_BUYLINK = 1
 # how many rep points should user get for new attribute
 REP_VALUE_NEW_ATTRIBUTE = 2
 # how many rep points should user get for new comment
@@ -56,6 +67,11 @@ REP_VALUE_FLAGGED_ATTR = -1
 # rep points if flag a part (and the inverse if your part is flagged)
 REP_VALUE_FLAG_PART = 1
 REP_VALUE_FLAGGED_PART = -1
+# rep points for cross references
+REP_VALUE_NEW_XREF = 5
+
+# Sets the maximum length of a page title
+MAX_PAGE_TITLE_LENGTH = 100
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -140,15 +156,19 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "context_processors.nsn_count",
     "context_processors.get_current_domain",
     "context_processors.get_current_path",
+    "context_processors.get_current_version",
     )
 
 MIDDLEWARE_CLASSES = (
+    'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'users.middleware.LastSeen',
+    'django.middleware.cache.FetchFromCacheMiddleware',
 )
 
 ROOT_URLCONF = 'partengine.urls'
@@ -184,6 +204,7 @@ INSTALLED_APPS = (
     'haystack',
     'storages',
     'twitter_tag',
+    'contact_form',
     # partfindr apps    
     'main',
     'parts',
@@ -219,6 +240,10 @@ TWITTER_OAUTH_SECRET = 'bcDxxq6ocaBNBQRMJyYvQXsbmpCxumTH9BBuhOqmUM'
 TWITTER_CONSUMER_KEY = 'vGm8CZhCn1T4bbdvL99A'
 # OAuth settings: Consumer secret
 TWITTER_CONSUMER_SECRET = 'D0oseP8Rg1FXoJycv9qh2lUTAH8sNfGkD8YWEStuL5o'
+
+ABSOLUTE_URL_OVERRIDES = {
+    'auth.user': lambda o: "/users/profile/%s/" % o.username,
+}
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
