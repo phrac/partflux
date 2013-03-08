@@ -191,7 +191,7 @@
                             | <a href="/sitemap.xml">Sitemap</a>
                             | <a href="http://validator.w3.org/check?uri=http://preview.partengine.org{{ request.get_full_path }}">Valid HTML5</a>
                             <br />
-                            &copy; 2012 - {% now "Y" %} Part Engine ( {{ current_version }} )
+                            &copy; 2012 - {% now "Y" %} Part Engine ( {% include 'version.txt' %} )
                             <br /><br />
                             </div>
                 </div>

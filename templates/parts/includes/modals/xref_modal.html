@@ -32,7 +32,7 @@
             <div class="control-group">
                 <label class="control-label" for="id_copy_attrs">Copy Attributes?</label>
                 <div class="controls">
-                    {{ xref_form.copy_attrs }}
+                    <input type="checkbox" name="copy_attrs" />
                     <p>If you copy attributes, all attributes for <strong>{{ part.number }}</strong>
                     will be copied to the new part if it doesn't exist.
                     </p>

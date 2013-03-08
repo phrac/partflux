@@ -156,7 +156,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "context_processors.nsn_count",
     "context_processors.get_current_domain",
     "context_processors.get_current_path",
-    "context_processors.get_current_version",
     )
 
 MIDDLEWARE_CLASSES = (
