@@ -2,6 +2,7 @@ from django.conf.urls.defaults import patterns, include, url
 
 urlpatterns = patterns('',
     url(r'^$', 'main.views.index'),
+    url(r'^home/$', 'main.views.home'),
     url(r'^ajax/status/$', 'main.views.status_messages'), 
     
     url(r'^partbot/$',
