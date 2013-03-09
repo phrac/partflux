@@ -52,9 +52,8 @@ urlpatterns = patterns('',
     (r'^contact/', include('contact_form.urls')),
 
     # SITEMAP URLs
-    url(r'^sitemap.txt$', 'sitemap.index'),
-    url(r'^sitemap-(?P<sitemap_type>\w+)-(?P<sitemap_date>(\d{4})\D?(0[1-9]|1[0-2])\D?([12]\d|0[1-9]|3[01])).txt', 'sitemap.object_index'),
-    url(r'^sitemap-(?P<sitemap_type>\w+)-index-(?P<sitemap_date>(\d{4})\D?(0[1-9]|1[0-2])\D?([12]\d|0[1-9]|3[01])).txt', 'sitemap.sitemap'),
+    url(r'^sitemap.xml$', 'sitemap.index'),
+    url(r'^sitemap-(?P<sitemap_type>\w+)-(?P<sitemap_date>(\d{4})\D?(0[1-9]|1[0-2])\D?([12]\d|0[1-9]|3[01])).xml', 'sitemap.sitemap'),
 
     # Admin related urls
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),

@@ -52,6 +52,11 @@ def redirect_new_page(request, company_slug, part_slug):
         p = get_object_or_404(Part, slug=part_slug)
         c = p.company
     return HttpResponsePermanentRedirect(reverse('parts.views.detail', args=[p.id, c.slug, p.slug]))
+
+def redirect_sitemap(request, part_id):
+    p = get_object_or_404(Part, pk=part_id)
+    return HttpResponsePermanentRedirect(reverse('parts.views.detail',
+                                                 args=[p.id, p.company.slug, p.slug]))
     
 def detail(request, part_id, company_slug, part_slug):
     p = get_object_or_404(Part, id=part_id)

@@ -21,63 +21,25 @@ def index(request):
         datelist.append(current_date)
         current_date -= td
 
-    return render(request, 'sitemaps/index.txt',
+    return render(request, 'sitemaps/index.xml',
                   { 'dates': datelist },
-                  content_type='text/plain')
-    
-def object_index(request, sitemap_type, sitemap_date):
-    current_date = datetime.strptime(sitemap_date, '%Y-%m-%d')
-    next_date = current_date + timedelta(hours=24)
-    if sitemap_type == 'parts':
-        obj = Part.objects.filter(created_at__range=(current_date, next_date))
-    elif sitemap_type == 'companies':
-        obj = Company.objects.filter(created_at__range=(current_date, next_date))
-    elif sitemap_type == 'nsn':
-        obj = Nsn.objects.filter(updated_at__range=(current_date, next_date))
-        
-    try:
-        page = int(request.GET.get('page', '1'))
-    except ValueError:
-        page = 1
-
-    p = Paginator(obj, LINKS_PER_PAGE, request=request)
-    try:
-        obj_list = p.page(page)
-    except (PageNotAnInteger, EmptyPage):
-        obj_list = p.page(1)
-        
-    results_list = []
-    for page in range(1, p.num_pages + 1):
-        results_list.append("http://partengine.org/sitemap-%s-index-%s.txt?page=%s" % (sitemap_type, sitemap_date, page))    
-        
-    return render(request, 'sitemaps/object_index.txt',
-                 {'objects_list': results_list,
-                  'sitemap_date': sitemap_date,
-                 }, content_type='text/plain')
+                  content_type='application/xml')
     
 
 def sitemap(request, sitemap_type, sitemap_date):
     current_date = datetime.strptime(sitemap_date, '%Y-%m-%d')
     next_date = current_date + timedelta(hours=24)
     if sitemap_type == 'parts':
-        obj = Part.objects.filter(created_at__range=(current_date, next_date))
+        obj = Part.objects.filter(created_at__range=(current_date, next_date)).only('id')[:50000]
     elif sitemap_type == 'companies':
         obj = Company.objects.filter(created_at__range=(current_date, next_date))
     elif sitemap_type == 'nsn':
         obj = Nsn.objects.filter(updated_at__range=(current_date, next_date))
         
-    try:
-        page = int(request.GET.get('page', '1'))
-    except ValueError:
-        page = 1
-
-    p = Paginator(obj, LINKS_PER_PAGE, request=request)
-    try:
-        obj_list = p.page(page)
-    except (PageNotAnInteger, EmptyPage):
-        obj_list = p.page(1)    
-    return render(request, 'sitemaps/sitemap.txt',
-                 {'objects_list': obj_list,
+    return render(request, 'sitemaps/sitemap.xml',
+                 {'objects_list': obj,
+                  'type': sitemap_type,
                   'current_domain': 'http://partengine.org',
-                 }, content_type='text/plain')
+                 }, content_type='application/xml')
+
 

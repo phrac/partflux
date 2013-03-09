@@ -62,29 +62,32 @@ class ReputationAction(models.Model):
 
     
     def reputation_event(sender, instance, created, **kwargs):
-        if sender is Part:
-            points = settings.REP_VALUE_NEW_PART
-            action = 'NEW_PART'
-        elif sender is Attribute:
-            points = settings.REP_VALUE_NEW_ATTRIBUTE
-            action = 'NEW_ATTR'
-        elif sender is PartImage:
-            points = settings.REP_VALUE_NEW_IMAGE
-            action = 'NEW_IMG'
-        elif sender is BuyLink:
-            points = settings.REP_VALUE_NEW_BUYLINK
-            action = 'NEW_BUYLINK'
-        elif sender is Xref:
-            points = settings.REP_VALUE_NEW_XREF
-            action = 'NEW_XREF'
-        else:
+        if instance.user.id == 2:
             pass
-        
-        if created and instance.user is not None:
-            ra = ReputationAction(content_object=instance, user=instance.user, point_value=points, action=action)
-            ra.save()
         else:
-            pass
+            if sender is Part:
+                points = settings.REP_VALUE_NEW_PART
+                action = 'NEW_PART'
+            elif sender is Attribute:
+                points = settings.REP_VALUE_NEW_ATTRIBUTE
+                action = 'NEW_ATTR'
+            elif sender is PartImage:
+                points = settings.REP_VALUE_NEW_IMAGE
+                action = 'NEW_IMG'
+            elif sender is BuyLink:
+                points = settings.REP_VALUE_NEW_BUYLINK
+                action = 'NEW_BUYLINK'
+            elif sender is Xref:
+                points = settings.REP_VALUE_NEW_XREF
+                action = 'NEW_XREF'
+            else:
+                pass
+            
+            if created and instance.user is not None:
+                ra = ReputationAction(content_object=instance, user=instance.user, point_value=points, action=action)
+                ra.save()
+            else:
+                pass
     
     post_save.connect(reputation_event, sender=Part)
     post_save.connect(reputation_event, sender=Attribute)

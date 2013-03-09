@@ -18,6 +18,7 @@ urlpatterns = patterns('',
     url(r'^ajax/delete_image/$', 'parts.ajax.delete_image'),
 
     url(r'^(?P<part_id>\d+)/(?P<company_slug>.+)/(?P<part_slug>.+)/$', 'parts.views.detail'),
+    url(r'^(?P<part_id>\d+)/$', 'parts.views.redirect_sitemap'),
     url(r'^(?P<company_slug>.+)/(?P<part_slug>.+)/$', 'parts.views.redirect_new_page'),
 
     

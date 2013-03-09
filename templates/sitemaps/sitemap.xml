@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset 
+    xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+    xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
+{% for object in objects_list %}
+    <url>
+    <loc>{{ current_domain }}/{{ type }}/{{ object.id }}</loc>
+        <lastmod>{{ object.updated_at|date:"Y-m-d" }}</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>.5</priority>
+    </url>
+{% endfor %}
+</urlset>
