@@ -4,6 +4,7 @@ from django.template import RequestContext
 from datetime import date, timedelta, datetime
 from django.template import loader, Context
 from pure_pagination import Paginator, PageNotAnInteger, EmptyPage
+from haystack.query import SearchQuerySet
 
 from parts.models import Part
 from companies.models import Company
@@ -30,7 +31,8 @@ def sitemap(request, sitemap_type, sitemap_date):
     current_date = datetime.strptime(sitemap_date, '%Y-%m-%d')
     next_date = current_date + timedelta(hours=24)
     if sitemap_type == 'parts':
-        obj = Part.objects.filter(created_at__range=(current_date, next_date)).only('id')[:50000]
+        results = SearchQuerySet.filter(created_at__range=[current_date,
+                                                           next_date]).models(Parts).values('url')[:50000],
     elif sitemap_type == 'companies':
         obj = Company.objects.filter(created_at__range=(current_date, next_date))
     elif sitemap_type == 'nsn':
