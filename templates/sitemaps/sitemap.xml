@@ -4,10 +4,8 @@
     xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
 {% for object in objects_list %}
     <url>
-    <loc>{{ current_domain }}/{{ type }}/{{ object.id }}</loc>
-        <lastmod>{{ object.updated_at|date:"Y-m-d" }}</lastmod>
+    <loc>{{ object.url }}</loc>
         <changefreq>weekly</changefreq>
-        <priority>.5</priority>
     </url>
 {% endfor %}
 </urlset>

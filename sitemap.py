@@ -31,15 +31,15 @@ def sitemap(request, sitemap_type, sitemap_date):
     current_date = datetime.strptime(sitemap_date, '%Y-%m-%d')
     next_date = current_date + timedelta(hours=24)
     if sitemap_type == 'parts':
-        results = SearchQuerySet.filter(created_at__range=[current_date,
-                                                           next_date]).models(Parts).values('url')[:50000],
+        results = SearchQuerySet().filter(created__range=[current_date,
+                                                           next_date]).models(Part).values('url')[:50000]
     elif sitemap_type == 'companies':
         obj = Company.objects.filter(created_at__range=(current_date, next_date))
     elif sitemap_type == 'nsn':
         obj = Nsn.objects.filter(updated_at__range=(current_date, next_date))
         
     return render(request, 'sitemaps/sitemap.xml',
-                 {'objects_list': obj,
+                 {'objects_list': results,
                   'type': sitemap_type,
                   'current_domain': 'http://partengine.org',
                  }, content_type='application/xml')
