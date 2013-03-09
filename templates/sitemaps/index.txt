@@ -1,6 +1,0 @@
-{% for date in dates %}http://partengine.org/sitemap-parts-{{ date|date:"Y-m-d" }}.txt
-http://partengine.org/sitemap-companies-{{ date|date:"Y-m-d" }}.txt
-http://partengine.org/sitemap-nsn-{{ date|date:"Y-m-d" }}.txt
-{% endfor %}
-
-

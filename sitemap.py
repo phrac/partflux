@@ -34,10 +34,11 @@ def sitemap(request, sitemap_type, sitemap_date):
         results = SearchQuerySet().filter(created__range=[current_date,
                                                            next_date]).models(Part).values('url')[:50000]
     elif sitemap_type == 'companies':
-        obj = Company.objects.filter(created_at__range=(current_date, next_date))
+        results = SearchQuerySet().filter(created__range=[current_date,
+                                                           next_date]).models(Company).values('url')[:50000]
     elif sitemap_type == 'nsn':
-        obj = Nsn.objects.filter(updated_at__range=(current_date, next_date))
-        
+        results = SearchQuerySet().filter(created__range=[current_date,
+                                                           next_date]).models(Nsn).values('url')[:50000] 
     return render(request, 'sitemaps/sitemap.xml',
                  {'objects_list': results,
                   'type': sitemap_type,

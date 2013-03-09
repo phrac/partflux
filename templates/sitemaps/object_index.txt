@@ -1,5 +1,0 @@
-{% for o in objects_list %}{{ o }}
-{% endfor %}
-
-
-

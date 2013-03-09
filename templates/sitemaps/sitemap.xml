@@ -4,7 +4,7 @@
     xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
 {% for object in objects_list %}
     <url>
-    <loc>{{ object.url }}</loc>
+        <loc>{{ object.url }}</loc>
         <changefreq>weekly</changefreq>
     </url>
 {% endfor %}
