@@ -138,7 +138,7 @@ $.get('/search/autocomplete', { q: query }, function (data) {
                         <li class="active"><a title="attr_count"><i class="icon-eye-open"></i> &asymp; {{ attr_count|intcomma }} attributes</a></li>
                     </ul>
                     {% block no_skyscraper %}
-                    <div>
+                    <div style="margin-top:20px">
                         {% include 'includes/adsense-skyscraper.html' %}
                     </div>
                     {% endblock %}
