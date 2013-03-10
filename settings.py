@@ -151,9 +151,11 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.media",
     "django.core.context_processors.static",
     "django.contrib.messages.context_processors.messages",
-    "context_processors.user_reputation",
     "context_processors.part_count",
     "context_processors.nsn_count",
+    "context_processors.xref_count",
+    "context_processors.company_count",
+    "context_processors.attr_count",
     "context_processors.get_current_domain",
     "context_processors.get_current_path",
     )
@@ -165,7 +167,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'users.middleware.LastSeen',
     'django.middleware.cache.FetchFromCacheMiddleware',
 )
@@ -209,10 +210,7 @@ INSTALLED_APPS = (
     'parts',
     'companies',
     'nsn',
-    'partgroups',
     'users',
-    'reputation',
-    'debug_toolbar',
 )
 
 # django-registration settings

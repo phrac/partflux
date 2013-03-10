@@ -4,9 +4,7 @@
 Frequently Asked Questions | Part Engine
 {% endblock %}
 
-{% block help_active %}active open{% endblock %}
-
-{% block page_title %}Frequently Asked Questions{% endblock %}
+{% block help_active %}active{% endblock %}
 
 {% block breadcrumb_links %}
 <a href="#">Help</a>
@@ -14,39 +12,30 @@ Frequently Asked Questions | Part Engine
 {% endblock %}
 
 {% block content %}
-    <div class="row-fluid">
-        <div class="span8">
-            <div class="widget-box">
-            <div class="widget-title">
-                <span class="icon">
-                    <i class="icon-list-alt"></i>
-                </span>
-                <h5>Frequently Asked Questions</h5>
-            </div>
-            <div class="widget-content">
-            {% for topic in topics %}
-            <h2>{{ topic }}</h2>
-            {% for q in topic.questions.all %}
-            <h3><a id="{{ q.slug }}">{{ q.text }}</a></h3>
-            <p class="justify">{{ q.answer|safe }}</p>
-            {% endfor %}
-            {% endfor %}
-            </div>
-        </div>
-        </div>
-
-        <div class="well span4">
-            <div class="right_articles" style="font-size:1.2em">
-                {% for topic in topics %}
-                <h3>{{ topic }}</h3>
-                <ul>
-                    {% for q in topic.questions.all %}
-                    <li><a href="{% url faq_topic_list %}#{{ q.slug }}">{{ q.text }}</a></li>
-                    {% endfor %}
-                </ul>
-                {% endfor %}
-            </div>
-        </div>
+<div class="row-fluid">
+    <div class="span12">
+        <h4><i class="icon-list-alt"></i> Frequently Asked Questions</h4>
+        {% for topic in topics %}
+        <h3>{{ topic }}</h3>
+        {% for q in topic.questions.all %}
+        <h4><a id="{{ q.slug }}">{{ q.text }}</a></h4>
+        <p class="justify">{{ q.answer|safe }}</p>
+        {% endfor %}
+        {% endfor %}
     </div>
+</div>
+{% endblock %}
 
+{% block rightbar %}
+<div class="module-top"><i class="icon-comments"></i> Table of Contents</div>
+<div class="module">
+    {% for topic in topics %}
+    <strong>{{ topic }}</strong>
+    <ul>
+        {% for q in topic.questions.all %}
+        <li><a href="{% url faq_topic_list %}#{{ q.slug }}">{{ q.text }}</a></li>
+        {% endfor %}
+    </ul>
+    {% endfor %}
+</div>
 {% endblock %}

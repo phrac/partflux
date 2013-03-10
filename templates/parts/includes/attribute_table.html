@@ -1,56 +1,33 @@
 {% if part.attribute_set.count > 0 %}
-<div class="widget-content nopadding">
-    <table class="table table-bordered data-table">
-        <thead>
-            <tr>
-                <th>Attribute</th>
-                <th>Value</th>
-                <th class="noprint">Actions</th>
-            </tr>
-        </thead>
-        {% for a in part.attribute_set.all %}
-        <tr>
-            <td>
-                <strong>{{ a.key }}</strong>	
-            </td>
-            <td>
-                {{ a.value }}
-                <div class="collapse" id="collapse_{{ a.pk }}">
-                    <h5>Attribute Information</h5>
-                    <ul class="unstyled">
-                        <li><strong>Created By:</strong> <a href="{{ a.user.get_absolute_url }}">{{ a.user }}</a></li>
-                        <li><strong>Created On:</strong> {{ a.created_at }}</li>
-                        <li><strong>Last Update:</strong> {{ a.updated_at }}</li>
-                        <li><strong>Flagged:</strong> {{ a.attributeflag_set.count }} times
-                            {% if a.attributeflag_set.count > 0 %}
-                            <ul>
-                                {% for f in a.attributeflag_set.all %}
-                                <li>By <a href="{{ f.user.get_absolute_url }}">{{ f.user }}</a> for: <strong><em>{{ f.reason }}</em></strong></li>
-                                {% endfor %}
-                            </ul>
-                            {% endif %}
-                        </li>
+<table class="table table-striped">
+    {% for a in part.attribute_set.all %}
+    <tr>
+        <td>
+            <strong>{{ a.key }}</strong>	
+        </td>
+        <td>
+            {{ a.value }}
+            <div class="collapse" id="collapse_{{ a.pk }}">
+                <h5>Attribute Information</h5>
+                <ul class="unstyled">
+                    <li><strong>Created By:</strong> <a href="{{ a.user.get_absolute_url }}">{{ a.user }}</a></li>
+                    <li><strong>Created On:</strong> {{ a.created_at }}</li>
+                    <li><strong>Last Update:</strong> {{ a.updated_at }}</li>
+                    <li><strong>Flagged:</strong> {{ a.attributeflag_set.count }} times
+                    {% if a.attributeflag_set.count > 0 %}
+                    <ul>
+                        {% for f in a.attributeflag_set.all %}
+                        <li>By <a href="{{ f.user.get_absolute_url }}">{{ f.user }}</a> for: <strong><em>{{ f.reason }}</em></strong></li>
+                        {% endfor %}
                     </ul>
-                </div>
-            </td>
-            <td class="noprint" style="text-align:center;">
-                <div class="btn-group noprint">
-                    <a href="#collapse_{{ a.pk }}" data-toggle="collapse" class="btn btn-mini tip-top" title="See detailed attribute information"><i class="icon icon-info-sign"></i></a>
-                    <a class="btn btn-mini tip-top" title="Flag" href="#flag-modal" data-toggle="modal" onClick="SetFlags('attr', {{ a.id }})"><i class="icon icon-flag"></i></a>
-                    <!--<a class="btn btn-mini tip-top" title="Up Vote"><i class="icon icon-thumbs-up"></i></a>-->
-                    <!--<a class="btn btn-mini tip-top" title="Down Vote"><i class="icon icon-thumbs-down"></i></a>-->
-                    {% if user.is_staff %}
-                        <a class="btn btn-mini tip-top" title="Delete"><i class="icon icon-trash"></i></a>
                     {% endif %}
-                </div>
-            </td>
-        </tr>
-        
-        {% endfor %}
-    </table>
-</div>
+                    </li>
+                </ul>
+            </div>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
 {% else %}
-<div class="widget-content">
-    <div class="alert alert-error">No additional information available.</div>
-</div>
+<div class="alert alert-error">No additional information available.</div>
 {% endif %}

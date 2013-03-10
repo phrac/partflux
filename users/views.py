@@ -6,7 +6,6 @@ from django.http import HttpResponsePermanentRedirect, HttpResponseRedirect, Htt
 from pure_pagination import Paginator, PageNotAnInteger, EmptyPage
 
 from users.models import UserProfile, UserFavoritePart
-from reputation.models import ReputationAction
 from parts.models import Part
 
 @login_required
@@ -17,7 +16,6 @@ def view_profile(request, username):
     profile = user.get_profile()
     profile.profile_views += 1
     profile.save()
-    reputation_actions = ReputationAction.objects.filter(user=user)
 
     return render_to_response('users/profile.html',
                               {'profile' : profile,
