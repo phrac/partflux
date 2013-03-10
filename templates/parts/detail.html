@@ -23,7 +23,7 @@
 {% block content %}
 <div class="row-fluid" itemscope itemtype="http://data-vocabulary.org/Product">
     <div class="span12">
-    <h2><span itemprop="name">{{ part.number }}</span> by <span itemprop="brand">{{ part.company|safe }}</span></h2>
+        <h2><span itemprop="name">{{ part.number }}</span> by <a itemprop="brand" href="{{ part.company.get_absolute_url }}">{{ part.company|safe }}</a></h2>
         <h4><span itemprop="description">{{ part.description }}</span></h4>
     </div>
 </div>
