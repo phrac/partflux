@@ -59,9 +59,6 @@
         {% endif %}
         {% include 'parts/includes/buylink_table.html' %}
 
-        <!-- adsense -->
-        {% include 'includes/adsense_728x90.html' %}
-
         <!-- images widget -->
         <h4><i class="icon-picture"></i> Part Images</h4>
         {% if user.is_staff %}
@@ -93,6 +90,9 @@
             <div class="alert alert-error">No similar parts found</div>
         </div>
         {% endif %}
+
+        <!-- adsense -->
+        {% include 'includes/adsense_728x90.html' %}
 
         <!-- comments widget -->
         {% include 'includes/disqus.html' %}
