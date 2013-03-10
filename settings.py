@@ -205,6 +205,7 @@ INSTALLED_APPS = (
     'storages',
     'twitter_tag',
     'contact_form',
+    'articles',
     # partfindr apps    
     'main',
     'parts',
@@ -237,6 +238,9 @@ TWITTER_OAUTH_SECRET = 'bcDxxq6ocaBNBQRMJyYvQXsbmpCxumTH9BBuhOqmUM'
 TWITTER_CONSUMER_KEY = 'vGm8CZhCn1T4bbdvL99A'
 # OAuth settings: Consumer secret
 TWITTER_CONSUMER_SECRET = 'D0oseP8Rg1FXoJycv9qh2lUTAH8sNfGkD8YWEStuL5o'
+
+DISQUS_USER_API_KEY = 'Rk3o4gvtTyx8EspHIrcRm235o2Nn00Cki7CnRMERZGiG14RGiWJmNY3vTT0c4H57'
+DISQUS_FORUM_SHORTNAME = 'partengine'
 
 ABSOLUTE_URL_OVERRIDES = {
     'auth.user': lambda o: "/users/profile/%s/" % o.username,
