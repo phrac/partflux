@@ -1,6 +1,7 @@
 {% extends "base/base_MAIN.html" %}
 
 {% block parts_active %}active{% endblock %}
+{% block no_adsense %}{% endblock %}
 
 {% block breadcrumb_links %}
 <a href="{% url parts.views.index %}" title="Parts" class="tip-bottom"><i class="icon-cog"></i> Parts</a>
@@ -12,7 +13,7 @@
 
 {% block content %}
 <div class="row-fluid">
-    <h5><i class="icon-th"></i> Parts Listing</h5>
+    <h4><i class="icon-th"></i> Parts Listing</h4>
     {% include 'includes/adsense_728x90.html' %}
     <table class="table table-striped">
         <tbody>
@@ -31,6 +32,7 @@
             {% endfor %}
         </tbody>
     </table>
-    {{ parts_list.render }}							
+    {{ parts_list.render }}
+    {% include 'includes/adsense_728x90.html' %}
 </div>
 {% endblock %}
