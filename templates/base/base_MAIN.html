@@ -137,9 +137,11 @@ $.get('/search/autocomplete', { q: query }, function (data) {
                         <li><a title="xref_count"><i class="icon-random"></i> &asymp; {{ xref_count|intcomma }} cross refs</a></li>
                         <li class="active"><a title="attr_count"><i class="icon-eye-open"></i> &asymp; {{ attr_count|intcomma }} attributes</a></li>
                     </ul>
+                    {% block no_skyscraper %}
                     <div>
                         {% include 'includes/adsense-skyscraper.html' %}
                     </div>
+                    {% endblock %}
                     {% block rightbar %}
                     <div class="module-top"><i class="icon-bullhorn"></i> From our blog</div>
                     <div class="module">
