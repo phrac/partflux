@@ -67,7 +67,7 @@ $.get('/search/autocomplete', { q: query }, function (data) {
                         </a>
                         <a href="/"><h1>part engine</h1></a>
                         <div class="search nav-collapse collapse">
-                            <form class="navbar-form pull-left">
+                            <form class="navbar-form pull-left" action="{% url search.views.results %}" method="get">
                                 <div class="input-append">
                                     <input autocomplete="off" class="span3" id="appendedInputButtons" type="text" name="q">
                                     <button class="btn btn-primary" type="button"><i class="icon-search"></i></button>

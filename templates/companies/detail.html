@@ -19,7 +19,6 @@
 {% block content %}  
 <div class="row-fluid">
     <div class="well span12">
-        {% include 'includes/adsense_728x90.html' %}
         {% if company.description %}
         <p>{{ company.description|linebreaksbr|truncatewords:150 }}</p>
         {% else %}
@@ -29,6 +28,7 @@
 </div>
 <div class="row-fluid">
     <div class="span12">
+        {% include 'includes/adsense_728x90.html' %}
         <h4><i class="icon-cog"></i> Part numbers by {{ company.name }} <small>{{ parts_list.paginator.count|intcomma }} parts</small></h4>
         <table class="table table-striped">
             <tbody>

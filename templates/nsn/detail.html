@@ -6,6 +6,8 @@ NSN {{ nsn.number }} - {{ nsn.description }} - Details | Part Engine
 
 {% block nsn_active %}active open{% endblock %}
 
+{% block no_adsense %}{% endblock %}
+
 {% block breadcrumb_links %}
 <a href="{% url nsn.views.index %}" title="NSN Listing" class="tip-bottom"><i class="icon-plane"></i> NSN</a>
 <a href="#" class="current">{{ nsn.number }}</a>
@@ -18,7 +20,6 @@ NSN {{ nsn.number }} - {{ nsn.description }} - Details | Part Engine
     <div class="alert alert-error">
         <strong>WARNING!</strong> Our NSN data is currently incomplete. We are adding new information every day so check back often for updates.
     </div>
-    {% include 'includes/adsense_728x90.html' %}
 </div>
 <div class="row-fluid">
     <div class="span12">
@@ -116,6 +117,7 @@ NSN {{ nsn.number }} - {{ nsn.description }} - Details | Part Engine
             </tr>
 
         </table>
+        {% include 'includes/adsense_728x90.html' %}
 
         <h4><i class="icon-list-alt"></i> Characteristics</h4>
 
