@@ -12,6 +12,8 @@
 
 {% block parts_active %}active open{% endblock %}
 
+{% block no_adsense %}{% endblock %}
+
 {% block breadcrumb_links %}
     <a href="{% url parts.views.index %}" title="Parts" class="tip-bottom"><i class="icon-cog"></i> Parts</a>
     <a href="{{ part.company.get_absolute_url }}"><i class="icon-briefcase"></i> {{ part.company.name|safe }}</a>
@@ -30,6 +32,7 @@
     <div class="span12">
 
         <!-- attributes -->
+        {% include 'includes/adsense_728x90.html' %}
         <h4><i class="icon-list"></i> Part Details</h4>
         {% if user.is_staff %}
         <div class="buttons pull-right">
@@ -39,9 +42,7 @@
         {% include 'parts/includes/attribute_table.html' %}
 
         <!-- adsense -->
-        <div style="text-align:center">
-            {% include 'includes/adsense_728x90.html' %}
-        </div>
+        {% include 'includes/adsense_728x90.html' %}
 
         <!-- cross refs -->
         <h4><i class="icon-random"></i> Cross References</h4>
