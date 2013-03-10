@@ -141,11 +141,6 @@ $.get('/search/autocomplete', { q: query }, function (data) {
                     {% block rightbar %}
                     <div class="module-top"><i class="icon-twitter"></i> Latest Tweets from Part Engine</div>
                     <div class="module">
-                        {% load twitter_tag %}
-                        {% get_tweets for company.twitter_name as tweets limit 3 %}
-                        {% for tweet in tweets %}
-                        <div class="alert alert-info alert-block">{{ tweet.html|safe }}</div>
-                        {% endfor %}
                     </div>
                 </div>
                 {% endblock %}
