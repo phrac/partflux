@@ -137,10 +137,12 @@ $.get('/search/autocomplete', { q: query }, function (data) {
                         <li class="active"><a title="attr_count"><i class="icon-eye-open"></i> &asymp; {{ attr_count|intcomma }} attributes</a></li>
                     </ul>
                     <div style="text-align:center;">
+                        {% include 'includes/adsense-skyscraper.html' %}
                     </div>
                     {% block rightbar %}
                     <div class="module-top"><i class="icon-twitter"></i> Latest Tweets from Part Engine</div>
                     <div class="module">
+                        
                     </div>
                 </div>
                 {% endblock %}
