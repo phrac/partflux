@@ -28,6 +28,7 @@ DATABASES = {
             'PORT': '',                      					# Set to empty string for default. Not used with sqlite3.
             'OPTIONS': {
                 'POOL_ENABLED': True,
+                'autocommit': True,
             }
     }
 }

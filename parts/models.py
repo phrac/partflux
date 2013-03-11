@@ -10,6 +10,11 @@ from sorl.thumbnail import ImageField
 from companies.models import Company
 from nsn.models import Nsn
 
+class Category(models.Model):
+    name = models.CharField(max_length=64, unique=True)
+    slug = models.CharField(max_length=128)
+    parent = models.ForeignKey('Category', null=True)
+    
 class Part(models.Model):
     """
     Stores a unique part number and related information

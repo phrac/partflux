@@ -4,7 +4,8 @@
 <a href="{% url search.views.index %}"><i class="icon-search"></i> Search</a>
 <a href="#">"<em>{{ searchterm }}</em>"</a>
 {% endblock %}
-
+{% block no_adsense %}{% endblock %}
+{% block no_skyscraper %}{% endblock %}
 {% block page_title %}
 Search Results
 {% endblock %}
