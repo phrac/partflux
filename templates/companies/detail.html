@@ -10,6 +10,12 @@
 {% block companies_active %}active{% endblock %}
 {% block no_adsense %}{% endblock %}
 
+{% block meta_description %}Parts by {{ company.name|safe }} : {{ company.description }}.
+{% for part in parts_list.object_list %}
+{{ part.number }},
+{% endfor %}
+{% endblock %}
+
 {% block breadcrumb_links %}
 <a href="{% url companies.views.index %}" title="Parts" class="tip-bottom"><i class="icon-briefcase"></i> Companies</a>
 <a href="#" class="current">{{ company.name }}</a>
