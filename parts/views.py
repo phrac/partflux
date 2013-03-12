@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect, Htt
 from django.template import RequestContext
 from django.template.defaultfilters import slugify, truncatechars
 from django.db import IntegrityError
+from django.db.models import Avg, Max, Min
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.contrib import messages
@@ -60,6 +61,7 @@ def redirect_sitemap(request, part_id):
 def detail(request, part_id, company_slug, part_slug):
     p = get_object_or_404(Part, id=part_id)
     mlt = SearchQuerySet().more_like_this(p)[:10]
+    pricing = BuyLink.objects.filter(part=p).aggregate(avg_price=Avg('price'), max_price=Max('price'), min_price=Min('price'))
     current_site = get_current_site(request)
     title = "%s by %s - %s | %s" % (p.number, p.company.name,
                                     truncatechars(p.description,
@@ -138,6 +140,7 @@ def detail(request, part_id, company_slug, part_slug):
                                'buylinkform' : buylinkform,
                                'mlt': mlt,
                                'page_title': title,
+                               'agg_pricing': pricing,
                               },
                               context_instance=RequestContext(request))
 

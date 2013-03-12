@@ -28,49 +28,14 @@ def results(request):
     
     if searchform.is_valid():
         q = searchform.cleaned_data['q']
-        no_partial_q = re.sub('\{.+\}', '', q)
-        no_partial_q = re.sub('\(.+\)', '', no_partial_q)
-        no_partial_q = re.sub('\[.+\]', '', no_partial_q)
-
-        selected_facets = request.GET.getlist("f")
-        
-        partial = re.findall(r'\{(.+?)\}', q)
-        company = re.findall(r'\((.+?)\)', q)
-        nsn = re.findall(r'\[(.+?)\]', q)
 
         if q:
-            sqs = SearchQuerySet()
-            if '*' in q or '?' in q:
-                results = sqs.filter(number=q)[:250]
-            else:
-                results = sqs.filter(content=AutoQuery(no_partial_q))[:250]
-
-            # check for a partial part number search
-            if partial:
-                firsthit = str(partial[0])
-                if results:
-                    results = results.narrow(u'number:"%s"' % firsthit)
-                else:
-                    results = sqs.filter(number__contains=firsthit)
-            if company:
-                firsthit = str(company[0])
-                if results:
-                    results = results.narrow(u'company:"%s"' % firsthit)
-                else:
-                    results = sqs.filter(company__contains=firsthit)
-
+            sqs = SearchQuerySet().auto_query(q)
+            suggestions = sqs.spelling_suggestion()
+            results = sqs.filter(content=AutoQuery(q))[:250]
 
         else:
             results = []
-
-        # drill down
-        for facet in selected_facets:
-            if ":" not in facet:
-                continue
-            field, value = facet.split(":", 1)
-
-            if value:
-                results = results.narrow(u'%s:"%s"' % (field, sqs.query.clean(value)))
 
         try:                                                                    
             page = request.GET.get('page', 1)
@@ -84,6 +49,8 @@ def results(request):
                               { 
                                   'results_list': results_list, 
                                   'searchterm': q,
+                                  'sqs': sqs,
+                                  'suggestions': suggestions,
                                  # 'facets': results.facet_counts(),
                               },
                               context_instance=RequestContext(request))

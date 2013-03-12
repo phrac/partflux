@@ -14,9 +14,9 @@
             <img src="{{ STATIC_URL }}img/logo-big.png" alt="Part Engine Logo" />
             <h3>Search {{ part_count|intcomma }} parts and {{ nsn_count|intcomma }} NSNs</h3><br />
             <form class="input-append search" method="get" action="{% url search.views.results %}">
-                <input style="width:75%; height:45px; font-size:2em;" autocomplete="off" name="q" type="text" id="appdendedInputButton" >
-                <button style="padding-left:20px; padding-right:20px; height:55px; margin-bottom:10px;" class="btn btn-huge btn-primary" type="submit">
-                    <h3><i class="icon-search icon-white"></i></h3>
+                <input class="span6" autocomplete="off" name="q" type="text" id="appdendedInputButton" >
+                <button class="btn btn-primary" type="submit">
+                    <i class="icon-search icon-white"></i>
                 </button>
             </form>
         </div>
