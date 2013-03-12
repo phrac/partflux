@@ -34,13 +34,14 @@
     <div class="span12">
         <!-- buylinks -->
         <div class="page-header section-header">
+        {% include 'includes/adsense_728x90.html' %}
         <h4><i class="icon-shopping-cart"></i> Distributors
         {% if user.is_staff %}
             <a title="New Xref" href="#buylink-modal" data-toggle="modal"><i class="pull-right icon-plus-sign icon-white"></i></a>
         {% endif %}
         </h4>
         </div>
-        {% include 'includes/adsense_728x90.html' %}
+        
         <div id="buylink-table">
             {% include 'parts/includes/buylink_table.html' %}
         </div>
@@ -108,27 +109,7 @@
         <!-- comments widget -->
         {% include 'includes/disqus.html' %}
 
-        {% block rightbar %}
-        <div class="module-top">
-            <i class="icon-money"></i> Distributor Pricing Overview
-        </div>
-        <div class="module">
-        <table class="table">
-            <tr>
-                <td>Average Price</td>
-                <td>${{ agg_pricing.avg_price|default:"0.00" }}</td>
-            </tr>
-            <tr>
-                <td>Low Price</td>
-                <td>${{ agg_pricing.min_price|default:"0.00" }}</td>
-            </tr>
-            <tr>
-                <td>High Price</td>
-                <td>${{ agg_pricing.max_price|default:"0.00" }}</td>
-            </tr>
-        </table>
-        </div>
-        {% endblock %}
+        
         
         {% if user.is_staff %}
         <script src="{{ STATIC_URL }}js/modal-form.js"></script>
@@ -152,4 +133,26 @@
     </div>
 </div>
 
+{% endblock %}
+
+{% block rightbar %}
+<div class="module-top">
+    <i class="icon-money"></i> Distributor Pricing Overview
+</div>
+<div class="module">
+    <table class="table">
+        <tr>
+            <td>Average Price</td>
+            <td>${{ agg_pricing.avg_price|default:"0.00" }}</td>
+        </tr>
+        <tr>
+            <td><strong>Low Price</strong></td>
+            <td><strong>${{ agg_pricing.min_price|default:"0.00" }}</strong></td>
+        </tr>
+        <tr>
+            <td>High Price</td>
+            <td>${{ agg_pricing.max_price|default:"0.00" }}</td>
+        </tr>
+    </table>
+</div>
 {% endblock %}
