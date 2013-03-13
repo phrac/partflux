@@ -11,7 +11,6 @@ def autocomplete(request):
     if request.is_ajax():
         type = request.GET.get('type', '')
         q = request.GET.get('q', '')
-        print 'AUTOCOMPLETE: %s' % q
         if q.__len__() < 3:
             return HttpResponse()
         suggestions = []
