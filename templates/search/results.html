@@ -4,7 +4,8 @@
 <a href="{% url search.views.index %}"><i class="icon-search"></i> Search</a>
 <a href="#">"<em>{{ searchterm }}</em>"</a>
 {% endblock %}
-
+{% block no_adsense %}{% endblock %}
+{% block no_skyscraper %}{% endblock %}
 {% block page_title %}
 Search Results
 {% endblock %}
@@ -13,68 +14,62 @@ Search Results
 
 {% block content %}
 <div class="row-fluid">
+    {{ sqs.spelling_suggestion }} {{ suggestion }} {{ suggestions }}
     <div class="span12">
         <h3>{% block searchstats %}{{ results_list.paginator.count }} documents match "<i>{{ searchterm }}</i>" - showing {{ results_list.start_index }}-{{ results_list.end_index }}{% endblock %}</h3>
     </div>
 </div>
 <div class="row-fluid">
     <div class="span12">
-        <div class="widget-box">
-            <div class="widget-content nopadding">
-                <table class="table table-bordered results">
-                    {% for result in results_list.object_list %}
-                    {% if result.content_type == "parts.part" %}
-                            {% include "search/includes/parts/part.html" %}
-                    {% endif %}
-                    {% if result.content_type == "nsn.nsn" %}
-                        {% include "search/includes/nsn/nsn.html" %}
-                    {% endif %}
-                    {% if result.content_type == "companies.company" %}
-                        {% include "search/includes/companies/company.html" %}
-                    {% endif %}
-                    {% endfor %}
-                </table>
-            
-                <div class="pagination">
-                    {{ results_list.render }}
-                </div>
-            </div>
-        </div>
-        <div class="widget-box well">
-            {% include "includes/add_part_to_db.html" %}
+        <table class="table table-striped results">
+            {% for result in results_list.object_list %}
+            {% if result.content_type == "parts.part" %}
+            {% include "search/includes/parts/part.html" %}
+            {% endif %}
+            {% if result.content_type == "nsn.nsn" %}
+            {% include "search/includes/nsn/nsn.html" %}
+            {% endif %}
+            {% if result.content_type == "companies.company" %}
+            {% include "search/includes/companies/company.html" %}
+            {% endif %}
+            {% endfor %}
+        </table>
+
+        <div class="pagination">
+            {{ results_list.render }}
         </div>
     </div>
 
     {% if facets.fields.company %}
     <div class="well span3">
         <h3>Filter by company</h3>
-            <dl>
-                {% for company in facets.fields.company|slice:":30" %}
-                {% if company.1 > 0 %}
-                <dd class="company_facet">
-                <a href="{% url search.views.results %}?q={{ searchterm|urlencode }}&amp;f=company_exact:{{ company.0|urlencode }}">{{ company.0 }}</a> ({{ company.1 }})
-                </dd>
-                {% endif %}
-                {% endfor %}
-                
-            </dl>
+        <dl>
+            {% for company in facets.fields.company|slice:":30" %}
+            {% if company.1 > 0 %}
+            <dd class="company_facet">
+            <a href="{% url search.views.results %}?q={{ searchterm|urlencode }}&amp;f=company_exact:{{ company.0|urlencode }}">{{ company.0 }}</a> ({{ company.1 }})
+            </dd>
+            {% endif %}
+            {% endfor %}
+
+        </dl>
     </div>
     {% endif %}
-    
+
     {% if facets.fields.attributes %}
     <div class="well span3">
         <h3>Filter by Attribute</h3>
-            <dl>
+        <dl>
 
-                {% for attributes in facets.fields.attributes|slice:":30" %}
-                {% if attributes.1 > 0 %}
-                <dd class="attribute_facet">
-                <a href="{% url search.views.results %}?q={{ searchterm|urlencode }}&amp;f=attributes_exact:{{ attributes.0|urlencode }}">{{ attributes.0 }}</a> ({{ attributes.1 }})
-                </dd>
-                {% endif %}
-                {% endfor %}
-                
-            </dl>
+            {% for attributes in facets.fields.attributes|slice:":30" %}
+            {% if attributes.1 > 0 %}
+            <dd class="attribute_facet">
+            <a href="{% url search.views.results %}?q={{ searchterm|urlencode }}&amp;f=attributes_exact:{{ attributes.0|urlencode }}">{{ attributes.0 }}</a> ({{ attributes.1 }})
+            </dd>
+            {% endif %}
+            {% endfor %}
+
+        </dl>
     </div>
     {% endif %}
 </div>

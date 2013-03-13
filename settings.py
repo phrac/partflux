@@ -28,6 +28,7 @@ DATABASES = {
             'PORT': '',                      					# Set to empty string for default. Not used with sqlite3.
             'OPTIONS': {
                 'POOL_ENABLED': True,
+                'autocommit': True,
             }
     }
 }
@@ -151,9 +152,11 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.media",
     "django.core.context_processors.static",
     "django.contrib.messages.context_processors.messages",
-    "context_processors.user_reputation",
     "context_processors.part_count",
     "context_processors.nsn_count",
+    "context_processors.xref_count",
+    "context_processors.company_count",
+    "context_processors.attr_count",
     "context_processors.get_current_domain",
     "context_processors.get_current_path",
     )
@@ -165,7 +168,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'users.middleware.LastSeen',
     'django.middleware.cache.FetchFromCacheMiddleware',
 )
@@ -204,15 +206,13 @@ INSTALLED_APPS = (
     'storages',
     'twitter_tag',
     'contact_form',
+    'articles',
     # partfindr apps    
     'main',
     'parts',
     'companies',
     'nsn',
-    'partgroups',
     'users',
-    'reputation',
-    'debug_toolbar',
 )
 
 # django-registration settings
@@ -239,6 +239,9 @@ TWITTER_OAUTH_SECRET = 'bcDxxq6ocaBNBQRMJyYvQXsbmpCxumTH9BBuhOqmUM'
 TWITTER_CONSUMER_KEY = 'vGm8CZhCn1T4bbdvL99A'
 # OAuth settings: Consumer secret
 TWITTER_CONSUMER_SECRET = 'D0oseP8Rg1FXoJycv9qh2lUTAH8sNfGkD8YWEStuL5o'
+
+DISQUS_USER_API_KEY = 'Rk3o4gvtTyx8EspHIrcRm235o2Nn00Cki7CnRMERZGiG14RGiWJmNY3vTT0c4H57'
+DISQUS_FORUM_SHORTNAME = 'partengine'
 
 ABSOLUTE_URL_OVERRIDES = {
     'auth.user': lambda o: "/users/profile/%s/" % o.username,

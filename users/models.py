@@ -5,7 +5,6 @@ from django.db.models import Sum
 from django.db.models.signals import post_save
 
 from parts.models import Attribute, Part, PartImage
-from reputation.models import ReputationAction
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
@@ -36,7 +35,6 @@ class UserProfile(models.Model):
         profile.save()
 
     post_save.connect(create_user_profile, sender=User)
-    post_save.connect(update_total_rep, sender=ReputationAction)
 
 
 class UserFavoritePart(models.Model):

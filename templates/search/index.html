@@ -1,9 +1,9 @@
 {% extends "base/base_MAIN.html" %}
 
 {% block title %}
-Advanced Search | partfindr
+Advanced Search | Part Engine
 {% endblock %}
-
+{% block no_adsense %}{% endblock %}
 {% block breadcrumb_links %}
 <a href="{% url search.views.index %}">Search</a>
 <a class="active">Advanced Search</a>
@@ -14,23 +14,17 @@ Advanced Search | partfindr
 {% block page_title %}Advanced Search{% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row-fluid">
-        <div class="well span10">
-            <p>We are continually working to improve our search experience by adding more features and capabilities. This page
-            is intended to document our search system to help you find exactly the parts you are looking for.
-            </p>
-        </div>
+    <div class="page-header">
+        <h2>Advanced Search Tips and Tricks</h2>
     </div>
-    
-    <div class="well">
-        <h2>Queries <small>How to use the search box to find what you are looking for</small></h2>
-    
-        
+    <p>We are continually working to improve our search experience by adding more features and capabilities. This page
+    is intended to document our search system to help you find exactly the parts you are looking for.
+    </p>
 
+    <h3>Queries <small>How to use the search box to find what you are looking for</small></h2>
     <div class="row">
-        <div class="well span5">
-        <h3>Standard search</h3>
+        <div class="bs-docs-example span6">
+        <div class="label-e">Standard search</div>
         <p>We implement all of the standard search features that you would expect to find
         on any major search engine. These include exact phrase, keyword, or, and none types.</p>
         
@@ -38,8 +32,8 @@ Advanced Search | partfindr
         are looking for.</p>
             
         </div>
-        <div class="well span5">
-        <h3>Using standard search <small>some examples</small></h3>
+        <div class="bs-docs-example span6">
+        <div class="label-e">Using standard search <small>some examples</small></div>
         <p>Text that is <code>highlighted like this</code> is what you would type in the search box.</p>
         <dl>
             <dt>Match all keywords:</dt>
@@ -58,35 +52,34 @@ Advanced Search | partfindr
         </div>
     </div>
 
-
     <div class="row">
-        <div class="well span5">
-        <h3>Wildcard search</h3>
-        <p>Wildcards are helpful specifically when you are searching by part number.
-        Wildcards help find the part you're looking for if you don't know the full part number.
-        </p>
-        <p>For example, say you just pulled the alternator out of your car and you see:
-        9357<strong>X</strong>564 where the <strong>X</strong> is smudged out. With wildcard searches, you can
-        easily find that part using a <code>?</code> wildcard. You would simply search for <code>9357?564</code>.
-        </p>
-        <p>Partfindr currently has two wildcards: <code>?</code> and <code>*</code>.</p>
+        <div class="bs-docs-example span6">
+            <div class="label-e">Wildcard search</div>
+            <p>Wildcards are helpful specifically when you are searching by part number.
+            Wildcards help find the part you're looking for if you don't know the full part number.
+            </p>
+            <p>For example, say you just pulled the alternator out of your car and you see:
+            9357<strong>X</strong>564 where the <strong>X</strong> is smudged out. With wildcard searches, you can
+            easily find that part using a <code>?</code> wildcard. You would simply search for <code>9357?564</code>.
+            </p>
+            <p>Partfindr currently has two wildcards: <code>?</code> and <code>*</code>.</p>
             
         </div>
-        <div class="well span5">
-        <h3>Using wildcards <small>some examples</small></h3>
-        <p>Text that is <code>highlighted like this</code> is what you would type in the search box.</p>
-        <dl>
-            <dt>Find all part numbers starting with digits <strong>4196</strong>:</dt>
-            <dd>Query: <code>4196*</code></dd>
-            <dt>Find part numbers starting with 419 with the 4 character unknown:</dt>
-            <dd>Query: <code>419?*</code></dd>
-            <dt>Find a part number with one or more missing digits:</dt>
-            <dd>Query: <code>9?57?564</code></dd>
-        </dl>
-        </p>
+        
+        <div class="bs-docs-example span6">
+            <div class="label-e">Using wildcards <small>some examples</small></div>
+            <p>Text that is <code>highlighted like this</code> is what you would type in the search box.</p>
+            <dl>
+                <dt>Find all part numbers starting with digits <strong>4196</strong>:</dt>
+                <dd>Query: <code>4196*</code></dd>
+                <dt>Find part numbers starting with 419 with the 4 character unknown:</dt>
+                <dd>Query: <code>419?*</code></dd>
+                <dt>Find a part number with one or more missing digits:</dt>
+                <dd>Query: <code>9?57?564</code></dd>
+            </dl>
+            </p>
         </div>
     </div>
-    </div>
-</div>
+
 {% endblock %}
 

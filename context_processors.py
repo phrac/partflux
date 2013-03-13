@@ -25,6 +25,24 @@ def xref_count(request):
         'xref_count': int(row[0])
     }
 
+def company_count(request):
+    from django.db import connection, transaction
+    cursor = connection.cursor()
+    cursor.execute("SELECT reltuples FROM pg_class WHERE relname = 'companies_company'")
+    row = cursor.fetchone()
+    return {
+        'company_count': int(row[0])
+    }
+
+def attr_count(request):
+    from django.db import connection, transaction
+    cursor = connection.cursor()
+    cursor.execute("SELECT reltuples FROM pg_class WHERE relname = 'parts_attribute'")
+    row = cursor.fetchone()
+    return {
+        'attr_count': int(row[0])
+    }
+
 def get_current_path(request):
     return {
         'current_path': request.get_full_path()

@@ -7,7 +7,10 @@
 {{ company.name|safe }} - Details - Page {{ parts_list.paginator.current_page }} | Part Engine
 {% endblock %}
 
-{% block companies_active %}class="active"{% endblock %}
+{% block companies_active %}active{% endblock %}
+{% block no_adsense %}{% endblock %}
+
+{% block meta_description %}Parts by {{ company.name|safe }} : {{ company.description }} Some parts listed on this page include: {% for part in parts_list.object_list|slice:":5"%}{{ part.number }}, {% endfor %}{% endblock %}
 
 {% block breadcrumb_links %}
 <a href="{% url companies.views.index %}" title="Parts" class="tip-bottom"><i class="icon-briefcase"></i> Companies</a>
@@ -19,7 +22,6 @@
 {% block content %}  
 <div class="row-fluid">
     <div class="well span12">
-    {% include 'includes/adsense_728x90.html' %}
         {% if company.description %}
         <p>{{ company.description|linebreaksbr|truncatewords:150 }}</p>
         {% else %}
@@ -28,94 +30,50 @@
     </div>
 </div>
 <div class="row-fluid">
-    
-    <div class="span8">
-        <div class="widget-box">
-            <div class="widget-title">
-                <span class="icon">
-                    <i class="icon-cog"></i>
-                </span>
-                <h5>Part numbers by {{ company.name }} <small>{{ parts_list.paginator.count|intcomma }} parts</small></h5>
-            </div>
-            <div class="widget-content nopadding">
-                
-                <table class="table table-bordered data-table">
-                    <thead>
-                        <tr>
-                            <th>Part #</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for part in parts_list.object_list %}
-                        <tr>
-                            <td>
-                                <a href="{{ part.get_absolute_url }}">{{ part.number }}</a>
-                            </td>
-                            <td>
-                                {{ part.description|truncatewords:20 }}
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-                {{ parts_list.render }}
-            </div>
-        </div>
-    </div>
-
-    <div class="span4">
-        <div class="widget-box">
-            <div class="widget-title">
-                <span class="icon">
-                    <i class="icon-briefcase"></i>
-                </span>
-                <h5>Details for {{ company.name }}</h5>
-                <div class="buttons">
-                    <a class="btn btn-mini tip-bottom" title="Add To My Companies"><i class="icon icon-star"></i></a>
-                    <a class="btn btn-mini tip-bottom" title="Flag Company"><i class="icon icon-flag"></i></a>
-                    {% if user.is_staff %}
-                    <a href="{% url companies.views.edit company_id=company.id company_slug=company.slug %}" class="btn btn-mini tip-bottom" title="Edit Company"><i class="icon icon-edit"></i></a>
-                    {% endif %}
-                </div>
-            </div>
-            <div style="text-align:center;" class="widget-content">
-                {% if company.logo %}
-                {% thumbnail company.logo "200" as im %}
-                <img class="push-right" src="{{ im.url }}" alt="{{ company.name }} logo" />
-                {% endthumbnail %}
-                {% endif %}<br />
-                {% if company.url %}{{ company.url|urlize }}<br />{% endif %}
-                {% if company.address1 %}{{ company.address1 }}<br />{% endif %}
-                {% if company.address2 %}{{ company.address2 }}<br />{% endif %}
-                {% if company.city %}{{ company.city }}, {{ company.state }}&nbsp;&nbsp;{{ company.zipcode }} {{ company.country }}<br /><br />{% endif %}
-                {% if company.phone %}Phone: {{ company.phone }}<br />{% endif %}
-                {% if company.fax %}Fax: {{ company.fax }}<br />{% endif %}
-                {% if company.email %}Email: {{ company.email|urlize }}<br />{% endif %}
-                {% if company.wikipedia_url %}<a href="{{ company.wikipedia_url }}">Wikipedia Page</a><br />{% endif %}
-                <br /><br />
-                <table>
-                {% if company.twitter_name %}<tr><td><a href="http://twitter.com/{{ company.twitter_name }}"><img src="{{ STATIC_URL }}images/glyphicons/glyphicons_392_twitter.png" alt="twitter" /></td><td><a href="http://twitter.com/{{ company.twitter_name }}">Follow on Twitter</a></td></tr>{% endif %}
-                {% if company.facebook_url %}<tr><td><a href="{{ company.facebook_url }}"><img src="{{ STATIC_URL }}images/glyphicons/glyphicons_390_facebook.png" alt="twitter" /></td><td>&nbsp;<a href="{{ company.twitter_url }}">Like on Facebook</a></li></td></tr>{% endif %}
-                </table>
-            </div>
-        </div>
-
-        <!-- twitter -->
-        <div class="widget-box">
-            <div class="widget-title">
-                <span class="icon">
-                    <img src="{{ STATIC_URL }}images/glyphicons/glyphicons_392_twitter.png" alt="twitter" />
-                </span>
-                <h5>Recent tweets by {{ company.name }}</h5>
-            </div>
-            <div class="widget-content">
-                {% load twitter_tag %}
-                {% get_tweets for company.twitter_name as tweets limit 10 %}
-                {% for tweet in tweets %}
-                <div class="alert alert-info alert-block">{{ tweet.html|safe }}</div>
+    <div class="span12">
+        {% include 'includes/adsense_728x90.html' %}
+        <h4><i class="icon-cog"></i> Part numbers by {{ company.name }} <small>{{ parts_list.paginator.count|intcomma }} parts</small></h4>
+        <table class="table table-striped">
+            <tbody>
+                {% for part in parts_list.object_list %}
+                <tr>
+                    <td>
+                        <a href="{{ part.get_absolute_url }}">{{ part.number }}</a>
+                    </td>
+                    <td>
+                        {{ part.description|truncatewords:20 }}
+                    </td>
+                </tr>
                 {% endfor %}
-            </div>
+            </tbody>
+        </table>
+        {{ parts_list.render }}
+        {% include 'includes/adsense_728x90.html' %}
+    </div>
+</div>
+{% endblock %}
+
+{% block rightbar %}
+<div class="module-top"><i class="icon-lock"></i> {{ company.name }} Overview</div>
+<div class="module text-center">
+    {% if company.logo %}
+    {% thumbnail company.logo "200" as im %}
+    <img class="push-right" src="{{ im.url }}" alt="{{ company.name }} logo" />
+    {% endthumbnail %}
+    {% endif %}<br />
+    {% if company.url %}{{ company.url|urlize }}<br />{% endif %}
+    {% if company.address1 %}{{ company.address1 }}<br />{% endif %}
+    {% if company.address2 %}{{ company.address2 }}<br />{% endif %}
+    {% if company.city %}{{ company.city }}, {{ company.state }}&nbsp;&nbsp;{{ company.zipcode }} {{ company.country }}<br /><br />{% endif %}
+    {% if company.phone %}Phone: {{ company.phone }}<br />{% endif %}
+    {% if company.fax %}Fax: {{ company.fax }}<br />{% endif %}
+    {% if company.email %}Email: {{ company.email|urlize }}<br />{% endif %}
+    {% if company.wikipedia_url %}<a href="{{ company.wikipedia_url }}">Wikipedia Page</a><br />{% endif %}
+    <br /><br />
+    <table>
+        {% if company.twitter_name %}<tr><td><a href="http://twitter.com/{{ company.twitter_name }}"><img src="{{ STATIC_URL }}images/glyphicons/glyphicons_392_twitter.png" alt="twitter" /></td><td><a href="http://twitter.com/{{ company.twitter_name }}">Follow on Twitter</a></td></tr>{% endif %}
+            {% if company.facebook_url %}<tr><td><a href="{{ company.facebook_url }}"><img src="{{ STATIC_URL }}images/glyphicons/glyphicons_390_facebook.png" alt="twitter" /></td><td>&nbsp;<a href="{{ company.twitter_url }}">Like on Facebook</a></li></td></tr>{% endif %}
+            </table>
         </div>
     </div>
 </div>

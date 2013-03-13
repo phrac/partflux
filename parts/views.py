@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect, Htt
 from django.template import RequestContext
 from django.template.defaultfilters import slugify, truncatechars
 from django.db import IntegrityError
+from django.db.models import Avg, Max, Min
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.contrib import messages
@@ -18,7 +19,6 @@ from django.core.files.storage import default_storage
 
 from parts.models import Part, Xref, PartImage, BuyLink, Attribute
 from companies.models import Company
-from partgroups.models import PartGroup
 from parts.forms import MetadataForm, XrefForm, ImageUploadForm, BuyLinkForm
 from users.models import UserProfile, UserFavoritePart
 import json
@@ -61,6 +61,7 @@ def redirect_sitemap(request, part_id):
 def detail(request, part_id, company_slug, part_slug):
     p = get_object_or_404(Part, id=part_id)
     mlt = SearchQuerySet().more_like_this(p)[:10]
+    pricing = BuyLink.objects.filter(part=p).aggregate(avg_price=Avg('price'), max_price=Max('price'), min_price=Min('price'))
     current_site = get_current_site(request)
     title = "%s by %s - %s | %s" % (p.number, p.company.name,
                                     truncatechars(p.description,
@@ -70,18 +71,6 @@ def detail(request, part_id, company_slug, part_slug):
                                      + 22))),
                                     current_site.name)
 
-    if request.user.is_authenticated() and UserFavoritePart.objects.filter(user=request.user, part=p).count() == 1:
-        fave = UserFavoritePart.objects.get(user=request.user, part=p)
-        is_user_favorite = True
-    else:
-        is_user_favorite = False
-        fave = None
-    
-    if request.user.is_authenticated():
-        user_asm = PartGroup.objects.filter(user=request.user)
-    else:
-        user_asm = None
-    
     xrefs = Xref.objects.filter(part=p.id).exclude(xrefpart=p.id)
     reverse_xrefs = Xref.objects.filter(xrefpart=p.id).exclude(part=p.id)
 
@@ -149,11 +138,9 @@ def detail(request, part_id, company_slug, part_slug):
                                'xref_form' : xrefform,
                                'imageuploadform' : imageuploadform,
                                'buylinkform' : buylinkform,
-                               'is_user_favorite' : is_user_favorite,
-                               'fave': fave,
-                               'user_assemblies': user_asm,
                                'mlt': mlt,
                                'page_title': title,
+                               'agg_pricing': pricing,
                               },
                               context_instance=RequestContext(request))
 
@@ -225,7 +212,6 @@ def addpartform(request):
 def addxref(request, part_id):
     p = get_object_or_404(Part, pk=part_id)
     xrefform = XrefForm(request.POST)
-    print 'adding xref' 
     if xrefform.is_valid():
         part_number = xrefform.cleaned_data['part'].strip().upper()
         company = xrefform.cleaned_data['company'].strip().upper()

@@ -5,64 +5,44 @@
 <a href="#" class="current">Contact Us</a>
 {% endblock %}
 
+{% block no_adsense_sidebar %}{% endblock %}
+
 {% block help_active %}active open{% endblock %}
 {% block title %}Contact Us | Part Engine{% endblock %}
 {% block page_title %}Contact Us{% endblock %}
 
 {% block content %}
 <div class="row-fluid">
-    <div class="span7">
-        {% if user.is_authenticated %}
-        <div class="widget-box">
-            <div class="widget-title">
-                <span class="icon">
-                    <i class="icon-th"></i>
-                </span>
-                <h5>Contact Us</h5>
+    <div class="span12">
+        <h4><i class="icon-th"></i> Contact Us</h4>
+        <form class="form-horizontal" action="" method="post" autocomplete="off">
+            {% csrf_token %}
+            <div class="control-group">
+                <label class="control-label" for="id_part">Your name</label>
+                <div class="controls">
+                    <input id="id_name" type="text" class="span6 required" name="name" maxlength="100" />
+                </div>
             </div>
-            <div class="widget-content nopadding">
-                <form class="well form-horizontal" action="" method="post" autocomplete="off">
-                    {% csrf_token %}
-                    <div class="control-group">
-                        <label class="control-label" for="id_part">Your name</label>
-                        <div class="controls">
-                            {{ form.name }}
-                        </div>
-                    </div>
 
-                    <div class="control-group">
-                        <label class="control-label" for="id_company">Your email</label>
-                        <div class="company-ta controls">
-                            {{ form.email }}
-                        </div>
-                    </div>
-
-                    <div class="control-group">
-                        <label class="control-label" for="id_description">Message</label>
-                        <div class="controls">
-                            {{ form.body }}
-                        </div>
-                    </div>
-
-                    <div class="form-actions">
-                        <button type="submit" class="btn btn-inverse">Contact Us</button>
-                        <button type="submit" class="btn btn-default" onclick="this.form.reset()">Clear Form</button>
-                    </div>
-                </form>
+            <div class="control-group">
+                <label class="control-label" for="id_company">Your email</label>
+                <div class="company-ta controls">
+                    <input id="id_email" type="text" class="span6 required" name="email" maxlength="200" />
+                </div>
             </div>
-        </div>
 
-        {% else %}
-        <h3 class="add">{% include "includes/sign_in.html" with action="add a new part." %}</h3>
-        {% endif %}
-    </div>
+            <div class="control-group">
+                <label class="control-label" for="id_description">Message</label>
+                <div class="controls">
+                    <textarea id="id_body" rows="10" cols="40" name="body" class="span8 required"></textarea>
+                </div>
+            </div>
 
-
-    <div class="well span5">
-        
-        <p><strong>Please note:</strong> We will answer every email that we receive
-        within 48 hours. If we can't answer your question, we will try direct
-        you to somewhere that can be of more assistance.</p>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-inverse">Contact Us</button>
+                <button type="submit" class="btn btn-default" onclick="this.form.reset()">Clear Form</button>
+            </div>
+        </form>
     </div>
 </div>
-{% endblock %}
+    {% endblock %}
