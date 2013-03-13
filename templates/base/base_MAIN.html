@@ -35,8 +35,7 @@
              ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
              var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
              })();
-</script>
-
+         </script>
 <!-- search typeahead -->
 <script type="text/javascript">
     $(document).ready(function() {
@@ -50,10 +49,12 @@
             }
         });
     });
+
 </script>
     <!--[if lt IE 9]>
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+
     </head>
     <body>
         <div id="header">
@@ -109,7 +110,6 @@
                 </div>
             </div>
         </div>
-
         <!-- End Header -->
         <div id="content" class="container">
             <div class="row-fluid" >
@@ -123,10 +123,22 @@
                     {% block content %}
                     {% endblock %}
                 </div>
-                
+
                 <!-- Start Right Section -->
                 {% block no_sidebar %}
                 <div id="side-section" class="span3">
+                    
+                    {% block no_adsense_sidebar %}
+                    <div class="module-top">
+                        Sponsored Links
+                    </div>
+                    <div class="module" style="text-align:center;">
+                        {% include 'includes/adsense-small-square.html' %}
+                    </div>
+                    {%endblock%}
+
+                    {% block rightbar %}
+                    {% endblock %}
                     <ul class="nav nav-list">
                         <li class="nav-header">Part Engine indexes</li>
                         <li class="active"><a title="part count"><i class="icon-cogs"></i> &asymp; {{ part_count|intcomma }} parts</a></li>
@@ -135,74 +147,65 @@
                         <li><a title="xref_count"><i class="icon-random"></i> &asymp; {{ xref_count|intcomma }} cross refs</a></li>
                         <li class="active"><a title="attr_count"><i class="icon-eye-open"></i> &asymp; {{ attr_count|intcomma }} attributes</a></li>
                     </ul>
-                    <div class="module-top">
-                        Sponsored Links
-                    </div>
-                    <div class="module" style="text-align:center;">
-                        {% include 'includes/adsense-small-square.html' %}
-                    </div>
-                    {% block rightbar %}
-                    {% endblock %}
-                    
+
                 </div>
                 {% endblock %}
             </div>
         </div>
-    </div>
-</div>
-<footer class="footer">
-    <div class="container">
-        <div class="row-fluid">
-            <div class="span6">
-                <p class="copyright">
-                <a href="/blog/">Our Blog</a>
-                | <a href="/faq/">FAQ</a>
-                | <a href="/search/">Advanced Search</a>
-                | <a href="/privacy/">Privacy Policy</a>
-                | <a href="/contact/">Contact</a>
-                | <a href="/sitemap.xml">Sitemap</a>
-                | <a href="http://validator.w3.org/check?uri=http://preview.partengine.org{{ request.get_full_path }}">Valid HTML5</a><br />
-                &copy; 2012 - {% now "Y" %} <strong>Part Engine</strong> ( {% include 'version.txt' %} )
+        
+        <footer class="footer">
+        <div class="container">
+            <div class="row-fluid">
+                <div class="span6">
+                    <p class="copyright">
+                    <a href="/blog/">Our Blog</a>
+                    | <a href="/faq/">FAQ</a>
+                    | <a href="/search/">Advanced Search</a>
+                    | <a href="/privacy/">Privacy Policy</a>
+                    | <a href="/contact/">Contact</a>
+                    | <a href="/sitemap.xml">Sitemap</a>
+                    | <a href="http://validator.w3.org/check?uri=http://preview.partengine.org{{ request.get_full_path }}">Valid HTML5</a><br />
+                    &copy; 2012 - {% now "Y" %} <strong>Part Engine</strong> ( {% include 'version.txt' %} )
 
-                </p>
-            </div>
-            <div class="span6">
-                <div class="pagination pull-right">
-                    <ul>
-                        <li><a data-rel="tooltip" data-placement="top" data-original-title="Follow us on Twitter" href="http://twitter.com/partengine"><i class="icon-twitter"></i></a></li>
-                        <li><a data-rel="tooltip" data-placement="top" data-original-title="+1 us on Google+" href="https://plus.google.com/u/0/b/108549216163192075170"><i class="icon-google-plus"></i></a></li>          
-                    </ul>
+                    </p>
+                </div>
+                <div class="span6">
+                    <div class="pagination pull-right">
+                        <ul>
+                            <li><a data-rel="tooltip" data-placement="top" data-original-title="Follow us on Twitter" href="http://twitter.com/partengine"><i class="icon-twitter"></i></a></li>
+                            <li><a data-rel="tooltip" data-placement="top" data-original-title="+1 us on Google+" href="https://plus.google.com/u/0/b/108549216163192075170"><i class="icon-google-plus"></i></a></li>          
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</footer>
-<script type="text/javascript">
-    $("[data-rel=tooltip]").tooltip();
-</script>
+        </footer>
+        <script type="text/javascript">
+            $("[data-rel=tooltip]").tooltip();
+            </script>
 
-<script type="text/javascript">
-    $(document).ready(function(){
-        $('body').jKit();
-    });
-</script>
+            <script type="text/javascript">
+                $(document).ready(function(){
+                        $('body').jKit();
+                        });
+                    </script>
 
-<!-- Start of StatCounter Code for Default Guide -->
-<script type="text/javascript">
-var sc_project=8410352; 
-var sc_invisible=1; 
-var sc_security="4bec6654"; 
-var scJsHost = (("https:" == document.location.protocol) ?
-"https://secure." : "http://www.");
-document.write("<sc"+"ript type='text/javascript' src='" +
-scJsHost+
-"statcounter.com/counter/counter.js'></"+"script>");
-</script>
-<noscript><div class="statcounter"><a title="free hit
-counter" href="http://statcounter.com/free-hit-counter/"
-target="_blank"><img class="statcounter"
-src="http://c.statcounter.com/8410352/0/4bec6654/1/"
-alt="free hit counter"></a></div></noscript>
-<!-- End of StatCounter Code for Default Guide -->
-            </body>
-        </html>
+                    <!-- Start of StatCounter Code for Default Guide -->
+                    <script type="text/javascript">
+                        var sc_project=8410352; 
+                        var sc_invisible=1; 
+                        var sc_security="4bec6654"; 
+                        var scJsHost = (("https:" == document.location.protocol) ?
+                                "https://secure." : "http://www.");
+                        document.write("<sc"+"ript type='text/javascript' src='" +
+                                scJsHost+
+                                "statcounter.com/counter/counter.js'></"+"script>");
+                        </script>
+                        <noscript><div class="statcounter"><a title="free hit
+                                    counter" href="http://statcounter.com/free-hit-counter/"
+                                    target="_blank"><img class="statcounter"
+                                    src="http://c.statcounter.com/8410352/0/4bec6654/1/"
+                                    alt="free hit counter"></a></div></noscript>
+                        <!-- End of StatCounter Code for Default Guide -->
+                    </body>
+                </html>

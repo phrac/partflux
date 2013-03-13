@@ -5,6 +5,8 @@
 <a href="#" class="current">Contact Us</a>
 {% endblock %}
 
+{% block no_adsense_sidebar %}{% endblock %}
+
 {% block help_active %}active open{% endblock %}
 {% block title %}Contact Us | Part Engine{% endblock %}
 {% block page_title %}Contact Us{% endblock %}
@@ -13,26 +15,26 @@
 <div class="row-fluid">
     <div class="span12">
         <h4><i class="icon-th"></i> Contact Us</h4>
-        <form class="well form-horizontal" action="" method="post" autocomplete="off">
+        <form class="form-horizontal" action="" method="post" autocomplete="off">
             {% csrf_token %}
             <div class="control-group">
                 <label class="control-label" for="id_part">Your name</label>
                 <div class="controls">
-                    {{ form.name }}
+                    <input id="id_name" type="text" class="span6 required" name="name" maxlength="100" />
                 </div>
             </div>
 
             <div class="control-group">
                 <label class="control-label" for="id_company">Your email</label>
                 <div class="company-ta controls">
-                    {{ form.email }}
+                    <input id="id_email" type="text" class="span6 required" name="email" maxlength="200" />
                 </div>
             </div>
 
             <div class="control-group">
                 <label class="control-label" for="id_description">Message</label>
                 <div class="controls">
-                    {{ form.body }}
+                    <textarea id="id_body" rows="10" cols="40" name="body" class="span8 required"></textarea>
                 </div>
             </div>
 

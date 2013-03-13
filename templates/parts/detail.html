@@ -34,7 +34,6 @@
     <div class="span12">
         <!-- buylinks -->
         <div class="page-header section-header">
-        {% include 'includes/adsense_728x90.html' %}
         <h4><i class="icon-shopping-cart"></i> Distributors
         {% if user.is_staff %}
             <a title="New Xref" href="#buylink-modal" data-toggle="modal"><i class="pull-right icon-plus-sign icon-white"></i></a>
@@ -45,6 +44,7 @@
         <div id="buylink-table">
             {% include 'parts/includes/buylink_table.html' %}
         </div>
+        {% include 'includes/adsense_728x90.html' %}
         
         <!-- attributes -->
         <div class="page-header section-header">

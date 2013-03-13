@@ -30,6 +30,7 @@ class Part(models.Model):
     approved = models.BooleanField(default=True)
     nsn = models.ForeignKey(Nsn, null=True)
     images = models.ManyToManyField('PartImage')
+    cross_references = models.ManyToManyField('Part', related_name='xrefs')
     source = models.URLField()
 
     def __unicode__(self):
@@ -44,7 +45,8 @@ class Part(models.Model):
         """
         self.number = self.number.strip().upper()
         self.description = self.description.strip().upper()
-        self.slug = slugify(self.number)
+        if not self.slug:
+            self.slug = slugify(self.number)
         super(Part, self).save(*args, **kwargs)
            
     def get_all_xrefs(self):
@@ -75,8 +77,8 @@ class Attribute(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, null=True)
-    upvotes = models.IntegerField(null=True)
-    downvotes = models.IntegerField(null=True)
+    upvotes = models.IntegerField(null=True, default=0)
+    downvotes = models.IntegerField(null=True, default=0)
 
     class Meta:
         unique_together = ('part', 'key', 'value')
@@ -88,10 +90,6 @@ class Attribute(models.Model):
     def save(self, *args, **kwargs):
         self.key = self.key.strip().upper()
         self.value = self.value.strip().upper()
-        if not self.upvotes:
-            self.upvotes = 0
-        if not self.downvotes:
-            self.downvotes = 0
         super(Attribute, self).save(*args, **kwargs)
         
     def get_flags():
