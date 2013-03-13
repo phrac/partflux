@@ -40,16 +40,17 @@
 <!-- search typeahead -->
 <script type="text/javascript">
     $(document).ready(function() {
-            $(".search input[type=text]").typeahead({
-items: 5,
-source: function (query, process) {
-$.get('/search/autocomplete', { q: query }, function (data) {
-    process(data)
-    })
-}
-});
-            });
-        </script>
+        $(".search input[type=text]").typeahead({
+            items: 7,
+            minLength:3,
+            source: function (query, process) {
+                $.get('/search/autocomplete', { q: query }, function (data) {
+                    process(data)
+                })
+            }
+        });
+    });
+</script>
     <!--[if lt IE 9]>
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -66,7 +67,7 @@ $.get('/search/autocomplete', { q: query }, function (data) {
                         <div class="search nav-collapse collapse">
                             <form class="navbar-form pull-left" action="{% url search.views.results %}" method="get">
                                 <div class="input-append">
-                                    <input autocomplete="off" class="span3" id="appendedInputButtons" type="text" name="q" value="{{ searchterm }}">
+                                    <input data-minLength="3" placeholder="Search parts and NSNs..." autocomplete="off" class="span3" id="appendedInputButtons" type="text" name="q" value="{{ searchterm }}">
                                     <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
                                 </div>           
                             </form>

@@ -4,6 +4,6 @@
         <a href="{{ result.object.get_absolute_url }}">{{ result.object.name }}</a>
     </td>
     <td colspan="2" class="part_desc">
-        {{ result.object.description|truncatewords:20 }}
+        {{ result.object.description|truncatewords:20|default:"Sorry, no description available." }}
     </td>
 </tr>
