@@ -3,10 +3,10 @@
     {% for a in part.attribute_set.all %}
     <tr>
         <td>
-            <strong>{{ a.key }}</strong>	
+            <strong>{{ a.key|safe }}</strong>	
         </td>
         <td>
-            {{ a.value }}
+            {{ a.value|safe }}
             <div class="collapse" id="collapse_{{ a.pk }}">
                 <h5>Attribute Information</h5>
                 <ul class="unstyled">

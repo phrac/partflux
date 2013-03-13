@@ -22,11 +22,6 @@ $(document).ready(function() {
                 if(divUpdate){
                     $(divUpdate).hide().html(response).fadeIn("slow");
                 };
-                $.gritter.add({
-                    title: successTitle,
-                    text: successMsg,
-                    sticky: false
-                });
                 $('button').button('reset');
                 $('.control-group').removeClass('success');
                 $('.control-group').removeClass('error');
@@ -34,11 +29,6 @@ $(document).ready(function() {
             },
             error: function(xhr, textStatus, error) {
                 $('.modal').modal('hide');
-                $.gritter.add({
-                    title: errorTitle,
-                    text: 'There was an error: ' + xhr.responseText,
-                    sticky: false
-                });
                 $('button').button('reset');
                 $('.control-group').removeClass('success');
                 $('.control-group').removeClass('error');

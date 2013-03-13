@@ -212,7 +212,6 @@ def addpartform(request):
 def addxref(request, part_id):
     p = get_object_or_404(Part, pk=part_id)
     xrefform = XrefForm(request.POST)
-    print 'adding xref' 
     if xrefform.is_valid():
         part_number = xrefform.cleaned_data['part'].strip().upper()
         company = xrefform.cleaned_data['company'].strip().upper()
