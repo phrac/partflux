@@ -15,7 +15,8 @@
 -------------------------------------------------- */
 
 body {font-family: 'Open Sans', serif; font-size:12px;}
-
+.article { font-size:14px;}
+.article pre { font-size:14px;}
 .btn.btn-small, input[type="submit"].btn.btn-small {font-family: inherit;}
 .btn-primary {background-color: rgba(22, 150, 200, 0.5);color: #ffffff;background-image: -moz-linear-gradient(top, #4eb2e0, #4aaad6);background-image: -ms-linear-gradient(top, #4eb2e0, #4aaad6);background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#4eb2e0), to(#4aaad6));background-image: -webkit-linear-gradient(top, #4eb2e0, #4aaad6);
     background-image: -o-linear-gradient(top, #4eb2e0, #4aaad6);

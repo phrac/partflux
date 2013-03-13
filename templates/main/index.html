@@ -8,7 +8,7 @@
 
 {% block content %}
 {% load humanize %}
-<div class="container">
+<div class="container" style="font-size:14px;">
     <div class="row-fluid">
         <div class="search" style="margin-top:60px; text-align:center">
             <img src="{{ STATIC_URL }}img/logo-big.png" alt="Part Engine Logo" />
@@ -23,7 +23,7 @@
     </div>
 
     <div class="row-fluid">
-        <div class="span10 offset1">
+        <div class="span6 offset3">
             <h3>Our mission</h3>
             <p class="justify">Part Engine's goals are lofty: <strong>index every part number in the world.</strong>
             This goal is only possible with help from our users. We need help to enter parts,
@@ -32,6 +32,7 @@
     </div>
 
     <div class="row-fluid">
+    <div class="span9 offset2">
         <h4 class="offset1" style="margin-top:50px">Part Engine Indexes:</h4>
         <div class="span3 offset1">
             <strong><i class="icon-cog"></i> Part Information</strong>
@@ -62,6 +63,7 @@
                 <li>Associated Part Numbers</li>
             </ul>
         </div>
+    </div>
     </div>
 </div>
 {% endblock %}
