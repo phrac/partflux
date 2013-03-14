@@ -2,6 +2,7 @@ from django.db import models
 from django.template.defaultfilters import slugify
 
 from parts.models import Part
+from currency.models import Currency
 
 class Distributor(models.Model):
     name = models.CharField(max_length=64, unique=True)
@@ -15,7 +16,7 @@ class Distributor(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.name)
+            self.slug = slugify(self.name)[:72]
         super(Distributor, self).save(*args, **kwargs)
 
     def __unicode__(self):
@@ -32,18 +33,19 @@ class DistributorSKU(models.Model):
     stock = models.IntegerField(default=0)
     price = models.IntegerField(max_digits=16, decimal_places=4)
     price_UOM = models.CharField(max_length=9)
-    price_currency = models.ForeignKey(max_length=3)
+    price_currency = models.ForeignKey(Currency)
     url = models.URLField(max_length=256)
     updated = models.DateTimeField(auto_now=True)
 
     class Meta:
         unique_together = ('sku', 'distributor',)
 
-class HistoricalPrice(models.Model):
+class SKUHistoricalPrice(models.Model):
     sku = models.ForeignKey(DistributorSKU)
     date = models.DateTimeField(auto_now_add=True)
     price = models.IntegerField(max_digits=16, decimal_places=4)
     price_UOM = models.CharField(max_length=9)
+    price_currency = models.ForeignKey(Currency)
 
 
 
