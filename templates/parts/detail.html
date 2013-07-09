@@ -26,6 +26,7 @@
 
             <h2><span itemprop="name">{{ part.number }}</span> by <a itemprop="brand" href="{{ part.company.get_absolute_url }}">{{ part.company|safe }}</a></h2>
             <h4><span itemprop="description">{{ part.description }}</span></h4>
+            {% include 'includes/adsense_728x90.html' %}
 
     </div>
 </div>
@@ -44,7 +45,7 @@
         <div id="buylink-table">
             {% include 'parts/includes/buylink_table.html' %}
         </div>
-        {% include 'includes/adsense_728x90.html' %}
+        
         
         <!-- attributes -->
         <div class="page-header section-header">
