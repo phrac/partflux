@@ -8,7 +8,7 @@
         </tr>
     </thead>
     <tbody>
-        {% for buylink in part.buylink_set.all %}
+        {% for buylink in distributor_skus.all %}
         <tr>
             <td>
                 <a href="{{ buylink.url }}">{{ buylink.company.name }}</a>

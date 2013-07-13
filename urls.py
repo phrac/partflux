@@ -41,6 +41,9 @@ urlpatterns = patterns('',
     
     # CONTACT URLs
     (r'^contact/', include('contact_form.urls')),
+    
+    # Currency URLs
+    (r'^currencies/', include('currencies.urls')),
 
     # SITEMAP URLs
     url(r'^sitemap.xml$', 'sitemap.index'),

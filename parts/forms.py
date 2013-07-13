@@ -13,16 +13,12 @@ class BuyLinkForm(forms.Form):
    
 
 class XrefForm(forms.Form):
-    part = forms.CharField(
-        widget=JQueryAutoComplete(
-            source='/search/autocomplete/?type=part',
-            attrs={'max_length':48, 'placeholder':'New Part #'},
-            options={"minLength":3}))
-
+    part = forms.CharField(max_length=48)
     company = forms.CharField(max_length=48)
 
     desc = forms.CharField(max_length=256, required=False)
     copy_attrs = forms.BooleanField(required=False)
+    update_all_xrefs = forms.BooleanField(required=False)
     
 class ImageUploadForm(forms.Form):
     file = forms.FileField(required=True)

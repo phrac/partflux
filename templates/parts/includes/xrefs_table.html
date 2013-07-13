@@ -1,4 +1,4 @@
-{% if part.get_all_xrefs %}
+{% if part.cross_references %}
 <div class="widget-content nopadding">
     <table id="xrefs" class="table table-condensed table-striped">
         <thead>
@@ -9,17 +9,11 @@
             </tr>
         </thead>
         <tbody>
-            {% for x in part.get_all_xrefs %}
+            {% for x in part.cross_references.all %}
             <tr>
-                {% if x.part.number == part.number %}
-                <td><a href="{{ x.xrefpart.get_absolute_url }}">{{ x.xrefpart.number }}</a></td>
-                <td>{{ x.xrefpart.description }}</td>
-                <td><a href="{{ x.xrefpart.company.get_absolute_url }}">{{ x.xrefpart.company.name }}</a></td>
-                {% else %}
-                <td><a href="{{ x.part.get_absolute_url }}">{{ x.part.number }}</a></td>
-                <td>{{ x.part.description }}</td>
-                <td><a href="{{ x.part.company.get_absolute_url }}">{{ x.part.company.name }}</a></td>
-                {% endif %}
+                <td><a href="{{ x.get_absolute_url }}">{{ x.number }}</a></td>
+                <td>{{ x.description }}</td>
+                <td><a href="{{ x.company.get_absolute_url }}">{{ x.company.name }}</a></td>
             </tr>
             {% endfor %}
         </tbody>

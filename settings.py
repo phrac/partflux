@@ -1,4 +1,4 @@
-# Django settings for partfindr project.
+# Django settings for Part Engine project.
 import os
 DIRNAME = os.path.dirname(__file__)
 
@@ -175,10 +175,6 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'partengine.urls'
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-#	"/usr/home/derek/pp/partengine/templates",
     os.path.join(DIRNAME, 'templates')
 )
 
@@ -207,12 +203,14 @@ INSTALLED_APPS = (
     'twitter_tag',
     'contact_form',
     'articles',
+    'currencies',
     # partfindr apps    
     'main',
     'parts',
     'companies',
     'nsn',
     'users',
+    'distributors',
 )
 
 # django-registration settings

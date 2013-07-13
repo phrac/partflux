@@ -2,7 +2,7 @@ from django.db import models
 from django.template.defaultfilters import slugify
 
 from parts.models import Part
-from currency.models import Currency
+from currencies.models import Currency
 
 class Distributor(models.Model):
     name = models.CharField(max_length=64, unique=True)
@@ -31,7 +31,7 @@ class DistributorSKU(models.Model):
     distributor = models.ForeignKey(Distributor)
     part = models.ForeignKey(Part)
     stock = models.IntegerField(default=0)
-    price = models.IntegerField(max_digits=16, decimal_places=4)
+    price = models.IntegerField(max_length=16)
     price_UOM = models.CharField(max_length=9)
     price_currency = models.ForeignKey(Currency)
     url = models.URLField(max_length=256)
@@ -43,7 +43,7 @@ class DistributorSKU(models.Model):
 class SKUHistoricalPrice(models.Model):
     sku = models.ForeignKey(DistributorSKU)
     date = models.DateTimeField(auto_now_add=True)
-    price = models.IntegerField(max_digits=16, decimal_places=4)
+    price = models.IntegerField(max_length=16)
     price_UOM = models.CharField(max_length=9)
     price_currency = models.ForeignKey(Currency)
 

@@ -13,13 +13,21 @@
 {% block parts_active %}active open{% endblock %}
 
 {% block no_adsense %}{% endblock %}
-
-{% block breadcrumb_links %}
-    <a href="{% url parts.views.index %}" title="Parts" class="tip-bottom"><i class="icon-cog"></i> Parts</a>
-    <a href="{{ part.company.get_absolute_url }}"><i class="icon-briefcase"></i> {{ part.company.name|safe }}</a>
-    <a href="#" class="current">{{ part.number }}</a>
+{% block head %}
+<!-- search typeahead -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".company-ta input[type=text]").typeahead({
+            items: 5,
+            source: function (query, process) {
+            $.get('/search/autocomplete?type=company', { q: query }, function (data) {
+                process(data)
+            })
+        }
+    });
+});
+</script>
 {% endblock %}
-
 {% block content %}
 <div class="row-fluid" itemscope itemtype="http://data-vocabulary.org/Product">
     <div class="span12">

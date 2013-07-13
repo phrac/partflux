@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.core.files.storage import default_storage
 
-from parts.models import Part, PartImage, BuyLink, Attribute, AttributeFlag
+from parts.models import Part, PartImage, Attribute
 from companies.models import Company
 from users.models import UserFavoritePart
 

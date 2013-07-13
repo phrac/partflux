@@ -4,24 +4,22 @@ from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect, Htt
 from django.template import RequestContext
 from django.template.defaultfilters import slugify, truncatechars
 from django.db import IntegrityError
-from django.db.models import Avg, Max, Min
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
-from django.conf import settings
-from django.contrib.sites.models import get_current_site
-from pure_pagination import Paginator, PageNotAnInteger, EmptyPage
-from haystack.query import SearchQuerySet
-
-from django.contrib.auth.models import User
 from django.core.files.storage import default_storage
+from django.contrib.sites.models import get_current_site
+from django.db.models import Avg, Max, Min
+from haystack.query import SearchQuerySet
+import json
+from pure_pagination import Paginator, PageNotAnInteger, EmptyPage
 
-from parts.models import Part, Xref, PartImage, BuyLink, Attribute
 from companies.models import Company
 from parts.forms import MetadataForm, XrefForm, ImageUploadForm, BuyLinkForm
-from users.models import UserProfile, UserFavoritePart
-import json
+from parts.models import Part, PartImage, Attribute
+from distributors.models import Distributor, DistributorSKU
 
 def index(request):
     parts = Part.objects.all().order_by('-created_at')
@@ -61,7 +59,8 @@ def redirect_sitemap(request, part_id):
 def detail(request, part_id, company_slug, part_slug):
     p = get_object_or_404(Part, id=part_id)
     mlt = SearchQuerySet().more_like_this(p)[:10]
-    pricing = BuyLink.objects.filter(part=p).aggregate(avg_price=Avg('price'), max_price=Max('price'), min_price=Min('price'))
+    pricing = DistributorSKU.objects.filter(part=p).aggregate(avg_price=Avg('price'), max_price=Max('price'), min_price=Min('price'))
+    distributor_skus = DistributorSKU.objects.filter(part=p)
     current_site = get_current_site(request)
     title = "%s by %s - %s | %s" % (p.number, p.company.name,
                                     truncatechars(p.description,
@@ -70,9 +69,6 @@ def detail(request, part_id, company_slug, part_slug):
                                      len(p.company.name)
                                      + 22))),
                                     current_site.name)
-
-    xrefs = Xref.objects.filter(part=p.id).exclude(xrefpart=p.id)
-    reverse_xrefs = Xref.objects.filter(xrefpart=p.id).exclude(part=p.id)
 
     metaform = MetadataForm(None)
     xrefform = XrefForm(None)
@@ -132,8 +128,6 @@ def detail(request, part_id, company_slug, part_slug):
             
     return render_to_response('parts/detail.html', 
                               {'part': p, 
-                               'xrefs': xrefs,
-                               'reverse_xrefs': reverse_xrefs,
                                'metadata_form': metaform, 
                                'xref_form' : xrefform,
                                'imageuploadform' : imageuploadform,
@@ -141,6 +135,7 @@ def detail(request, part_id, company_slug, part_slug):
                                'mlt': mlt,
                                'page_title': title,
                                'agg_pricing': pricing,
+                               'ditributor_skus': distributor_skus,
                               },
                               context_instance=RequestContext(request))
 
@@ -217,6 +212,7 @@ def addxref(request, part_id):
         company = xrefform.cleaned_data['company'].strip().upper()
         description = xrefform.cleaned_data['desc'].strip().upper()
         copy_attrs = xrefform.cleaned_data['copy_attrs']
+        update_all_xrefs = xrefform.cleaned_data['update_all_xrefs']
         
         """Check if the company exists and create it if it does not"""
         try:
@@ -238,13 +234,14 @@ def addxref(request, part_id):
                     new_attr.save()
             newpart.save()
 
-        xr1, _created = Xref.objects.get_or_create(part=p, xrefpart=newpart)
-        if _created == True:
-            xr1.user = request.user
-            xr1.save()
+            newpart.cross_references.add(p)
+            p.cross_references.add(newpart)
+
+            if update_all_xrefs == True:
+                for x in p.cross_references.all():
+                    x.cross_references.add(newpart)
+
             return True
-        else:
-            return 'Cross Reference already exists'
             
 @login_required
 def uploadimage(request, part_id, form):

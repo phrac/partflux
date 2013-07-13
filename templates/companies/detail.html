@@ -21,7 +21,9 @@
 
 {% block content %}  
 <div class="row-fluid">
-    <div class="well span12">
+    {% include 'includes/adsense_728x90.html' %}
+    <h2>{{ company.name }}</h2>
+    <div class="span12">
         {% if company.description %}
         <p>{{ company.description|linebreaksbr|truncatewords:150 }}</p>
         {% else %}
@@ -31,7 +33,6 @@
 </div>
 <div class="row-fluid">
     <div class="span12">
-        {% include 'includes/adsense_728x90.html' %}
         <h4><i class="icon-cog"></i> Part numbers by {{ company.name }} <small>{{ parts_list.paginator.count|intcomma }} parts</small></h4>
         <table class="table table-striped">
             <tbody>
@@ -48,7 +49,6 @@
             </tbody>
         </table>
         {{ parts_list.render }}
-        {% include 'includes/adsense_728x90.html' %}
     </div>
 </div>
 {% endblock %}
@@ -69,12 +69,5 @@
     {% if company.fax %}Fax: {{ company.fax }}<br />{% endif %}
     {% if company.email %}Email: {{ company.email|urlize }}<br />{% endif %}
     {% if company.wikipedia_url %}<a href="{{ company.wikipedia_url }}">Wikipedia Page</a><br />{% endif %}
-    <br /><br />
-    <table>
-        {% if company.twitter_name %}<tr><td><a href="http://twitter.com/{{ company.twitter_name }}"><img src="{{ STATIC_URL }}images/glyphicons/glyphicons_392_twitter.png" alt="twitter" /></td><td><a href="http://twitter.com/{{ company.twitter_name }}">Follow on Twitter</a></td></tr>{% endif %}
-            {% if company.facebook_url %}<tr><td><a href="{{ company.facebook_url }}"><img src="{{ STATIC_URL }}images/glyphicons/glyphicons_390_facebook.png" alt="twitter" /></td><td>&nbsp;<a href="{{ company.twitter_url }}">Like on Facebook</a></li></td></tr>{% endif %}
-            </table>
-        </div>
-    </div>
 </div>
 {% endblock %}

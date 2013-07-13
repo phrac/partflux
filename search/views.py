@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from haystack.query import SearchQuerySet
 from haystack.inputs import AutoQuery
 
-from parts.models import Part, Xref
+from parts.models import Part
 from companies.models import Company
 from search.forms import SearchForm
 

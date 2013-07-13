@@ -6,6 +6,7 @@ django-appconf==0.6
 django-articles==2.4.1
 django-classy-tags==0.4
 django-contact-form==0.3
+git+git@bitbucket.org:partengine/django-currencies.git#egg=django_currencies
 django-debug-toolbar==0.9.4
 -e git://github.com/twaddington/django-gravatar.git@c4f9c9aac9c0c95fbf3a574ade60b29514e9310e#egg=django_gravatar2-dev
 -e git://github.com/toastdriven/django-haystack.git@ac6bbfbcd30f16768b4bfda1f0b1abf7a0aa34ff#egg=django_haystack-dev

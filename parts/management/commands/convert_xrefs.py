@@ -14,6 +14,7 @@ class Command(BaseCommand):
             for row in Xref.objects.filter(pk__gt=pk)[:LIMIT]:
                 pk = row.pk
                 row.part.cross_references.add(row.xrefpart)
+                row.xrefpart.cross_references.add(row.part)
             gc.collect()
             i += LIMIT
 
