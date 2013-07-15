@@ -1,4 +1,3 @@
-{% if part.buylink_set.count > 0 %}
 <table class="table table-striped table-condensed">
     <thead>
         <tr>
@@ -8,6 +7,17 @@
         </tr>
     </thead>
     <tbody>
+    <!-- apw ad -->
+        <tr>
+            <td colspan="3">
+                <a href="http://www.anrdoezrs.net/click-7196527-10536423" target="_top">
+                    <img src="http://www.tqlkg.com/image-7196527-10536423" width="120" height="60" alt="Auto Parts Warehouse" border="0"/>
+                </a><br />
+                <a href="http://www.kqzyfj.com/click-7196527-10475274" target="_top">Free Shipping On All Orders Over $50 From AutoPartsWarehouse.com!</a><img src="http://www.awltovhc.com/image-7196527-10475274" width="1" height="1" border="0"/>
+            </td>
+            
+        </tr>
+               
         {% for buylink in distributor_skus.all %}
         <tr>
             <td>
@@ -23,7 +33,5 @@
         {% endfor %}
     </tbody>
 </table>
-{% else %}
-<div class="alert alert-error">No distributors found.</div>
-{% endif %}
+
 

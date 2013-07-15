@@ -4,7 +4,11 @@ from django.db import models
 from django.db.models import Sum
 from django.db.models.signals import post_save
 
-from parts.models import Attribute, Part, PartImage
+
+from parts.models import Part, Attribute
+
+#from reputation.models import ReputationAction
+
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
