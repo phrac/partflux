@@ -27,6 +27,7 @@ class Part(models.Model):
     approved = models.BooleanField(default=True)
     nsn = models.ForeignKey(Nsn, null=True)
     images = models.ManyToManyField('PartImage')
+    asin = models.CharField(max_length=10)
     cross_references = models.ManyToManyField('Part', related_name='xrefs')
 
     def __unicode__(self):
