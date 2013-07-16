@@ -1,0 +1,37 @@
+<div class="modal hide" id="add-asin">
+    {% if user.is_authenticated %}
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+        <h3>Add ASIN</h3>
+    </div>
+    <form data-div-update="#attribute-table" data-gritter-title-success="ASIN Added" data-gritter-msg-success="Thanks for contributing! Your reputation has been incremented" data-gritter-error-title="Something went wrong" class="modal-form form-horizontal" id="asin-form" autocomplete="off" method="post">
+        <div class="modal-body">
+            {% csrf_token %}
+
+            <div class="control-group">
+                <label class="control-label" for="id_part">ASIN #</label>
+                <div class="controls">
+                    {{ asinform.asin }}
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="modal-footer">
+            <input type="hidden" name="asin_button" value="1" />
+            <button type="submit" disabled="disabled" class="modal-form-submit btn btn-inverse">Save ASIN</button>
+            <button class="btn" data-dismiss="modal">Cancel</button>
+        </div>
+
+    </form>
+
+<script type="text/javascript">
+    $('#add-asin').on('shown', function () {
+        $('#id_part').focus();
+    })
+</script>
+{% else %}
+{% include 'includes/login_modal.html' %}
+{% endif %}
+</div>

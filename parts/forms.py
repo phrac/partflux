@@ -11,7 +11,9 @@ class BuyLinkForm(forms.Form):
    price = forms.DecimalField(decimal_places=4, required=True)
    company = forms.CharField(max_length=48)
    
-
+class ASINForm(forms.Form):
+   asin = forms.CharField(max_length=10)
+   
 class XrefForm(forms.Form):
     part = forms.CharField(max_length=48)
     company = forms.CharField(max_length=48)

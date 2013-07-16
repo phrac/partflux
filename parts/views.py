@@ -17,7 +17,7 @@ import json
 from pure_pagination import Paginator, PageNotAnInteger, EmptyPage
 
 from companies.models import Company
-from parts.forms import MetadataForm, XrefForm, ImageUploadForm, BuyLinkForm
+from parts.forms import MetadataForm, XrefForm, ImageUploadForm, BuyLinkForm, ASINForm
 from parts.models import Part, PartImage, Attribute
 from distributors.models import Distributor, DistributorSKU
 
@@ -74,6 +74,7 @@ def detail(request, part_id, company_slug, part_slug):
     xrefform = XrefForm(None)
     imageuploadform = ImageUploadForm(None)
     buylinkform = BuyLinkForm(None)
+    asinform = ASINForm(None)
 
     if 'buylink_button' in request.POST:
         buylinkform = BuyLinkForm(request.POST)
@@ -91,6 +92,19 @@ def detail(request, part_id, company_slug, part_slug):
         metaform = MetadataForm(request.POST)
         if metaform.is_valid:
             status, new_id = addmeta(request, p.pk)
+                
+            if request.is_ajax():
+                return render_to_response('parts/includes/attribute_table.html',
+                                          {'part': p,},
+                                          context_instance=RequestContext(request))
+            else:
+                return HttpResponseRedirect(reverse('parts.views.detail',
+                                                    args=[part_id, p.company.slug, p.slug]))
+    if 'asin_button' in request.POST:
+        asinform = ASINForm(request.POST)
+        if asinform.is_valid():
+            p.asin = asinform.cleaned_data['asin']
+            p.save()
                 
             if request.is_ajax():
                 return render_to_response('parts/includes/attribute_table.html',
@@ -136,6 +150,7 @@ def detail(request, part_id, company_slug, part_slug):
                                'page_title': title,
                                'agg_pricing': pricing,
                                'ditributor_skus': distributor_skus,
+                               'asinform': asinform,
                               },
                               context_instance=RequestContext(request))
 
