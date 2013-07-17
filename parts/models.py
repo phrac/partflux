@@ -13,6 +13,22 @@ class Category(models.Model):
     name = models.CharField(max_length=64, unique=True)
     slug = models.CharField(max_length=128)
     parent = models.ForeignKey('Category', null=True)
+
+    def __unicode__(self):
+        return self.name
+
+    def get_taxonomy(self):
+        parents = []
+        p = self
+        while p is not None:
+            parents.append(p)
+            p = p.parent
+
+        return list(reversed(parents))
+
+    def get_children(self):
+        return Category.objects.filter(parent=self).order_by(name)
+            
     
 class Part(models.Model):
     number = models.CharField(max_length=48)
