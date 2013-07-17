@@ -1,0 +1,103 @@
+<div class="modal hide" id="category-modal">
+    {% if user.is_authenticated %}
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+        <h3>Assign a Category</h3>
+    </div>
+    <div class="modal-body">
+        <form id="category-form" data-div-update="#attribute-table" class="modal-form form-horizontal" id="asin-form" autocomplete="off" method="post">
+        {% csrf_token %}
+        <div class="control-group">
+            <label class="control-label">Parent Category</label>
+            <div class="controls">
+                <select id="cat1" name="cat1"></select>    
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Sub-Category 1</label>
+            <div class="controls">
+                <select id="cat2" name="cat2"></select>    
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Sub-Category 2</label>
+            <div class="controls">
+                <select id="cat3" name="cat3"></select>    
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Sub-Category 3</label>
+            <div class="controls">
+                <select id="cat4" name="cat4"></select>    
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Sub-Category 4</label>
+            <div class="controls">
+                <select id="cat5" name="cat5"></select>    
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Sub-Category 5</label>
+            <div class="controls">
+                <select id="cat6" name="cat6"></select>    
+            </div>
+        </div>
+
+    </div>
+        <div class="modal-footer">
+            <input type="hidden" name="category_button" value="1" />
+            <button id="save-category" type="submit" data-loading-text="Saving..." class="modal-form-submit btn btn-inverse"><i class="icon-hdd icon-white"></i> Save</button>
+            <button class="btn" data-dismiss="modal">Cancel</button>
+
+        </form>
+    </div>
+
+    <script type="text/javascript">
+        $('#save-category').click(function() {
+            $('#save-category').button('loading');
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#cat1").jCombo("http://partengine.org/parts/ajax/parent_categories/", { 
+                initial_text: "------ Select Category ------", 
+                selected_value: "0",
+                dataType: "json"
+            });
+	        $("#cat2").jCombo("/parts/ajax/child_categories/", { 
+                initial_text: "------ Select Sub-Category 1------",
+                parent: "#cat1",
+                selected_value: "0",
+                dataType: "json" 
+            } );
+            $("#cat3").jCombo("/parts/ajax/child_categories/", { 
+                initial_text: "------ Select Sub-Category 2------",
+                parent: "#cat2",
+                selected_value: "0",
+                dataType: "json" 
+            } );
+            $("#cat4").jCombo("/parts/ajax/child_categories/", { 
+                initial_text: "------ Select Sub-Category 3------",
+                parent: "#cat3",
+                selected_value: "0",
+                dataType: "json" 
+            } );
+            $("#cat5").jCombo("/parts/ajax/child_categories/", { 
+                initial_text: "------ Select Sub-Category 4------",
+                parent: "#cat4",
+                selected_value: "0",
+                dataType: "json" 
+            } );
+            $("#cat6").jCombo("/parts/ajax/child_categories/", { 
+                initial_text: "------ Select Sub-Category 4------",
+                parent: "#cat5",
+                selected_value: "0",
+                dataType: "json" 
+            } );
+        });
+    </script>    
+    {% else %}
+    {% include 'includes/login_modal.html' %}
+    {% endif %}
+</div>

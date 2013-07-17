@@ -4,8 +4,9 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.core.files.storage import default_storage
+import json
 
-from parts.models import Part, PartImage, Attribute
+from parts.models import Part, PartImage, Attribute, Category
 from companies.models import Company
 from users.models import UserFavoritePart
 
@@ -116,5 +117,23 @@ def delete_favorite(request):
                                  context_instance=RequestContext(request))
     else:
         return HttpResponseRedirect(reverse('parts.views.detail', args=[part.id, c.slug, p.slug]))
+        
+@login_required
+def get_parent_categories(request):
+    print 'loading parents'
+    categories = {}
+    c = Category.objects.filter(parent=None).order_by('name')
+    for cat in c:
+        categories[cat.id] = cat.name
+    return HttpResponse(json.dumps(categories), content_type='application/json')
+    
+@login_required
+def get_child_categories(request, parent_id):
+    categories = {}
+    c = Category.objects.filter(parent=parent_id).order_by('name')
+    for cat in c:
+        categories[cat.id] = cat.name
+    return HttpResponse(json.dumps(categories), content_type='application/json')
+    
 
 

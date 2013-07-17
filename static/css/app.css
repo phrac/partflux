@@ -7,14 +7,12 @@
 /* Import Google Web Fonts
 -------------------------------------------------- */
 
-@import url(http://fonts.googleapis.com/css?family=Maven+Pro:400,700,500,900);
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800);
 
 
 /* Body and structure
 -------------------------------------------------- */
 
-body {font-family: 'Open Sans', serif; font-size:12px;}
+body {font-family: Arial, serif; font-size:12px;}
 .article { font-size:14px;}
 .article pre { font-size:14px;}
 .btn.btn-small, input[type="submit"].btn.btn-small {font-family: inherit;}
@@ -63,7 +61,7 @@ margin-bottom: 15px;
 
 #header {;position: relative;z-index: 2;}
 #header .navbar {
-    font-family: 'Open Sans', sans-serif;
+    font-family: Arial, sans-serif;
     *position: relative;
     *z-index: 2;
     /*margin-bottom: 30px;*/

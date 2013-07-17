@@ -1,5 +1,22 @@
-{% if part.attribute_set.count > 0 %}
 <table class="table table-striped table-condensed">
+    <tr>
+        <td><strong>Category</strong></td>
+        <td>
+            {% for c in part.categories.all %}
+                {% for s in c.get_taxonomy %}
+                    {{ s }}
+                    {% if forloop.last %}
+                    {% else %}
+                    >
+                    {% endif %} 
+                {% endfor %}
+            {% endfor %}
+            
+            {% if user.is_staff %}
+            <a title="New Attribute" href="#category-modal" data-toggle="modal"><i class="pull-right icon-plus-sign icon-white"></i></a>
+            {% endif %}
+        </td>
+    </tr>
     <tr>
         <td><strong>ASIN</strong></td>
         <td>
@@ -21,6 +38,4 @@
     </tr>
     {% endfor %}
 </table>
-{% else %}
-<div class="alert alert-error">No additional information available.</div>
-{% endif %}
+

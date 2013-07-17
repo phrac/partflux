@@ -14,9 +14,8 @@ Search Results
 
 {% block content %}
 <div class="row-fluid">
-    {{ sqs.spelling_suggestion }} {{ suggestion }} {{ suggestions }}
     <div class="span12">
-        <h3>{% block searchstats %}{{ results_list.paginator.count }} documents match "<i>{{ searchterm }}</i>" - showing {{ results_list.start_index }}-{{ results_list.end_index }}{% endblock %}</h3>
+        <h4>{% block searchstats %}{{ results_list.paginator.count }} documents match "<i>{{ searchterm }}</i>" - showing {{ results_list.start_index }}-{{ results_list.end_index }}{% endblock %}</h4>
     </div>
 </div>
 <div class="row-fluid">

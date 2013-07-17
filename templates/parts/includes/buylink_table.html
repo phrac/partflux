@@ -39,7 +39,7 @@
                 </td>
                 <td>
                     {% if part.asin %}
-                    <a href="http://amazon.com/dp/{{part.asin}}?tag=partfindr-20">Buy {{ part.company }} {{ part.number }} at Amazon for less!</a>
+                    <a href="http://amazon.com/dp/{{part.asin}}/?tag=partfindr-20">Buy a {{ part.company }} {{ part.number }} at Amazon for less</a>
                     {% else %}
                     <a href="http://www.amazon.com/gp/search/ref=as_li_qf_sp_sr_il_tl?ie=UTF8&camp=1789&creative=9325&index=aps&keywords={{ part.company }} {{ part.number }}&linkCode=as2&tag=partfindr-20">{{ part.company }} {{ part.number }} at Amazon</a>
                     {% endif %}

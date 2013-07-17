@@ -27,13 +27,14 @@
     });
 });
 </script>
+
 {% endblock %}
 {% block content %}
 <div class="row-fluid" itemscope itemtype="http://data-vocabulary.org/Product">
     <div class="span12">
 
-            <h2><span itemprop="name">{{ part.number }}</span> by <a itemprop="brand" href="{{ part.company.get_absolute_url }}">{{ part.company|safe }}</a> <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
-<g:plusone></g:plusone></h2>
+            <h3><span itemprop="name">{{ part.number }}</span> by <a itemprop="brand" href="{{ part.company.get_absolute_url }}">{{ part.company|safe }}</a> <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+                <g:plusone></g:plusone></h3>
             <h4><span itemprop="description">{{ part.description }}</span></h4>
             {% include 'includes/adsense_728x90.html' %}
 
@@ -140,6 +141,7 @@
         {% include 'parts/includes/modals/add_favorite-modal.html' %}
         {% include 'parts/includes/modals/delete_image_modal.html' %}
         {% include 'parts/includes/modals/asin_modal.html' %}
+        {% include 'parts/includes/modals/category_modal.html' %}
         {% endif %}
     </div>
 </div>

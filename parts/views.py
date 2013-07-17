@@ -18,7 +18,7 @@ from pure_pagination import Paginator, PageNotAnInteger, EmptyPage
 
 from companies.models import Company
 from parts.forms import MetadataForm, XrefForm, ImageUploadForm, BuyLinkForm, ASINForm
-from parts.models import Part, PartImage, Attribute
+from parts.models import Part, PartImage, Attribute, Category
 from distributors.models import Distributor, DistributorSKU
 
 def index(request):
@@ -113,6 +113,38 @@ def detail(request, part_id, company_slug, part_slug):
             else:
                 return HttpResponseRedirect(reverse('parts.views.detail',
                                                     args=[part_id, p.company.slug, p.slug]))
+
+    if 'category_button' in request.POST:
+
+        cat1 = request.POST.get('cat1', None)
+        cat2 = request.POST.get('cat2', None)
+        cat3 = request.POST.get('cat3', None)
+        cat4 = request.POST.get('cat4', None)
+        cat5 = request.POST.get('cat5', None)
+        cat6 = request.POST.get('cat6', None)
+        
+        if cat6 is not None and cat6 != '__jcombo__':
+            cat = Category.objects.get(id=cat6)
+        elif cat5 is not None and cat5 != '__jcombo__':
+            cat = Category.objects.get(id=cat5)
+        elif cat4 is not None and cat4 != '__jcombo__':
+            cat = Category.objects.get(id=cat4)
+        elif cat3 is not None and cat3 != '__jcombo__':
+            cat = Category.objects.get(id=cat3)
+        elif cat2 is not None and cat2 != '__jcombo__':
+            cat = Category.objects.get(id=cat2)
+        else:
+            cat = Category.objects.get(id=cat1)
+            
+        p.categories.add(cat)
+            
+        if request.is_ajax():
+            return render_to_response('parts/includes/attribute_table.html',
+                                          {'part': p,},
+                                          context_instance=RequestContext(request))
+        else:
+            return HttpResponseRedirect(reverse('parts.views.detail',
+                                                args=[part_id, p.company.slug, p.slug]))
 
     if 'xref_button' in request.POST:
         xrefform = XrefForm(request.POST)
