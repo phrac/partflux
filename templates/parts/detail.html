@@ -32,25 +32,24 @@
 {% block content %}
 <div class="row-fluid" itemscope itemtype="http://data-vocabulary.org/Product">
     <div class="span12">
-
+		<h5>                                                                                                                                         
+                {% for c in part.categories.all %}                                                                                                       
+                {% for s in c.get_taxonomy %}                                                                                                            
+                {{ s }}                                                                                                                                  
+                {% if forloop.last %}                                                                                                                    
+                {% else %}                                                                                                                               
+                >                                                                                                                                        
+                {% endif %}                                                                                                                              
+                {% endfor %}                                                                                                                             
+                {% endfor %}                                                                                                                             
+                                                                                                                                                         
+                {% if user.is_staff %}                                                                                                                   
+                <a title="New Attribute" href="#category-modal" data-toggle="modal"><i class="pull-right icon-plus-sign icon-white"></i></a>             
+                {% endif %}                                                                                                                              
+            </h5>
             <h3><span itemprop="name">{{ part.number }}</span> by <a itemprop="brand" href="{{ part.company.get_absolute_url }}">{{ part.company|safe }}</a> <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
                 <g:plusone></g:plusone></h3>
             <h4><span itemprop="description">{{ part.description }}</span></h4>
-            <h5>
-                {% for c in part.categories.all %}
-                {% for s in c.get_taxonomy %}
-                {{ s }}
-                {% if forloop.last %}
-                {% else %}
-                >
-                {% endif %} 
-                {% endfor %}
-                {% endfor %}
-
-                {% if user.is_staff %}
-                <a title="New Attribute" href="#category-modal" data-toggle="modal"><i class="pull-right icon-plus-sign icon-white"></i></a>
-                {% endif %}
-            </h5>
             {% include 'includes/adsense_728x90.html' %}
 
     </div>

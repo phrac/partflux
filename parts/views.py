@@ -103,8 +103,12 @@ def detail(request, part_id, company_slug, part_slug):
     if 'asin_button' in request.POST:
         asinform = ASINForm(request.POST)
         if asinform.is_valid():
-            p.asin = asinform.cleaned_data['asin']
+            asin = asinform.cleaned_data['asin']
+	    p.asin = asin
             p.save()
+	    for x in p.cross_references.all():
+	        x.asin = asin
+	        x.save()
                 
             if request.is_ajax():
                 return render_to_response('parts/includes/attribute_table.html',
@@ -137,6 +141,8 @@ def detail(request, part_id, company_slug, part_slug):
             cat = Category.objects.get(id=cat1)
             
         p.categories.add(cat)
+	for c in p.cross_references.all():
+	    c.categories.add(cat)
             
         if request.is_ajax():
             return render_to_response('parts/includes/attribute_table.html',
