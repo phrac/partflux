@@ -8,6 +8,19 @@
     <tbody>
         <!-- affiliate links -->
         <tr>
+                <td>
+                    <strong>Amazon</strong>
+                </td>
+                <td><strong>
+                    {% if part.asin %}
+                    <a href="http://amazon.com/dp/{{part.asin}}/?tag=partfindr-20">Buy a {{ part.company }} <strong>{{ part.number }}</strong> at Amazon and save!</a>
+                    {% else %}
+                    <a href="http://www.amazon.com/gp/search/ref=as_li_qf_sp_sr_il_tl?ie=UTF8&camp=1789&creative=9325&index=aps&keywords={{ part.company }} {{ part.number }}&linkCode=as2&tag=partfindr-20">{{ part.company }} {{ part.number }} at Amazon</a>
+                    {% endif %}
+                    </strong>
+                </td>
+            </tr>
+        <tr>
             <td>
                 Advance Auto Parts
             </td>
@@ -20,7 +33,7 @@
                     Autozone
                 </td>
                 <td>
-                    <a href="http://www.anrdoezrs.net/click-7196527-10785342" target="_top">Get a FREE $15 Gift Card on $100 spent on ship to home orders!</a><img src="http://www.ftjcfx.com/image-7196527-10785342" width="1" height="1" border="0"/>
+                    <a href="http://www.anrdoezrs.net/click-7196527-10785342" target="_top">Buy <strong>{{ part.number }}</strong> and get a FREE $15 Gift Card on $100 spent on ship to home orders!</a><img src="http://www.ftjcfx.com/image-7196527-10785342" width="1" height="1" border="0"/>
                 </td>
             </tr>
 
@@ -29,23 +42,9 @@
                     Auto Parts Warehouse
                 </td>
                 <td>
-                    <a href="http://www.dpbolvw.net/click-7196527-11131195?url=http%3A%2F%2Fwww.autopartswarehouse.com/search/%2F%3Fapwcid%3DA1154013966W44c8db0e4c70a%26Ntt%3D{{part.company}} {{ part.number }}" target="_top">Save on {{part.company}} {{ part.number }}</a><img src="http://www.tqlkg.com/image-7196527-11131195" width="1" height="1" border="0"/>
+                    <a href="http://www.dpbolvw.net/click-7196527-11131195?url=http%3A%2F%2Fwww.autopartswarehouse.com/search/%3Fapwcid%3DA1154013966W44c8db0e4c70a%26Ntt%3D{{part.company}} {{ part.number }}" target="_top">Buy <strong>{{ part.number }}</strong> and save $12 with code VISA12!</a><img src="http://www.tqlkg.com/image-7196527-11131195" width="1" height="1" border="0"/>
                 </td>
             </tr>
-
-            <tr>
-                <td>
-                    Amazon
-                </td>
-                <td>
-                    {% if part.asin %}
-                    <a href="http://amazon.com/dp/{{part.asin}}/?tag=partfindr-20">Buy a {{ part.company }} {{ part.number }} at Amazon for less</a>
-                    {% else %}
-                    <a href="http://www.amazon.com/gp/search/ref=as_li_qf_sp_sr_il_tl?ie=UTF8&camp=1789&creative=9325&index=aps&keywords={{ part.company }} {{ part.number }}&linkCode=as2&tag=partfindr-20">{{ part.company }} {{ part.number }} at Amazon</a>
-                    {% endif %}
-                </td>
-            </tr>
-
 
 
             {% for buylink in distributor_skus.all %}
