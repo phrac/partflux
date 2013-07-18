@@ -47,7 +47,7 @@
                 <a title="New Attribute" href="#category-modal" data-toggle="modal"><i class="pull-right icon-plus-sign icon-white"></i></a>             
                 {% endif %}                                                                                                                              
             </h6>
-            <h3><a itemprop="brand" href="{{ part.company.get_absolute_url }}">{{ part.company|safe }}</a> <span itemprop="name">{{ part.number }}</span><script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+            <h3><a itemprop="brand" href="{{ part.company.get_absolute_url }}">{{ part.company|safe }}</a> <span itemprop="name">{{ part.number }}</span>&nbsp;&nbsp;&nbsp;<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
                 <g:plusone></g:plusone></h3>
             <h4><span itemprop="description">{{ part.description }}</span></h4>
             {% include 'includes/adsense_728x90.html' %}

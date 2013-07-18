@@ -6,13 +6,13 @@
 
 /* Import Google Web Fonts
 -------------------------------------------------- */
-
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,700);
 
 
 /* Body and structure
 -------------------------------------------------- */
 
-body {font-family: Arial, serif; font-size:12px;}
+body {font-family: 'Roboto', arial, sans-serif; font-size:12px;}
 .article { font-size:14px;}
 .article pre { font-size:14px;}
 .btn.btn-small, input[type="submit"].btn.btn-small {font-family: inherit;}
@@ -61,7 +61,7 @@ margin-bottom: 15px;
 
 #header {;position: relative;z-index: 2;}
 #header .navbar {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', arial, sans-serif;
     *position: relative;
     *z-index: 2;
     /*margin-bottom: 30px;*/
