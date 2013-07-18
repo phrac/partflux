@@ -141,15 +141,24 @@
                         {% include 'includes/cj-right-bar.html' %}
                     </div>
                     {%endblock%} 
-                    <ul class="nav nav-list">
-                        <li class="nav-header">Part Engine indexes</li>
-                        <li class="active"><a title="part count"><i class="icon-cogs"></i> &asymp; {{ part_count|intcomma }} parts</a></li>
-                        <li><a title="nsn count"><i class="icon-fighter-jet"></i> &asymp; {{ nsn_count|intcomma }} NSNs</a></li>
-                        <li class="active"><a title="company_count"><i class="icon-building"></i> &asymp; {{ company_count|intcomma }} companies</a></li>
-                        <li><a title="xref_count"><i class="icon-random"></i> &asymp; {{ xref_count|intcomma }} cross refs</a></li>
-                        <li class="active"><a title="attr_count"><i class="icon-eye-open"></i> &asymp; {{ attr_count|intcomma }} attributes</a></li>
-                    </ul>
-                {% endblock %}
+                    <div class="module-top">
+                        Get Social with Part Engine
+                    </div>
+                    <div class="module" style="text-align:center;"
+                        <!-- Place this tag where you want the widget to render. -->
+                        <div class="g-page" data-width="202" data-href="//plus.google.com/108549216163192075170" data-rel="publisher"></div>
+
+                        <!-- Place this tag after the last widget tag. -->
+                        <script type="text/javascript">
+                            (function() {
+                             var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                             po.src = 'https://apis.google.com/js/plusone.js';
+                             var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+                             })();
+                         </script>
+                     </div>
+                    
+                     {% endblock %}
                 </div>
                 
             </div>
@@ -157,6 +166,17 @@
         
         <footer class="footer">
         <div class="container">
+            <div class="row-fluid">
+                <ul class="inline">
+                    <li class="nav-header">Part Engine indexes</li>
+                    <li><i class="icon-cogs"></i> &asymp; {{ part_count|intcomma }} parts</li>
+                    <li><i class="icon-fighter-jet"></i> &asymp; {{ nsn_count|intcomma }} NSNs</li>
+                    <li><i class="icon-building"></i> &asymp; {{ company_count|intcomma }} companies</li>
+                    <li><i class="icon-random"></i> &asymp; {{ xref_count|intcomma }} cross refs</li>
+                    <li><i class="icon-eye-open"></i> &asymp; {{ attr_count|intcomma }} attributes</li>
+                </ul>
+            </div>
+
             <div class="row-fluid">
                 <div class="span6">
                     <p class="copyright">
@@ -175,7 +195,8 @@
                     <div class="pagination pull-right">
                         <ul>
                             <li><a data-rel="tooltip" data-placement="top" data-original-title="Follow us on Twitter" href="http://twitter.com/partengine"><i class="icon-twitter"></i></a></li>
-                            <li><a data-rel="tooltip" data-placement="top" data-original-title="+1 us on Google+" href="https://plus.google.com/u/0/b/108549216163192075170"><i class="icon-google-plus"></i></a></li>          
+                            <li><a data-rel="tooltip" data-placement="top" data-original-title="+1 us on Google+" href="//plus.google.com/108549216163192075170?prsrc=3"
+   rel="publisher" target="_top" style="text-decoration:none;"><i class="icon-google-plus"></i></a></li>          
                         </ul>
                     </div>
                 </div>
