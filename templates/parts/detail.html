@@ -27,7 +27,7 @@
             })
         }
         });
-        {% if user.is_authenticated %}
+        {% if user.is_staff %}
         $.fn.editable.defaults.mode = 'inline';
         $('#description').editable({
             params: {csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value},
