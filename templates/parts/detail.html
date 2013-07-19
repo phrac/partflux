@@ -56,7 +56,7 @@
         </h6>
         <h3><a itemprop="brand" href="{{ part.company.get_absolute_url }}">{{ part.company|safe }}</a> <span itemprop="name">{{ part.number }}</span>&nbsp;&nbsp;&nbsp;<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
             <g:plusone></g:plusone></h3>
-        <h4><span id="description" itemprop="description">{{ part.description }}</span></h4>
+        <h4><span id="description" data-name="description" data-placeholder="No Description" data-type="text" data-inputclass="input input-large" data-pk="{{ part.pk }}" data-url="{% url parts.ajax.update_description %}" itemprop="description" >{{ part.description }}</span></h4>
         {% include 'includes/adsense_728x90.html' %}
 
     </div>
