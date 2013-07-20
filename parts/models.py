@@ -64,9 +64,15 @@ class Part(models.Model):
         term = self.number
         for x in self.cross_references.all():
             term += " %s" % x.number
-        print term
         return term
-           
+    
+    def amazon_price(self):
+        from amazon.api import AmazonAPI
+        amazon = AmazonAPI(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY, settings.AWS_ASSOCIATE_TAG)
+        product = amazon.lookup(ItemId=self.asin)
+        price = product.price_and_currency
+        return "$%s %s" % (price[0], price[1])
+
     @models.permalink
     def get_absolute_url(self):
         return ('parts.views.detail', [self.id, str(self.company.slug), str(self.slug)])

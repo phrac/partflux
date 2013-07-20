@@ -3,6 +3,7 @@
         <tr>
             <th>Affiliate</th>
             <th>Current Promotion (click)</th>
+            <th>Price</th>
         </tr>
     </thead>    
     <tbody>
@@ -11,20 +12,25 @@
                 <td>
                     <strong>Amazon</strong>
                 </td>
+                {% if part.asin %}
                 <td><strong>
-                    {% if part.asin %}
-                    <a rel="nofollow" href="http://amazon.com/dp/{{ part.asin }}/?tag=partfindr-20">Buy a {{ part.company }} <strong>{{ part.number }}</strong> at Amazon and save!</a>
+                    
+                        <a rel="nofollow" href="http://amazon.com/dp/{{ part.asin }}/?tag=partfindr-20">Buy a {{ part.company }} <strong>{{ part.number }}</strong> at Amazon and save!</a>
+                    </td>
+                    <td>
+                        {{ part.amazon_price }}
+                    </td>
                     {% else %}
-                    <a rel="nofollow" href="http://www.amazon.com/gp/search/ref=as_li_qf_sp_sr_il_tl?ie=UTF8&camp=1789&creative=9325&index=aps&keywords={{ part.amazon_keywords }}&linkCode=as2&tag=partfindr-20">{{ part.company }} {{ part.number }} at Amazon</a>
+                    <td colspan="2">
+                        <a rel="nofollow" href="http://www.amazon.com/gp/search/ref=as_li_qf_sp_sr_il_tl?ie=UTF8&camp=1789&creative=9325&index=aps&keywords={{ part.amazon_keywords }}&linkCode=as2&tag=partfindr-20">{{ part.company }} {{ part.number }} at Amazon</a>
+                    </td>
                     {% endif %}
-                    </strong>
-                </td>
             </tr>
         <tr>
             <td>
                 Advance Auto Parts
             </td>
-            <td>
+            <td colspan="2">
                 <a rel="nofollow" href="http://www.kqzyfj.com/click-7196527-11430277">Take $40 Off Orders of $100+ with code DOW29 at AdvanceAutoParts.com! Ends 7/20 - Online only, not valid in store</a><img src="http://www.lduhtrp.net/image-7196527-11430277" width="1" height="1" border="0"/>
             </tr>
 
@@ -32,7 +38,7 @@
                 <td>
                     Autozone
                 </td>
-                <td>
+                <td colspan="2">
                     <a rel="nofollow" href="http://www.anrdoezrs.net/click-7196527-10785342" target="_top">Buy <strong>{{ part.number }}</strong> and get a FREE $15 Gift Card on $100 spent on ship to home orders!</a><img src="http://www.ftjcfx.com/image-7196527-10785342" width="1" height="1" border="0"/>
                 </td>
             </tr>
@@ -41,7 +47,7 @@
                 <td>
                     Auto Parts Warehouse
                 </td>
-                <td>
+                <td colspan="2">
                     <a rel="nofollow" href="http://www.dpbolvw.net/click-7196527-11131195?url=http%3A%2F%2Fwww.autopartswarehouse.com/search/%3Fapwcid%3DA1154013966W44c8db0e4c70a%26Ntt%3D{{part.company}} {{ part.number }}" target="_top">Buy <strong>{{ part.number }}</strong> and save $12 with code VISA12!</a><img src="http://www.tqlkg.com/image-7196527-11131195" width="1" height="1" border="0"/>
                 </td>
             </tr>
