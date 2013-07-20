@@ -60,18 +60,10 @@ class Part(models.Model):
         super(Part, self).save(*args, **kwargs)
         
     @property
-    def asin_guess(self):
-        from amazon.api import AmazonAPI
-        term = "%s %s" % (self.company.name, self.number)
-        amazon = AmazonAPI(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY, settings.AWS_ASSOCIATE_TAG)
-        products = amazon.search_n(5,Keywords=term, SearchIndex='All')
-        #if len(products) < 1:
-        #    for x in self.cross_references.all():
-        #        print x
-        #        term = "%s %s" % (x.company.name, x.number)
-        #        products = amazon.search_n(5,Keywords=term, SearchIndex='All')
-        #        if len(products) > 0:
-        #            break;
+    def amazon_keywords(self):
+        term = self.number
+        for x in self.cross_references.all():
+            term += " %s" % x.number
         print term
         return term
            

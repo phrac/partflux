@@ -15,7 +15,7 @@
                     {% if part.asin %}
                     <a rel="nofollow" href="http://amazon.com/dp/{{ part.asin }}/?tag=partfindr-20">Buy a {{ part.company }} <strong>{{ part.number }}</strong> at Amazon and save!</a>
                     {% else %}
-                    <a rel="nofollow" href="http://www.amazon.com/gp/search/ref=as_li_qf_sp_sr_il_tl?ie=UTF8&camp=1789&creative=9325&index=aps&keywords={{ part.number }}&linkCode=as2&tag=partfindr-20">{{ part.company }} {{ part.number }} at Amazon</a>
+                    <a rel="nofollow" href="http://www.amazon.com/gp/search/ref=as_li_qf_sp_sr_il_tl?ie=UTF8&camp=1789&creative=9325&index=aps&keywords={{ part.amazon_keywords }}&linkCode=as2&tag=partfindr-20">{{ part.company }} {{ part.number }} at Amazon</a>
                     {% endif %}
                     </strong>
                 </td>
