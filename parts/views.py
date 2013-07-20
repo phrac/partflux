@@ -56,13 +56,19 @@ def redirect_sitemap(request, part_id):
     return HttpResponsePermanentRedirect(reverse('parts.views.detail',
                                                  args=[p.id, p.company.slug, p.slug]))
     
+@login_required
+def empty_category(response):
+    parts = Part.objects.filter(categories=None).order_by('?')[:1]
+    p = parts[0]
+    return HttpResponseRedirect(reverse('parts.views.detail', args=[p.id, p.company.slug, p.slug]))
+    
 def detail(request, part_id, company_slug, part_slug):
     p = get_object_or_404(Part, id=part_id)
     mlt = SearchQuerySet().more_like_this(p)[:10]
     pricing = DistributorSKU.objects.filter(part=p).aggregate(avg_price=Avg('price'), max_price=Max('price'), min_price=Min('price'))
     distributor_skus = DistributorSKU.objects.filter(part=p)
     current_site = get_current_site(request)
-    title = "%s by %s - %s | %s" % (p.number, p.company.name,
+    title = "%s %s - %s | %s" % (p.company.name, p.number,
                                     truncatechars(p.description,
                                     (settings.MAX_PAGE_TITLE_LENGTH
                                      - (len(p.number) +
@@ -126,8 +132,11 @@ def detail(request, part_id, company_slug, part_slug):
         cat4 = request.POST.get('cat4', None)
         cat5 = request.POST.get('cat5', None)
         cat6 = request.POST.get('cat6', None)
+        search = request.POST.get('category_ta', None)
         
-        if cat6 is not None and cat6 != '__jcombo__':
+        if search is not None and search != '':
+            cat = Category.objects.get(name=search)
+        elif cat6 is not None and cat6 != '__jcombo__':
             cat = Category.objects.get(id=cat6)
         elif cat5 is not None and cat5 != '__jcombo__':
             cat = Category.objects.get(id=cat5)
@@ -145,7 +154,7 @@ def detail(request, part_id, company_slug, part_slug):
 	    c.categories.add(cat)
             
         if request.is_ajax():
-            return render_to_response('parts/includes/attribute_table.html',
+            return render_to_response('parts/includes/category.html',
                                           {'part': p,},
                                           context_instance=RequestContext(request))
         else:

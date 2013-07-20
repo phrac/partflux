@@ -91,7 +91,7 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-bolt"></i> Admin <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="{% url parts.views.addpartform %}"><i class="icon-plus-sign"></i> New Part</a></li>
-                                    <li><a href="/privacy/"><i class="icon-lock"></i> Privacy Policy</a></li>
+                                    <li><a href="{% url parts.views.empty_category %}"><i class="icon-repeat"></i> Category Spree</a></li>
                                     <li><a href="/contact/"><i class="icon-envelope"></i> Contact Us</a></li>
                                 </ul>
                                 </li>
@@ -100,10 +100,10 @@
                             <p class="navbar-text pull-right">
                             {% if user.is_authenticated %}
                             <img src="{% gravatar_url user.email 20 %}" alt="gravatar" /> hi {{ request.user }}. 
-                            <a href="{% url django.contrib.auth.views.logout %}?next={{request.path}}"><i class="icon-remove-circle"></i></a>
+                            <a rel="nofollow" href="{% url django.contrib.auth.views.logout %}?next={{request.path}}"><i class="icon-remove-circle"></i></a>
                             {% else %}
-                            <a href="{% url django.contrib.auth.views.login %}?next={{request.path}}" class="navbar-link">login</a> or 
-                            <a href="{% url django.contrib.auth.views.login %}?next={{request.path}}" class="navbar-link">register</a>
+                            <a rel="nofollow" href="{% url django.contrib.auth.views.login %}?next={{request.path}}" class="navbar-link">login</a> or 
+                            <a rel="nofollow" href="{% url django.contrib.auth.views.login %}?next={{request.path}}" class="navbar-link">register</a>
                             {% endif %}
                             </p> 
                         </div><!--/.nav-collapse -->

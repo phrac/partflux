@@ -8,7 +8,7 @@
 {{ page_title|safe }}
 {% endblock %}
 
-{% block meta_description %}{{ part.number }} by {{ part.company.name|safe }} : {{ part.description }}{% endblock %}
+{% block meta_description %}{{ part.company.name|safe }} {{ part.number }} : {{ part.description }}{% endblock %}
 
 {% block parts_active %}active open{% endblock %}
 
@@ -27,6 +27,14 @@
             })
         }
         });
+        $(".category-ta input[type=text]").typeahead({
+            items: 10,
+            source: function (query, process) {
+            $.get('/search/autocomplete?type=category', { q: query }, function (data) {
+                process(data)
+            })
+        }
+        });
         {% if user.is_staff %}
         $.fn.editable.defaults.mode = 'inline';
         $('#description').editable({
@@ -40,20 +48,7 @@
 {% block content %}
 <div class="row-fluid" itemscope itemtype="http://data-vocabulary.org/Product">
     <div class="span12">
-        <h6>                                                                                                                              
-            {% for c in part.categories.all %}                                                                                                
-            {% for s in c.get_taxonomy %}                                                                                                     
-            {{ s }}                                                                                                                           
-            {% if forloop.last %}                                                                                                             
-            {% else %}                                                                                                                        
-            >                                                                                                                                 
-            {% endif %}                                                                                                                       
-            {% endfor %}                                                                                                                      
-            {% endfor %}                                                                                                                      
-            {% if user.is_staff %}
-            <a title="New Attribute" href="#category-modal" data-toggle="modal"><i class="pull-right icon-plus-sign icon-white"></i></a>             
-            {% endif %}                                                                                                                              
-        </h6>
+        {% include 'parts/includes/category.html' %}
         <h3><a itemprop="brand" href="{{ part.company.get_absolute_url }}">{{ part.company|safe }}</a> <span itemprop="name">{{ part.number }}</span>&nbsp;&nbsp;&nbsp;<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
             <g:plusone></g:plusone></h3>
         <h4><span id="description" data-name="description" data-placeholder="No Description" data-type="text" data-inputclass="input input-large" data-pk="{{ part.pk }}" data-url="{% url parts.ajax.update_description %}" itemprop="description" >{{ part.description }}</span></h4>

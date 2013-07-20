@@ -6,6 +6,7 @@ urlpatterns = patterns('',
     url(r'^$', 'parts.views.index'),
     
     url(r'^add/$', 'parts.views.addpartform'),
+    url(r'^spree/$', 'parts.views.empty_category'),
 
     url(r'^ajax/description/$', 'parts.ajax.update_description'),
     url(r'^ajax/update_company/$', 'parts.ajax.update_company'),

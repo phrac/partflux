@@ -4,6 +4,7 @@ from django.conf import settings
 from haystack.query import SearchQuerySet
 from haystack.inputs import AutoQuery
 from django.http import Http404
+from parts.models import Category, Part
 
 import json
 
@@ -15,10 +16,13 @@ def autocomplete(request):
             return HttpResponse()
         suggestions = []
         if type == 'company':
-            sqs = SearchQuerySet().filter(name__startswith=q)[:5]
+            sqs = SearchQuerySet().filter(name__startswith=q)[:10]
             suggestions = [result.object.name for result in sqs]
+        elif type == 'category':
+            sqs = SearchQuerySet().models(Category).filter(text__startswith=q)[:10]
+            suggestions = [result.object.name for result in sqs]        
         else:
-            sqs = SearchQuerySet().filter(content__startswith=q)[:5]
+            sqs = SearchQuerySet().filter(content__startswith=q)[:10]
             for result in sqs:
                 if result.object.number:
                     suggestions.append(result.object.number)
