@@ -86,15 +86,22 @@ class Part(models.Model):
         except:
             return None
 
-    def asin_image(self):                                                                                                                            
-        amazon = AmazonAPI(settings.AWS_ACCESS_KEY_ID,                                                                                                   
+    def asin_image(self): 
+        amazon = AmazonAPI(settings.AWS_ACCESS_KEY_ID,
                            settings.AWS_SECRET_ACCESS_KEY,
                            settings.AWS_ASSOCIATE_TAG)
-        try:                                                                                                                                             
-            product = amazon.lookup(ItemId=self.asin)                                                                                                    
+        try: 
+            product = amazon.lookup(ItemId=self.asin)
             return product.large_image_url
         except:
             return None
+
+    def asin_search(self):
+        amazon = AmazonAPI(settings.AWS_ACCESS_KEY_ID,
+                           settings.AWS_SECRET_ACCESS_KEY,
+                           settings.AWS_ASSOCIATE_TAG)
+        products = amazon.search_n(5, Keywords=self.number, SearchIndex='All')
+        return products
 
 
     @models.permalink

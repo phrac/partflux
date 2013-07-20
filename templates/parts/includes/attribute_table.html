@@ -8,6 +8,35 @@
             {% endif %}
         </td>
     </tr>
+    {% if not part.asin and user.is_staff %}
+    <tr>
+        <td>Possible ASIN Matches</td>
+        <td>
+            <table>
+                <tr>
+                    <th>
+                        ASIN
+                    </th>
+                    <th>Description</th>
+                </tr>
+                {% for a in part.asin_search %}
+                <tr>
+                    <td class="asin"><a>{{ a.asin }}</a></td>
+                    <td>{{ a.title }}</td>
+                </tr>
+                {% endfor %}
+                {% for x in part.cross_references.all %}
+                {% for a in x.asin_search %}
+                <tr>
+                    <td>{{ a.asin }}</td>
+                    <td>{{ a.title }}</td>
+                </tr>
+                {% endfor %}
+                {% endfor %}
+            </table>
+        </td>
+    </tr>
+    {% endif %}
     {% for a in part.attribute_set.all %}
     <tr>
         <td>
@@ -20,4 +49,14 @@
     </tr>
     {% endfor %}
 </table>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(function(){
+            $('td.asin a').click(function(){
+                $("#id_asin").val($(this).text());
+                $("#add-asin").modal('show');
+            });
+        });
+    });
+</script>
 
