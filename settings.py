@@ -6,7 +6,7 @@ DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-     ('Derek Musselmann', 'derek@partfindr.net'),
+     ('Derek Musselmann', 'derek@partengine.org'),
 )
 
 INTERNAL_IPS = {
@@ -168,7 +168,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'users.middleware.LastSeen',
     'django.middleware.cache.FetchFromCacheMiddleware',
 )
 

@@ -1,9 +1,9 @@
 {% load thumbnail %}
-{% if part.images.count > 0 %}
+{% if part.images.count > 0 or part.asin %}
 <ul class="thumbnails">
     {% for image in part.images.all %}
     {% if image.image %}
-    {% thumbnail image.image "160x120" crop="center" as im %}
+    {% thumbnail image.image "160x120" as im %}
     <li class="span3">
     <div class="thumbnail">
         <a data-jkit="[lightbox:group=images]" class="thumbnail" href="{{ image.image.url }}"><img src="{{ im.url }}" alt="{{ part.number }} image" itemprop="image" /></a>
@@ -19,6 +19,14 @@
     {% endthumbnail %}
     {% endif %}
     {% endfor %}
+
+    <!--{% if part.asin %}
+    <li class="span3">                                                                                                                               
+    <div class="thumbnail">
+        <a data-jkit="[lightbox:group=images]" class="thumbnail" href="{{ part.asin_image }}"><img src="{{ part.asin_thumbnail }}" alt="{{ part.number }} image" itemprop="image" /></a>
+    </div>
+    </li>
+    {% endif %}-->
 </ul>
 {% else %}
 <div class="alert alert-error">No images have been submitted.</div>

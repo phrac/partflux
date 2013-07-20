@@ -5,6 +5,7 @@ from django.db.models.signals import post_save
 from django.template.defaultfilters import slugify
 from django.utils.encoding import smart_str
 from sorl.thumbnail import ImageField
+from amazon.api import AmazonAPI
 
 from companies.models import Company
 from nsn.models import Nsn
@@ -67,11 +68,34 @@ class Part(models.Model):
         return term
     
     def amazon_price(self):
-        from amazon.api import AmazonAPI
         amazon = AmazonAPI(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY, settings.AWS_ASSOCIATE_TAG)
-        product = amazon.lookup(ItemId=self.asin)
-        price = product.price_and_currency
-        return "$%s %s" % (price[0], price[1])
+        try:
+            product = amazon.lookup(ItemId=self.asin)
+            price = product.price_and_currency
+            return "$%.2f %s" % (price[0], price[1])
+        except:
+            return None
+
+    def asin_thumbnail(self):
+        amazon = AmazonAPI(settings.AWS_ACCESS_KEY_ID,
+                           settings.AWS_SECRET_ACCESS_KEY,
+                           settings.AWS_ASSOCIATE_TAG)
+        try:
+            product = amazon.lookup(ItemId=self.asin)
+            return product.medium_image_url
+        except:
+            return None
+
+    def asin_image(self):                                                                                                                            
+        amazon = AmazonAPI(settings.AWS_ACCESS_KEY_ID,                                                                                                   
+                           settings.AWS_SECRET_ACCESS_KEY,
+                           settings.AWS_ASSOCIATE_TAG)
+        try:                                                                                                                                             
+            product = amazon.lookup(ItemId=self.asin)                                                                                                    
+            return product.large_image_url
+        except:
+            return None
+
 
     @models.permalink
     def get_absolute_url(self):
@@ -106,7 +130,7 @@ class Attribute(models.Model):
 class PartImage(models.Model):
     image = ImageField(upload_to='part_images')
     user = models.ForeignKey(User, null=False)
-    hash = models.CharField(max_length=1000, unique=True)
+    #hash = models.CharField(max_length=1000, unique=True)
     approved = models.BooleanField(default=True)
     album_cover = models.BooleanField(default=False)
 

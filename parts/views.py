@@ -64,7 +64,7 @@ def empty_category(response):
     
 def detail(request, part_id, company_slug, part_slug):
     p = get_object_or_404(Part, id=part_id)
-    mlt = SearchQuerySet().more_like_this(p)[:10]
+    mlt = SearchQuerySet().models(Part).more_like_this(p)[:10]
     pricing = DistributorSKU.objects.filter(part=p).aggregate(avg_price=Avg('price'), max_price=Max('price'), min_price=Min('price'))
     distributor_skus = DistributorSKU.objects.filter(part=p)
     current_site = get_current_site(request)
@@ -178,12 +178,6 @@ def detail(request, part_id, company_slug, part_slug):
         imageuploadform = ImageUploadForm(request.POST, request.FILES)
         if imageuploadform.is_valid:
             status = uploadimage(request, p.pk, imageuploadform)
-
-            if status is True:
-                messages.success(request, 'Image upload successful. Thanks for contributing!')
-            else:
-                messages.error(request, 'Image upload failed. Most likely it was not an image file or it was a duplicate.')
-
             return HttpResponseRedirect(reverse('parts.views.detail',
                                                     args=[part_id, p.company.slug, p.slug]))
             
@@ -307,28 +301,29 @@ def addxref(request, part_id):
             
 @login_required
 def uploadimage(request, part_id, form):
-    import hashlib
-    from django.core.files.base import ContentFile
-    
+    print 'in uploadimage()'
     p = get_object_or_404(Part, pk=part_id)
     if form.is_valid():
+        print 'form valid'
         if request.FILES.get('file', None):
             f = request.FILES['file']
             
             """ hash the image so we can keep them unique """
-            content = ContentFile(f.read()).read()
-            h = hashlib.sha512()
-            h.update(content)
+            #content = ContentFile(f.read()).read()
+            #h = hashlib.sha512()
+            #h.update(content)
             
             """Handle the file upload"""
+            print 'changing file name'
             new_filename = "%s_%s" % (str(part_id), f.name)
-            f.seek(0)
-            image = PartImage(user=request.user, hash=h.hexdigest())
+            image = PartImage(user=request.user)
             try:
+                print 'uploading image to aws'
                 image.image.save(new_filename, f)
                 image.save()
                 p.images.add(image)
                 p.save()
+                print 'done'
                 return True
             except IntegrityError:
                 return False

@@ -14,7 +14,9 @@
 
 {% block no_adsense %}{% endblock %}
 {% block head %}
+<link href="{{ STATIC_URL }}css/select2.css" rel="stylesheet" />
 <link href="{{ STATIC_URL }}css/bootstrap-editable.css" rel="stylesheet">
+<link rel="stylesheet" href="{{ STATIC_URL }}css/uniform.css" type="text/css" media="screen" />
 <script src="{{ STATIC_URL }}js/bootstrap-editable.min.js"></script>
 <!-- search typeahead -->
 <script type="text/javascript">
@@ -118,7 +120,7 @@
                 {% for p in mlt %}
                 <tr>
                     <td>
-                        <a href="{{ p.object.get_absolute_url }}">{{ p.object.number }}</a>
+                         <a href="{{ p.object.get_absolute_url }}">{{ p.object.number }}</a>
                     </td>
                     <td>
                         {{ p.object.description|truncatechars:120 }}
@@ -140,10 +142,8 @@
         
         {% if user.is_staff %}
         <script src="{{ STATIC_URL }}js/modal-form.js"></script>
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/uniform.css" type="text/css" media="screen" />
         <script src="{{ STATIC_URL }}js/jquery.uniform.js"></script>
-        <link href="{{ STATIC_URL }}css/select2.css" rel="stylesheet" />
-        <script src="http://ivaynberg.github.com/select2/select2-master/select2.js"></script>
+        <script src="{{ STATIC_URL }}js/select2.min.js"></script>
         <script src="{{ STATIC_URL }}js/jquery.validate.js"></script>
         <script src="{{ STATIC_URL }}js/unicorn.form_validation.js"></script>
 

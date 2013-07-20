@@ -24,7 +24,7 @@ def autocomplete(request):
         else:
             sqs = SearchQuerySet().filter(content__startswith=q)[:10]
             for result in sqs:
-                if result.object.number:
+                if result.object is not None and result.object.number:
                     suggestions.append(result.object.number)
                 else:
                     pass
