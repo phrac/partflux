@@ -28,7 +28,7 @@
                 {% for x in part.cross_references.all %}
                 {% for a in x.asin_search %}
                 <tr>
-                    <td>{{ a.asin }}</td>
+                    <td class="asin"><a>{{ a.asin }}</a></td>
                     <td>{{ a.title }}</td>
                 </tr>
                 {% endfor %}

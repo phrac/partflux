@@ -120,7 +120,6 @@ def delete_favorite(request):
         
 @login_required
 def get_parent_categories(request):
-    print 'loading parents'
     categories = {}
     c = Category.objects.filter(parent=None).order_by('name')
     for cat in c:

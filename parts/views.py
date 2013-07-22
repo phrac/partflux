@@ -290,14 +290,14 @@ def addxref(request, part_id):
                     new_attr.save()
             newpart.save()
 
-            newpart.cross_references.add(p)
-            p.cross_references.add(newpart)
+        newpart.cross_references.add(p)
+        p.cross_references.add(newpart)
 
-            if update_all_xrefs == True:
-                for x in p.cross_references.all():
-                    x.cross_references.add(newpart)
+        if update_all_xrefs == True:
+            for x in p.cross_references.all():
+                x.cross_references.add(newpart)
 
-            return True
+        return True
             
 @login_required
 def uploadimage(request, part_id, form):

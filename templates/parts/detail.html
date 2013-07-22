@@ -14,11 +14,11 @@
 
 {% block no_adsense %}{% endblock %}
 {% block head %}
+{% if user.is_staff %}
 <link href="{{ STATIC_URL }}css/select2.css" rel="stylesheet" />
 <link href="{{ STATIC_URL }}css/bootstrap-editable.css" rel="stylesheet">
 <link rel="stylesheet" href="{{ STATIC_URL }}css/uniform.css" type="text/css" media="screen" />
 <script src="{{ STATIC_URL }}js/bootstrap-editable.min.js"></script>
-<!-- search typeahead -->
 <script type="text/javascript">
     $(document).ready(function() {
         $(".company-ta input[type=text]").typeahead({
@@ -37,14 +37,13 @@
             })
         }
         });
-        {% if user.is_staff %}
         $.fn.editable.defaults.mode = 'inline';
         $('#description').editable({
             params: {csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value},
         });
-        {% endif %}
 });
 </script>
+{% endif %}
 
 {% endblock %}
 {% block content %}

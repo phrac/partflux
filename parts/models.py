@@ -97,10 +97,13 @@ class Part(models.Model):
             return None
 
     def asin_search(self):
-        amazon = AmazonAPI(settings.AWS_ACCESS_KEY_ID,
+        try:
+            amazon = AmazonAPI(settings.AWS_ACCESS_KEY_ID,
                            settings.AWS_SECRET_ACCESS_KEY,
                            settings.AWS_ASSOCIATE_TAG)
-        products = amazon.search_n(5, Keywords=self.number, SearchIndex='All')
+            products = amazon.search_n(10, Keywords=self.number, SearchIndex='All')
+        except:
+            products = None
         return products
 
 
