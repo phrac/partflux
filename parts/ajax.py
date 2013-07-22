@@ -134,5 +134,12 @@ def get_child_categories(request, parent_id):
         categories[cat.id] = cat.name
     return HttpResponse(json.dumps(categories), content_type='application/json')
     
+def get_distributors(request, part_id):
+    p = Part.objects.get(id=part_id)
+
+    if request.is_ajax:
+        return render_to_response('parts/includes/buylink_table.html',
+                                  {'part': p,},
+                                  context_instance=RequestContext(request))
 
 

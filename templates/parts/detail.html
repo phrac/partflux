@@ -43,6 +43,11 @@
         });
 });
 </script>
+<script type="text/javascript">
+    $(document).ready(function() {
+            $('#buylink-table').load('/parts/ajax/load_distributors/{{ part.pk }}');
+            });
+        </script>
 {% endif %}
 
 {% endblock %}
@@ -70,7 +75,6 @@
         </div>
         
         <div id="buylink-table">
-            {% include 'parts/includes/buylink_table.html' %}
         </div>
         
         
