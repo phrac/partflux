@@ -136,10 +136,17 @@ def get_child_categories(request, parent_id):
     
 def get_distributors(request, part_id):
     p = Part.objects.get(id=part_id)
-
     if request.is_ajax:
         return render_to_response('parts/includes/buylink_table.html',
                                   {'part': p,},
                                   context_instance=RequestContext(request))
 
+@login_required
+def admin_asin_search(request, part_id):
+    p = Part.objects.get(id=part_id)
+
+    if request.is_ajax:
+        return render_to_response('parts/includes/admin_asin_search.html',
+                                  {'part': p,},
+                                  context_instance=RequestContext(request))
 

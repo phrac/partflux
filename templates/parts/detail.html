@@ -45,17 +45,22 @@
 </script>
 <script type="text/javascript">
     $(document).ready(function() {
-            $('#buylink-table').load('/parts/ajax/load_distributors/{{ part.pk }}');
+            $('#asin_search').load('/parts/ajax/asin_search/{{ part.pk }}');
             });
-        </script>
+</script>
 {% endif %}
 
+<script type="text/javascript">
+    $(document).ready(function() {
+            $('#buylink-table').load('/parts/ajax/load_distributors/{{ part.pk }}');
+            });
+</script>
 {% endblock %}
 {% block content %}
 <div class="row-fluid" itemscope itemtype="http://data-vocabulary.org/Product">
     <div class="span12">
         {% include 'parts/includes/category.html' %}
-        <h3><a itemprop="brand" href="{{ part.company.get_absolute_url }}">{{ part.company|safe }}</a> <span itemprop="name">{{ part.number }}</span>&nbsp;&nbsp;&nbsp;<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+        <h3><span itemprop="name">{{ part.number }}</span> by <a itemprop="brand" href="{{ part.company.get_absolute_url }}">{{ part.company|safe }}</a>&nbsp;&nbsp;&nbsp;<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
             <g:plusone></g:plusone></h3>
         <h4><span id="description" data-name="description" data-placeholder="No Description" data-type="text" data-inputclass="input input-large" data-pk="{{ part.pk }}" data-url="{% url parts.ajax.update_description %}" itemprop="description" >{{ part.description }}</span></h4>
         {% include 'includes/adsense_728x90.html' %}
@@ -75,6 +80,7 @@
         </div>
         
         <div id="buylink-table">
+        <img src="{{ STATIC_URL }}js/select2-spinner.gif" /> Loading distributors ...
         </div>
         
         

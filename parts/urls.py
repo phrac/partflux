@@ -11,6 +11,7 @@ urlpatterns = patterns('',
     url(r'^ajax/description/$', 'parts.ajax.update_description'),
     url(r'^ajax/update_company/$', 'parts.ajax.update_company'),
     url(r'^ajax/load_distributors/(\d+)/$', 'parts.ajax.get_distributors'),
+    url(r'^ajax/asin_search/(\d+)/$', 'parts.ajax.admin_asin_search'),
     url(r'^ajax/flag/$', 'parts.ajax.flag'),
     
     url(r'^ajax/add_favorite/$', 'parts.ajax.add_favorite'),

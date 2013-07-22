@@ -9,32 +9,9 @@
         </td>
     </tr>
     {% if not part.asin and user.is_staff %}
-    <tr>
-        <td>Possible ASIN Matches</td>
-        <td>
-            <table>
-                <tr>
-                    <th>
-                        ASIN
-                    </th>
-                    <th>Description</th>
-                </tr>
-                {% for a in part.asin_search %}
-                <tr>
-                    <td class="asin"><a>{{ a.asin }}</a></td>
-                    <td>{{ a.title }}</td>
-                </tr>
-                {% endfor %}
-                {% for x in part.cross_references.all %}
-                {% for a in x.asin_search %}
-                <tr>
-                    <td class="asin"><a>{{ a.asin }}</a></td>
-                    <td>{{ a.title }}</td>
-                </tr>
-                {% endfor %}
-                {% endfor %}
-            </table>
-        </td>
+    <tr id="asin_search">
+        <td>ASIN Search</td>
+        <td><img src="{{ STATIC_URL }}js/select2-spinner.gif"></td>
     </tr>
     {% endif %}
     {% for a in part.attribute_set.all %}

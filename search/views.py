@@ -31,7 +31,6 @@ def results(request):
 
         if q:
             sqs = SearchQuerySet().auto_query(q)
-            suggestions = sqs.spelling_suggestion()
             results = sqs.filter(content=AutoQuery(q))[:250]
 
         else:
@@ -50,7 +49,6 @@ def results(request):
                                   'results_list': results_list, 
                                   'searchterm': q,
                                   'sqs': sqs,
-                                  'suggestions': suggestions,
                                  # 'facets': results.facet_counts(),
                               },
                               context_instance=RequestContext(request))

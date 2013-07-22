@@ -68,7 +68,7 @@ def detail(request, part_id, company_slug, part_slug):
     pricing = DistributorSKU.objects.filter(part=p).aggregate(avg_price=Avg('price'), max_price=Max('price'), min_price=Min('price'))
     distributor_skus = DistributorSKU.objects.filter(part=p)
     current_site = get_current_site(request)
-    title = "%s %s - %s | %s" % (p.company.name, p.number,
+    title = "%s by %s - %s | %s" % (p.number, p.company.name,
                                     truncatechars(p.description,
                                     (settings.MAX_PAGE_TITLE_LENGTH
                                      - (len(p.number) +
