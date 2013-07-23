@@ -20,14 +20,19 @@
     {% endif %}
     {% endfor %}
 
-    <!--{% if part.asin %}
+    {% if part.asin %}
     <li class="span3">                                                                                                                               
     <div class="thumbnail">
         <a data-jkit="[lightbox:group=images]" class="thumbnail" href="{{ part.asin_image }}"><img src="{{ part.asin_thumbnail }}" alt="{{ part.number }} image" itemprop="image" /></a>
     </div>
     </li>
-    {% endif %}-->
+    {% endif %}
 </ul>
+<script type="text/javascript">
+    $(document).ready(function(){
+            $('#images-table').jKit();
+            });
+</script>
 {% else %}
 <div class="alert alert-error">No images have been submitted.</div>
 {% endif %}
