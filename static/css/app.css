@@ -11,8 +11,8 @@
 
 /* Body and structure
 -------------------------------------------------- */
-
-body {font-family: 'Roboto', arial, sans-serif; font-size:13px;}
+html,body {height:100%;}
+body {font-family: 'Roboto', arial, sans-serif; font-size:13px; }
 .article { font-size:14px;}
 .article pre { font-size:14px;}
 .btn.btn-small, input[type="submit"].btn.btn-small {font-family: inherit;}
@@ -476,15 +476,30 @@ select:active:enabled {background-image: url("data:image/png;base64,iVBORw0KGgoA
 
 /* Footer
 -------------------------------------------------- */
-
+#wrap {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    /* Negative indent footer by it's height */
+    margin: 0 auto -101px;
+}
+#main {overflow:auto;
+	padding-bottom: 101px;}  /* must be same height as the footer */
 .footer {
-    position: relative;
-    top: 62px;
-
+    height: 100px;
     padding:  0;
-    margin-top: 70px;
-    border-top: 1px solid #e5e5e5;
+    border-top: 1px solid #cdcdcd;
+    margin-top: -101px;
+    clear:both;
     background-color: rgb(32, 32, 32);
+}
+/*Opera Fix*/
+body:before {/* thanks to Maleika (Kohoutec)*/
+    content:"";
+    height:100%;
+    float:left;
+    width:0;
+    margin-top:-32767px;/* thank you Erik J - negate effect of float*/
 }
 .footer p {
     margin-bottom: 0;

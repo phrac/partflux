@@ -57,105 +57,114 @@
     <!--[if lt IE 9]>
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-
+    <!--[if !IE 7]>
+	<style type="text/css">
+		#wrap {display:table;height:100%}
+	</style>
+    <![endif]-->
     </head>
     <body>
-        <div id="header">
-            <div class="navbar navbar-fixed-top">
-                <div class="navbar-inner">
-                    <div class="container">
-                        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                            <span class="icon-bar"></span>
-                        </a>
-                        <a href="/"><h1>part engine</h1></a>
-                        <div class="search nav-collapse collapse">
-                            <form class="navbar-form pull-left" action="{% url search.views.results %}" method="get">
-                                <div class="input-append">
-                                    <input data-minLength="3" placeholder="Search parts and NSNs..." autocomplete="off" class="span3" id="appendedInputButtons" type="text" name="q" value="{{ searchterm }}">
-                                    <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
-                                </div>           
-                            </form>
-                            <ul class="nav">
-                                <li class="{% block parts_active %}{%endblock%}"><a href="{% url parts.views.index %}"><i class="icon-cogs"></i> Parts</a></li>
-                                <li class="{% block nsn_active %}{%endblock%}"><a href="{% url nsn.views.index %}"><i class="icon-fighter-jet"></i> NSN</a></li>
-                                <li class="{% block companies_active %}{%endblock%}"><a href="{% url companies.views.index %}"><i class="icon-building"></i> Companies</a></li>
-                                <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-plus-sign"></i> More <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="/blog/"><i class="icon-bullhorn"></i> Our Blog</a></li>
-                                    <li><a href="/faq/"><i class="icon-question-sign"></i> F.A.Q.</a></li>
-                                    <li><a href="/privacy/"><i class="icon-lock"></i> Privacy Policy</a></li>
-                                    <li><a href="/contact/"><i class="icon-envelope"></i> Contact Us</a></li>
+        <div id="wrap">
+            <div id="main">
+            <div id="header">
+                <div class="navbar navbar-fixed-top">
+                    <div class="navbar-inner">
+                        <div class="container">
+                            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                                <span class="icon-bar"></span>
+                            </a>
+                            <a href="/"><h1>part engine</h1></a>
+                            <div class="search nav-collapse collapse">
+                                <form class="navbar-form pull-left" action="{% url search.views.results %}" method="get">
+                                    <div class="input-append">
+                                        <input data-minLength="3" placeholder="Search parts and NSNs..." autocomplete="off" class="span3" id="appendedInputButtons" type="text" name="q" value="{{ searchterm }}">
+                                        <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
+                                    </div>           
+                                </form>
+                                <ul class="nav">
+                                    <li class="{% block parts_active %}{%endblock%}"><a href="{% url parts.views.index %}"><i class="icon-cogs"></i> Parts</a></li>
+                                    <li class="{% block nsn_active %}{%endblock%}"><a href="{% url nsn.views.index %}"><i class="icon-fighter-jet"></i> NSN</a></li>
+                                    <li class="{% block companies_active %}{%endblock%}"><a href="{% url companies.views.index %}"><i class="icon-building"></i> Companies</a></li>
+                                    <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-plus-sign"></i> More <b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="/blog/"><i class="icon-bullhorn"></i> Our Blog</a></li>
+                                        <li><a href="/faq/"><i class="icon-question-sign"></i> F.A.Q.</a></li>
+                                        <li><a href="/privacy/"><i class="icon-lock"></i> Privacy Policy</a></li>
+                                        <li><a href="/contact/"><i class="icon-envelope"></i> Contact Us</a></li>
+                                    </ul>
+                                    </li>
+                                    {% if user.is_staff %}
+                                    <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-bolt"></i> Admin <b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="{% url parts.views.addpartform %}"><i class="icon-plus-sign"></i> New Part</a></li>
+                                        <li><a href="{% url parts.views.empty_category %}"><i class="icon-repeat"></i> Category Spree</a></li>
+                                        <li><a href="/contact/"><i class="icon-envelope"></i> Contact Us</a></li>
+                                    </ul>
+                                    </li>
+                                    {% endif %}
                                 </ul>
-                                </li>
-                                {% if user.is_staff %}
-                                <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-bolt"></i> Admin <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="{% url parts.views.addpartform %}"><i class="icon-plus-sign"></i> New Part</a></li>
-                                    <li><a href="{% url parts.views.empty_category %}"><i class="icon-repeat"></i> Category Spree</a></li>
-                                    <li><a href="/contact/"><i class="icon-envelope"></i> Contact Us</a></li>
-                                </ul>
-                                </li>
+                                <p class="navbar-text pull-right">
+                                {% if user.is_authenticated %}
+                                <img src="{% gravatar_url user.email 20 %}" alt="gravatar" /> hi {{ request.user }}. 
+                                <a rel="nofollow" href="{% url django.contrib.auth.views.logout %}?next={{request.path}}"><i class="icon-remove-circle"></i></a>
+                                {% else %}
+                                <a rel="nofollow" href="{% url django.contrib.auth.views.login %}?next={{request.path}}" class="navbar-link">login</a> or 
+                                <a rel="nofollow" href="{% url django.contrib.auth.views.login %}?next={{request.path}}" class="navbar-link">register</a>
                                 {% endif %}
-                            </ul>
-                            <p class="navbar-text pull-right">
-                            {% if user.is_authenticated %}
-                            <img src="{% gravatar_url user.email 20 %}" alt="gravatar" /> hi {{ request.user }}. 
-                            <a rel="nofollow" href="{% url django.contrib.auth.views.logout %}?next={{request.path}}"><i class="icon-remove-circle"></i></a>
-                            {% else %}
-                            <a rel="nofollow" href="{% url django.contrib.auth.views.login %}?next={{request.path}}" class="navbar-link">login</a> or 
-                            <a rel="nofollow" href="{% url django.contrib.auth.views.login %}?next={{request.path}}" class="navbar-link">register</a>
-                            {% endif %}
-                            </p> 
-                        </div><!--/.nav-collapse -->
+                                </p> 
+                            </div><!--/.nav-collapse -->
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- End Header -->
-        <div id="content" class="container">
-            <div class="row-fluid" >
-                <div class="span9 main-section">
-                    {% block no_adsense %}
-                    <div class="options-bar">
-                        {% include 'includes/adsense_728x90.html' %}
+            <!-- End Header -->
+            <div id="content" class="container">
+                <div class="row-fluid" >
+                    <div class="span9 main-section">
+                        {% block no_adsense %}
+                        <div class="options-bar">
+                            {% include 'includes/adsense_728x90.html' %}
+                        </div>
+                        {% endblock %}
+                        <!-- start content -->
+                        {% block content %}
+                        {% endblock %}
                     </div>
-                    {% endblock %}
-                    <!-- start content -->
-                    {% block content %}
-                    {% endblock %}
-                </div>
 
-                <!-- Start Right Section -->
-                {% block no_sidebar %}
-                <div id="side-section" class="span3">
-                    
-                    
+                    <!-- Start Right Section -->
+                    {% block no_sidebar %}
+                    <div id="side-section" class="span3">
 
-                    {% block rightbar %}
-                    {% endblock %}
-                    {% block no_adsense_sidebar %}
-                    <div class="module-top">
-                        Sponsored Links
+
+
+                        {% block rightbar %}
+                        {% endblock %}
+                        {% block no_adsense_sidebar %}
+                        <div class="module-top">
+                            Sponsored Links
+                        </div>
+                        <div class="module" style="text-align:center;">
+                            {% include 'includes/adsense-small-square.html' %}
+                        </div>
+                        {%endblock%} 
+                        <div class="module-top">
+                            Recent part updates
+                        </div>
+                        <div class="module" style="text-align:center;"
+                        </div>
+
+                        {% endblock %}
                     </div>
-                    <div class="module" style="text-align:center;">
-                        {% include 'includes/adsense-small-square.html' %}
-                    </div>
-                    {%endblock%} 
-                    <div class="module-top">
-                        Recent part updates
-                    </div>
-                    <div class="module" style="text-align:center;"
-                    </div>
-                    
-                     {% endblock %}
+
                 </div>
-                
             </div>
         </div>
-        
-        <footer class="footer">
+    </div>
+    </div>
+
+        <footer id="footer" class="footer">
         <div class="container">
 
             <div class="row-fluid">
