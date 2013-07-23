@@ -53,6 +53,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
             $('#buylink-table').load('/parts/ajax/load_distributors/{{ part.pk }}');
+            $('#images-table').load('/parts/ajax/load_images/{{ part.pk }}');
             });
 </script>
 {% endblock %}
@@ -115,9 +116,10 @@
             <a title="New Xref" href="#image-modal" data-toggle="modal"><i class="pull-right icon-plus-sign icon-white"></i></a>
         {% endif %}
         </h4>
+    </div>
+        <div id="images-table">
+        <img src="{{ STATIC_URL }}js/select2-spinner.gif" /> Loading images ...
         </div>
-        {% include 'parts/includes/image_table.html' %}
-
         
         <!-- similar parts -->
         <div class="section-header">
