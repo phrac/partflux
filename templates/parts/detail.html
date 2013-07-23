@@ -9,11 +9,17 @@
 {% endblock %}
 
 {% block meta_description %}{{ part.company.name|safe }} {{ part.number }} : {{ part.description }}{% endblock %}
+{% block meta_keywords %}{{ part.company.name|safe }}, {{ part.number }},
+{% for x in part.cross_references.all %}
+{{ x.number }},
+{% endfor %}
+{% endblock %}
 
 {% block parts_active %}active open{% endblock %}
 
 {% block no_adsense %}{% endblock %}
 {% block head %}
+<link rel="canonical" href="http://partengine.org{{ part.get_absolute_url }}" />
 {% if user.is_staff %}
 <link href="{{ STATIC_URL }}css/select2.css" rel="stylesheet" />
 <link href="{{ STATIC_URL }}css/bootstrap-editable.css" rel="stylesheet">
@@ -73,7 +79,7 @@
     <div class="span12">
         <!-- buylinks -->
         <div class="section-header">
-        <h4><i class="icon-shopping-cart"></i> Distributors
+        <h4>Distributors
         {% if user.is_staff %}
             <a title="New Xref" href="#buylink-modal" data-toggle="modal"><i class="pull-right icon-plus-sign icon-white"></i></a>
         {% endif %}
@@ -88,7 +94,7 @@
         
         <!-- attributes -->
         <div class="section-header">
-        <h4><i class="icon-list"></i> Attributes
+        <h4>Attributes / Specifications
         {% if user.is_staff %}
             <a title="New Attribute" href="#attribute-modal" data-toggle="modal"><i class="pull-right icon-plus-sign icon-white"></i></a>
         {% endif %}    
@@ -100,7 +106,7 @@
 
         <!-- cross refs -->
         <div class="section-header">
-        <h4><i class="icon-random"></i> Cross References
+        <h4>Cross References / Interchange Information
         {% if user.is_staff %}
             <a title="New Xref" href="#add-xref" data-toggle="modal"><i class="pull-right icon-plus-sign icon-white"></i></a>
         {% endif %}
@@ -112,7 +118,7 @@
         
         <!-- images widget -->
         <div class="section-header">
-        <h4><i class="icon-picture"></i> Part Images
+        <h4>Part Images
         {% if user.is_staff %}
             <a title="New Xref" href="#image-modal" data-toggle="modal"><i class="pull-right icon-plus-sign icon-white"></i></a>
         {% endif %}
@@ -125,7 +131,7 @@
         
         <!-- similar parts -->
         <div class="section-header">
-        <h4><i class="icon-th"></i> Similar Parts</h4>
+        <h4>Similar Parts</h4>
         </div>
         {% if mlt %}
         <table class="table table-striped table-condensed">
@@ -179,7 +185,7 @@
 
 {% block rightbar %}
 <div class="module-top">
-    <i class="icon-money"></i> Distributor Pricing Overview
+    Distributor Pricing Overview
 </div>
 <div class="module">
     <table class="table">

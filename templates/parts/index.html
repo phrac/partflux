@@ -1,7 +1,8 @@
 {% extends "base/base_MAIN.html" %}
 
 {% block parts_active %}active{% endblock %}
-{% block no_adsense %}{% endblock %}
+{% block no_sidebar %}{% endblock %}
+{% block no_adsense %} {% endblock %}
 
 {% block breadcrumb_links %}
 <a href="{% url parts.views.index %}" title="Parts" class="tip-bottom"><i class="icon-cog"></i> Parts</a>
@@ -12,29 +13,39 @@
 {% block title %}Part Listing - Page {{ page_num }} | Part Engine {% endblock %}
 
 {% block content %}
-<div class="row-fluid">
-    <div class="page-header">
-        <h3>Parts Listing</h3>
+<div class="container">
+    <div class="row-fluid">
+        <div>
+            <h3>Parts Listing by recent updates</h3>
+        </div>
+        {% include 'includes/adsense_728x90.html' %}
+        <table class="table table-striped">
+            <thead>
+                <th>Part #</th>
+                <th>Description</th>
+                <th>Manufacturer</th>
+                <th>Last Update</th>
+            <tbody>
+                {% for part in parts_list.object_list %}
+                <tr>
+                    <td>
+                        <a href="{{ part.get_absolute_url }}">{{ part.number }}</a>
+                    </td>
+                    <td>
+                        {{ part.description|truncatewords:8 }}
+                    </td>
+                    <td>
+                        <a href="{{ part.company.get_absolute_url }}">{{ part.company.name }}</a>
+                    </td>
+                    <td>
+                        {{ part.updated_at }}
+                    <td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {{ parts_list.render }}
+        {% include 'includes/adsense_728x90.html' %}
     </div>
-    {% include 'includes/adsense_728x90.html' %}
-    <table class="table table-striped">
-        <tbody>
-            {% for part in parts_list.object_list %}
-            <tr>
-                <td>
-                    <a href="{{ part.get_absolute_url }}">{{ part.number }}</a>
-                </td>
-                <td>
-                    {{ part.description|truncatewords:8 }}
-                </td>
-                <td>
-                    <a href="{{ part.company.get_absolute_url }}">{{ part.company.name }}</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {{ parts_list.render }}
-    {% include 'includes/adsense_728x90.html' %}
 </div>
 {% endblock %}

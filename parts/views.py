@@ -22,7 +22,7 @@ from parts.models import Part, PartImage, Attribute, Category
 from distributors.models import Distributor, DistributorSKU
 
 def index(request):
-    parts = Part.objects.all().order_by('-created_at')
+    parts = Part.objects.all().order_by('-updated_at')
 
     try:
         page = int(request.GET.get('page', '1'))

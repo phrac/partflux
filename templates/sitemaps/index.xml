@@ -6,14 +6,6 @@
         <loc>http://partengine.org/sitemap-parts-{{ date|date:"Y-m-d" }}.xml</loc>
         <lastmod>{{ date|date:"Y-m-d" }}</lastmod>
     </sitemap>
-    <sitemap>
-        <loc>http://partengine.org/sitemap-companies-{{ date|date:"Y-m-d" }}.xml</loc>
-        <lastmod>{{ date|date:"Y-m-d" }}</lastmod>
-    </sitemap>
-    <sitemap>
-        <loc>http://partengine.org/sitemap-nsn-{{ date|date:"Y-m-d" }}.xml</loc>
-        <lastmod>{{ date|date:"Y-m-d" }}</lastmod>
-    </sitemap>
 {% endfor %}
 
 </sitemapindex>

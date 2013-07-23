@@ -17,7 +17,7 @@
     {% for a in part.attribute_set.all %}
     <tr>
         <td>
-            <strong>{{ a.key|safe }}</strong>	
+            {{ a.key|safe }}	
         </td>
         <td>
             {{ a.value|safe }}
