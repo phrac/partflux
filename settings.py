@@ -200,7 +200,7 @@ INSTALLED_APPS = (
     'haystack',
     'storages',
     'twitter_tag',
-    'contact_form',
+    #'contact_form',
     'articles',
     'currencies',
     # partfindr apps    

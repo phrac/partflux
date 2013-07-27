@@ -39,23 +39,6 @@
             <button id="cancel-attribute" class="btn" data-dismiss="modal">Cancel</button>
         </form>
     </div>
-
-    <script type="text/javascript">
-        $('#cancel-attribute').click(function() {    
-            $('#attribute-form').each(function() {this.reset();});
-            var validator = $("#attribute-form").validate();
-            validator.resetForm();
-        });
-    </script>
-
-    <script type="text/javascript">
-        $('#attribute-modal').on('shown', function () {
-            $('#id_key').focus();
-        });
-    </script>
-
-    
-    
     {% else %}
     {% include 'includes/login_modal.html' %}
     {% endif %}

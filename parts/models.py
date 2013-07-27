@@ -107,9 +107,10 @@ class Part(models.Model):
         return products
 
 
-    @models.permalink
     def get_absolute_url(self):
-        return ('parts.views.detail', [self.id, str(self.company.slug), str(self.slug)])
+        from django.core.urlresolvers import reverse
+        return reverse('parts.views.detail', args=[str(self.id), str(self.company.slug),
+                                               str(self.slug)])
 
 class Attribute(models.Model):
     part = models.ForeignKey('Part')

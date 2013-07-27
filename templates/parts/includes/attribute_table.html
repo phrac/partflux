@@ -1,39 +1,8 @@
-<table class="table table-striped table-condensed">
-    <tr>
-        <td><strong>ASIN</strong></td>
-        <td>
-            {{ part.asin }}
-            {% if user.is_staff %}
-            <a title="New Attribute" href="#add-asin" data-toggle="modal"><i class="pull-right icon-plus-sign icon-white"></i></a>
-            {% endif %}
-        </td>
-    </tr>
-    {% if not part.asin and user.is_staff %}
-    <tr id="asin_search">
-        <td>ASIN Search</td>
-        <td><img src="{{ STATIC_URL }}js/select2-spinner.gif"></td>
-    </tr>
-    {% endif %}
+<ul>
     {% for a in part.attribute_set.all %}
-    <tr>
-        <td>
-            {{ a.key|safe }}	
-        </td>
-        <td>
-            {{ a.value|safe }}
-            
-        </td>
-    </tr>
+    <li>
+    <span class="count-left">{{ a.key|safe }}</span>
+    <span class="count">{{ a.value|safe }}</span>
+    </li>
     {% endfor %}
-</table>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $(function(){
-            $('td.asin a').click(function(){
-                $("#id_asin").val($(this).text());
-                $("#add-asin").modal('show');
-            });
-        });
-    });
-</script>
-
+</ul>

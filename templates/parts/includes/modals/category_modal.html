@@ -59,46 +59,6 @@
 
         </form>
     </div>
-
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $("#cat1").jCombo("http://partengine.org/parts/ajax/parent_categories/", { 
-                initial_text: "------ Select Category ------", 
-                selected_value: "0",
-                dataType: "json"
-            });
-	        $("#cat2").jCombo("/parts/ajax/child_categories/", { 
-                initial_text: "------ Select Sub-Category 1------",
-                parent: "#cat1",
-                selected_value: "0",
-                dataType: "json" 
-            } );
-            $("#cat3").jCombo("/parts/ajax/child_categories/", { 
-                initial_text: "------ Select Sub-Category 2------",
-                parent: "#cat2",
-                selected_value: "0",
-                dataType: "json" 
-            } );
-            $("#cat4").jCombo("/parts/ajax/child_categories/", { 
-                initial_text: "------ Select Sub-Category 3------",
-                parent: "#cat3",
-                selected_value: "0",
-                dataType: "json" 
-            } );
-            $("#cat5").jCombo("/parts/ajax/child_categories/", { 
-                initial_text: "------ Select Sub-Category 4------",
-                parent: "#cat4",
-                selected_value: "0",
-                dataType: "json" 
-            } );
-            $("#cat6").jCombo("/parts/ajax/child_categories/", { 
-                initial_text: "------ Select Sub-Category 4------",
-                parent: "#cat5",
-                selected_value: "0",
-                dataType: "json" 
-            } );
-        });
-    </script>    
     {% else %}
     {% include 'includes/login_modal.html' %}
     {% endif %}

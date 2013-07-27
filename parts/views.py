@@ -1,4 +1,5 @@
-from django.shortcuts import render_to_response, redirect, get_object_or_404
+from annoying.decorators import ajax_request, render_to
+from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect, HttpResponse
 from django.template import RequestContext
@@ -35,11 +36,11 @@ def index(request):
     except (PageNotAnInteger, EmptyPage):
         parts_list = p.page(1)
 
-    return render_to_response('parts/index.html',
-                              {'parts_list': parts_list,
-                               'page_num': page,
-                              },
-                              context_instance=RequestContext(request))
+    context = {'parts_list': parts_list,
+               'page_num': page,
+              }
+
+    return render(request, 'parts/index.html', context)
 
 
 def redirect_new_page(request, company_slug, part_slug):
@@ -181,19 +182,18 @@ def detail(request, part_id, company_slug, part_slug):
             return HttpResponseRedirect(reverse('parts.views.detail',
                                                     args=[part_id, p.company.slug, p.slug]))
             
-    return render_to_response('parts/detail.html', 
-                              {'part': p, 
-                               'metadata_form': metaform, 
-                               'xref_form' : xrefform,
-                               'imageuploadform' : imageuploadform,
-                               'buylinkform' : buylinkform,
-                               'mlt': mlt,
-                               'page_title': title,
-                               'agg_pricing': pricing,
-                               'ditributor_skus': distributor_skus,
-                               'asinform': asinform,
-                              },
-                              context_instance=RequestContext(request))
+    return render(request, 'parts/detail.html', {'part': p, 
+            'metadata_form': metaform, 
+            'xref_form' : xrefform,
+            'imageuploadform' : imageuploadform,
+            'buylinkform' : buylinkform,
+            'mlt': mlt,
+            'page_title': title,
+            'agg_pricing': pricing,
+            'ditributor_skus': distributor_skus,
+            'asinform': asinform,
+           })
+
 
 @login_required
 def addmeta(request, part_id):

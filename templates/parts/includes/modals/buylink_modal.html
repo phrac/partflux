@@ -44,18 +44,6 @@
         </form>
     </div>
 
-    <script type="text/javascript">
-        $('#cancel-buylink').click(function() {    
-            $('#buylink-form').each(function() {this.reset();});
-        });
-    </script>
-
-    <script type="text/javascript">
-        $('#buylink-modal').on('shown', function () {
-            $('#id_url').focus();
-        })
-    </script>
-    
     {% else %}
     {% include 'includes/login_modal.html' %}
     {% endif %}

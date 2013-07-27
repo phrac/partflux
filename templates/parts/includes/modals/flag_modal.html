@@ -29,13 +29,6 @@
             <button class="btn" data-dismiss="modal">Cancel</button>
         </form>
     </div>
-
-    <script type="text/javascript">
-        $('#flag-modal').on('shown', function () {
-            $('#id_reason').focus();
-        });
-    </script>
-
     {% else %}
     {% include 'includes/login_modal.html' %}
     {% endif %}

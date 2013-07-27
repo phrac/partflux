@@ -26,19 +26,6 @@
             <button class="btn" data-dismiss="modal">Cancel</button>
         </form>
     </div>
-
-    <script type="text/javascript">
-        $('#save-company').click(function() {
-            $('#save-company').button('loading');
-        });
-    </script>
-
-    <script type="text/javascript">
-        $('#company-modal').on('shown', function () {
-            $('#id_name').focus();
-        });
-    </script>
-
     {% else %}
     {% include 'includes/login_modal.html' %}
     {% endif %}

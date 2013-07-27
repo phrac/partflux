@@ -28,13 +28,6 @@
             <button class="btn" data-dismiss="modal">Cancel</button>
         </form>
     </div>
-
-    <script type="text/javascript">
-        $('#add_favorite-modal').on('shown', function () {
-            $('#id_notes').focus();
-        });
-    </script>
-
 {% else %}
 {% include 'includes/login_modal.html' %}
 {% endif %}
