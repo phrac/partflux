@@ -1,0 +1,26 @@
+<!-- popularity over time -->
+<script src="{{ STATIC_URL }}js/jquery.min.js"></script>
+
+<script type="text/javascript">
+    $(function() {
+
+            var d1 = [];
+
+            for (var i = 0; i < 14; i += 0.1) {
+			d1.push([i, Math.sqrt(i * 10)]);
+                        }
+            var d2 = [];
+
+            for (var i = 0; i < 12; i += 0.3) {
+			d2.push([i, Math.sqrt(i * 4)]);
+		}
+                $.plot("#hit_graph", [ { data: d1, lines: { show: true, fill: true} } ]);
+                $.plot("#price_graph", [ { data: d2, lines: { show: true, fill: true} } ]);
+
+            });
+</script>
+<h4 class="center">Views 1 YEAR</h4>
+<div id="hit_graph" style="width:100%; height:150px;"></div>
+
+<h4 class="center">Average price</h4>
+<div id="price_graph" style="width:100%; height:150px;"></div>

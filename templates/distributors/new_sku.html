@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block breadcrumbs %}
+<li class="divider"><i class="icon-caret-right"></i></li>
+<li>Parts</li>
+<li class="divider"><i class="icon-caret-right"></i></li>
+<li>New Part</li>
+{% endblock %}
+
+{% block content %}
+<h1>New Part Creator</h1>
+<div class="row-fluid">
+    <div class="span6">
+        <form class="form-horizontal" action="" method="post" autocomplete="off">
+            {% csrf_token %}
+            {% for field in new_part_form %}
+            <div class="widget widget-heading-simple widget-body-white">
+                <div class="widget-head">
+                    <h4 class="heading">{{ field.label }}</h4>
+                </div>
+                <div class="widget-body">
+                    {{ field }}
+                </div>
+                {% if field.errors %}
+                    <div class="alert alert-primary">
+                        <strong>Error!</strong> {% for e in field.errors %} {{ e }} {% endfor %}
+                    </div>
+                    {% endif %}
+            </div>
+            {% endfor %}
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-inverse">Create Part</button>
+                <button type="submit" class="btn btn-default" onclick="this.form.reset()">Clear Form</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
