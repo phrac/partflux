@@ -20,9 +20,6 @@ urlpatterns = patterns('',
     # URLs for parts
     url(r'^parts/', include('parts.urls')),
     
-    # URLs for NSN
-    url(r'^nsn/', include('nsn.urls')),
-    
     # URLs for search
     url(r'^search/', include('search.urls')),
 
@@ -42,9 +39,6 @@ urlpatterns = patterns('',
     # CONTACT URLs
     #(r'^contact/', include('contact_form.urls')),
     
-    # Currency URLs
-    #(r'^currencies/', include('currencies.urls')),
-
     # SITEMAP URLs
     url(r'^sitemap.xml$', 'sitemap.index'),
     url(r'^sitemap-(?P<sitemap_type>\w+)-(?P<sitemap_date>(\d{4})\D?(0[1-9]|1[0-2])\D?([12]\d|0[1-9]|3[01])).xml', 'sitemap.sitemap'),

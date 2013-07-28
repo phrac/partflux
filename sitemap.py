@@ -4,7 +4,6 @@ from haystack.query import SearchQuerySet
 
 from parts.models import Part
 from companies.models import Company
-from nsn.models import Nsn
 
 
 def index(request):
@@ -27,9 +26,6 @@ def sitemap(request, sitemap_type, sitemap_date):
     elif sitemap_type == 'companies':
         results = SearchQuerySet().filter(created__range=[current_date,
                                                            next_date]).models(Company).values('url')[:50000]
-    elif sitemap_type == 'nsn':
-        results = SearchQuerySet().filter(created__range=[current_date,
-                                                           next_date]).models(Nsn).values('url')[:50000] 
     return render(request, 'sitemaps/sitemap.xml',
                  {'objects_list': results,
                   'type': sitemap_type,
