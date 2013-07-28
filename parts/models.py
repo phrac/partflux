@@ -8,7 +8,6 @@ from sorl.thumbnail import ImageField
 from amazon.api import AmazonAPI
 
 from companies.models import Company
-from nsn.models import Nsn
 
 class Category(models.Model):
     name = models.CharField(max_length=64, unique=True)
@@ -42,7 +41,6 @@ class Part(models.Model):
     user = models.ForeignKey(User, null=True)
     hits = models.IntegerField(default=0, editable=False)
     approved = models.BooleanField(default=True)
-    nsn = models.ForeignKey(Nsn, null=True)
     images = models.ManyToManyField('PartImage')
     asin = models.CharField(max_length=10)
     cross_references = models.ManyToManyField('Part', related_name='xrefs')

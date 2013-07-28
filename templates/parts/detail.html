@@ -19,7 +19,7 @@
 <li class="divider">
     <i class="icon-caret-right"></i>
     </li>
-    <li><a href="">Parts</a></li>
+    <li><a href="{% url 'parts.views.index' %}">Parts</a></li>
 {% endblock %}
 
 {% block no_adsense %}{% endblock %}
@@ -63,11 +63,11 @@
             });
 </script>
 
-        
 {% if user.is_staff %}
 <!-- load scripts for admin -->
 <script type="text/javascript">
     $(document).ready(function() {
+            console.log('fire asin');
         $('#asin_search').load('/parts/ajax/asin_search/{{ part.pk }}');
         });
      $(document).ready(function() {
@@ -135,7 +135,7 @@
             } );
         });
     </script>
-{% endif %}
+    {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -152,10 +152,11 @@
     
     <div class="span3" data-toggle="modal-gallery" data-target="#modal-gallery" id="gallery-5" data-delegate="#gallery-5">
         <div class="widget widget-heading-simple widget-body-white">
-            <div class="widget-head">
-                <h4 class="heading strong">{{ part.number }} Data Card</h4>
-            </div>
             <div class="widget-body">
+                <div class="glyphicons glyphicon-top glyphicon-large table">
+                    <i></i>
+                    <h4>{{ part.number }} DATA CARD</h4>
+                </div>
                 <div id="data-card">
                     <table class="table table-condensed">
                         <tr>
@@ -215,6 +216,9 @@
         {% include 'parts/includes/image_table.html' %}
         <p class="separator text-center"><i class="icon-bar-chart icon-3x"></i></p>
         <div class="separator bottom"></div>
+        {% include 'parts/includes/statistics.html' %}
+            
+
     </div>
     <!-- // Product Gallery END -->
     <div class="span9">
@@ -226,6 +230,9 @@
                     <div class="widget-body">
                         <p><span class="text-primary strong text-uppercase">{{ part.description }}</span> {{ part.detailed_description }}</p>
                     </div>
+                    <a href="#attribute-modal" data-toggle="modal" class="hidden-phone btn btn-toggle-code btn-mini btn-primary btn-icon">
+                            <i class="icon-plus-sign icon-white"></i> Edit Description
+                        </a>
                 </div>
                 <!-- // Product description END -->
                 <div class="widget widget-heading-simple widget-body-default">
@@ -235,29 +242,24 @@
             </div>
             <div class="span5">
                 <form class="margin-bottom-none">
-                    
+                   
                     <!-- Price -->
                     <div class="box-generic">
                         <div class="separator bottom">
-                            <span class="text-large">&dollar;1,000.00</span><br/>
-                            <span class="text-faded">&dollar;1,119 incl. VAT</span>
+                            <span class="text-large">${{ agg_pricing.avg_price|default:"0.00" }}</span><br/>
+                            <span class="text-faded">Average Distributor Price</span>
                         </div>
-                        <label class="strong">Select size</label>
-                        <select class="selectpicker span12" data-style="btn-default btn-small">
-                            <option>Option</option>
-                            <option>Option</option>
-                            <option>Option</option>
-                        </select>
-                        
-                        <label class="strong">Qty</label>
-                        <input type="text" class="input-block-level" value="1" />
+                      
                         <div class="separator bottom">
-                            <a href="shop_cart.html?lang=en&amp;style=style-default-menus-dark" class="btn btn-icon btn-large glyphicons cart_in btn-success btn-block"><i></i>Add to cart</a>
+                            <a href="#" class="btn btn-icon btn-large glyphicons cart_in btn-success btn-block"><i></i>Show all Distributors</a>
                         </div>
                         <div class="text-right share">
                             <a href="" class="glyphicons standard facebook"><i></i></a> <a href="" class="glyphicons standard twitter"><i></i></a>
                         </div>
-                        <div class="ribbon-wrapper"><div class="ribbon success">50% Off</div></div>
+                        <div class="separator bottom"></div>
+                        <a href="#distributor-sku-modal" data-toggle="modal" class="hidden-phone btn btn-toggle-code btn-mini btn-primary btn-icon">
+                            <i class="icon-plus-sign icon-white"></i> Suggest Distributor
+                        </a>
                     </div>
                     <!-- // Purchase Options END -->
                     
@@ -265,8 +267,21 @@
             </div>
         </div>
         
-        <p class="separator text-center"><i class="icon-info-sign icon-3x"></i></p>
+        <p class="separator text-center"><i class="icon-ellipsis-horizontal icon-3x"></i></p>
         <div class="separator bottom"></div>
+
+        {% if user.is_staff and not part.asin %}
+        <div class="widget">
+            <div class="widget-head">
+                <h4 class="heading glyphicons history"><i></i>Possible ASIN Matches</h4>
+            </div>
+            <div id="asin_search" class="widget-body list">
+                <i class="icon-spinner icon-spin icon-xlarge"></i> Loading Amazon matches ...       
+            </div>
+            <a href="#attribute-modal" data-toggle="modal" class="hidden-phone btn btn-toggle-code btn-mini btn-primary btn-icon outside">
+            </a>
+        </div>
+        {% endif %}
 
         <div class="widget">
             <div class="widget-head">
@@ -315,13 +330,11 @@
         {% include 'parts/includes/modals/attribute_modal.html' %} 
         {% include 'parts/includes/modals/image_modal.html' %}
         {% include 'parts/includes/modals/xref_modal.html' %}
-        {% include 'parts/includes/modals/buylink_modal.html' %}
         {% include 'parts/includes/modals/company_modal.html' %}
-        {% include 'parts/includes/modals/flag_modal.html' %}
         {% include 'parts/includes/modals/add_favorite-modal.html' %}
-        {% include 'parts/includes/modals/delete_image_modal.html' %}
         {% include 'parts/includes/modals/asin_modal.html' %}
         {% include 'parts/includes/modals/category_modal.html' %}
+        {% include 'distributors/modals/new_sku.html' %}
         {% endif %}
 
 {% endblock %}

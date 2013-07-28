@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import patterns, include, url
+from django.conf.urls import patterns, include, url
 from django.contrib.sitemaps import FlatPageSitemap, GenericSitemap
 from django.contrib import admin
 from tastypie.api import Api
@@ -34,10 +34,10 @@ urlpatterns = patterns('',
     (r'^users/', include('users.urls')),
 
     # blog urls
-    url(r'^blog/', include('articles.urls')),
+    #url(r'^blog/', include('articles.urls')),
 
     # API URLs
-    #(r'^api/', include(v1_api.urls)),
+    (r'^api/', include(v1_api.urls)),
     
     # CONTACT URLs
     #(r'^contact/', include('contact_form.urls')),

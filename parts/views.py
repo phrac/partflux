@@ -21,6 +21,7 @@ from companies.models import Company
 from parts.forms import MetadataForm, XrefForm, ImageUploadForm, BuyLinkForm, ASINForm
 from parts.models import Part, PartImage, Attribute, Category
 from distributors.models import Distributor, DistributorSKU
+from distributors.forms import DistributorSKUForm
 
 def index(request):
     parts = Part.objects.all().order_by('-updated_at')
@@ -80,7 +81,7 @@ def detail(request, part_id, company_slug, part_slug):
     metaform = MetadataForm(None)
     xrefform = XrefForm(None)
     imageuploadform = ImageUploadForm(None)
-    buylinkform = BuyLinkForm(None)
+    newskuform = DistributorSKUForm(part=p)
     asinform = ASINForm(None)
 
     if 'buylink_button' in request.POST:
@@ -186,7 +187,7 @@ def detail(request, part_id, company_slug, part_slug):
             'metadata_form': metaform, 
             'xref_form' : xrefform,
             'imageuploadform' : imageuploadform,
-            'buylinkform' : buylinkform,
+            'newskuform' : newskuform,
             'mlt': mlt,
             'page_title': title,
             'agg_pricing': pricing,

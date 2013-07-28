@@ -1,25 +1,35 @@
-<td>Possible ASIN Matches</td>
-    <td>
-        <table>
-            <tr>
-                <th>
-                    ASIN
-                </th>
-                <th>Description</th>
-            </tr>
-            {% for a in part.asin_search %}
-            <tr>
-                <td><a class="asin">{{ a.asin }}</a></td>
-                <td>{{ a.title }}</td>
-            </tr>
-            {% endfor %}
-            {% for x in part.cross_references.all %}
-            {% for a in x.asin_search %}
-            <tr>
-                <td><a class="asin">{{ a.asin }}</a></td>
-                <td>{{ a.title }}</td>
-            </tr>
-            {% endfor %}
-            {% endfor %}
-        </table>
-    </td>
+<table class="table table-condensed">
+    <tr>
+        <th>
+            ASIN
+        </th>
+        <th>Description</th>
+    </tr>
+    {% for a in part.asin_search %}
+    <tr>
+        <td><a class="asin">{{ a.asin }}</a></td>
+        <td>{{ a.title }}</td>
+    </tr>
+    {% endfor %}
+    {% for x in part.cross_references.all %}
+    {% for a in x.asin_search %}
+    <tr>
+        <td><a class="asin">{{ a.asin }}</a></td>
+        <td>{{ a.title }}</td>
+    </tr>
+    {% endfor %}
+    {% endfor %}
+</table>
+<script type="text/javascript">
+     $(document).ready(function() {
+
+        $(function(){
+            $('.asin').click(function(){
+                console.log('click');
+                $("#id_asin").val($(this).text());
+                $("#add-asin").modal('show');
+            });
+            });
+        });
+
+</script>

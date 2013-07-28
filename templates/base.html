@@ -75,7 +75,7 @@
                         <ul class="topnav pull-left">
                             <li><a href="" class="glyphicons search single-icon"><i></i></a></li>
                             <li>
-                            <form action="" method="get">
+                            <form action="{% url 'search.views.results' %}" method="get">
                                 <input class="search" data-minLength="3" placeholder="Search Parts" autocomplete="off" type="text" name="q" value="{{ searchterm }}" />
                             </form>
                             </li>
@@ -104,12 +104,12 @@
                     <a href="" class="appbrand pull-left"><span class="text-primary">PART</span> FLUX</a>
 
                     <ul class="topnav pull-right">
-                        <li><a href="">Home</a></li>
-                        <li><a href="">Parts</a></li>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="{% url 'parts.views.index' %}">Parts</a></li>
                         <li><a href="">Manufacturers</a></li>
                         <li><a href="">Distributors</a></li>
                         <li><a href="/blog/">Blog</a></li>
-                        <li><a href="contact.html?lang=en&amp;style=style-default-menus-dark">Contact</a></li>
+                        <li><a href="">Contact</a></li>
 
                     </ul>
                     <div class="clearfix"></div>
@@ -258,6 +258,8 @@
 
         <!-- Cookie Plugin -->
         <script src="{{ STATIC_URL }}theme/scripts/plugins/system/jquery.cookie.js"></script>
+
+        <script language="javascript" type="text/javascript" src="{{ STATIC_URL }}theme/scripts/plugins/charts/flot/jquery.flot.js"></script>
 
         <!-- Colors -->
         <script>

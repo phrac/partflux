@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import patterns, include, url
+from django.conf.urls import patterns, include, url
 from django.contrib.auth import views as auth_views
 
 urlpatterns = patterns('',
@@ -21,5 +21,5 @@ urlpatterns = patterns('',
        {'template_name': 'registration/pwreset.html'}
       ),
     
-    (r'^', include('registration.urls')),
+    (r'^', include('registration.backends.default.urls')),
 )

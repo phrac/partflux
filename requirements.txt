@@ -1,13 +1,12 @@
 Django==1.5.1
 PIL==1.1.7
-Powerline==beta
 argparse==1.2.1
 boto==2.8.0
 bottlenose==0.4.2
 distribute==0.6.35
 django-annoying==0.7.7
 django-appconf==0.6
-django-articles==2.4.1
+#django-articles==2.4.1
 django-classy-tags==0.4
 django-contact-form==0.3.1
 -e git+git@bitbucket.org:partengine/django-currencies.git@996bcb26fd4fd104188989d59bff7db8a6628a9a#egg=django_currencies-dev

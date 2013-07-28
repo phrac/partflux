@@ -200,14 +200,12 @@ INSTALLED_APPS = (
     'haystack',
     'storages',
     'twitter_tag',
-    #'contact_form',
-    'articles',
-    'currencies',
+    #'articles',
+    #'currencies',
     # partfindr apps    
     'main',
     'parts',
     'companies',
-    'nsn',
     'users',
     'distributors',
 )
@@ -255,6 +253,7 @@ LOGGING = {
     'handlers': {
         'mail_admins': {
             'level': 'ERROR',
+            'filters': [],
             'class': 'django.utils.log.AdminEmailHandler'
         }
     },

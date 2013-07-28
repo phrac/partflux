@@ -23,7 +23,8 @@ urlpatterns = patterns('',
     url(r'^ajax/parent_categories/$', 'parts.ajax.get_parent_categories'),
     url(r'^ajax/child_categories/(\d+)/$', 'parts.ajax.get_child_categories'),
 
-    url(r'^(?P<part_id>\d+)/(?P<company_slug>.+)/(?P<part_slug>.+)/$', 'parts.views.detail'),
+    url(r'^(?P<part_id>\d+)/(?P<company_slug>.+)/(?P<part_slug>.+)/$',
+        'parts.views.detail', name='part_details'),
     url(r'^(?P<part_id>\d+)/$', 'parts.views.redirect_sitemap'),
     url(r'^(?P<company_slug>.+)/(?P<part_slug>.+)/$', 'parts.views.redirect_new_page'),
 
