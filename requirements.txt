@@ -1,15 +1,13 @@
 Django==1.5.1
 PIL==1.1.7
+SPARQLWrapper==1.5.2
 argparse==1.2.1
 boto==2.8.0
 bottlenose==0.4.2
 distribute==0.6.35
 django-annoying==0.7.7
 django-appconf==0.6
-#django-articles==2.4.1
 django-classy-tags==0.4
-django-contact-form==0.3.1
--e git+git@bitbucket.org:partengine/django-currencies.git@996bcb26fd4fd104188989d59bff7db8a6628a9a#egg=django_currencies-dev
 django-debug-toolbar==0.9.4
 -e git://github.com/howiworkdaily/django-faq.git@d4dd7f2c743e374d59cb0b3ad36f9970189430b7#egg=django_faq-dev
 -e git://github.com/twaddington/django-gravatar.git@c4f9c9aac9c0c95fbf3a574ade60b29514e9310e#egg=django_gravatar2-dev
@@ -19,20 +17,26 @@ django-orm==2.0.5
 -e git://github.com/partengine/django-pure-pagination@9265315c7c27bc4d870547a419d99ef7f009ccff#egg=django_pure_pagination-dev
 django-registration==1.0
 django-storages==1.1.8
-django-tastypie==0.9.12
+django-tastypie==0.9.15
 django-twitter-tag==1.1
 feedparser==5.1.3
+html5lib==1.0b3
+isodate==0.4.9
 lxml==3.2.1
 markdown2==2.1.0
+microdata==0.4.0
 mimeparse==0.1.3
 psycopg2==2.4.6
 pyelasticsearch==0.6
+pyparsing==1.5.7
 python-amazon-simple-product-api==1.4.0
 python-dateutil==2.1
 python-memcached==1.48
+rdflib==4.0.1
+rdflib-microdata==0.2.0
 requests==1.2.3
 simplejson==3.0.8
-six==1.2.0
+six==1.3.0
 sorl-thumbnail==11.12
 twitter==1.9.1
 wsgiref==0.1.2

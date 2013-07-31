@@ -68,7 +68,7 @@ def detail(request, part_id, company_slug, part_slug):
     p = get_object_or_404(Part, id=part_id)
     mlt = SearchQuerySet().models(Part).more_like_this(p)[:10]
     pricing = DistributorSKU.objects.filter(part=p).aggregate(avg_price=Avg('price'), max_price=Max('price'), min_price=Min('price'))
-    distributor_skus = DistributorSKU.objects.filter(part=p)
+    distributor_skus = DistributorSKU.objects.filter(part=p).order_by('price')
     current_site = get_current_site(request)
     title = "%s by %s - %s | %s" % (p.number, p.company.name,
                                     truncatechars(p.description,
@@ -81,7 +81,7 @@ def detail(request, part_id, company_slug, part_slug):
     metaform = MetadataForm(None)
     xrefform = XrefForm(None)
     imageuploadform = ImageUploadForm(None)
-    newskuform = DistributorSKUForm(part=p)
+    newskuform = DistributorSKUForm(None)
     asinform = ASINForm(None)
 
     if 'buylink_button' in request.POST:
@@ -108,6 +108,25 @@ def detail(request, part_id, company_slug, part_slug):
             else:
                 return HttpResponseRedirect(reverse('parts.views.detail',
                                                     args=[part_id, p.company.slug, p.slug]))
+    if 'sku_button' in request.POST:
+        newskuform = DistributorSKUForm(request.POST)
+        if newskuform.is_valid():
+            print 'valid'
+            sku = newskuform.save(commit=False)
+            sku.part = p
+            sku.save()
+                
+            if request.is_ajax():
+                return render_to_response('parts/includes/attribute_table.html',
+                                          {'part': p,},
+                                          context_instance=RequestContext(request))
+            else:
+                return HttpResponseRedirect(reverse('parts.views.detail',
+                                                    args=[part_id, p.company.slug, p.slug]))
+        else:
+            print 'Not valid'
+            print newskuform.errors
+
     if 'asin_button' in request.POST:
         asinform = ASINForm(request.POST)
         if asinform.is_valid():
@@ -191,7 +210,7 @@ def detail(request, part_id, company_slug, part_slug):
             'mlt': mlt,
             'page_title': title,
             'agg_pricing': pricing,
-            'ditributor_skus': distributor_skus,
+            'distributor_skus': distributor_skus,
             'asinform': asinform,
            })
 

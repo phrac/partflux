@@ -28,14 +28,35 @@ class Distributor(models.Model):
 class DistributorSKU(models.Model):
     sku = models.CharField(max_length=32)
     distributor = models.ForeignKey(Distributor)
-    part = models.ForeignKey(Part)
-    price = models.IntegerField(max_length=16)
+    part = models.ForeignKey(Part, null=True)
+    price = models.DecimalField(decimal_places=2, max_digits=6, max_length=16)
     url = models.URLField(max_length=256)
     updated = models.DateTimeField(auto_now=True)
     xpath = models.CharField(max_length=1024)
 
     class Meta:
         unique_together = ('sku', 'distributor',)
+
+    def __unicode__(self):
+        return "%s - %s" % (self.distributor, self.sku)
+
+    def update_xpath_price(self):
+        import urllib2
+        from lxml import etree
+        import microdata
+        import urllib
+
+        items = microdata.get_items(urllib.urlopen(self.url))
+        for i in items:
+            if i.offers:
+                print i.offers.price.strip()
+        html = urllib2.urlopen(self.url).read()
+        tree = etree.HTML(html)
+        price = tree.xpath("%s/text()[1]" % self.xpath)
+        try:
+            return price[0]
+        except:
+            return None
 
 class SKUHistoricalPrice(models.Model):
     sku = models.ForeignKey(DistributorSKU)

@@ -223,7 +223,7 @@
     <!-- // Product Gallery END -->
     <div class="span9">
         <div class="row-fluid">
-            <div class="span7">
+            <div class="span6">
                 <!-- Product description -->
                 <div class="widget widget-heading-simple widget-body-gray">
                     <div class="widget-head"><h4 class="heading glyphicons notes strong"><i></i>Detailed Information</h4></div>
@@ -240,18 +240,33 @@
                     <div class="widget-body"><p class="margin-none">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi erat massa, ultricies sit amet.</p></div>
                 </div>
             </div>
-            <div class="span5">
+            <div class="span6">
                 <form class="margin-bottom-none">
                    
                     <!-- Price -->
                     <div class="box-generic">
                         <div class="separator bottom">
-                            <span class="text-large">${{ agg_pricing.avg_price|default:"0.00" }}</span><br/>
+                            <span class="text-large pull-right">{{ distributor_skus.count|default:"0" }}</span>
+                            <span class="text-large">${{ agg_pricing.avg_price|floatformat:2|default:"N/A" }}</span><br/>
+                            <span class="text-faded pull-right">Distributors</span>
                             <span class="text-faded">Average Distributor Price</span>
                         </div>
-                      
+                        <table class="table table-condensed">
+                            <tr>
+                                <th>Distributor</th>
+                                <th>SKU</th>
+                                <th>Price</th>
+                            </tr>
+                        {% for d in distributor_skus|slice:":3" %}
+                        <tr>
+                            <td><a href="{{ d.url }}">{{ d.distributor }}</a></td>
+                            <td>{{ d.sku }}</td>
+                            <td>${{ d.price }}</td>
+                        </tr>
+                        {% endfor %}
+                        </table> 
                         <div class="separator bottom">
-                            <a href="#" class="btn btn-icon btn-large glyphicons cart_in btn-success btn-block"><i></i>Show all Distributors</a>
+                            <a href="#distributors" class="btn btn-icon btn-large glyphicons cart_in btn-success btn-block"><i></i>Show all Distributors</a>
                         </div>
                         <div class="text-right share">
                             <a href="" class="glyphicons standard facebook"><i></i></a> <a href="" class="glyphicons standard twitter"><i></i></a>
@@ -266,7 +281,7 @@
                 </form>
             </div>
         </div>
-        
+
         <p class="separator text-center"><i class="icon-ellipsis-horizontal icon-3x"></i></p>
         <div class="separator bottom"></div>
 
@@ -309,9 +324,39 @@
             </div>
         </div>
 
-        <p class="separator text-center">
+        <p class="separator text-center" id="distributors">
         <i class="icon-ellipsis-horizontal icon-3x"></i>
         </p>
+        <div class="widget">
+            <div class="widget-head">
+                <h4 class="heading glyphicons credit_card"><i></i>Distributor Information</h4>
+            </div>
+            <div class="widget-body list">
+                <table class="table table-condensed">
+                    <tr>
+                        <th>Distributor</th>
+                        <th>SKU</th>
+                        <th>Price</th>
+                        <th>Coupons</th>
+                        <th>Updated</th>
+                        <th>xpath</th>
+                    </tr>
+                    {% for d in distributor_skus %}
+                    <tr>
+                        <td><a href="{{ d.url }}">{{ d.distributor }}</a></td>
+                        <td>{{ d.sku }}</td>
+                        <td class="text-primary strong">${{ d.price }}</td>
+                        <td>{{ d.coupons|default:"None" }}</td>
+                        <td>{{ d.updated|naturaltime }}</td>
+                        <td>{{ d.update_xpath_price }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </a>
+    </div>
+    <p class="separator text-center">
+        <i class="icon-ellipsis-horizontal icon-3x"></i>
 
         <div class="widget">
             <div class="widget-head">
