@@ -49,28 +49,6 @@ LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/users/login/'
 LOGOUT_URL = '/users/logout/'
 
-# Settings for user voting system
-# Reputation required before a user can up/down vote items
-MINIMUM_VOTE_REPUTATION = 50
-# how many reputation points should the user get for a new part
-REP_VALUE_NEW_PART = 10
-# how many reputation points should the user get for a new buylink
-REP_VALUE_NEW_BUYLINK = 1
-# how many rep points should user get for new attribute
-REP_VALUE_NEW_ATTRIBUTE = 2
-# how many rep points should user get for new comment
-REP_VALUE_NEW_COMMENT = 3
-# how many rep points should user get for new image
-REP_VALUE_NEW_IMAGE = 3
-# rep points for flagging an attribute (and the inverse if your attr is flagged)
-REP_VALUE_FLAG_ATTR = 1
-REP_VALUE_FLAGGED_ATTR = -1
-# rep points if flag a part (and the inverse if your part is flagged)
-REP_VALUE_FLAG_PART = 1
-REP_VALUE_FLAGGED_PART = -1
-# rep points for cross references
-REP_VALUE_NEW_XREF = 5
-
 # Sets the maximum length of a page title
 MAX_PAGE_TITLE_LENGTH = 100
 
@@ -195,12 +173,10 @@ INSTALLED_APPS = (
     'sorl.thumbnail',
     'django_gravatar',
     'faq',
-    'tastypie',
-    'markdown_deux',
     'haystack',
     'storages',
-    'twitter_tag',
-    #'articles',
+    'south',
+    'tastypie',
     # partfindr apps    
     'main',
     'parts',

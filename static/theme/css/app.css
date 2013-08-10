@@ -5956,7 +5956,7 @@ div.dataTables_filter label {
   margin: 0;
 }
 .modal-backdrop {
-  z-index: 999;
+  z-index: 1001;
   background: #000000;
 }
 .modal-backdrop,
@@ -5965,7 +5965,7 @@ div.dataTables_filter label {
   filter: alpha(opacity=90);
 }
 .modal {
-  z-index: 1000;
+  z-index: 1002;
   border-color: #efefef;
   background: #ffffff;
   box-shadow: none;

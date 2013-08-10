@@ -31,6 +31,7 @@ class Category(models.Model):
             
     
 class Part(models.Model):
+    redirect_part = models.ForeignKey('Part', null=True)
     number = models.CharField(max_length=48)
     categories = models.ManyToManyField(Category, related_name='part_category')
     slug = models.CharField(max_length=64)
@@ -42,7 +43,9 @@ class Part(models.Model):
     hits = models.IntegerField(default=0, editable=False)
     approved = models.BooleanField(default=True)
     images = models.ManyToManyField('PartImage')
-    asin = models.CharField(max_length=10)
+    asin = models.CharField(max_length=10, null=True)
+    upc = models.CharField(max_length=13, null=True)
+    ean = models.CharField(max_length=13, null=True)
     cross_references = models.ManyToManyField('Part', related_name='xrefs')
 
     def __unicode__(self):
@@ -58,13 +61,6 @@ class Part(models.Model):
             self.slug = slugify(self.number)
         super(Part, self).save(*args, **kwargs)
         
-    @property
-    def amazon_keywords(self):
-        term = self.number
-        for x in self.cross_references.all():
-            term += " %s" % x.number
-        return term
-    
     def amazon_price(self):
         amazon = AmazonAPI(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY, settings.AWS_ASSOCIATE_TAG)
         try:
@@ -132,10 +128,6 @@ class Attribute(models.Model):
         self.value = self.value.strip().upper()
         super(Attribute, self).save(*args, **kwargs)
         
-    def get_flags():
-        return Attribute.objects.get(attribute=self)
-
-
 class PartImage(models.Model):
     image = ImageField(upload_to='part_images')
     user = models.ForeignKey(User, null=False)

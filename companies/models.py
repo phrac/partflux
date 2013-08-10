@@ -33,33 +33,6 @@ class Company(models.Model):
         return self.name 
     
     def get_absolute_url(self):
-        return ('companies.views.detail', [self.id, str(self.slug)])
-
-class CompanyContact(models.Model):
-    SEX = (('M', 'Male'),
-           ('F', 'Female'))
-
-    company = models.ForeignKey('Company')
-    first_name = models.CharField(max_length=32)
-    last_name = models.CharField(max_length=32)
-    sex = models.CharField(max_length=1, choices=SEX)
-    email = models.EmailField()
-    work_phone = models.CharField(max_length=16)
-    cell_phone = models.CharField(max_length=16)
-    fax = models.CharField(max_length=16)
-
-    class Meta:
-        unique_together = ('company', 'first_name', 'last_name',)
-    
-class CompanyBranch(models.Model):
-    company = models.ForeignKey('Company')
-    name = models.CharField(max_length=32)
-    email = models.EmailField(max_length=32)
-    phone = models.CharField(max_length=16)
-    fax = models.CharField(max_length=16)
-    address1 = models.CharField(max_length=64)
-    address2 = models.CharField(max_length=64)
-    city = models.CharField(max_length=32)
-    state = models.CharField(max_length=32)
-    country = models.CharField(max_length=32)
-    zip = models.CharField(max_length=8)
+        from django.core.urlresolvers import reverse
+        return reverse('companies.views.detail', args=[str(self.id),
+                                                       str(self.slug)])

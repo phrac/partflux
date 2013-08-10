@@ -1,5 +1,6 @@
+from amazon.api import AmazonAPI
 from annoying.decorators import ajax_request, render_to
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, render_to_response
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect, HttpResponse
 from django.template import RequestContext
@@ -84,18 +85,6 @@ def detail(request, part_id, company_slug, part_slug):
     newskuform = DistributorSKUForm(None)
     asinform = ASINForm(None)
 
-    if 'buylink_button' in request.POST:
-        buylinkform = BuyLinkForm(request.POST)
-        if buylinkform.is_valid:
-            status = addbuylink(request, p.pk)
-
-            if request.is_ajax():
-                return render_to_response('parts/includes/buylink_table.html',
-                                          {'part': p,},
-                                          context_instance=RequestContext(request))
-            else:
-                return HttpResponseRedirect(reverse('parts.views.detail', args=[part_id, p.company.slug, p.slug]))
-
     if 'metadata_button' in request.POST:
         metaform = MetadataForm(request.POST)
         if metaform.is_valid:
@@ -131,11 +120,26 @@ def detail(request, part_id, company_slug, part_slug):
         asinform = ASINForm(request.POST)
         if asinform.is_valid():
             asin = asinform.cleaned_data['asin']
-	    p.asin = asin
+            p.asin = asin
             p.save()
-	    for x in p.cross_references.all():
-	        x.asin = asin
-	        x.save()
+            d = Distributor.objects.get(name='Amazon')
+            amazon = AmazonAPI(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY, settings.AWS_ASSOCIATE_TAG)
+            try:
+                product = amazon.lookup(ItemId=asin)
+            except:
+                pass
+            price = product.price_and_currency
+            p.upc = product.upc
+            p.ean = product.ean
+            p.save()
+                
+            ds = DistributorSKU(distributor=d, part=p, sku=asin, price=price[0],
+                                url = product.offer_url)
+            ds.save()
+            
+            for x in p.cross_references.all():
+                x.asin = asin
+                x.save()
                 
             if request.is_ajax():
                 return render_to_response('parts/includes/attribute_table.html',
