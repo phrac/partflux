@@ -4,9 +4,11 @@
 {% block no_sidebar %}{% endblock %}
 {% block no_adsense %} {% endblock %}
 
-{% block breadcrumb_links %}
-<a href="{% url parts.views.index %}" title="Parts" class="tip-bottom"><i class="icon-cog"></i> Parts</a>
-<a href="#" class="current">Newest Parts</a>
+{% block breadcrumbs %}
+<li class="divider">
+    <i class="icon-caret-right"></i>
+</li>
+<li><a href="{% url 'parts.views.index' %}">Parts</a></li>
 {% endblock %}
 
 {% block page_title %}Browse Parts{% endblock %}

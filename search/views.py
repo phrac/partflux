@@ -49,7 +49,6 @@ def results(request):
                                   'results_list': results_list, 
                                   'searchterm': q,
                                   'sqs': sqs,
-                                 # 'facets': results.facet_counts(),
                               },
                               context_instance=RequestContext(request))
 

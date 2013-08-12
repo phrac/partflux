@@ -1,4 +1,4 @@
-{% extends "base/base_MAIN.html" %}
+{% extends "base.html" %}
 
 {% block home_active %}class="active"{% endblock %}
 
@@ -11,9 +11,8 @@
 <div class="container" style="font-size:14px;">
     <div class="row-fluid">
         <div class="search" style="margin-top:60px; text-align:center">
-            <img src="{{ STATIC_URL }}img/logo-big.png" alt="Part Engine" />
             <h3>The Part Number Search Engine</h3><br />
-            <form class="input-append search" method="get" action="{% url search.views.results %}">
+            <form class="input-append search" method="get" action="{% url 'search.views.results' %}">
                 <input class="span6" autocomplete="off" name="q" type="text" id="appdendedInputButton" >
                 <button class="btn btn-primary" type="submit">
                     <i class="icon-search icon-white"></i>

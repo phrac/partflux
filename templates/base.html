@@ -87,8 +87,10 @@
                             <span>Follow us</span> 
                             <a href="" class="icon-facebook"></a>
                             <a href="" class="icon-twitter"></a>
-                            <a href="" class="icon-youtube"></a>
                             <a href="" class="icon-google-plus"></a>
+                            {% if user.is_staff %}
+                             <a href="{% url 'parts.views.empty_category' %}" class="icon-play"></a>
+                            {% endif %}
                             </li>
                             <li class="inverse"><a href="" class="glyphicons unlock no-ajaxify"><i></i> Sign in</a></li>
                             <li class="primary"><a href="" class="glyphicons user_add no-ajaxify"><i></i> Sign up</a></li>
@@ -120,8 +122,7 @@
             </div>
             <!-- Top navbar END -->
             <ul class="breadcrumb breadcrumb-960">
-                    <li>You are here</li>
-                    <li><a href="" class="glyphicons dashboard"><i></i> PART FLUX</a></li>
+                    <li><a href="/" class="glyphicons dashboard"><i></i> Part Flux</a></li>
                     {% block breadcrumbs %}
                     {% endblock %}
                 </ul>
@@ -132,7 +133,7 @@
             </div>
         </div>
     </div>
-            <!-- // Content END -->
+            <!-- // Content END -->                                                                                       
 
             <div id="footer" class="hidden-print">
 
@@ -141,11 +142,11 @@
                         <div class="span2">
                             <h4>Quick Links</h4>
                             <ul>
-                                <li><a href="index.html?lang=en&amp;style=style-default-menus-dark">Home</a></li>
-                                <li><a href="about.html?lang=en&amp;style=style-default-menus-dark">Part Numbers</a></li>
-                                <li><a href="pricing.html?lang=en&amp;style=style-default-menus-dark">Manufacturers</a></li>
-                                <li><a href="blog.html?lang=en&amp;style=style-default-menus-dark">Distributors</a></li>
-                                <li><a href="contact.html?lang=en&amp;style=style-default-menus-dark">Blog</a></li>
+                                <li><a href="/">Home</a></li>
+                                <li><a href="{% url 'parts.views.index' %}">Part Numbers</a></li>
+                                <li><a href="{% url 'companies.views.index' %}">Manufacturers</a></li>
+                                <li><a href="#">Distributors</a></li>
+                                <li><a href="#">Blog</a></li>
                             </ul>
                         </div>
                         <div class="span4">
@@ -158,17 +159,11 @@
                         <div class="span3">
                             <h4>Our Blog</h4>
                             <ul>
-                                <li><a href="">What is Lorem Ipsum?</a></li>
-                                <li><a href="">What is Lorem Ipsum?</a></li>
-                                <li><a href="blog.html?lang=en&amp;style=style-default-menus-dark">What is Lorem Ipsum?</a></li>
-                                <li><a href="blog.html?lang=en&amp;style=style-default-menus-dark">What is Lorem Ipsum?</a></li>
-                                <li><a href="blog.html?lang=en&amp;style=style-default-menus-dark">What is Lorem Ipsum?</a></li>
                             </ul>
                         </div>
                         <div class="span3">
                             <h4>Contact</h4>
                             <ul class="icons">
-                                <li class="glyphicons fax"><i></i>01 230 1958</li>
                                 <li class="glyphicons envelope"><i></i>info@partflux.com</li>
                             </ul>
 
@@ -184,7 +179,7 @@
                     <!--  Copyright Line -->
                     <div class="copy">
                         &copy; 2012 - {% now "Y" %} <strong>disflux, LLC.</strong>
-                        <span class="appbrand">PART FLUX ( $ID_VERSION$ )</span>
+                        <span class="appbrand">PART FLUX</span>
                     </div>
                     <!--  End Copyright Line -->
 

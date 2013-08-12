@@ -18,8 +18,12 @@
 {% block breadcrumbs %}
 <li class="divider">
     <i class="icon-caret-right"></i>
-    </li>
-    <li><a href="{% url 'parts.views.index' %}">Parts</a></li>
+</li>
+<li><a href="{% url 'parts.views.index' %}">Parts</a></li>
+<li class="divider"><i class="icon-caret-right"></i></li>
+<li><a href="{{ part.company.get_absolute_url }}">{{ part.company }}</a></li>
+<li class="divider"><i class="icon-caret-right"></i></li>
+<li>{{ part.number }}</li>
 {% endblock %}
 
 {% block no_adsense %}{% endblock %}
@@ -279,7 +283,11 @@
                             </tr>
                         {% for d in distributor_skus|slice:":3" %}
                         <tr>
+                            {% if d.distributor.affiliate_url %}
+                            <td><a href="{{ d.distributor.affiliate_url }}{{ d.url }}">{{ d.distributor }}</a></td>
+                            {% else %}
                             <td><a href="{{ d.url }}">{{ d.distributor }}</a></td>
+                            {% endif %}
                             <td>{{ d.sku }}</td>
                             <td>${{ d.price }}</td>
                         </tr>
@@ -340,7 +348,7 @@
         
         <div class="widget">
             <div class="widget-head">
-                <h4 class="heading icon-xing"><i></i> Cross References</h4>
+                <h4 class="heading glyphicons random"><i></i> Cross References</h4>
             </div>
             <div class="widget-body list">
                 {% include 'parts/includes/xrefs_table.html' %}   
@@ -357,7 +365,7 @@
         </p>
         <div class="widget">
             <div class="widget-head">
-                <h4 class="heading icon-money"><i></i> Distributor Information</h4>
+                <h4 class="heading glyphicons cargo"><i></i> Distributor Information</h4>
             </div>
             <div class="widget-body list">
                 <table class="table table-condensed">
@@ -388,7 +396,7 @@
 
         <div class="widget">
             <div class="widget-head">
-                <h4 class="heading icon-comments"><i></i> Comments</h4>
+                <h4 class="heading glyphicons chat"><i></i> Comments</h4>
             </div>
             <div class="widget-body">
                 {% include 'includes/disqus.html' %}   

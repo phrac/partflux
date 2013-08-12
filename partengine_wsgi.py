@@ -1,4 +1,4 @@
-SITE_DIR = '/usr/home/derek/partengine/partengine'
+SITE_DIR = '/usr/home/derek/partflux/partengine'
 import site
 site.addsitedir(SITE_DIR)
 import os
