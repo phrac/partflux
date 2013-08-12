@@ -14,6 +14,7 @@ urlpatterns = patterns('',
     url(r'^ajax/load_images/(\d+)/$', 'parts.ajax.get_images'),
     url(r'^ajax/asin_search/(\d+)/$', 'parts.ajax.admin_asin_search'),
     url(r'^ajax/set_redirect_part/$', 'parts.ajax.set_redirect_part'),
+    url(r'^ajax/delete/$', 'parts.ajax.delete_part'),
     
     url(r'^ajax/delete_image/$', 'parts.ajax.delete_image'),
     url(r'^ajax/parent_categories/$', 'parts.ajax.get_parent_categories'),

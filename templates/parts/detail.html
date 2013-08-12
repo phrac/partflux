@@ -220,6 +220,11 @@
                             <th># Alternates</th>
                             <td>{{ alternates|length }}</td>
                         </tr>
+                        {% if user.is_staff %}
+                        <tr>
+                            <td colspan="2"><a href="{% url 'parts.ajax.delete_part' %}?pid={{ part.pk }}">del</a></td>
+                        </tr>
+                        {% endif %}
                     </table>
                 </div>
             </div>

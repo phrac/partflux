@@ -120,5 +120,11 @@ def set_redirect_part(request):
                                                           to_part_object.company.slug,
                                                           to_part_object.slug]))
 
+@login_required
+def delete_part(request):
+    part = request.GET.get('pid', '')
+    Part.objects.get(id=part).delete()
+
+    return HttpResponseRedirect(reverse('parts.views.empty_category'))
     
 
