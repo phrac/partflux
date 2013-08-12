@@ -6,7 +6,7 @@ DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-     ('Derek Musselmann', 'derek@partengine.org'),
+     ('Derek Musselmann', 'derek@partflux.com'),
 )
 
 INTERNAL_IPS = {
@@ -130,11 +130,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.media",
     "django.core.context_processors.static",
     "django.contrib.messages.context_processors.messages",
-    "context_processors.part_count",
-    "context_processors.nsn_count",
-    "context_processors.xref_count",
-    "context_processors.company_count",
-    "context_processors.attr_count",
     "context_processors.get_current_domain",
     "context_processors.get_current_path",
     )
@@ -199,16 +194,6 @@ AUTH_PROFILE_MODULE = 'users.UserProfile'
 # django-storages settings
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 AWS_IS_GZIPPED = True
-
-#Twitter OAuth Settings
-# Your access token: Access token
-TWITTER_OAUTH_TOKEN = '1228693177-QdV2B5cgs4zM4rt43QgdRH1XcIjBQr8ne32g86I'
-# Your access token: Access token secret
-TWITTER_OAUTH_SECRET = 'bcDxxq6ocaBNBQRMJyYvQXsbmpCxumTH9BBuhOqmUM'
-# OAuth settings: Consumer key
-TWITTER_CONSUMER_KEY = 'vGm8CZhCn1T4bbdvL99A'
-# OAuth settings: Consumer secret
-TWITTER_CONSUMER_SECRET = 'D0oseP8Rg1FXoJycv9qh2lUTAH8sNfGkD8YWEStuL5o'
 
 DISQUS_USER_API_KEY = 'Rk3o4gvtTyx8EspHIrcRm235o2Nn00Cki7CnRMERZGiG14RGiWJmNY3vTT0c4H57'
 DISQUS_FORUM_SHORTNAME = 'partengine'

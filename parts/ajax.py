@@ -67,58 +67,6 @@ def delete_image(request):
         
         
 @login_required
-def flag(request):
-
-    reason = request.POST.get('reason', None)
-    flag_type = request.POST.get('flag-type', None)
-    flag_id = request.POST.get('flag-id', None)
-    pk = request.POST.get('part_pk', '')
-    p = get_object_or_404(Part, id=pk)
-    
-    if flag_type == 'attr':
-        attr = Attribute.objects.get(id=flag_id)
-        attrflag = AttributeFlag(reason=reason, attribute=attr,
-                                 user=request.user, active=True)
-        attrflag.save()
-
-
-    if request.is_ajax:
-        return render_to_response('parts/includes/attribute_table.html',
-                                          {'part': p, },
-                                          context_instance=RequestContext(request))
-    else:
-        return HttpResponseRedirect(reverse('parts.views.detail', args=[part.id, c.slug, p.slug]))
-
-@login_required
-def add_favorite(request):
-    pk = request.POST.get('part_pk', '')
-    notes = request.POST.get('notes', '')
-    p = get_object_or_404(Part, id=pk)
-
-    favepart = UserFavoritePart(user=request.user, part=p, notes=notes)
-    favepart.save()
-
-    if request.is_ajax:
-        return HttpResponse()
-    else:
-        return HttpResponseRedirect(reverse('parts.views.detail', args=[part.id, c.slug, p.slug]))
-        
-@login_required
-def delete_favorite(request):
-    fave_id = request.POST.get('fave-id', '')
-    fave = get_object_or_404(UserFavoritePart, id=fave_id, user=request.user)
-    fave.delete()
-    
-    fave_parts = UserFavoritePart.objects.filter(user=request.user)
-
-    if request.is_ajax:
-        return render_to_response('users/includes/faveparts-table.html',
-                                 {'fave_parts': fave_parts,},
-                                 context_instance=RequestContext(request))
-    else:
-        return HttpResponseRedirect(reverse('parts.views.detail', args=[part.id, c.slug, p.slug]))
-        
-@login_required
 def get_parent_categories(request):
     categories = {}
     c = Category.objects.filter(parent=None).order_by('name')
@@ -156,4 +104,21 @@ def admin_asin_search(request, part_id):
         return render_to_response('parts/includes/admin_asin_search.html',
                                   {'part': p,},
                                   context_instance=RequestContext(request))
+
+@login_required
+def set_redirect_part(request):
+    from_part = request.GET.get('from', '')
+    to_part = request.GET.get('to', '')
+    from_part_object = Part.objects.get(id=from_part)
+    to_part_object = Part.objects.get(id=to_part)
+    from_part_object.redirect_part = to_part_object
+    from_part_object.save()
+    to_part_object.cross_references.remove(from_part_object)
+
+    return HttpResponseRedirect(reverse('parts.views.detail',
+                                                    args=[to_part_object.id,
+                                                          to_part_object.company.slug,
+                                                          to_part_object.slug]))
+
+    
 

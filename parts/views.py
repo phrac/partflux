@@ -67,6 +67,16 @@ def empty_category(response):
     
 def detail(request, part_id, company_slug, part_slug):
     p = get_object_or_404(Part, id=part_id)
+    
+    # redirect this part if it has a master part
+    if p.redirect_part is not None:
+        redirect = get_object_or_404(Part, id=p.redirect_part.id)
+        return HttpResponseRedirect(reverse('parts.views.detail',
+                                            args=[redirect.id,
+                                                  redirect.company.slug,
+                                                  redirect.slug]))
+
+    alternates = Part.objects.filter(redirect_part=p)
     mlt = SearchQuerySet().models(Part).more_like_this(p)[:10]
     pricing = DistributorSKU.objects.filter(part=p).aggregate(avg_price=Avg('price'), max_price=Max('price'), min_price=Min('price'))
     distributor_skus = DistributorSKU.objects.filter(part=p).order_by('price')
@@ -139,6 +149,8 @@ def detail(request, part_id, company_slug, part_slug):
             
             for x in p.cross_references.all():
                 x.asin = asin
+                x.upc = product.upc
+                x.ean = product.ean
                 x.save()
                 
             if request.is_ajax():
@@ -216,6 +228,7 @@ def detail(request, part_id, company_slug, part_slug):
             'agg_pricing': pricing,
             'distributor_skus': distributor_skus,
             'asinform': asinform,
+            'alternates': alternates,
            })
 
 

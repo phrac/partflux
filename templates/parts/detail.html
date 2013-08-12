@@ -212,6 +212,10 @@
                             <th>Attributes</th>
                             <td>{{ part.attribute_set.all|length }}</td>
                         </tr>
+                        <tr>
+                            <th># Alternates</th>
+                            <td>{{ alternates|length }}</td>
+                        </tr>
                     </table>
                 </div>
             </div>
@@ -235,19 +239,30 @@
                     <div class="widget-body">
                         <p><span class="text-primary strong text-uppercase">{{ part.description }}</span> {{ part.detailed_description }}</p>
                     </div>
+                    {% if user.is_staff %}
+                    <div class="separator bottom">
                     <a href="#attribute-modal" data-toggle="modal" class="hidden-phone btn btn-toggle-code btn-mini btn-primary btn-icon">
-                            <i class="icon-plus-sign icon-white"></i> Edit Description
-                        </a>
+                        <i class="icon-plus-sign icon-white"></i> Edit Description
+                    </a>
+                </div>
+                    {% endif %}
                 </div>
                 <!-- // Product description END -->
                 <div class="widget widget-heading-simple widget-body-default">
-                    <div class="widget-head"><h4 class="heading glyphicons warning_sign strong"><i></i>Important note</h4></div>
-                    <div class="widget-body"><p class="margin-none">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi erat massa, ultricies sit amet.</p></div>
+                    <div class="widget-head"><h4 class="heading glyphicons warning_sign strong"><i></i>Alternate Part Numbers</h4></div>
+                    <p class="margin-none">
+                        {% if alternates %}
+                            {% for a in alternates %}
+                            {{ a }},
+                            {% endfor %}
+                        {% else %}
+                        No known alternate part numbers
+                        {% endif %}
+                        </p>
                 </div>
             </div>
             <div class="span6">
                 <form class="margin-bottom-none">
-                   
                     <!-- Price -->
                     <div class="box-generic">
                         <div class="separator bottom">
@@ -277,12 +292,13 @@
                             <a href="" class="glyphicons standard facebook"><i></i></a> <a href="" class="glyphicons standard twitter"><i></i></a>
                         </div>
                         <div class="separator bottom"></div>
+                        {% if user.is_staff %}
                         <a href="#distributor-sku-modal" data-toggle="modal" class="hidden-phone btn btn-toggle-code btn-mini btn-primary btn-icon">
-                            <i class="icon-plus-sign icon-white"></i> Suggest Distributor
+                            <i class="icon-plus-sign icon-white"></i> New Distributor
                         </a>
+                        {% endif %}
                     </div>
                     <!-- // Purchase Options END -->
-                    
                 </form>
             </div>
         </div>
@@ -310,9 +326,11 @@
             <div class="widget-body list">
                 {% include 'parts/includes/attribute_table.html' %}   
             </div>
+            {% if user.is_staff %}
             <a href="#attribute-modal" data-toggle="modal" class="hidden-phone btn btn-toggle-code btn-mini btn-primary btn-icon outside">
                 <i class="icon-plus-sign icon-white"></i> New Attribute
             </a>
+            {% endif %}
         </div>
 
 
@@ -327,6 +345,11 @@
             <div class="widget-body list">
                 {% include 'parts/includes/xrefs_table.html' %}   
             </div>
+            {% if user.is_staff %}
+            <a href="#xref-modal" data-toggle="modal" class="hidden-phone btn btn-toggle-code btn-mini btn-primary btn-icon outside">
+                <i class="icon-plus-sign icon-white"></i> New Cross Reference
+            </a>
+            {% endif %}
         </div>
 
         <p class="separator text-center" id="distributors">

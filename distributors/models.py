@@ -58,23 +58,23 @@ class DistributorSKU(models.Model):
                 return price[0]
             except:
                 pass
+        else:
+            import urllib2
+            from lxml import etree
+            import microdata
+            import urllib
 
-        import urllib2
-        from lxml import etree
-        import microdata
-        import urllib
-
-        items = microdata.get_items(urllib.urlopen(self.url))
-        for i in items:
-            if i.offers:
-                return "%s (md)".replace("$", "") % i.offers.price.strip().replace("$", "")
-        html = urllib2.urlopen(self.url).read()
-        tree = etree.HTML(html)
-        price = tree.xpath("%s/text()[1]" % self.xpath)
-        try:
-            return "%s (xp)" % price[0].replace("$", "")
-        except:
-            return "N/A"
+            items = microdata.get_items(urllib.urlopen(self.url))
+            for i in items:
+                if i.offers:
+                    return "%s (md)".replace("$", "") % i.offers.price.strip().replace("$", "")
+            html = urllib2.urlopen(self.url).read()
+            tree = etree.HTML(html)
+            price = tree.xpath("%s/text()[1]" % self.xpath)
+            try:
+                return "%s (xp)" % price[0].replace("$", "")
+            except:
+                return "N/A"
 
 class SKUHistoricalPrice(models.Model):
     part = models.ForeignKey(Part)
