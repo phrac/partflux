@@ -14,47 +14,64 @@ class Command(BaseCommand):
     can_import_settings = True
     
     def handle(self, *args, **options):
+        elements = set(['product'])
+        child_elements = set(['programname', 'manufacturer', 'manufacturerid',
+                              'name', 'sku', 'price', 'buyurl'])
+
+        offer = {}
+        counter = 0
+
+        context = etree.iterparse(args[0], events=("start", "end"))
         
-        doc = etree.parse(args[0], recover=True)
-        root = doc.getroot()
-        products = doc.findall('product')
-        for product in products:
-            aid = product.find('programname').text
-            mfg = product.find('manufacturer').text.upper()
-            mfg_part = product.find('manufacturerid').text.upper()
-            desc = product.find('name').text.upper()
-            sku = product.find('sku').text
-            price = product.find('saleprice').text.replace(',', '')
-            affiliate_url = product.find('buyurl').text
-            if len(mfg_part) > 48:
-                pass
-            else:
-                distributor = Distributor.objects.get(affiliate_identifier=aid)
-                try:
-                    manufacturer = Company.objects.get(name=mfg.upper())
-                except ObjectDoesNotExist:
-                    manufacturer = Company(name=mfg.upper())
-                    manufacturer.save()
-                try:
-                    part = Part.objects.get(company=manufacturer, number=mfg_part.upper())
-                except ObjectDoesNotExist:
-                    part = Part(number=mfg_part, company=manufacturer, description=desc)
-                    part.save()
-                try:
-                    distributor_sku = DistributorSKU.objects.get(distributor=distributor, sku=sku)
-                except ObjectDoesNotExist:
-                    distributor_sku = DistributorSKU(sku=sku, distributor=distributor, part=part)
-                
-                distributor_sku.price = price
-                distributor_sku.affiliate_url = affiliate_url
-                
-                try:
-                    distributor_sku.save()
-                except:
-                    connection._rollback()
-                
-            self.stdout.write('%s : %s' % (mfg, mfg_part))
-            break
+        for event, element in context:
+            tag = element.tag
+            if tag in child_elements:
+                if element.text:
+                    offer[tag] = element.text
+            elif tag in elements:
+                """
+                We have reached the last element, process it
+                """
+                if offer:
+                    #print offer
+                    populate_db(offer)
+                    counter += 1
+                    print counter
+                    offer = {}
+                    #element.clear()
             
+
+def populate_db(offer):
+    if len(offer['manufacturerid']) > 48:
+        pass
+    else:
+        distributor = Distributor.objects.get(affiliate_identifier=offer['programname'])
+        try:
+            manufacturer = Company.objects.get(name=offer['manufacturer'].upper())
+        except ObjectDoesNotExist:
+            manufacturer = Company(name=offer['manufacturer'].upper())
+            manufacturer.save()
+        try:
+            part = Part.objects.get(company=manufacturer,
+                                    number=offer['manufacturerid'].upper())
+        except ObjectDoesNotExist:
+            part = Part(number=offer['manufacturerid'].upper(), company=manufacturer,
+                        description=offer['name'].upper())
+            part.save()
+        try:
+            distributor_sku = DistributorSKU.objects.get(distributor=distributor,
+                                       sku=offer['sku'].upper())
+        except ObjectDoesNotExist:
+            distributor_sku = DistributorSKU(sku=offer['sku'].upper(), distributor=distributor, part=part)
         
-    
+        distributor_sku.price = offer['price']
+        distributor_sku.affiliate_url = offer['buyurl']
+        
+        try:
+            distributor_sku.save()
+        except:
+            connection._rollback()
+        
+    print ('%s : %s' % (offer['manufacturer'],
+                                   offer['manufacturerid']))
+            
