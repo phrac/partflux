@@ -34,14 +34,14 @@ class Command(BaseCommand):
                 """
                 if offer:
                     #print offer
-                    populate_db(offer)
+                    populate_db(offer, counter)
                     counter += 1
-                    print counter
+                    #print counter
                     offer = {}
                     #element.clear()
             
 
-def populate_db(offer):
+def populate_db(offer, counter):
     if len(offer['manufacturerid']) > 48:
         pass
     else:
@@ -72,6 +72,6 @@ def populate_db(offer):
         except:
             connection._rollback()
         
-    print ('%s : %s' % (offer['manufacturer'],
+    print ('[%s] %s : %s' % (counter, offer['manufacturer'],
                                    offer['manufacturerid']))
             
