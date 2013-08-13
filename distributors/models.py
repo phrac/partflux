@@ -7,6 +7,7 @@ from parts.models import Part
 
 class Distributor(models.Model):
     name = models.CharField(max_length=64, unique=True)
+    affiliate_identifier = models.CharField(max_length=64, unique=True)
     slug = models.CharField(max_length=72, blank=True, null=True)
     description = models.TextField(null=True)
     url = models.URLField(null=True, blank=True)
@@ -38,7 +39,7 @@ class DistributorSKU(models.Model):
     price = models.DecimalField(decimal_places=2, max_digits=6, max_length=16,
                                 null=True)
     url = models.URLField(max_length=256)
-    affiliate_url = models.URLField(null=True)
+    affiliate_url = models.URLField(max_length=512, null=True)
     updated = models.DateTimeField(auto_now=True)
     xpath = models.CharField(max_length=1024, null=True)
 

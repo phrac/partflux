@@ -1,9 +1,12 @@
 Django==1.5.1
 PIL==1.1.7
 SPARQLWrapper==1.5.2
+South==0.8.2
 argparse==1.2.1
 boto==2.8.0
 bottlenose==0.4.2
+## FIXME: could not find svn URL in dependency_links for this package:
+cElementTree==1.0.5-20051216
 distribute==0.6.35
 django-annoying==0.7.7
 django-appconf==0.6

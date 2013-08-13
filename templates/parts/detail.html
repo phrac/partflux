@@ -152,7 +152,7 @@
     <div class="span12">
         {% include 'parts/includes/category.html' %}
         <h3><a itemprop="brand" href="{{ part.company.get_absolute_url }}">{{ part.company|safe }}</a> {{ part.number }}</h3>
-        <h4><span id="description" data-name="description" data-placeholder="No Description" data-type="text" data-inputclass="input input-large" data-pk="{{ part.pk }}" data-url="{% url 'parts.ajax.update_description' %}" itemprop="description" >{{ part.description }}</span></h4>
+        <h4><span id="description" data-name="description" data-placeholder="No Description" data-type="text" data-inputclass="input input-large" data-pk="{{ part.pk }}" data-url="{% url 'parts.ajax.update_description' %}" itemprop="description" >{{ part.description|safe }}</span></h4>
 
     </div>
 </div>
@@ -246,7 +246,7 @@
                 <div class="widget widget-heading-simple widget-body-gray">
                     <div class="widget-head"><h4 class="heading glyphicons notes strong"><i></i>Detailed Information</h4></div>
                     <div class="widget-body">
-                        <p><span class="text-primary strong text-uppercase">{{ part.description }}</span> {{ part.detailed_description }}</p>
+                        <p><span class="text-primary strong text-uppercase">{{ part.description|safe }}</span> {{ part.detailed_description }}</p>
                     </div>
                     {% if user.is_staff %}
                     <div class="separator bottom">
@@ -288,8 +288,8 @@
                             </tr>
                         {% for d in distributor_skus|slice:":3" %}
                         <tr>
-                            {% if d.distributor.affiliate_url %}
-                            <td><a href="{{ d.distributor.affiliate_url }}{{ d.url }}">{{ d.distributor }}</a></td>
+                            {% if d.affiliate_url %}
+                            <td><a href="{{ d.affiliate_url }}{{ d.url }}">{{ d.distributor }}</a></td>
                             {% else %}
                             <td><a href="{{ d.url }}">{{ d.distributor }}</a></td>
                             {% endif %}
@@ -389,7 +389,7 @@
                         <td class="text-primary strong">${{ d.price }}</td>
                         <td>{{ d.coupons|default:"None" }}</td>
                         <td>{{ d.updated|naturaltime }}</td>
-                        <td>{{ d.update_price }}</td>
+                        <td></td>
                     </tr>
                     {% endfor %}
                 </table>
