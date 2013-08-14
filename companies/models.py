@@ -39,3 +39,10 @@ class Company(models.Model):
         from django.core.urlresolvers import reverse
         return reverse('companies.views.detail', args=[str(self.id),
                                                        str(self.slug)])
+
+class CompanyAltName(models.Model):
+    company = models.ForeignKey(Company)
+    name = models.CharField(max_length=128, unique=True)
+
+    def __unicode__(self):
+        return "%s : Real Name: %s" % (self.name, self.company.name)
