@@ -151,7 +151,7 @@
 <div class="row-fluid" itemscope itemtype="http://data-vocabulary.org/Product">
     <div class="span12">
         {% include 'parts/includes/category.html' %}
-        <h3><a itemprop="brand" href="{{ part.company.get_absolute_url }}">{{ part.company|safe }}</a> {{ part.number }}</h3>
+        <h3><a itemprop="brand" href="{{ part.company.get_absolute_url }}">{{ part.company.name|safe }}</a> {{ part.number }}</h3>
         <h4><span id="description" data-name="description" data-placeholder="No Description" data-type="text" data-inputclass="input input-large" data-pk="{{ part.pk }}" data-url="{% url 'parts.ajax.update_description' %}" itemprop="description" >{{ part.description|safe }}</span></h4>
 
     </div>
@@ -174,7 +174,7 @@
                         </tr>
                         <tr>
                             <th>Mfg.</th>
-                            <td>{{ part.company }}</td>
+                            <td>{{ part.company.name }}</td>
                         </tr>
                         <tr>
                             <th>Categories</th>

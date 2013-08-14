@@ -33,7 +33,7 @@ class Company(models.Model):
         super(Company, self).save(*args, **kwargs)
 
     def __unicode__(self):
-        return "(%s) %s" % (self.id, self.name )
+        return "%s (%s)" % (self.name, self.id )
     
     def get_absolute_url(self):
         from django.core.urlresolvers import reverse
@@ -43,6 +43,9 @@ class Company(models.Model):
 class CompanyAltName(models.Model):
     company = models.ForeignKey(Company)
     name = models.CharField(max_length=128, unique=True)
+    
+    class Meta:
+        ordering = ('company',)
 
     def __unicode__(self):
         return "%s : Real Name: %s" % (self.name, self.company.name)

@@ -21,12 +21,9 @@ def autocomplete(request):
         sqs = SearchQuerySet().models(Category).filter(text__startswith=q)[:10]
         suggestions = [result.object.name for result in sqs]        
     else:
-        sqs = SearchQuerySet().autocomplete(content_auto=q)[:10]
+        sqs = SearchQuerySet().models(Part).filter(text__startswith=q)[:10]
         for result in sqs:
-            if result.object is not None and result.object.number:
-                suggestions.append(result.object.number)
-            else:
-                pass
+            suggestions.append(result.object.number)
     
     the_data = json.dumps(suggestions)
 #        return HttpResponse(the_data, content_type='application/json')

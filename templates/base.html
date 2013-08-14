@@ -287,7 +287,7 @@
                     items: 7,
                     minLength:3,
                     source: function (query, process) {
-                        $.get('/search/autocomplete', { q: query }, function (data) {
+                        $.get('/search/autocomplete/', { q: query }, function (data) {
                             process(data)
                         })
                     }

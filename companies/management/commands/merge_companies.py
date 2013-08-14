@@ -21,16 +21,19 @@ class Command(BaseCommand):
             print "Processing %s" % p.number
             try:
                 finalp = Part.objects.get(company=to_c, number=p.number)
-                skus = DistributorSKU.objects.filter(part=p)
-                for sku in skus:
-                    sku.part=finalp
-                    sku.save()
-                p.delete()
-
             except:
+                finalp = None
                 p.company = to_c
                 p.save()
-
+            
+            if finalp:
+                skus = DistributorSKU.objects.filter(part=p)                                                                           
+                for sku in skus:                                                                                                       
+                    sku.part=finalp                                                                                                    
+                    sku.save()
+                p.delete()
+                finalp = None
+        
         from_c.delete()
 
 

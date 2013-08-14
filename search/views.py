@@ -30,8 +30,7 @@ def results(request):
         q = searchform.cleaned_data['q']
 
         if q:
-            sqs = SearchQuerySet().auto_query(q)
-            results = sqs.filter(content=AutoQuery(q))[:250]
+            results = SearchQuerySet().models(Part).filter(text=AutoQuery(q))[:500]
 
         else:
             results = []
@@ -47,8 +46,7 @@ def results(request):
     return render_to_response('search/results.html',
                               { 
                                   'results_list': results_list, 
-                                  'searchterm': q,
-                                  'sqs': sqs,
+                                  'query': q,
                               },
                               context_instance=RequestContext(request))
 
