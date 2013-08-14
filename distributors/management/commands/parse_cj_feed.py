@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import connection
-from companies.models import Company
+from companies.models import Company, CompanyAltName
 from parts.models import Part
 from distributors.models import Distributor, DistributorSKU
 import xml.etree.cElementTree as etree
@@ -45,12 +45,21 @@ def populate_db(offer, counter):
     if len(offer['manufacturerid']) > 48:
         pass
     else:
-        distributor = Distributor.objects.get(affiliate_identifier=offer['programname'])
+        manufacturer = None
         try:
-            manufacturer = Company.objects.get(name=offer['manufacturer'].upper())
-        except ObjectDoesNotExist:
-            manufacturer = Company(name=offer['manufacturer'].upper())
-            manufacturer.save()
+            clookup = CompanyAltName.objects.get(name=offer['manufacturer'].upper())
+            manufacturer = clookup.company
+        except:
+            pass
+
+        distributor = Distributor.objects.get(affiliate_identifier=offer['programname'])
+        
+        if not manufacturer:
+            try:
+                manufacturer = Company.objects.get(name=offer['manufacturer'].upper())
+            except ObjectDoesNotExist:
+                manufacturer = Company(name=offer['manufacturer'].upper())
+                manufacturer.save()
         try:
             part = Part.objects.get(company=manufacturer,
                                     number=offer['manufacturerid'].upper())
