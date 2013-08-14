@@ -3,7 +3,7 @@ from parts.models import Part, Attribute, Category
 from django.utils.encoding import smart_str
 
 class PartIndex(indexes.SearchIndex, indexes.Indexable):
-    text = indexes.CharField(boost=2, document=True, use_template=True)
+    text = indexes.NgramField(boost=2, document=True, use_template=True)
     number = indexes.EdgeNgramField(model_attr='number', boost=1.5, indexed=True,
                                 index_fieldname='number', stored=True)
     company = indexes.CharField(model_attr='company')

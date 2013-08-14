@@ -9,30 +9,27 @@ from parts.models import Category, Part
 import json
 
 def autocomplete(request):
-    if request.is_ajax():
-        type = request.GET.get('type', '')
-        q = request.GET.get('q', '')
-        if q.__len__() < 3:
-            return HttpResponse()
-        suggestions = []
-        if type == 'company':
-            sqs = SearchQuerySet().filter(name__startswith=q)[:10]
-            suggestions = [result.object.name for result in sqs]
-        elif type == 'category':
-            sqs = SearchQuerySet().models(Category).filter(text__startswith=q)[:10]
-            suggestions = [result.object.name for result in sqs]        
-        else:
-            sqs = SearchQuerySet().filter(content__startswith=q)[:10]
-            for result in sqs:
-                if result.object is not None and result.object.number:
-                    suggestions.append(result.object.number)
-                else:
-                    pass
-        
-        the_data = json.dumps(suggestions)
-        return HttpResponse(the_data, content_type='application/json')
-
+    type = request.GET.get('type', '')
+    q = request.GET.get('q', '')
+    if q.__len__() < 3:
+        return HttpResponse()
+    suggestions = []
+    if type == 'company':
+        sqs = SearchQuerySet().filter(name__startswith=q)[:10]
+        suggestions = [result.object.name for result in sqs]
+    elif type == 'category':
+        sqs = SearchQuerySet().models(Category).filter(text__startswith=q)[:10]
+        suggestions = [result.object.name for result in sqs]        
     else:
-        raise Http404
+        sqs = SearchQuerySet().autocomplete(content_auto=q)[:10]
+        for result in sqs:
+            if result.object is not None and result.object.number:
+                suggestions.append(result.object.number)
+            else:
+                pass
+    
+    the_data = json.dumps(suggestions)
+#        return HttpResponse(the_data, content_type='application/json')
 
+    return HttpResponse(the_data, content_type='application/json')
 

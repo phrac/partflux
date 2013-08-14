@@ -220,6 +220,10 @@
                             <th># Alternates</th>
                             <td>{{ alternates|length }}</td>
                         </tr>
+                        <tr>
+                            <th>Added</th>
+                            <td> {{ part.created_at }}</td>
+                        </tr>
                         {% if user.is_staff %}
                         <tr>
                             <td colspan="2"><a href="{% url 'parts.ajax.delete_part' %}?pid={{ part.pk }}">del</a></td>
