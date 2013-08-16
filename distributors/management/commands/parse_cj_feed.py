@@ -1,12 +1,9 @@
 from django.core.management.base import BaseCommand, CommandError
-from django.core.exceptions import ObjectDoesNotExist
-from django.db import connection
-from django import db
-from companies.models import Company, CompanyAltName
-from parts.models import Part
-from distributors.models import Distributor, DistributorSKU
 from lxml import etree
-import nltk.data
+from offer import Offer
+
+        
+    
 
 class Command(BaseCommand):
     args = '<cj_xml_product_catalog_file.xml>'
@@ -14,7 +11,7 @@ class Command(BaseCommand):
     can_import_settings = True
     
     def handle(self, *args, **options):
-        offer = {}
+        product = {}
         counter = 0
 
         context = etree.iterparse(args[0], events=("start", "end"))
@@ -24,95 +21,22 @@ class Command(BaseCommand):
         for event, element in context:
             tag = element.tag
             if element.text:
-                offer[tag] = element.text
+                product[tag] = element.text
             if event == "end" and element.tag == "product":
                 """
                 We have reached the last element, process it
                 """
-                if offer:
-                    #print offer
-                    populate_db(offer, counter)
+                if product:
+                    offer = Offer('cj', product)
+                    print "[%s] %s : %s" % (counter, offer.mpn, offer.description)
+                    offer.populate_db()
+                    #populate_db(offer, counter)
                     counter += 1
-                offer = {}
+                    
+                product = {}
                 root.clear()
-                #break
 
 
 
-def populate_db(offer, counter):
-    if len(offer['manufacturerid']) > 48:
-        pass
-    else:
-        """
-        Clean up the description a bit
-        """
-        tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
-        desc = offer['description'].replace(".Product", ". Product")
-        desc = tokenizer.tokenize(desc)
-        
-        """
-        Advance auto likes to put their marketing into the last sentence of
-        the description. Get rid of it.
-        """
-        if offer['programname'] == 'Advance Auto Parts':
-            desc.pop()
-        description = ""
-        for d in desc:
-            if d.startswith("Product Features"):
-                pass
-            else:
-                description += "%s " % d
-        #print description
-        
-        
-        distributor = Distributor.objects.get(affiliate_identifier=offer['programname'])
-        """
-        Find the manufacturer of the part or create it if it doesn't exist
-        """
-        manufacturer = None
-        try:
-            clookup = CompanyAltName.objects.get(name=offer['manufacturer'].upper())
-            manufacturer = clookup.company
-        except:
-            pass
 
-        if not manufacturer:
-            manufacturer, created = Company.objects.get(name=offer['manufacturer'].upper())
-        
-        """ 
-        Get or create the actual manufacturer part
-        """
-        try:
-            part = Part.objects.get(company=manufacturer,
-                                    number=offer['manufacturerid'].upper())
-            if not part.long_description:
-                part.long_description = description
-                part.save()
-        except ObjectDoesNotExist:
-            part = Part(number=offer['manufacturerid'].upper(), company=manufacturer,
-                        description=offer['name'].upper(), long_description=offer['description'])
-            part.save()
-        
-        """
-        See if there is already a SKU for this distributor/part combo
-        """
-        try:
-            distributor_sku = DistributorSKU.objects.get(distributor=distributor,
-                                       sku=offer['sku'].upper())
-        except ObjectDoesNotExist:
-            distributor_sku = DistributorSKU(sku=offer['sku'].upper(), distributor=distributor, part=part)
-        
-        distributor_sku.price = offer['price']
-        distributor_sku.affiliate_url = offer['buyurl']
-        
-        try:
-            distributor_sku.save()
-        except:
-            connection._rollback()
-        
-    print ('[%s] %s : %s' % (counter, offer['manufacturer'],
-                                   offer['manufacturerid']))
-    """ Clear some memory """
-    db.reset_queries()
-    return True
             

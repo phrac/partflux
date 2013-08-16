@@ -222,7 +222,7 @@
                         </tr>
                         <tr>
                             <th>Added</th>
-                            <td> {{ part.created_at }}</td>
+                            <td> {{ part.created_at|date:"Y-m-d" }}</td>
                         </tr>
                         {% if user.is_staff %}
                         <tr>
