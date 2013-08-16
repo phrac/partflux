@@ -49,7 +49,13 @@ def populate_db(offer, counter):
         tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
         desc = offer['description'].replace(".Product", ". Product")
         desc = tokenizer.tokenize(desc)
-        desc.pop()
+        
+        """
+        Advance auto likes to put their marketing into the last sentence of
+        the description. Get rid of it.
+        """
+        if offer['programname'] == 'Advance Auto Parts':
+            desc.pop()
         description = ""
         for d in desc:
             if d.startswith("Product Features"):
@@ -59,6 +65,10 @@ def populate_db(offer, counter):
         #print description
         
         
+        distributor = Distributor.objects.get(affiliate_identifier=offer['programname'])
+        """
+        Find the manufacturer of the part or create it if it doesn't exist
+        """
         manufacturer = None
         try:
             clookup = CompanyAltName.objects.get(name=offer['manufacturer'].upper())
@@ -66,23 +76,26 @@ def populate_db(offer, counter):
         except:
             pass
 
-        distributor = Distributor.objects.get(affiliate_identifier=offer['programname'])
-        
         if not manufacturer:
-            try:
-                manufacturer = Company.objects.get(name=offer['manufacturer'].upper())
-            except ObjectDoesNotExist:
-                manufacturer = Company(name=offer['manufacturer'].upper())
-                manufacturer.save()
+            manufacturer, created = Company.objects.get(name=offer['manufacturer'].upper())
+        
+        """ 
+        Get or create the actual manufacturer part
+        """
         try:
             part = Part.objects.get(company=manufacturer,
                                     number=offer['manufacturerid'].upper())
-            part.long_description = description
-            part.save()
+            if not part.long_description:
+                part.long_description = description
+                part.save()
         except ObjectDoesNotExist:
             part = Part(number=offer['manufacturerid'].upper(), company=manufacturer,
                         description=offer['name'].upper(), long_description=offer['description'])
             part.save()
+        
+        """
+        See if there is already a SKU for this distributor/part combo
+        """
         try:
             distributor_sku = DistributorSKU.objects.get(distributor=distributor,
                                        sku=offer['sku'].upper())
