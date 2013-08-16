@@ -34,7 +34,7 @@
                         <a href="{{ part.get_absolute_url }}">{{ part.number }}</a>
                     </td>
                     <td>
-                        {{ part.description|truncatewords:8 }}
+                        {{ part.description|safe|truncatewords:8 }}
                     </td>
                     <td>
                         <a href="{{ part.company.get_absolute_url }}">{{ part.company.name }}</a>

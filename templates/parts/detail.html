@@ -21,7 +21,7 @@
 </li>
 <li><a href="{% url 'parts.views.index' %}">Parts</a></li>
 <li class="divider"><i class="icon-caret-right"></i></li>
-<li><a href="{{ part.company.get_absolute_url }}">{{ part.company }}</a></li>
+<li><a href="{{ part.company.get_absolute_url }}">{{ part.company.name|safe }}</a></li>
 <li class="divider"><i class="icon-caret-right"></i></li>
 <li>{{ part.number }}</li>
 {% endblock %}
@@ -250,7 +250,7 @@
                 <div class="widget widget-heading-simple widget-body-gray">
                     <div class="widget-head"><h4 class="heading glyphicons notes strong"><i></i>Detailed Information</h4></div>
                     <div class="widget-body">
-                        <p><span class="text-primary strong text-uppercase">{{ part.description|safe }}</span> {{ part.detailed_description }}</p>
+                        <p><span class="text-primary strong text-uppercase">{{ part.description|safe }}</span><br /><br /> {{ part.long_description|safe }}</p>
                     </div>
                     {% if user.is_staff %}
                     <div class="separator bottom">

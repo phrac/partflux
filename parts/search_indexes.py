@@ -3,8 +3,7 @@ from parts.models import Part, Attribute, Category
 from django.utils.encoding import smart_str
 
 class PartIndex(indexes.SearchIndex, indexes.Indexable):
-    text = indexes.CharField(document=True, use_template=True)
-    number = indexes.EdgeNgramField(model_attr='number')
+    text = indexes.EdgeNgramField(document=True, use_template=True)
     created = indexes.DateTimeField(model_attr='created_at')
     url = indexes.CharField(indexed=False)
     

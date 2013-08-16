@@ -1,12 +1,12 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import connection
+from django import db
 from companies.models import Company, CompanyAltName
 from parts.models import Part
 from distributors.models import Distributor, DistributorSKU
-import xml.etree.cElementTree as etree
-#import cElementTree as etree
-from xml.parsers import expat
+from lxml import etree
+import nltk.data
 
 class Command(BaseCommand):
     args = '<cj_xml_product_catalog_file.xml>'
@@ -14,21 +14,18 @@ class Command(BaseCommand):
     can_import_settings = True
     
     def handle(self, *args, **options):
-        elements = set(['product'])
-        child_elements = set(['programname', 'manufacturer', 'manufacturerid',
-                              'name', 'sku', 'price', 'buyurl'])
-
         offer = {}
         counter = 0
 
         context = etree.iterparse(args[0], events=("start", "end"))
+        context = iter(context)
+        event, root = context.next()
         
         for event, element in context:
             tag = element.tag
-            if tag in child_elements:
-                if element.text:
-                    offer[tag] = element.text
-            elif tag in elements:
+            if element.text:
+                offer[tag] = element.text
+            if event == "end" and element.tag == "product":
                 """
                 We have reached the last element, process it
                 """
@@ -36,15 +33,32 @@ class Command(BaseCommand):
                     #print offer
                     populate_db(offer, counter)
                     counter += 1
-                    #print counter
-                    offer = {}
-                    #element.clear()
-            
+                offer = {}
+                root.clear()
+                #break
+
+
 
 def populate_db(offer, counter):
     if len(offer['manufacturerid']) > 48:
         pass
     else:
+        """
+        Clean up the description a bit
+        """
+        tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
+        desc = offer['description'].replace(".Product", ". Product")
+        desc = tokenizer.tokenize(desc)
+        desc.pop()
+        description = ""
+        for d in desc:
+            if d.startswith("Product Features"):
+                pass
+            else:
+                description += "%s " % d
+        #print description
+        
+        
         manufacturer = None
         try:
             clookup = CompanyAltName.objects.get(name=offer['manufacturer'].upper())
@@ -63,9 +77,11 @@ def populate_db(offer, counter):
         try:
             part = Part.objects.get(company=manufacturer,
                                     number=offer['manufacturerid'].upper())
+            part.long_description = description
+            part.save()
         except ObjectDoesNotExist:
             part = Part(number=offer['manufacturerid'].upper(), company=manufacturer,
-                        description=offer['name'].upper())
+                        description=offer['name'].upper(), long_description=offer['description'])
             part.save()
         try:
             distributor_sku = DistributorSKU.objects.get(distributor=distributor,
@@ -83,4 +99,7 @@ def populate_db(offer, counter):
         
     print ('[%s] %s : %s' % (counter, offer['manufacturer'],
                                    offer['manufacturerid']))
+    """ Clear some memory """
+    db.reset_queries()
+    return True
             

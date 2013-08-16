@@ -36,6 +36,7 @@ class Part(models.Model):
     categories = models.ManyToManyField(Category, related_name='part_category')
     slug = models.CharField(max_length=64)
     description = models.TextField(null=False)
+    long_description = models.TextField(null=True)
     company = models.ForeignKey(Company)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

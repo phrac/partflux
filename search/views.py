@@ -30,10 +30,10 @@ def results(request):
         q = searchform.cleaned_data['q']
 
         if q:
-            results = SearchQuerySet().models(Part).filter(text=AutoQuery(q))[:500]
+            sqs = SearchQuerySet().auto_query(q)
+            results = sqs.models(Part).models(Company).filter(content=AutoQuery(q))[:500]
 
-        else:
-            results = []
+
 
         try:                                                                    
             page = request.GET.get('page', 1)
