@@ -13,11 +13,12 @@ class Command(BaseCommand):
         file = args[1]
         csvfile = csv.DictReader(open(file, 'rb'), delimiter=',')
         for product in csvfile:
+            print product
             offer = Offer(network, product)
             print "[%s] %s : %s" % (counter, offer.mpn, offer.description)
-            #offer.populate_db()
+            offer.populate_db()
             counter += 1
-            
+            break
 
 
 

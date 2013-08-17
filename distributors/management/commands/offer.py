@@ -9,10 +9,11 @@ import nltk.data
 class Offer:
     def __init__(self, network, product):
         if network == 'cj':
-            mapping = {'buylink': 'buyurl', 'mpn': 'manufacturerid',
-                       'manufacturer': 'manufacturer', 'sku': 'sku',
-                       'distributor': 'programname', 'description': 'name',
-                       'long_description': 'description', 'price':'price'}
+            mapping = {'buylink': 'BUYURL', 'mpn': 'MANUFACTURERID',
+                       'manufacturer': 'MANUFACTURER', 'sku': 'SKU',
+                       'distributor': 'PROGRAMNAME', 'description': 'NAME',
+                       'long_description': 'DESCRIPTION', 'price':'PRICE',
+                       'image_url': 'IMAGEURL'}
         elif network == 'pj':
             mapping = {'buylink': 'buy_url', 'mpn': 'mpn', 'upc': 'upc',
                        'manufacturer': 'manufacturer', 'sku': 'sku',
@@ -81,6 +82,9 @@ class Offer:
                                         number=self.mpn)
                 if not part.long_description:
                     part.long_description = self.long_description
+                    part.save()
+                if not part.image_url and self.image_url is not None:
+                    part.image_url = self.image_url
                     part.save()
             except ObjectDoesNotExist:
                 part = Part(number=self.mpn, company=manufacturer,

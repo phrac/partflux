@@ -44,6 +44,7 @@ class Part(models.Model):
     hits = models.IntegerField(default=0, editable=False)
     approved = models.BooleanField(default=True)
     images = models.ManyToManyField('PartImage')
+    image_url = models.URLField(max_length=512, null=True)
     asin = models.CharField(max_length=10, null=True)
     upc = models.CharField(max_length=13, null=True)
     ean = models.CharField(max_length=13, null=True)
