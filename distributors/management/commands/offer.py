@@ -13,31 +13,37 @@ class Offer:
                        'manufacturer': 'manufacturer', 'sku': 'sku',
                        'distributor': 'programname', 'description': 'name',
                        'long_description': 'description', 'price':'price'}
-            
-            for k, v in mapping.iteritems():
-                setattr(self, k, product[v].strip())
+        elif network == 'pj':
+            mapping = {'buylink': 'buy_url', 'mpn': 'mpn', 'upc': 'upc',
+                       'manufacturer': 'manufacturer', 'sku': 'sku',
+                       'distributor': 'program_name', 'description': 'name',
+                       'long_description': 'description_short', 'price':'price'}
+        else:
+            pass
                 
-            self._upcase()
-            """
-            Clean up the description a bit
-            """
-            tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
-            desc = self.description.replace(".Product", ". Product")
-            desc = tokenizer.tokenize(desc)
+        for k, v in mapping.iteritems():
+            setattr(self, k, product[v].strip())
             
-            """
-            Advance auto likes to put their marketing into the last sentence of
-            the description. Get rid of it.
-            """
-            if self.distributor == 'Advance Auto Parts':
-                desc.pop()
-            description = ""
-            for d in desc:
-                if d.startswith("Product Features"):
-                    pass
-                else:
-                    description += "%s " % d
-            #print description
+        self._upcase()
+        """
+        Clean up the description a bit
+        """
+        tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
+        desc = self.long_description.replace(".Product", ". Product")
+        desc = tokenizer.tokenize(desc)
+        
+        """
+        Advance auto likes to put their marketing into the last sentence of
+        the description. Get rid of it.
+        """
+        if self.distributor == 'Advance Auto Parts':
+            desc.pop()
+        self.long_description = ""
+        for d in desc:
+            if d.startswith("Product Features"):
+                pass
+            else:
+                self.long_description += "%s " % d
         
     def _upcase(self):
         """
@@ -74,10 +80,10 @@ class Offer:
                 part = Part.objects.get(company=manufacturer,
                                         number=self.mpn)
                 if not part.long_description:
-                    part.long_description = description
+                    part.long_description = self.long_description
                     part.save()
             except ObjectDoesNotExist:
-                part = Part(number=self.manufacturer, company=manufacturer,
+                part = Part(number=self.mpn, company=manufacturer,
                             description=self.description, long_description=self.long_description)
                 part.save()
             

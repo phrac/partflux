@@ -2,9 +2,6 @@ from django.core.management.base import BaseCommand, CommandError
 from lxml import etree
 from offer import Offer
 
-        
-    
-
 class Command(BaseCommand):
     args = '<cj_xml_product_catalog_file.xml>'
     help = 'Parses a CJ product catalog XML file and updates distributor pricing'
@@ -30,7 +27,6 @@ class Command(BaseCommand):
                     offer = Offer('cj', product)
                     print "[%s] %s : %s" % (counter, offer.mpn, offer.description)
                     offer.populate_db()
-                    #populate_db(offer, counter)
                     counter += 1
                     
                 product = {}

@@ -10,4 +10,4 @@ templates/version.txt
 *.swo
 settings_local.py
 *.xml
-
+*.csv
