@@ -76,7 +76,7 @@
                             <li><a href="" class="glyphicons search single-icon"><i></i></a></li>
                             <li>
                             <form action="{% url 'search.views.results' %}" method="get">
-                                <input class="site-search" data-minLength="3" placeholder="Search Parts" autocomplete="off" type="text" name="q" value="{{ searchterm }}" />
+                                <input class="site-search" data-minLength="3" placeholder="Search Parts" autocomplete="off" type="text" name="q" value="{{ query }}" />
                             </form>
                             </li>
                         </form>
@@ -92,8 +92,6 @@
                              <a href="{% url 'parts.views.empty_category' %}" class="icon-play"></a>
                             {% endif %}
                             </li>
-                            <li class="inverse"><a href="" class="glyphicons unlock no-ajaxify"><i></i> Sign in</a></li>
-                            <li class="primary"><a href="" class="glyphicons user_add no-ajaxify"><i></i> Sign up</a></li>
                         </ul>
                         <div class="clearfix"></div>
 
@@ -108,8 +106,7 @@
                     <ul class="topnav pull-right">
                         <li><a href="/">Home</a></li>
                         <li><a href="{% url 'parts.views.index' %}">Parts</a></li>
-                        <li><a href="">Manufacturers</a></li>
-                        <li><a href="">Distributors</a></li>
+                        <li><a href="{% url 'companies.views.index' %}">Manufacturers</a></li>
                         <li><a href="/blog/">Blog</a></li>
                         <li><a href="">Contact</a></li>
 

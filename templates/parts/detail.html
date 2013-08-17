@@ -162,9 +162,8 @@
     <div class="span3" data-toggle="modal-gallery" data-target="#modal-gallery" id="gallery-5" data-delegate="#gallery-5">
         <div class="widget widget-heading-simple widget-body-white">
             <div class="widget-body">
-                <div class="glyphicons glyphicon-top glyphicon-large notes">
-                    <i></i>
-                    <h4>{{ part.number }} DATA CARD</h4>
+                <div class="lead center">
+                    <h4>Overview</h4>
                 </div>
                 <div id="data-card">
                     <table class="table table-condensed">
@@ -384,7 +383,6 @@
                         <th>Price</th>
                         <th>Coupons</th>
                         <th>Updated</th>
-                        <th>xpath</th>
                     </tr>
                     {% for d in distributor_skus %}
                     <tr>
@@ -393,7 +391,6 @@
                         <td class="text-primary strong">${{ d.price }}</td>
                         <td>{{ d.coupons|default:"None" }}</td>
                         <td>{{ d.updated|naturaltime }}</td>
-                        <td></td>
                     </tr>
                     {% endfor %}
                 </table>
