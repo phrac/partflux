@@ -290,9 +290,9 @@
                         {% for d in distributor_skus|slice:":3" %}
                         <tr>
                             {% if d.affiliate_url %}
-                            <td><a href="{{ d.affiliate_url }}{{ d.url }}">{{ d.distributor }}</a></td>
+                            <td><a rel="nofollow" href="{{ d.affiliate_url }}">{{ d.distributor }}</a></td>
                             {% else %}
-                            <td><a href="{{ d.url }}">{{ d.distributor }}</a></td>
+                            <td><a rel="nofollow" href="{{ d.url }}">{{ d.distributor }}</a></td>
                             {% endif %}
                             <td>{{ d.sku }}</td>
                             <td>${{ d.price }}</td>
@@ -384,7 +384,11 @@
                     </tr>
                     {% for d in distributor_skus %}
                     <tr>
-                        <td><a href="{{ d.url }}">{{ d.distributor }}</a></td>
+                        {% if d.affiliate_url %}
+                        <td><a rel="nofollow" href="{{ d.affiliate_url }}">{{ d.distributor }}</a></td>
+                        {% else %}
+                        <td><a rel="nofollow" href="{{ d.url }}">{{ d.distributor }}</a></td>
+                        {% endif %}
                         <td>{{ d.sku }}</td>
                         <td class="text-primary strong">${{ d.price }}</td>
                         <td>{{ d.coupons|default:"None" }}</td>

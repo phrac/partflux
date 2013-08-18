@@ -1,4 +1,4 @@
-{% extends "base/base_MAIN.html" %}
+{% extends "base.html" %}
 
 {% block title %}
 Privacy Policy | Part Engine
@@ -8,8 +8,11 @@ Privacy Policy | Part Engine
 
 {% block page_title %}Privacy Policy{% endblock %}
 
-{% block breadcrumb_links %}
-<a href="#" class="current"><i class="icon-lock"></i> Privacy Policy</a>
+{% block breadcrumbs %}
+<li class="divider">
+    <i class="icon-caret-right"></i>
+</li>
+<li><a href="#" class="current">Privacy Policy</a></li>
 {% endblock %}
 
 
@@ -17,7 +20,7 @@ Privacy Policy | Part Engine
 {% load humanize %}
 
 <div class="row-fluid">
-    <div class="span12">
+    <div class="span8">
         <h3>What information do we collect?</h3> 
         <p>
         We collect information from you when you register on our site, subscribe to our newsletter or fill out a form.  
@@ -95,7 +98,7 @@ Privacy Policy | Part Engine
             <strong>disflux, LLC</strong><br />
             6222 S. 142nd Street<br />
             Omaha, NE 68137<br /><br />
-            derek@partfindr.net
+            privacy@partflux.com
         </address>
         <!-- END PRIVACY POLICY CODE -->
     </div>

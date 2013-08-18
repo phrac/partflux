@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, include, url
+from django.views.generic import TemplateView
 
 urlpatterns = patterns('',
     url(r'^$', 'main.views.index'),
@@ -8,11 +9,6 @@ urlpatterns = patterns('',
     #   'django.views.generic.simple.direct_to_template',
     #   {'template': 'main/partbot.html'}),
     
-    #url(r'^privacy/$',
-    #   'django.views.generic.simple.direct_to_template',
-    #   {'template': 'main/privacy.html'}),
-       
-    #url(r'^contest/$',
-    #    'django.views.generic.simple.direct_to_template',
-    #    {'template': 'main/contest.html'}),
+    url(r'^privacy/$', TemplateView.as_view(template_name="main/privacy.html")),
+              
 )
