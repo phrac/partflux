@@ -141,6 +141,8 @@ def detail(request, part_id, company_slug, part_slug):
             price = product.price_and_currency
             p.upc = product.upc
             p.ean = product.ean
+            if not p.image_url:
+                p.image_url = product.large_image_url
             p.save()
                 
             ds = DistributorSKU(distributor=d, part=p, sku=asin, price=price[0],

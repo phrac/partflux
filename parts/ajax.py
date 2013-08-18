@@ -7,6 +7,7 @@ from django.core.files.storage import default_storage
 import json
 
 from parts.models import Part, PartImage, Attribute, Category
+from distributors.models import DistributorSKU
 from companies.models import Company
 from users.models import UserFavoritePart
 
@@ -113,6 +114,14 @@ def set_redirect_part(request):
     from_part_object.redirect_part = to_part_object
     from_part_object.save()
     to_part_object.cross_references.remove(from_part_object)
+    #attrs = Attribute.objects.filter(part=from_part_object)
+    for a in from_part_object.attribute_set.all():
+        new_a, created = Attribute.objects.get_or_create(part=to_part_object,
+                                                     key=a.key, value=a.value)
+    distributors = DistributorSKU.objects.filter(part=from_part_object)
+    for d in distributors:
+        d.part = to_part_object
+        d.save()
 
     return HttpResponseRedirect(reverse('parts.views.detail',
                                                     args=[to_part_object.id,

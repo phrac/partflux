@@ -97,7 +97,8 @@ class Part(models.Model):
             amazon = AmazonAPI(settings.AWS_ACCESS_KEY_ID,
                            settings.AWS_SECRET_ACCESS_KEY,
                            settings.AWS_ASSOCIATE_TAG)
-            products = amazon.search_n(10, Keywords=self.number, SearchIndex='All')
+            products = amazon.search_n(10, Keywords="%s %s" %
+                                       (self.company.name, self.number), SearchIndex='All')
         except:
             products = None
         return products
