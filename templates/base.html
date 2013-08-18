@@ -118,11 +118,13 @@
 
             </div>
             <!-- Top navbar END -->
-            <ul class="breadcrumb breadcrumb-960">
+            {% block no_breadcrumb %}
+                <ul class="breadcrumb breadcrumb-960">
                     <li><a href="/" class="glyphicons dashboard"><i></i> Part Flux</a></li>
                     {% block breadcrumbs %}
                     {% endblock %}
                 </ul>
+            {% endblock %}
             <div class="container">
                 
                 {% block content %}

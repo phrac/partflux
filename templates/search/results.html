@@ -1,9 +1,16 @@
 {% extends "base.html" %}
 
-{% block breadcrumb_links %}
-<a href="{% url search.views.index %}"><i class="icon-search"></i> Search</a>
-<a href="#">"<em>{{ searchterm }}</em>"</a>
+{% block breadcrumbs %}
+<li class="divider">
+    <i class="icon-caret-right"></i>
+</li>
+<li><a href="{% url 'search.views.index' %}">Search</a></li>
+<li class="divider">
+    <i class="icon-caret-right"></i>
+</li>
+<li>"<em>{{ query }}</em>"</a></li>
 {% endblock %}
+
 {% block no_adsense %}{% endblock %}
 {% block no_skyscraper %}{% endblock %}
 {% block page_title %}

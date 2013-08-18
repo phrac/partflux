@@ -22,14 +22,6 @@
 				<p id="logo">
 					<a href="/" title="Part Engine"><img src="{{ STATIC_URL }}img/logo-black.png" width="265" height="39" alt="Part Engine" title="Part Engine"></a>
 				</p>
-				{% if user.is_authenticated %}
-                <h4 class="pull-right"><a title="" href="{{ request.user.get_absolute_url }}"><img src="{% gravatar_url user.email 40 %}" alt="gravatar" /> Welcome back {{ user }}</a></h4>
-                
-                {% else %}
-                <h4 class="pull-right">
-					<a href="{% url django.contrib.auth.views.login %}?next={{request.path}}">Sign In</a>
-                </h4>
-                {% endif %}
 				
 			</div>
 			<div id="attention">
@@ -50,12 +42,11 @@
 					<h4 class="pitch">
 						Search by part number, part description, NSN number, or any other information.
 					</h4>
-					<form class="search" method="get" action="{% url search.views.results %}">
+					<form class="search" method="get" action="{% url 'search.views.results' %}">
 						<input id="iemail" autocomplete="off" name="q" type="text" placeholder="Search parts or NSNs"><input style="margin-top:-10px;" class="btn btn-subscribe btn-xlarge" type="submit" value="Search!">
 					</form>
 					<h4 class="pitch">
-					   Or you can <a href="{% url parts.views.index %}">browse parts</a>, <a href="{% url nsn.views.index %}">NSN data</a>, or <a href="{% url partgroups.views.index %}">assemblies</a>. Also check out our <a href="/faq/">F.A.Q.</a>
-					</h4>
+					   Or you can <a href="{% url 'parts.views.index' %}">browse parts</a> 					</h4>
 				</div>
 			</div>
 			<div id="features" class="container">
