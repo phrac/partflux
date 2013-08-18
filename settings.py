@@ -45,6 +45,8 @@ DATABASES = {
 #CACHE_MIDDLEWARE_KEY_PREFIX = ''
 
 
+ALLOWED_HOSTS = ['partflux.com',]
+
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/users/login/'
 LOGOUT_URL = '/users/logout/'
