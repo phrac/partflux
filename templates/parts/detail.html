@@ -1,8 +1,7 @@
 {% extends "base.html" %}
 
 {% load humanize %}
-{% load parttags %}
-{% load comments %}
+{% load thumbnail %}
 
 {% block title %}
 {{ page_title|safe }}
@@ -63,7 +62,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
             $('#buylink-table').load('/parts/ajax/load_distributors/{{ part.pk }}');
-            $('#images-table').load('/parts/ajax/load_images/{{ part.pk }}');
+            $('#datacard').load('/parts/ajax/load_images/{{ part.pk }}');
             });
 </script>
 
@@ -162,8 +161,10 @@
     <div class="span3" data-toggle="modal-gallery" data-target="#modal-gallery" id="gallery-5" data-delegate="#gallery-5">
         <div class="widget widget-heading-simple widget-body-white">
             <div class="widget-body">
-                <div class="lead center">
-                    <h4>Overview</h4>
+                <div class="lead center" id="datacard">
+                    <i class="icon-spinner icon-spin icon-large"></i>
+                    <br />
+                    Overview
                 </div>
                 <div id="data-card">
                     <table class="table table-condensed">
@@ -232,9 +233,6 @@
                 </div>
             </div>
         </div>
-        <p class="separator text-center"><i class="icon-picture icon-3x"></i></p>
-        <div class="separator bottom"></div>
-        {% include 'parts/includes/image_table.html' %}
         <p class="separator text-center"><i class="icon-bar-chart icon-3x"></i></p>
         <div class="separator bottom"></div>
         {% include 'parts/includes/statistics.html' %}

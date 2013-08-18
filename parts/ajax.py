@@ -88,11 +88,10 @@ def get_distributors(request, part_id):
         return render_to_response('parts/includes/buylink_table.html',
                                   {'part': p,},
                                   context_instance=RequestContext(request))
-
 def get_images(request, part_id):
     p = Part.objects.get(id=part_id)
     if request.is_ajax:
-        return render_to_response('parts/includes/image_table.html',
+        return render_to_response('parts/includes/datacard_thumb.html',
                                   {'part': p,},
                                   context_instance=RequestContext(request))
 

@@ -10,6 +10,7 @@
         </thead>
         <tbody>
             {% for x in part.cross_references.all %}
+            {% if x.number != part.number %}
             <tr>
                 <td>({{ x.pk }}) <a href="{{ x.get_absolute_url }}">{{ x.number }}</a> 
                     {% if user.is_staff %}
@@ -19,6 +20,7 @@
                 <td>{{ x.description }}</td>
                 <td><a href="{{ x.company.get_absolute_url }}">{{ x.company.name }}</a></td>
             </tr>
+            {% endif %}
             {% endfor %}
         </tbody>
     </table>
