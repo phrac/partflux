@@ -12,17 +12,19 @@
 
     <div class="mosaic-line mosaic-line-2">
         <div class="container-960 center">
-            <h2 style="margin-top:50px;"><strong class="text-primary">PART</strong> FLUX</h2>
+            <h1 style="margin-top:50px;"><strong class="text-primary">PART</strong> FLUX</h1>
         </div>
     </div>
     <div class="container-960 innerT">
         <div class="widget widget-heading-simple widget-body-gray">
             <div class="widget-body"><p class="margin-none">
                 <form class="input-append search" method="get" action="{% url 'search.views.results' %}">
-                    <input class="span11" autocomplete="off" name="q" type="text" id="appdendedInputButton" >
-                    <button class="btn btn-primary" type="submit">
-                        <i class="icon-search icon-white"></i>
+                    <div class="offset2">
+                    <input style="font-size:25px; height:40px;" class="span7" autocomplete="off" name="q" type="text" id="appdendedInputButton" >
+                    <button style="height:49px; width:50px;" class="btn btn-primary" type="submit">
+                        <i style="font-size:25px;" class="icon-search icon-white"></i>
                     </button>
+                </div>
                 </form>
             </div>
         </div>
@@ -33,34 +35,35 @@
             </div>
         </div>
 
-        <div class="row-fluid">
+        <div class="row-fluid" style="margin-top:50px;">
             <div class="span5 offset1">
-                <div class="widget widget-heading-simple widget-body-white">
-                    <div class="widget-body">
-                        <div>
-                            <h4>Recent Part Updates</h4>
-                            <dl class="unstyled">
-                                {% for p in parts %}
-                                <dt><a href="{{ p.get_absolute_url }}">{{ p.number }}</a></dt>
-                                <dd>{{ p.description }}</dd>
-                                {% endfor %}
-                            </dl>
-                        </div>
+                <h4>Recent Part Updates</h4>
+                <div class="widget widget-heading-simple widget-body-white widget-timeline">
+                    <ul class="list-timeline">
+                        {% for p in parts %}
+                        <li>
+                        <span class="date">{{ p.updated_at|date:"H:i" }}</span>
+                        <span class="glyphicons activity-icon cogwheel"><i></i></span>
+                        <span class="ellipsis"><a href="{{ p.get_absolute_url }}">{{ p.number }}</a> - {{ p.description }}
+                            <div class="clearfix"></div>
+                            </li>
+                            {% endfor %}
+                        </ul>
                     </div>
                 </div>
-            </div>
             <div class="span5">
-                <div class="widget widget-heading-simple widget-body-white">
-                    <div class="widget-body">
-                        <div>
-                            <h4>Recent Distributor Updates</h4>
-                            <dl class="unstyled">
-                                {% for p in skus %}
-                                <dt><a href="{{ p.part.get_absolute_url }}">{{ p.part.number }}</a></dt>
-                                <dd>{{ p.distributor.name }} distributor information updated</dd>
-                                {% endfor %}
-                            </dl>
-                        </div>
+                <h4>Recent Distributor Updates</h4>
+                <div class="widget widget-heading-simple widget-body-white widget-timeline">
+                    <ul class="list-timeline">
+                        {% for p in skus %}
+                        <li>
+                        <span class="date">{{ p.updated|date:"H:i" }}</span>
+                        <span class="glyphicons activity-icon cargo"><i></i></span>
+                        <span class="ellipsis">Updated <em>{{ p.distributor.name}}</em> data: <a href="{{ p.part.get_absolute_url }}">{{ p.part.number }}</a> 
+                            <div class="clearfix"></div>
+                            </li>
+                        {% endfor %}
+                        </ul>
                     </div>
                 </div>
             </div>
