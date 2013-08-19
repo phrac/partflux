@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import connection
 from companies.models import Company
-from parts.models import Part
+from parts.models import Part, Attribute
 from distributors.models import Distributor, DistributorSKU
 
 class Command(BaseCommand):
@@ -31,6 +31,9 @@ class Command(BaseCommand):
                 for sku in skus:                                                                                                       
                     sku.part=finalp                                                                                                    
                     sku.save()
+                for a in p.attribute_set.all():
+                    new_a, created = Attribute.objects.get_or_create(part=finalp,
+                                                     key=a.key, value=a.value)
                 p.delete()
                 finalp = None
         

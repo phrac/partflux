@@ -10,19 +10,24 @@ class Command(BaseCommand):
     can_import_settings = True
     
     def handle(self, *args, **options):
-        path = '/usr/home/vftp/derek/cj'
+        network = args[0]
+        if network == 'cj':
+            path = '/usr/home/vftp/derek/cj'
+        if network == 'pj':
+            path = '/usr/home/vftp/derek/pj'
         for file in os.listdir(path):
             current_file = os.path.join(path, file)
             counter = 0
-            network = args[0]
             csvfile = csv.DictReader(gzip.open(current_file, 'rb'), delimiter=',')
             for product in csvfile:
                 offer = Offer(network, product)
-                print "[%s] %s: SKU %s" % (counter, offer.mpn, offer.sku)
-                if len(offer.mpn) < 48:
+                if len(offer.mpn) < 48 and len(offer.mpn) > 2:
+                    print "[%s] %s: SKU %s" % (counter, offer.mpn, offer.sku)
                     offer.populate_db()
-                counter += 1
-            os.remove(current_file)
+                    counter += 1
+                else:
+                    print "INVALID MPN"
+            #os.remove(current_file)
 
 
 

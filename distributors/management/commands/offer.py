@@ -18,7 +18,8 @@ class Offer:
             mapping = {'buylink': 'buy_url', 'mpn': 'mpn', 'upc': 'upc',
                        'manufacturer': 'manufacturer', 'sku': 'sku',
                        'distributor': 'program_name', 'description': 'name',
-                       'long_description': 'description_short', 'price':'price'}
+                       'long_description': 'description_long', 'price':'price',
+                       'image_url': 'image_url'}
         else:
             pass
                 

@@ -1,4 +1,4 @@
-{{ object.number }}
+{{ object.number }} 
 {{ object.description }}
 {{ object.company.name }}
 {{ object.upc }}

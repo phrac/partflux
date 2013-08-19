@@ -244,9 +244,9 @@
             <div class="span6">
                 <!-- Product description -->
                 <div class="widget widget-heading-simple widget-body-gray">
-                    <div class="widget-head"><h4 class="heading glyphicons notes strong"><i></i>Detailed Information</h4></div>
+                    <div class="widget-head"><h4 class="heading glyphicons notes strong"><i></i>Detailed Description</h4></div>
                     <div class="widget-body">
-                        <p><span class="text-primary strong text-uppercase">{{ part.description|safe }}</span><br /><br /> {{ part.long_description|safe }}</p>
+                       <p><span class="text-primary strong text-uppercase">{{ part.description|safe }}</span><br /><br /> {{ part.long_description|safe|default:"" }}</p>
                     </div>
                     {% if user.is_staff %}
                     <div class="separator bottom">
@@ -286,7 +286,7 @@
                                 <th>SKU</th>
                                 <th>Price</th>
                             </tr>
-                        {% for d in distributor_skus|slice:":3" %}
+                        {% for d in distributor_skus|slice:":5" %}
                         <tr>
                             {% if d.affiliate_url %}
                             <td><a rel="nofollow" href="{{ d.affiliate_url }}">{{ d.distributor }}</a></td>
@@ -297,6 +297,11 @@
                             <td>${{ d.price }}</td>
                         </tr>
                         {% endfor %}
+                        {% if not distributor_skus %}
+                        <td colspan="3">
+                            <a rel="nofollow" href="http://www.amazon.com/gp/search/ref=as_li_qf_sp_sr_il_tl?ie=UTF8&camp=1789&creative=9325&index=aps&keywords={{ part.amazon_keywords }}&linkCode=as2&tag=partfindr-20">{{ part.company.name }} {{ part.number }} at Amazon</a>
+                        </td>
+                        {% endif %}
                         </table> 
                         <div class="separator bottom">
                             <a href="#distributors" class="btn btn-icon btn-large glyphicons cart_in btn-success btn-block"><i></i>See all Distributors</a>
@@ -327,8 +332,11 @@
             <div id="asin_search" class="widget-body list">
                 <i class="icon-spinner icon-spin icon-xlarge"></i> Loading Amazon matches ...       
             </div>
-            <a href="#attribute-modal" data-toggle="modal" class="hidden-phone btn btn-toggle-code btn-mini btn-primary btn-icon outside">
+            {% if user.is_staff %}
+            <a href="#add-asin" data-toggle="modal" class="hidden-phone btn btn-toggle-code btn-mini btn-primary btn-icon inside">
+                <i class="icon-plus-sign icon-white"></i> Manual ASIN
             </a>
+            {% endif %}
         </div>
         {% endif %}
 
@@ -419,7 +427,7 @@
                                 {{ p.object.description|truncatechars:120 }}
                             </td>
                             {% if user.is_staff %}
-                            <td><a href="{% url 'parts.ajax.set_redirect_part' %}?from={{ x.pk }}&to={{ part.pk }}">redirect to this part</a></td>
+                            <td><a href="{% url 'parts.ajax.set_redirect_part' %}?from={{ p.object.pk }}&to={{ part.pk }}">redirect to this part</a></td>
                             {% endif %}
                         </tr>
                         {% endfor %}

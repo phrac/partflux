@@ -12,7 +12,7 @@
             {% for x in part.cross_references.all %}
             {% if x.number != part.number %}
             <tr>
-                <td>({{ x.pk }}) <a href="{{ x.get_absolute_url }}">{{ x.number }}</a> 
+                <td><a href="{{ x.get_absolute_url }}">{{ x.number }}</a> 
                     {% if user.is_staff %}
                     (<a href="{% url 'parts.ajax.set_redirect_part' %}?from={{ x.pk }}&to={{ part.pk }}">redirect to this part</a>)
                     {% endif %}

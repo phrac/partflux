@@ -63,6 +63,13 @@ class Part(models.Model):
             self.slug = slugify(self.number)
         super(Part, self).save(*args, **kwargs)
         
+    @property
+    def amazon_keywords(self):
+        term = self.number
+        for x in self.cross_references.all():
+            term += " %s" % x.number
+        return term
+    
     def amazon_price(self):
         amazon = AmazonAPI(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY, settings.AWS_ASSOCIATE_TAG)
         try:
