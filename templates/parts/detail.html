@@ -7,12 +7,7 @@
 {{ page_title|safe }}
 {% endblock %}
 
-{% block meta_description %}{{ part.company.name|safe }} {{ part.number }} : {{ part.description }}{% endblock %}
-{% block meta_keywords %}{{ part.company.name|safe }}, {{ part.number }},
-{% for x in part.cross_references.all %}
-{{ x.number }},
-{% endfor %}
-{% endblock %}
+{% block meta_description %}{{ part.company.name|safe }} {{ part.number }} : {{ part.description }} {{ part.long_description|default:"" }}{% endblock %}
 
 {% block breadcrumbs %}
 <li class="divider">
