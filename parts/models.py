@@ -62,6 +62,13 @@ class Part(models.Model):
         if not self.slug:
             self.slug = slugify(self.number)
         super(Part, self).save(*args, **kwargs)
+
+    def get_alternates(self):
+        alternates = []
+        parts = Part.objects.filter(redirect_part=self)
+        for p in parts:
+            alternates.append(p.number)
+        return alternates
         
     @property
     def amazon_keywords(self):

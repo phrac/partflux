@@ -174,7 +174,7 @@
                         </tr>
                         <tr>
                             <th># Alternates</th>
-                            <td>{{ alternates|length }}</td>
+                            <td>{{ part.get_alternates|length }}</td>
                         </tr>
                         <tr>
                             <th>Added</th>
@@ -217,8 +217,8 @@
                 <div class="widget widget-heading-simple widget-body-default">
                     <div class="widget-head"><h4 class="heading glyphicons warning_sign strong"><i></i>Alternate Part Numbers</h4></div>
                     <p class="margin-none">
-                        {% if alternates %}
-                            {% for a in alternates %}
+                        {% if part.get_alternates %}
+                            {% for a in part.get_alternates %}
                             {{ a }},
                             {% endfor %}
                         {% else %}

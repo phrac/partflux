@@ -76,7 +76,6 @@ def detail(request, part_id, company_slug, part_slug):
                                                   redirect.company.slug,
                                                   redirect.slug]))
 
-    alternates = Part.objects.filter(redirect_part=p)
     mlt = SearchQuerySet().models(Part).more_like_this(p)[:10]
     pricing = DistributorSKU.objects.filter(part=p).aggregate(avg_price=Avg('price'), max_price=Max('price'), min_price=Min('price'))
     distributor_skus = DistributorSKU.objects.filter(part=p).order_by('price')
@@ -230,7 +229,6 @@ def detail(request, part_id, company_slug, part_slug):
             'agg_pricing': pricing,
             'distributor_skus': distributor_skus,
             'asinform': asinform,
-            'alternates': alternates,
            })
 
 
