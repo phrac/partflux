@@ -43,7 +43,7 @@ def results(request):
         p = Paginator(results, 20, request=request)
         results_list = p.page(page)
 
-    return render_to_response('search/results.html',
+    return render_to_response('search/results_new.html',
                               { 
                                   'results_list': results_list, 
                                   'query': q,

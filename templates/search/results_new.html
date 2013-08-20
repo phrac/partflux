@@ -1,0 +1,499 @@
+{% extends "base.html" %}
+
+{% block breadcrumbs %}
+<li class="divider">
+<i class="icon-caret-right"></i>
+</li>
+<li><a href="{% url 'search.views.index' %}">Search</a></li>
+<li class="divider">
+<i class="icon-caret-right"></i>
+</li>
+<li>"<em>{{ query }}</em>"</a></li>
+{% endblock %}
+
+{% block no_adsense %}{% endblock %}
+{% block no_skyscraper %}{% endblock %}
+{% block page_title %}
+Search Results
+{% endblock %}
+
+{% block search_active %}active{% endblock %}
+
+{% block content %}
+<div class="row-fluid">
+    <div class="span9">
+
+        <div class="widget widget-tabs widget-tabs-gray">
+            <div class="widget-head">
+                <ul>
+                    <li class="active"><a href="#search-simple" data-toggle="tab">Simple search</a></li>
+                    <li><a href="#search-advanced" data-toggle="tab">Advanced search</a></li>
+                    <!--<li><a href="#search-media" data-toggle="tab">Media search</a></li>
+                    <li><a href="#search-users" data-toggle="tab">Users search</a></li>-->
+                </ul>
+            </div>
+            <div class="widget-body">
+                <div class="tab-content">
+
+                    <div class="tab-pane active" id="search-simple">
+                        <div class="widget widget-heading-simple widget-body-simple text-right">
+                            <form class="form-search">
+                                <input type="text" class="input-large" placeholder="Type your keywords .. " />
+                                <button type="submit" class="btn btn-inverse">Search</button>
+                            </form>
+                        </div>
+                        <div class="widget widget-heading-simple widget-body-white margin-none">
+                            <div class="widget-body">
+                                <h5 class="text-uppercase strong separator bottom">{{ results_list.paginator.count }} Search results</h5>
+                                {% for result in results_list.object_list %}
+                                {% if result.content_type == "parts.part" %}
+                                {% include "search/includes/parts/part.html" %}
+                                {% endif %}
+                                {% if result.content_type == "nsn.nsn" %}
+                                {% include "search/includes/nsn/nsn.html" %}
+                                {% endif %}
+                                {% if result.content_type == "companies.company" %}
+                                {% include "search/includes/companies/company.html" %}
+                                {% endif %}
+                                {% endfor %}
+
+                                <div class="row-fluid">	
+                                    <div class="span10">
+                                        <h5 class="strong text-uppercase">What is Lorem Ipsum?</h5>
+                                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+                                        <p class="margin-none strong"><a href="" class="glyphicons single chevron-right"><i></i>read more</a></p>
+                                    </div>
+                                    <div class="span2 center">
+                                        <a href="" class="thumb"><img data-src="holder.js/150x100" alt="Image" /></a>
+                                    </div>
+                                </div>
+                                <hr class="separator" />
+                                <div class="row-fluid">	
+                                    <div class="span2 center">
+                                        <a href="" class="thumb"><img data-src="holder.js/150x100" alt="Image" /></a>
+                                    </div>
+                                    <div class="span10">
+                                        <h5 class="strong text-uppercase">What is Lorem Ipsum?</h5>
+                                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+                                        <p class="margin-none strong"><a href="" class="glyphicons single chevron-right"><i></i>read more</a></p>
+                                    </div>
+                                </div>
+                                <hr class="separator" />
+                                <div class="pagination margin-none">
+                                    <ul>
+                                        <li class="disabled"><a href="#">&lt;</a></li>
+                                        <li class="active"><a href="#">1</a></li>
+                                        <li><a href="#">2</a></li>
+                                        <li><a href="#">3</a></li>
+                                        <li><a href="#">&gt;</a></li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="search-advanced">
+
+                        <div class="widget widget-heading-simple widget-body-white">
+                            <div class="widget-body">
+                                <div class="row-fluid">
+                                    <div class="span4 center">
+                                        <div class="widget widget-heading-simple widget-body-simple margin-none">
+                                            <label class="strong">Search for</label>
+                                            <input type="text" class="span10" placeholder="Type your keywords .. " />
+
+                                            <label class="strong">Options</label>
+                                            <div class="uniformjs">
+                                                <label class="checkbox" style="display: inline-block;">
+                                                    <input type="checkbox" class="checkbox" value="1" />
+                                                    Sexxxxy
+                                                </label>
+                                                <label class="checkbox" style="display: inline-block; margin-left: 10px;">
+                                                    <input type="checkbox" class="checkbox" value="1" checked="checked" />
+                                                    Checked
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="span4 center">
+                                        <div class="widget widget-heading-simple widget-body-simple margin-none">
+                                            <label class="strong">Date from</label>
+                                            <div class="input-append date" id="datetimepicker2">
+                                                <input class="span12" type="text" value="14 February 2013 - 10:00">
+                                                <span class="add-on"><i class="icon-th"></i></span>
+                                            </div>
+                                            <label class="strong">Date to</label>
+                                            <div class="input-append date" id="datetimepicker2">
+                                                <input class="span12" type="text" value="14 February 2013 - 10:00">
+                                                <span class="add-on"><i class="icon-th"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="span4 center">
+                                        <div class="widget widget-heading-simple widget-body-simple margin-none">
+                                            <label class="strong">Other options</label>
+                                            <div class="btn-group" data-toggle="buttons-checkbox">
+                                                <button type="button" class="active btn btn-inverse">Left</button>
+                                                <button type="button" class="active btn btn-inverse">Middle</button>
+                                                <button type="button" class="btn btn-inverse">Right</button>
+                                            </div>
+                                            <div class="separator bottom"></div>
+                                            <button type="submit" class="btn btn-primary btn-large" data-loading-text="Now searching ..." data-toggle="btn-loading"><i class="icon-search"></i> Start Searching</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="widget widget-heading-simple widget-body-white margin-none">
+                            <div class="widget-body">
+                                <h5 class="text-uppercase strong separator bottom">30 Search results</h5>
+
+
+                                <div class="accordion accordion-2" id="tabAccountAccordion">
+
+                                    <!-- Accordion Item -->
+                                    <div class="accordion-group">
+                                        <div class="accordion-heading">
+                                            <a class="accordion-toggle glyphicons right_arrow" data-toggle="collapse" data-parent="#tabAccountAccordion" href="#collapse-1-1">
+                                                <i></i>Lorem ipsum dolor sit amet?
+                                            </a>
+                                        </div>
+                                        <div id="collapse-1-1" class="accordion-body collapse">
+                                            <div class="accordion-inner">
+                                                <div class="row-fluid">	
+                                                    <div class="span2 center">
+                                                        <a href="" class="thumb"><img data-src="holder.js/150x100" alt="Image" /></a>
+                                                    </div>
+                                                    <div class="span10">
+                                                        <h5 class="strong text-uppercase">What is Lorem Ipsum?</h5>
+                                                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+                                                        <p class="margin-none strong"><a href="" class="glyphicons single chevron-right"><i></i>read more</a></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- // Accordion Item END -->
+
+                                    <!-- Accordion Item -->
+                                    <div class="accordion-group">
+                                        <div class="accordion-heading">
+                                            <a class="accordion-toggle glyphicons right_arrow" data-toggle="collapse" data-parent="#tabAccountAccordion" href="#collapse-2-1">
+                                                <i></i>Quisque porttitor elit ac mauris?
+                                            </a>
+                                        </div>
+                                        <div id="collapse-2-1" class="accordion-body collapse in">
+                                            <div class="accordion-inner">
+                                                <div class="row-fluid">	
+                                                    <div class="span2 center">
+                                                        <a href="" class="thumb"><img data-src="holder.js/150x100" alt="Image" /></a>
+                                                    </div>
+                                                    <div class="span10">
+                                                        <h5 class="strong text-uppercase">What is Lorem Ipsum?</h5>
+                                                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+                                                        <p class="margin-none strong"><a href="" class="glyphicons single chevron-right"><i></i>read more</a></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- // Accordion Item END -->
+
+                                    <!-- Accordion Item -->
+                                    <div class="accordion-group">
+                                        <div class="accordion-heading">
+                                            <a class="accordion-toggle glyphicons right_arrow" data-toggle="collapse" data-parent="#tabAccountAccordion" href="#collapse-3-1">
+                                                <i></i>Vivamus eros tortor consequat sed?
+                                            </a>
+                                        </div>
+                                        <div id="collapse-3-1" class="accordion-body collapse">
+                                            <div class="accordion-inner">
+                                                <div class="row-fluid">	
+                                                    <div class="span2 center">
+                                                        <a href="" class="thumb"><img data-src="holder.js/150x100" alt="Image" /></a>
+                                                    </div>
+                                                    <div class="span10">
+                                                        <h5 class="strong text-uppercase">What is Lorem Ipsum?</h5>
+                                                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+                                                        <p class="margin-none strong"><a href="" class="glyphicons single chevron-right"><i></i>read more</a></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- // Accordion Item END -->
+
+                                    <!-- Accordion Item -->
+                                    <div class="accordion-group">
+                                        <div class="accordion-heading">
+                                            <a class="accordion-toggle glyphicons right_arrow" data-toggle="collapse" data-parent="#tabAccountAccordion" href="#collapse-4-1">
+                                                <i></i>Etiam suscipit leo tincidunt mi volutpat?
+                                            </a>
+                                        </div>
+                                        <div id="collapse-4-1" class="accordion-body collapse">
+                                            <div class="accordion-inner">
+                                                <div class="row-fluid">	
+                                                    <div class="span2 center">
+                                                        <a href="" class="thumb"><img data-src="holder.js/150x100" alt="Image" /></a>
+                                                    </div>
+                                                    <div class="span10">
+                                                        <h5 class="strong text-uppercase">What is Lorem Ipsum?</h5>
+                                                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+                                                        <p class="margin-none strong"><a href="" class="glyphicons single chevron-right"><i></i>read more</a></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- // Accordion Item END -->
+
+                                </div>
+                                <div class="separator bottom"></div>
+                                <div class="pagination margin-none">
+                                    <ul>
+                                        <li class="disabled"><a href="#">&lt;</a></li>
+                                        <li class="active"><a href="#">1</a></li>
+                                        <li><a href="#">2</a></li>
+                                        <li><a href="#">3</a></li>
+                                        <li><a href="#">&gt;</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="search-media">
+                        <div class="widget widget-heading-simple widget-body-simple text-right">
+                            <form class="form-search">
+                                <input type="text" class="input-large" placeholder="Type your keywords .. " />
+                                <button type="submit" class="btn btn-inverse">Search</button>
+                            </form>
+                        </div>
+                        <div class="widget widget-heading-simple widget-body-white margin-none">
+                            <div class="widget-body">
+                                <h5 class="text-uppercase strong separator bottom">30 Search results</h5>
+
+                                <!-- Gallery Layout -->
+                                <div class="gallery gallery-2">
+                                    <ul class="row-fluid" data-toggle="modal-gallery" data-target="#modal-gallery" id="gallery-4" data-delegate="#gallery-4">
+                                        <li class="span3 hidden-phone"><a class="thumb" href="../../../../../common/theme/images/gallery-2/8.jpg" data-gallery="gallery"><img src="../../../../../common/theme/images/gallery-2/8.jpg" alt="photo" /></a></li>
+                                        <li class="span3 hidden-phone"><a class="thumb" href="../../../../../common/theme/images/gallery-2/7.jpg" data-gallery="gallery"><img src="../../../../../common/theme/images/gallery-2/7.jpg" alt="photo" /></a></li>
+                                        <li class="span3 hidden-phone"><a class="thumb" href="../../../../../common/theme/images/gallery-2/6.jpg" data-gallery="gallery"><img src="../../../../../common/theme/images/gallery-2/6.jpg" alt="photo" /></a></li>
+                                        <li class="span3 hidden-phone"><a class="thumb" href="../../../../../common/theme/images/gallery-2/5.jpg" data-gallery="gallery"><img src="../../../../../common/theme/images/gallery-2/5.jpg" alt="photo" /></a></li>
+                                        <li class="span3 hidden-phone"><a class="thumb" href="../../../../../common/theme/images/gallery-2/4.jpg" data-gallery="gallery"><img src="../../../../../common/theme/images/gallery-2/4.jpg" alt="photo" /></a></li>
+                                        <li class="span3"><a class="thumb" href="../../../../../common/theme/images/gallery-2/3.jpg" data-gallery="gallery"><img src="../../../../../common/theme/images/gallery-2/3.jpg" alt="photo" /></a></li>
+                                        <li class="span3"><a class="thumb" href="../../../../../common/theme/images/gallery-2/2.jpg" data-gallery="gallery"><img src="../../../../../common/theme/images/gallery-2/2.jpg" alt="photo" /></a></li>
+                                        <li class="span3"><a class="thumb" href="../../../../../common/theme/images/gallery-2/1.jpg" data-gallery="gallery"><img src="../../../../../common/theme/images/gallery-2/1.jpg" alt="photo" /></a></li>
+                                    </ul>
+                                </div>
+                                <!-- // Gallery Layout END -->
+
+                                <hr class="separator" />
+                                <div class="pagination margin-none">
+                                    <ul>
+                                        <li class="disabled"><a href="#">&lt;</a></li>
+                                        <li class="active"><a href="#">1</a></li>
+                                        <li><a href="#">2</a></li>
+                                        <li><a href="#">3</a></li>
+                                        <li><a href="#">&gt;</a></li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="search-users">
+                        <div class="widget widget-heading-simple widget-body-simple text-right">
+                            <form class="form-search">
+                                <input type="text" class="input-large" placeholder="Type your keywords .. " />
+                                <button type="submit" class="btn btn-inverse">Search</button>
+                            </form>
+                        </div>
+                        <div class="widget widget-heading-simple widget-body-white margin-none">
+                            <div class="widget-body">
+                                <h5 class="text-uppercase strong">30 Search results</h5>
+                                <hr class="separator" />
+                                <table class="table table-vertical-center">
+                                    <thead>
+                                        <tr>
+                                            <th class="center">Photo</th>
+                                            <th class="center">Full name</th>
+                                            <th class="center">Location</th>
+                                            <th class="center">Membership</th>
+                                            <th class="center">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="center"><img data-src="holder.js/50x50/dark" alt="Image" /></td>
+                                            <td class="strong center">Lorem Ipsum Dolor</td>
+                                            <td class="center">Romania <a href="" class="innerL text-underline">view on map <i class="icon-map-marker"></i></a></td>
+                                            <td class="center"><span class="label label-success"><i class="icon-ok"></i> Accepted</span></td>
+                                            <td class="center"><a href="" class="btn btn-small btn-primary">View <i class="icon-eye-open"></i></a></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="center"><img data-src="holder.js/50x50/dark" alt="Image" /></td>
+                                            <td class="strong center">John Doe</td>
+                                            <td class="center">United States <a href="" class="innerL text-underline">view on map <i class="icon-map-marker"></i></a></td>
+                                            <td class="center"><span class="label label-success"><i class="icon-ok"></i> Accepted</span></td>
+                                            <td class="center"><a href="" class="btn btn-small btn-primary">View <i class="icon-eye-open"></i></a></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="center"><img data-src="holder.js/50x50/dark" alt="Image" /></td>
+                                            <td class="strong center">Jane Doe</td>
+                                            <td class="center">Europe <a href="" class="innerL text-underline">view on map <i class="icon-map-marker"></i></a></td>
+                                            <td class="center"><span class="label label-important"><i class="icon-remove"></i> Rejected</span></td>
+                                            <td class="center"><a href="" class="btn btn-small btn-success">Accept <i class="icon-ok"></i></a></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="center"><img data-src="holder.js/50x50/dark" alt="Image" /></td>
+                                            <td class="strong center">Lorem Dolor</td>
+                                            <td class="center">Asia <a href="" class="innerL text-underline">view on map <i class="icon-map-marker"></i></a></td>
+                                            <td class="center"><span class="label label-important"><i class="icon-remove"></i> Rejected</span></td>
+                                            <td class="center"><a href="" class="btn btn-small btn-success">Accept <i class="icon-ok"></i></a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <hr class="separator" />
+                                <div class="pagination margin-none">
+                                    <ul>
+                                        <li class="disabled"><a href="#">&lt;</a></li>
+                                        <li class="active"><a href="#">1</a></li>
+                                        <li><a href="#">2</a></li>
+                                        <li><a href="#">3</a></li>
+                                        <li><a href="#">&gt;</a></li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="span3">
+
+        <div class="widget widget-heading-simple widget-body-gray">
+            <div class="widget-body">
+                <div class="glyphicons glyphicon-xlarge glyphicon-top circle_question_mark">
+                    <i></i>
+                    <h4>Have a Question?</h4>
+                    <p class="margin-none">Lorem Ipsum is simply dummy text of the printing and typesetting industry.<br/> <a href="" class="text-underline">Get your answer</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Widget -->
+        <div class="widget widget-heading-simple widget-body-gray">
+
+            <!-- Widget Heading -->
+            <div class="widget-head">
+                <h4 class="heading glyphicons list"><i></i>Categories</h4>
+            </div>
+            <!-- // Widget Heading END -->
+
+            <div class="widget-body list">
+
+                <!-- List -->
+                <ul>
+                    <li>
+                    <a href="">Make Up</a>
+                    <span class="badge">35</span>
+                    </li>
+                    <li>
+                    <a href="">Fragrances</a>
+                    <span class="badge">30</span>
+                    </li>
+                    <li>
+                    <a href="">Nails</a>
+                    <span class="badge">19</span>
+                    </li>
+                    <li>
+                    <a href="">Hair Products</a>
+                    <span class="badge">33</span>
+                    </li>
+                    <li>
+                    <a href="">Accessories</a>
+                    <span class="badge">17</span>
+                    </li>
+                </ul>
+                <!-- // List END -->
+
+            </div>
+        </div>
+        <!-- // Widget END -->
+
+    </div>
+</div>	
+</div>	
+
+
+                </div>
+
+                <div class="row-fluid">
+                    <div class="span12">
+                        <h4>{% block searchstats %}{{ results_list.paginator.count }} documents match "<i>{{ query }}</i>" - showing {{ results_list.start_index }}-{{ results_list.end_index }}{% endblock %}</h4>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <table class="table table-striped results">
+                            {% for result in results_list.object_list %}
+                            {% if result.content_type == "parts.part" %}
+                            {% include "search/includes/parts/part.html" %}
+                            {% endif %}
+                            {% if result.content_type == "nsn.nsn" %}
+                            {% include "search/includes/nsn/nsn.html" %}
+                            {% endif %}
+                            {% if result.content_type == "companies.company" %}
+                            {% include "search/includes/companies/company.html" %}
+                            {% endif %}
+                            {% endfor %}
+                        </table>
+
+                        <div class="pagination">
+                            {{ results_list.render }}
+                        </div>
+                    </div>
+
+                    {% if facets.fields.company %}
+                    <div class="well span3">
+                        <h3>Filter by company</h3>
+                        <dl>
+                            {% for company in facets.fields.company|slice:":30" %}
+                            {% if company.1 > 0 %}
+                            <dd class="company_facet">
+                            <a href="{% url search.views.results %}?q={{ searchterm|urlencode }}&amp;f=company_exact:{{ company.0|urlencode }}">{{ company.0 }}</a> ({{ company.1 }})
+                            </dd>
+                            {% endif %}
+                            {% endfor %}
+
+                        </dl>
+                    </div>
+                    {% endif %}
+
+                    {% if facets.fields.attributes %}
+                    <div class="well span3">
+                        <h3>Filter by Attribute</h3>
+                        <dl>
+
+                            {% for attributes in facets.fields.attributes|slice:":30" %}
+                            {% if attributes.1 > 0 %}
+                            <dd class="attribute_facet">
+                            <a href="{% url search.views.results %}?q={{ searchterm|urlencode }}&amp;f=attributes_exact:{{ attributes.0|urlencode }}">{{ attributes.0 }}</a> ({{ attributes.1 }})
+                            </dd>
+                            {% endif %}
+                            {% endfor %}
+
+                        </dl>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endblock %}

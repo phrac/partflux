@@ -1,12 +1,11 @@
-<tr>
-    <td><p style="font-weight:bold; font-size:.7em">PART</p></td>
-    <td>
-        <a href="{{ result.object.get_absolute_url }}">{{ result.object.number }}</a>
-    </td>
-    <td>
-        {{ result.object.description|truncatewords:20 }}
-    </td>
-    <td>
-        <a href="{{ result.object.company.get_absolute_url }}">{{ result.object.company.name }}</a>
-    </td>
-</tr>
+<div class="row-fluid">	
+    <div class="span10">
+        <h5 class="strong text-uppercase"><a href="{{ result.object.get_absolute_url }}">{{ result.object.number }}</a></h5>
+        <p>{{ result.object.description }}</p>
+        <p class="margin-none strong"><a href="{{ result.object.company.get_absolute_url }}" class="glyphicons single chevron-right"><i></i>{{ result.object.company.name }}</a></p>
+    </div>
+    <div class="span2 center">
+        <a href="" class="thumb"><img data-src="{{ STATIC_URL}}themes/plugins/scripts/other/holder/holder.js/150x100/text:No Image" alt="Image" /></a>
+    </div>
+</div>
+<hr class="separator" />
