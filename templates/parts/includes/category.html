@@ -1,15 +1,18 @@
-<h6 id="category-taxonomy">                                                                                                                              
+<div id="category-taxonomy">
+<ul class="inline">                                                                                                                              
     {% for c in part.categories.all %}                                                                                                
     {% for s in c.get_taxonomy %}                                                                                                     
-    {{ s }}                                                                                                                           
+    <li>{{ s }}</li>                                                                                                                           
     {% if forloop.last %}                                                                                                             
     {% else %}                                                                                                                        
-    >                                                                                                                                 
+<li class="divider">
+    <i class="icon-caret-right"></i>
+</li>                                                                                                                                
     {% endif %}                                                                                                                       
-    {% endfor %}
-    <br />                                                                                                                      
+    {% endfor %}                                                                                                                     
     {% endfor %}                                                                                                                      
     {% if user.is_staff %}
-    <a title="New Attribute" href="#category-modal" data-toggle="modal"><i class="pull-right icon-plus-sign icon-white"></i></a>             
-    {% endif %}                                                                                                                              
-</h6>
+    <li><a title="New Attribute" href="#category-modal" data-toggle="modal"><i class="icon-plus-sign"></i></a></li>             
+    {% endif %}
+   </ul>                                                                                                                              
+</div>

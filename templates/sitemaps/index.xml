@@ -3,7 +3,7 @@
 
 {% for date in dates %}
     <sitemap>
-        <loc>http://partengine.org/sitemap-parts-{{ date|date:"Y-m-d" }}.xml</loc>
+        <loc>http://partflux.com/sitemap-parts-{{ date|date:"Y-m-d" }}.xml</loc>
         <lastmod>{{ date|date:"Y-m-d" }}</lastmod>
     </sitemap>
 {% endfor %}

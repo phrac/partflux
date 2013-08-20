@@ -5,7 +5,7 @@
 {% for object in objects_list %}
     <url>
         <loc>{{ object.url }}</loc>
-        <changefreq>weekly</changefreq>
+        <changefreq>daily</changefreq>
     </url>
 {% endfor %}
 </urlset>

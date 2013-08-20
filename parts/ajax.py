@@ -114,7 +114,8 @@ def set_redirect_part(request):
     from_part_object.redirect_part = to_part_object
     from_part_object.save()
     to_part_object.cross_references.remove(from_part_object)
-    #attrs = Attribute.objects.filter(part=from_part_object)
+    if not to_part_object.image_url and from_part_object.image_url:
+        to_part_object.image_url = from_part_object.image_url
     for a in from_part_object.attribute_set.all():
         new_a, created = Attribute.objects.get_or_create(part=to_part_object,
                                                      key=a.key, value=a.value)
