@@ -71,7 +71,6 @@
 
         $(function(){
             $('.asin').click(function(){
-                console.log('click');
                 $("#id_asin").val($(this).text());
                 $("#add-asin").modal('show');
             });
@@ -83,17 +82,8 @@
 <script src="{{ STATIC_URL }}js/modal-form.js"></script>
 <script src="{{ STATIC_URL }}js/jquery.uniform.js"></script>
 <script src="{{ STATIC_URL }}js/select2.min.js"></script>
-<script src="{{ STATIC_URL }}js/jquery.validate.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.min.js"></script>
 <script src="{{ STATIC_URL }}js/unicorn.form_validation.js"></script>
-    <script type="text/javascript">
-        $('#cancel-attribute').click(function() {    
-            $('#attribute-form').each(function() {this.reset();});
-            var validator = $("#attribute-form").validate();
-            validator.resetForm();
-        });
-    </script>
-    
-
     <script type="text/javascript">
     $(document).ready(function() { 
             $("select").select2({ width: 'resolve' });           
