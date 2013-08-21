@@ -2,10 +2,12 @@
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 {% for date in dates %}
+    {% for num, url in date.items %}
     <sitemap>
-        <loc>http://partflux.com/sitemap-parts-{{ date|date:"Y-m-d" }}.xml</loc>
-        <lastmod>{{ date|date:"Y-m-d" }}</lastmod>
+        <loc>http://partflux.com/sitemap-parts-{{ url|date:"Y-m-d" }}-{{ num }}.xml</loc>
+        <lastmod>{{ url|date:"Y-m-d" }}</lastmod>
     </sitemap>
+    {% endfor %}
 {% endfor %}
 
 </sitemapindex>

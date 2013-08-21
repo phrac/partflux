@@ -3,10 +3,12 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
 {% for object in objects_list %}
+    {% if object.url %}
     <url>
         <loc>{{ object.url }}</loc>
         <changefreq>daily</changefreq>
     </url>
+    {% endif %}
 {% endfor %}
 </urlset>
 {% endif %}

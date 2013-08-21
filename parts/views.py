@@ -142,18 +142,13 @@ def detail(request, part_id, company_slug, part_slug):
             p.ean = product.ean
             if not p.image_url:
                 p.image_url = product.large_image_url
+            ### check that the image is valid here ###
             p.save()
                 
             ds = DistributorSKU(distributor=d, part=p, sku=asin, price=price[0],
                                 url = product.offer_url)
             ds.save()
             
-            for x in p.cross_references.all():
-                x.asin = asin
-                x.upc = product.upc
-                x.ean = product.ean
-                x.save()
-                
             if request.is_ajax():
                 return render_to_response('parts/includes/attribute_table.html',
                                           {'part': p,},
