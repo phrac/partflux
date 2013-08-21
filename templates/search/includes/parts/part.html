@@ -1,11 +1,18 @@
+{% load thumbnail %}
 <div class="row-fluid">	
-    <div class="span10">
-        <h5 class="strong text-uppercase"><a href="{{ result.object.get_absolute_url }}">{{ result.object.number }}</a></h5>
-        <p>{{ result.object.description }}</p>
-        <p class="margin-none strong"><a href="{{ result.object.company.get_absolute_url }}" class="glyphicons single chevron-right"><i></i>{{ result.object.company.name }}</a></p>
+    <div class="span9">
+        <span style="font-weight:bold; font-size:.7em">PART</span>
+        <h5 class="strong text-uppercase"><a class="glyphicons single chevron-right" href="{{ result.object.get_absolute_url }}"><i></i>{{ result.object.number }}
+            by 
+                {{ result.object.company.name }}</a>
+        </h5>
+        <strong>{{ result.object.description }}</strong>
+        {% if result.object.long_description %}
+        <p>{{ result.object.long_description|safe|truncatewords_html:30|default:"No further description" }}</p>
+        {% endif %}
     </div>
-    <div class="span2 center">
-        <a href="" class="thumb"><img data-src="{{ STATIC_URL}}themes/plugins/scripts/other/holder/holder.js/150x100/text:No Image" alt="Image" /></a>
+    <div class="span2 offset1 center" id="img-{{ result.object.pk }}">
+        <i class="icon-spinner icon-spin icon-large"></i>
     </div>
 </div>
 <hr class="separator" />

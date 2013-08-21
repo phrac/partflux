@@ -33,7 +33,7 @@ class Company(models.Model):
         super(Company, self).save(*args, **kwargs)
 
     def __unicode__(self):
-        return "%s (%s)" % (self.name, self.id )
+        return "%s" % self.name
     
     def get_absolute_url(self):
         from django.core.urlresolvers import reverse

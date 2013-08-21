@@ -1,9 +1,9 @@
-<tr>
-    <td style="width:5%" class="part_number"><p style="font-weight:bold; font-size:.7em">COMPANY</p></td>
-    <td style="width:20%" class="part_number">
-        <a href="{{ result.object.get_absolute_url }}">{{ result.object.name }}</a>
-    </td>
-    <td colspan="2" class="part_desc">
-        {{ result.object.description|truncatewords:20|default:"Sorry, no description available." }}
-    </td>
-</tr>
+<div class="row-fluid">	
+    <div class="span10">
+        <p style="font-weight:bold; font-size:.7em">PART</p>
+        <h5 class="strong text-uppercase"><a href="{{ result.object.get_absolute_url }}">{{ result.object.name }}</a></h5>
+        <p>{{ result.object.description|safe|default:"No company description available."|truncatewords_html:30 }}</p>
+        <p class="margin-none strong"><a href="{{ result.object.company.get_absolute_url }}" class="glyphicons single chevron-right"><i></i>{{ result.object.company.name }}</a></p>
+    </div>
+</div>
+<hr class="separator" />

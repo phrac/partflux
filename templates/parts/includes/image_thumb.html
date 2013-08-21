@@ -1,0 +1,8 @@
+{% load thumbnail %}
+{% if part.image_url %}
+{% thumbnail part.image_url "125x125" as im %}
+<img src="{{ im.url }}" alt="{{ part.number }} image" />
+{% endthumbnail %}
+{% endif %}
+        
+

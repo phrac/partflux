@@ -57,7 +57,6 @@
 </script>
 <script type="text/javascript">
     $(document).ready(function() {
-            $('#buylink-table').load('/parts/ajax/load_distributors/{{ part.pk }}');
             $('#datacard').load('/parts/ajax/load_images/{{ part.pk }}');
             });
 </script>
@@ -119,8 +118,6 @@
             <div class="widget-body">
                 <div class="lead center" id="datacard">
                     <i class="icon-spinner icon-spin icon-large"></i>
-                    <br />
-                    Overview
                 </div>
                 <div id="data-card">
                     <table class="table table-condensed">
