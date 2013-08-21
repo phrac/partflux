@@ -13,7 +13,7 @@ class Offer:
                        'manufacturer': 'MANUFACTURER', 'sku': 'SKU',
                        'distributor': 'PROGRAMNAME', 'description': 'NAME',
                        'long_description': 'DESCRIPTION', 'price':'PRICE',
-                       'image_url': 'IMAGEURL'}
+                       'image_url': 'IMAGEURL', 'upc': 'UPC'}
         elif network == 'pj':
             mapping = {'buylink': 'buy_url', 'mpn': 'mpn', 'upc': 'upc',
                        'manufacturer': 'manufacturer', 'sku': 'sku',
@@ -89,6 +89,10 @@ class Offer:
             if not part.image_url:
                 part.image_url = self.image_url
                 part.save()
+            if not part.upc and self.upc:
+                part.upc = self.upc
+                part.save()
+                
         except ObjectDoesNotExist:
             part = Part(number=self.mpn, company=manufacturer,
                         description=self.description, long_description=self.long_description)

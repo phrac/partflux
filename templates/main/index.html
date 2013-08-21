@@ -44,7 +44,7 @@
                         <li>
                         <span class="date">{{ p.updated_at|date:"H:i" }}</span>
                         <span class="glyphicons activity-icon cogwheel"><i></i></span>
-                        <span class="ellipsis"><a href="{{ p.get_absolute_url }}">{{ p.number }}</a> - {{ p.description }}
+                        <span class="ellipsis"><a href="{{ p.get_absolute_url }}">{{ p.number }}</a> - {{ p.description|safe }}
                             <div class="clearfix"></div>
                             </li>
                             {% endfor %}

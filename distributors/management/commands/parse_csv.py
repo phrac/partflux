@@ -20,6 +20,7 @@ class Command(BaseCommand):
             counter = 0
             csvfile = csv.DictReader(gzip.open(current_file, 'rb'), delimiter=',')
             for product in csvfile:
+                #print product
                 offer = Offer(network, product)
                 if len(offer.mpn) < 48 and len(offer.mpn) > 2:
                     print "[%s] %s: SKU %s" % (counter, offer.mpn, offer.sku)
@@ -27,7 +28,7 @@ class Command(BaseCommand):
                     counter += 1
                 else:
                     print "INVALID MPN"
-            #os.remove(current_file)
+            os.remove(current_file)
 
 
 
