@@ -10,8 +10,22 @@ class PartIndex(indexes.SearchIndex, indexes.Indexable):
     category = indexes.CharField(faceted=True, indexed=False)
     with_distributors = indexes.FacetBooleanField()
     with_image = indexes.FacetBooleanField()
+    num_distributors = indexes.IntegerField(faceted=True, indexed=False)
+    low_price = indexes.DecimalField(faceted-True, indexed=False)
+    high_price = indexes.DecimalField(faceted=True, indexed=False)
     url = indexes.CharField(indexed=False)
 
+    def prepare_high_price(self, obj):
+        price = DistributorSKU.objects.filter(part=p).aggregate(max_price=Max('price'))
+        return price.max_price
+    
+    def prepare_low_price(self, obj):
+        price = DistributorSKU.objects.filter(part=obj).aggregate(min_price=Min('price'))
+        return price.min_price
+    
+    def prepare_num_distributors(self, obj):
+        return DistributorSKU.objects.filter(part=obj).count()
+    
     def prepare_with_image(self, obj):
         if obj.image_url:
             return True
