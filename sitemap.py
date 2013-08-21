@@ -18,7 +18,7 @@ def index(request):
         next_date = current_date + timedelta(hours=24)
         count = SearchQuerySet().filter(created__range=[current_date, next_date]).count()
         if count > 0:
-            num_pages = int(math.ceil(count/10000))
+            num_pages = int(math.ceil(count/10000.0))
             for x in range(0, num_pages):
                 urldict[x] = today
             date_list.append(urldict)
