@@ -33,14 +33,6 @@ Search Results
     <div class="span9">
 
         <div class="widget widget-tabs widget-tabs-gray">
-            <div class="widget-head">
-                <ul>
-                    <li class="active"><a href="#search-simple" data-toggle="tab">Simple search</a></li>
-                    <!--<li><a href="#search-advanced" data-toggle="tab">Advanced search</a></li>
-                    <li><a href="#search-media" data-toggle="tab">Media search</a></li>
-                    <li><a href="#search-users" data-toggle="tab">Users search</a></li>-->
-                </ul>
-            </div>
             <div class="widget-body">
                 <div class="tab-content">
 
@@ -54,6 +46,7 @@ Search Results
                         <div class="widget widget-heading-simple widget-body-white margin-none">
                             <div class="widget-body">
                                 <h5 class="text-uppercase strong separator bottom">{{ results_list.paginator.count }} Search results</h5>
+                                <hr class="separator" />
                                 {% for result in results_list.object_list %}
                                 {% if result.content_type == "parts.part" %}
                                 {% include "search/includes/parts/part.html" %}
@@ -79,8 +72,11 @@ Search Results
     </div>
     <div class="span3">
         <h4 class="center">Filter Results</h4>
+        {% if applied_facets %}
+        <strong>Remove filters:</strong><br />
+        {% endif %}
         {% for k, v in applied_facets.items %}
-        <span class="label label-important"><a style="color:#ccc;" href="{{ v }}"><i class="icon-remove-sign"></i> {{ k }}</a></span><br />
+        <span class="label label-success"><a style="color:#eee;" href="{{ v }}"><i class="icon-remove-sign"></i> {{ k }}</a></span><br />
         {% endfor %}
         <br />
         <!-- Widget -->
@@ -88,7 +84,7 @@ Search Results
 
             <!-- Widget Heading -->
             <div class="widget-head">
-                <h4 class="heading glyphicons list"><i></i>Brands</h4>
+                <h4 class="heading glyphicons building"><i></i>Brands</h4>
             </div>
             <!-- // Widget Heading END -->
 
@@ -113,7 +109,7 @@ Search Results
 
             <!-- Widget Heading -->
             <div class="widget-head">
-                <h4 class="heading glyphicons building"><i></i>Categories</h4>
+                <h4 class="heading glyphicons more_items"><i></i>Categories</h4>
             </div>
             <!-- // Widget Heading END -->
 

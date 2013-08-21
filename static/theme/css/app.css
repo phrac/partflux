@@ -389,7 +389,7 @@ p.separator i {
   text-transform: lowercase;
 }
 .text-faded {
-  color: #d7d7d7 !important;
+  color: #c7c7c7 !important;
 }
 .text-large {
   font-size: 35px !important;
@@ -1539,7 +1539,7 @@ html.top-full .navbar.main .topnav > li > a {
   padding: 0 15px;
   height: 43px;
   line-height: 43px;
-  font-weight: 600;
+  font-weight: bold;
 }
 html.top-full .navbar.main .topnav > li > a > img {
   margin: 0 0 3px;
@@ -3379,7 +3379,7 @@ html.top-full .navbar.main .topnav .dropdown-menu {
 }
 .breadcrumb li a {
   color: #ababab;
-  font-weight: 600;
+  font-weight:bold;
 }
 .breadcrumb li a.glyphicons {
   color: #ababab;
@@ -8103,7 +8103,7 @@ html.front.top-full .navbar.main .secondary .topnav > li.follow a + a {
   padding: 0 0 0 7.5px;
 }
 html.front.top-full .navbar.main .secondary .topnav > li.follow span {
-  font-weight: 600;
+  font-weight: bold;
   color: #dbdbdb;
   -webkit-transition: color 300ms ease;
   -moz-transition: color 300ms ease;
