@@ -59,6 +59,23 @@
     $(document).ready(function() {
             $('#datacard').load('/parts/ajax/load_images/{{ part.pk }}');
             });
+        </script>
+<script type="text/javascript">
+    $('a.tweet').click(function(e){
+ 
+  //We tell our browser not to follow that link
+  e.preventDefault();
+ 
+  //We get the URL of the link
+  var loc = $(this).attr('data-href');
+ 
+  //We get the title of the link
+  var title  = escape($(this).attr('data-title'));
+ 
+  //We trigger a new window with the Twitter dialog, in the middle of the page
+  window.open('http://twitter.com/share?url=' + loc + '&text=' + title + '&', 'twitterwindow', 'height=450, width=550, top='+($(window).height()/2 - 225) +', left='+$(window).width()/2 +', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0');
+ 
+  });
 </script>
 
 {% if user.is_staff %}
@@ -261,7 +278,9 @@
                             <a href="#distributors" class="btn btn-icon btn-large glyphicons cart_in btn-success btn-block"><i></i>See all Distributors</a>
                         </div>
                         <div class="text-right share">
-                            <a href="" class="glyphicons standard facebook"><i></i></a> <a href="" class="glyphicons standard twitter"><i></i></a>
+                            <a href="#" class="glyphicons standard facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href), 'facebook-share-dialog', 'width=626,height=436'); return false;">
+                            <i></i></a> 
+                        <a href="#" data-href="http://partflux.com{{ request.get_full_path }}" data-title="I just found {{ part.number }} by {{ part.company.name }} on Part Flux!" class="tweet glyphicons standard twitter"><i></i></a>
                         </div>
                         <div class="separator bottom"></div>
                         {% if user.is_staff %}
