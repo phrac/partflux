@@ -2,11 +2,11 @@
 
 {% block breadcrumbs %}
 <li class="divider">
-    <i class="icon-caret-right"></i>
+<i class="icon-caret-right"></i>
 </li>
 <li><a href="{% url 'search.views.index' %}">Search</a></li>
 <li class="divider">
-    <i class="icon-caret-right"></i>
+<i class="icon-caret-right"></i>
 </li>
 <li>"<em>{{ query }}</em>"</a></li>
 {% endblock %}
@@ -18,65 +18,188 @@ Search Results
 {% endblock %}
 
 {% block search_active %}active{% endblock %}
+{% block js %}
+<script type="text/javascript">
+    $(document).ready(function() {
+        {% for result in results_list.object_list %}
+        $('#img-{{ result.object.pk }}').load('/parts/ajax/load_images/{{ result.object.pk }}');
+        {% endfor %}
+    });
+</script>
 
+{% endblock %}
 {% block content %}
-<div class="row-fluid">
-    <div class="span12">
-        <h4>{% block searchstats %}{{ results_list.paginator.count }} documents match "<i>{{ query }}</i>" - showing {{ results_list.start_index }}-{{ results_list.end_index }}{% endblock %}</h4>
-    </div>
-</div>
-<div class="row-fluid">
-    <div class="span12">
-        <table class="table table-striped results">
-            {% for result in results_list.object_list %}
-            {% if result.content_type == "parts.part" %}
-            {% include "search/includes/parts/part.html" %}
-            {% endif %}
-            {% if result.content_type == "nsn.nsn" %}
-            {% include "search/includes/nsn/nsn.html" %}
-            {% endif %}
-            {% if result.content_type == "companies.company" %}
-            {% include "search/includes/companies/company.html" %}
-            {% endif %}
-            {% endfor %}
-        </table>
+<div class="row-fluid" style="margin-top:10px;">
+    <div class="span9">
 
-        <div class="pagination">
-            {{ results_list.render }}
+        <div class="widget widget-tabs widget-tabs-gray">
+            <div class="widget-head">
+                <ul>
+                    <li class="active"><a href="#search-simple" data-toggle="tab">Simple search</a></li>
+                    <!--<li><a href="#search-advanced" data-toggle="tab">Advanced search</a></li>
+                    <li><a href="#search-media" data-toggle="tab">Media search</a></li>
+                    <li><a href="#search-users" data-toggle="tab">Users search</a></li>-->
+                </ul>
+            </div>
+            <div class="widget-body">
+                <div class="tab-content">
+
+                    <div class="tab-pane active" id="search-simple">
+                        <div class="widget widget-heading-simple widget-body-simple text-right">
+                            <form class="form-search">
+                                <input name="q" value="{{ query }}" type="text" class="input-large" placeholder="Type your keywords .. " />
+                                <button type="submit" class="btn btn-inverse">Search</button>
+                            </form>
+                        </div>
+                        <div class="widget widget-heading-simple widget-body-white margin-none">
+                            <div class="widget-body">
+                                <h5 class="text-uppercase strong separator bottom">{{ results_list.paginator.count }} Search results</h5>
+                                {% for result in results_list.object_list %}
+                                {% if result.content_type == "parts.part" %}
+                                {% include "search/includes/parts/part.html" %}
+                                {% endif %}
+                                {% if result.content_type == "companies.company" %}
+                                {% include "search/includes/companies/company.html" %}
+                                {% endif %}
+                                {% endfor %}
+
+                                <hr class="separator" />
+                                <div class="pagination margin-none">
+                                    {{ results_list.render }}
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
+
     </div>
+    <div class="span3">
+        <h4 class="center">Filter Results</h4>
+        {% for k, v in applied_facets.items %}
+        <span class="label label-important"><a style="color:#ccc;" href="{{ v }}"><i class="icon-remove-sign"></i> {{ k }}</a></span><br />
+        {% endfor %}
+        <br />
+        <!-- Widget -->
+        <div class="widget widget-heading-simple widget-body-gray">
 
-    {% if facets.fields.company %}
-    <div class="well span3">
-        <h3>Filter by company</h3>
-        <dl>
-            {% for company in facets.fields.company|slice:":30" %}
-            {% if company.1 > 0 %}
-            <dd class="company_facet">
-            <a href="{% url search.views.results %}?q={{ searchterm|urlencode }}&amp;f=company_exact:{{ company.0|urlencode }}">{{ company.0 }}</a> ({{ company.1 }})
-            </dd>
-            {% endif %}
-            {% endfor %}
+            <!-- Widget Heading -->
+            <div class="widget-head">
+                <h4 class="heading glyphicons list"><i></i>Brands</h4>
+            </div>
+            <!-- // Widget Heading END -->
 
-        </dl>
+            <div class="widget-body list">
+
+                <!-- List -->
+                <ul>
+                    {% for brand in facets.fields.brand|slice:":8" %}
+                    <li>
+                  <a href="{{ request.get_full_path }}&amp;selected_facets=brand_exact:&quot;{{ brand.0|urlencode }}&quot;">{{ brand.0 }}</a>
+                    <span class="badge">{{ brand.1 }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <!-- // List END -->
+
+            </div>
+        </div>
+        <!-- // Widget END -->
+        <!-- Widget -->
+        <div class="widget widget-heading-simple widget-body-gray">
+
+            <!-- Widget Heading -->
+            <div class="widget-head">
+                <h4 class="heading glyphicons building"><i></i>Categories</h4>
+            </div>
+            <!-- // Widget Heading END -->
+
+            <div class="widget-body list">
+
+                <!-- List -->
+                <ul>
+                    {% for c in facets.fields.category|slice:":8" %}
+                    <li>
+                    <a href="{{ request.get_full_path }}&amp;selected_facets=category_exact:&quot;{{ c.0|urlencode }}&quot;">{{ c.0 }}</a>
+                    <span class="badge">{{ c.1 }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <!-- // List END -->
+
+            </div>
+        </div>
+        <!-- // Widget END -->
+
+        <!-- Widget -->
+        <div class="widget widget-heading-simple widget-body-gray">
+
+            <!-- Widget Heading -->
+            <div class="widget-head">
+                <h4 class="heading glyphicons cargo"><i></i>Distributor Information?</h4>
+            </div>
+            <!-- // Widget Heading END -->
+
+            <div class="widget-body list">
+
+                <!-- List -->
+                <ul>
+                    {% for d in facets.fields.with_distributors %}
+                    <li>
+                    <a href="{{ request.get_full_path }}&amp;selected_facets=with_distributors:{{ d.0|urlencode }}">
+                    {% if d.0 == 'F' %}
+                    No
+                    {% else %}
+                    Yes
+                    {% endif %}
+                    </a>
+                    <span class="badge">{{ d.1 }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <!-- // List END -->
+
+            </div>
+        </div>
+        <!-- // Widget END -->
+
+	<!-- Widget -->
+        <div class="widget widget-heading-simple widget-body-gray">                                                                                    
+            <!-- Widget Heading -->                                                                                                                    
+            <div class="widget-head">                                                                                               
+                <h4 class="heading glyphicons picture"><i></i>Has an image?</h4>                                                              
+            </div>                                                                                                                                     
+            <!-- // Widget Heading END -->                                                                                                             
+                                                                                                                                                       
+            <div class="widget-body list">                                                                                                             
+                                                                                                                                                       
+                <!-- List -->                                                                                                                          
+                <ul>                                                                                                                                   
+                    {% for d in facets.fields.with_image %}                                                                                     
+                    <li>                                                                                                                               
+                    <a href="{{ request.get_full_path }}&amp;selected_facets=with_image:{{ d.0|urlencode }}">                                   
+                    {% if d.0 == 'F' %}                                                                                                              
+                    No
+                    {% else %}
+                    Yes
+                    {% endif %}
+                    </a>
+                    <span class="badge">{{ d.1 }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <!-- // List END -->
+            </div>
+        </div>
+        <!-- // Widget END -->
+
     </div>
-    {% endif %}
+</div>	
+</div>	
 
-    {% if facets.fields.attributes %}
-    <div class="well span3">
-        <h3>Filter by Attribute</h3>
-        <dl>
 
-            {% for attributes in facets.fields.attributes|slice:":30" %}
-            {% if attributes.1 > 0 %}
-            <dd class="attribute_facet">
-            <a href="{% url search.views.results %}?q={{ searchterm|urlencode }}&amp;f=attributes_exact:{{ attributes.0|urlencode }}">{{ attributes.0 }}</a> ({{ attributes.1 }})
-            </dd>
-            {% endif %}
-            {% endfor %}
-
-        </dl>
-    </div>
-    {% endif %}
-</div>
+                </div>
 {% endblock %}

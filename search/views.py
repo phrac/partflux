@@ -50,7 +50,7 @@ def results(request):
         
 
         if q:
-            sqs = SearchQuerySet().models(Part).models(Company).facet('brand').facet('category').facet('with_distributors').auto_query(q)
+            sqs = SearchQuerySet().models(Part).models(Company).facet('brand').facet('category').facet('with_distributors').facet('with_image').auto_query(q)
             
             for facet in selected_facets:
                 sqs = sqs.narrow(facet)
@@ -63,7 +63,7 @@ def results(request):
         p = Paginator(sqs, 10, request=request)
         results_list = p.page(page)
 
-    return render_to_response('search/results_new.html',
+    return render_to_response('search/results.html',
                               { 
                                   'results_list': results_list, 
                                   'query': q,
