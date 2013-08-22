@@ -207,11 +207,11 @@
                 <div class="widget widget-heading-simple widget-body-gray">
                     <div class="widget-head"><h4 class="heading glyphicons notes strong"><i></i>Detailed Description</h4></div>
                     <div class="widget-body">
-                       <p><span class="text-primary strong text-uppercase">{{ part.description|safe }}</span><br /><br /> {{ part.long_description|safe|default:"" }}</p>
+                       <span class="text-primary strong">{{ part.description|safe }}</span><br /><br /><div id="description-div">{% include 'parts/includes/long_description.html' %}</div>
                     </div>
                     {% if user.is_staff %}
                     <div class="separator bottom">
-                    <a href="#attribute-modal" data-toggle="modal" class="hidden-phone btn btn-toggle-code btn-mini btn-primary btn-icon">
+                    <a href="#description-modal" data-toggle="modal" class="hidden-phone btn btn-toggle-code btn-mini btn-primary btn-icon">
                         <i class="icon-plus-sign icon-white"></i> Edit Description
                     </a>
                 </div>
@@ -423,6 +423,7 @@
         {% include 'parts/includes/modals/asin_modal.html' %}
         {% include 'parts/includes/modals/category_modal.html' %}
         {% include 'distributors/modals/new_sku.html' %}
+        {% include 'parts/includes/modals/description_modal.html' %}
         {% endif %}
 
 {% endblock %}

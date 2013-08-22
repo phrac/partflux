@@ -123,7 +123,7 @@ def set_redirect_part(request):
     for d in distributors:
         d.part = to_part_object
         d.save()
-
+    to_part_object.save()
     return HttpResponseRedirect(reverse('parts.views.detail',
                                                     args=[to_part_object.id,
                                                           to_part_object.company.slug,

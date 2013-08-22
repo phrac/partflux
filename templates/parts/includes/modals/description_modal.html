@@ -1,0 +1,27 @@
+<div class="modal hide" id="description-modal">
+    {% if user.is_authenticated %}
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+        <h3>Edit Description</h3>
+    </div>
+    <div class="modal-body">
+
+        <form data-div-update="#description-div" data-gritter-title-success="Description Updated" data-gritter-msg-success="Thanks for contributing! Your reputation has been incremented" data-gritter-error-title="Something went wrong" id="description-form" class="modal-form form-horizontal" autocomplete="off" method="post">
+            {% csrf_token %}
+            <div class="control-group">
+                <label class="control-label" for="id_part">Description</label>
+
+                    <textarea class="field span5" id="id_description" name="description" rows="15">{{ part.long_description }}</textarea>
+
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input type="hidden" name="description_button" value="1" />
+            <button id="save-description" disabled="disabled" data-loading-text="Saving..." class="modal-form-submit btn btn-inverse">Save Description</button>
+            <button id="cancel-attribute" class="btn" data-dismiss="modal">Cancel</button>
+        </form>
+    </div>
+    {% else %}
+    {% include 'includes/login_modal.html' %}
+    {% endif %}
+</div>

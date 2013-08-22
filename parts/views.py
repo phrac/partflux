@@ -124,6 +124,15 @@ def detail(request, part_id, company_slug, part_slug):
         else:
             print 'Not valid'
             print newskuform.errors
+    
+    if 'description_button' in request.POST:
+        description = request.POST.get('description', '')
+        p.long_description = description
+        p.save()
+        if request.is_ajax():
+            return render_to_response('parts/includes/long_description.html',
+                                        {'part': p,},
+                                    context_instance=RequestContext(request))
 
     if 'asin_button' in request.POST:
         asinform = ASINForm(request.POST)
@@ -206,13 +215,6 @@ def detail(request, part_id, company_slug, part_slug):
             else:
                 return HttpResponseRedirect(reverse('parts.views.detail',
                                                 args=[part_id, p.company.slug, p.slug]))
-    
-    if 'image_button' in request.POST:
-        imageuploadform = ImageUploadForm(request.POST, request.FILES)
-        if imageuploadform.is_valid:
-            status = uploadimage(request, p.pk, imageuploadform)
-            return HttpResponseRedirect(reverse('parts.views.detail',
-                                                    args=[part_id, p.company.slug, p.slug]))
             
     return render(request, 'parts/detail.html', {'part': p, 
             'metadata_form': metaform, 
