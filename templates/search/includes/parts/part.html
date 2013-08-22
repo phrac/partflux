@@ -10,6 +10,7 @@
         {% if result.object.long_description %}
         <p>{{ result.object.long_description|safe|truncatewords_html:30|default:"No further description" }}</p>
         {% endif %}
+        <span class="pull-right"><h5><strong>${{ result.low_price }} - ${{ result.high_price }} from <em>{{ result.num_distributors }}</em> distributor(s)</strong></h5></span>
     </div>
     <div class="span2 offset1 center" id="img-{{ result.object.pk }}">
         <i class="icon-spinner icon-spin icon-large"></i>

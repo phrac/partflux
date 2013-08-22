@@ -2,6 +2,7 @@ from haystack import indexes
 from parts.models import Part, Attribute, Category
 from distributors.models import DistributorSKU
 from django.utils.encoding import smart_str
+from django.db.models import Avg, Max, Min
 
 class PartIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, use_template=True)
@@ -11,17 +12,17 @@ class PartIndex(indexes.SearchIndex, indexes.Indexable):
     with_distributors = indexes.FacetBooleanField()
     with_image = indexes.FacetBooleanField()
     num_distributors = indexes.IntegerField(faceted=True, indexed=False)
-    low_price = indexes.DecimalField(faceted-True, indexed=False)
+    low_price = indexes.DecimalField(faceted=True, indexed=False)
     high_price = indexes.DecimalField(faceted=True, indexed=False)
     url = indexes.CharField(indexed=False)
 
     def prepare_high_price(self, obj):
-        price = DistributorSKU.objects.filter(part=p).aggregate(max_price=Max('price'))
-        return price.max_price
+        price = DistributorSKU.objects.filter(part=obj).aggregate(max_price=Max('price'))
+        return price['max_price']
     
     def prepare_low_price(self, obj):
         price = DistributorSKU.objects.filter(part=obj).aggregate(min_price=Min('price'))
-        return price.min_price
+        return price['min_price']
     
     def prepare_num_distributors(self, obj):
         return DistributorSKU.objects.filter(part=obj).count()

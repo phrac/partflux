@@ -1,6 +1,6 @@
 <div class="row-fluid">	
     <div class="span10">
-        <p style="font-weight:bold; font-size:.7em">PART</p>
+        <p style="font-weight:bold; font-size:.7em">MANUFACTURER</p>
         <h5 class="strong text-uppercase"><a href="{{ result.object.get_absolute_url }}">{{ result.object.name }}</a></h5>
         <p>{{ result.object.description|safe|default:"No company description available."|truncatewords_html:30 }}</p>
         <p class="margin-none strong"><a href="{{ result.object.company.get_absolute_url }}" class="glyphicons single chevron-right"><i></i>{{ result.object.company.name }}</a></p>
