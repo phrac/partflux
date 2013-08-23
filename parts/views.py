@@ -1,5 +1,4 @@
 from amazon.api import AmazonAPI
-from annoying.decorators import ajax_request, render_to
 from django.shortcuts import render, redirect, get_object_or_404, render_to_response
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect, HttpResponse

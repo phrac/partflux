@@ -166,14 +166,15 @@ INSTALLED_APPS = (
     'django.contrib.sitemaps',
     # external apps
     'pure_pagination',
-    'registration',
     'sorl.thumbnail',
-    'django_gravatar',
-    'faq',
     'haystack',
     'storages',
     'south',
     'tastypie',
+    'blogango',
+    'pingback',
+    'taggit',
+    'django_xmlrpc',
     # partfindr apps    
     'main',
     'parts',
