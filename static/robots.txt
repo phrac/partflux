@@ -1,5 +1,4 @@
 User-agent: *
-Crawl-delay: 2
 Disallow: /cgi-bin/
 Disallow: /users/
 Disallow: /parts/add/

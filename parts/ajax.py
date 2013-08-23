@@ -1,6 +1,6 @@
 from django.shortcuts import render_to_response, get_object_or_404
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.core.files.storage import default_storage
@@ -91,10 +91,12 @@ def get_distributors(request, part_id):
                                   context_instance=RequestContext(request))
 def get_images(request, part_id):
     p = Part.objects.get(id=part_id)
-    if request.is_ajax:
+    if request.is_ajax():
         return render_to_response('parts/includes/image_thumb.html',
                                   {'part': p,},
                                   context_instance=RequestContext(request))
+    else:
+        return HttpResponseForbidden()
 
 @login_required
 def admin_asin_search(request, part_id):
