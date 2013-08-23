@@ -4,7 +4,8 @@ from django.shortcuts import render, redirect, get_object_or_404, render_to_resp
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect, HttpResponse
 from django.template import RequestContext
-from django.template.defaultfilters import slugify, truncatechars
+from django.template.defaultfilters import slugify, truncatechars, title
+from main.templatetags import truncatesmart
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -61,31 +62,36 @@ def redirect_sitemap(request, part_id):
     
 @login_required
 def empty_category(response):
-    parts = Part.objects.filter(categories=None).order_by('?')[:1]
-    p = parts[0]
+    from random import randint
+    max_ = Part.objects.aggregate(Max('id'))['id__max']
+    p = Part.objects.filter(id__gte=randint(1, max_))[0]
+
     return HttpResponseRedirect(reverse('parts.views.detail', args=[p.id, p.company.slug, p.slug]))
     
 def detail(request, part_id, company_slug, part_slug):
     p = get_object_or_404(Part, id=part_id)
     
     # redirect this part if it has a master part
-    if p.redirect_part is not None:
-        redirect = get_object_or_404(Part, id=p.redirect_part.id)
-        return HttpResponseRedirect(reverse('parts.views.detail',
-                                            args=[redirect.id,
-                                                  redirect.company.slug,
-                                                  redirect.slug]))
+    try:
+        if p.redirect_part is not None:
+            redirect = p.redirect_part
+            return HttpResponseRedirect(reverse('parts.views.detail',
+                                                args=[redirect.id,
+                                                      redirect.company.slug,
+                                                      redirect.slug]))
+    except:
+        pass
 
-    mlt = SearchQuerySet().models(Part).more_like_this(p)[:10]
+    #mlt = SearchQuerySet().models(Part).more_like_this(p)[:10]
     pricing = DistributorSKU.objects.filter(part=p).aggregate(avg_price=Avg('price'), max_price=Max('price'), min_price=Min('price'))
     distributor_skus = DistributorSKU.objects.filter(part=p).order_by('price')
     current_site = get_current_site(request)
-    title = "%s by %s - %s | %s" % (p.number, p.company.name,
-                                    truncatechars(p.description,
+    page_title = "%s %s - %s | %s" % (p.company.name, p.number,
+                                    truncatesmart.truncatesmart(title(p.description),
                                     (settings.MAX_PAGE_TITLE_LENGTH
                                      - (len(p.number) +
                                      len(p.company.name)
-                                     + 22))),
+                                     + 12))),
                                     current_site.name)
 
     metaform = MetadataForm(None)
@@ -139,7 +145,6 @@ def detail(request, part_id, company_slug, part_slug):
         if asinform.is_valid():
             asin = asinform.cleaned_data['asin']
             p.asin = asin
-            p.save()
             d = Distributor.objects.get(name='Amazon')
             amazon = AmazonAPI(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY, settings.AWS_ASSOCIATE_TAG)
             try:
@@ -149,14 +154,15 @@ def detail(request, part_id, company_slug, part_slug):
             price = product.price_and_currency
             p.upc = product.upc
             p.ean = product.ean
-            if not p.image_url:
+            
+            if not p.image_url or request.POST.get('replace_image', False):
                 p.image_url = product.large_image_url
-            ### check that the image is valid here ###
-            p.save()
                 
+            p.save()
             ds = DistributorSKU(distributor=d, part=p, sku=asin, price=price[0],
                                 url = product.offer_url)
             ds.save()
+            p.save()
             
             if request.is_ajax():
                 return render_to_response('parts/includes/attribute_table.html',
@@ -192,6 +198,7 @@ def detail(request, part_id, company_slug, part_slug):
             cat = Category.objects.get(id=cat1)
             
         p.categories.add(cat)
+        p.save()
 	for c in p.cross_references.all():
 	    c.categories.add(cat)
             
@@ -221,8 +228,8 @@ def detail(request, part_id, company_slug, part_slug):
             'xref_form' : xrefform,
             'imageuploadform' : imageuploadform,
             'newskuform' : newskuform,
-            'mlt': mlt,
-            'page_title': title,
+            #'mlt': mlt,
+            'page_title': page_title,
             'agg_pricing': pricing,
             'distributor_skus': distributor_skus,
             'asinform': asinform,

@@ -3,9 +3,7 @@
 {% load humanize %}
 {% load thumbnail %}
 
-{% block title %}
-{{ page_title|safe }}
-{% endblock %}
+{% block title %}{{ page_title|safe }}{% endblock %}
 
 {% block meta_description %}{{ part.company.name|safe }} {{ part.number }} : {{ part.description }} {{ part.long_description|default:"" }}{% endblock %}
 
@@ -207,7 +205,7 @@
                 <div class="widget widget-heading-simple widget-body-gray">
                     <div class="widget-head"><h4 class="heading glyphicons notes strong"><i></i>Detailed Description</h4></div>
                     <div class="widget-body">
-                       <span class="text-primary strong">{{ part.description|safe }}</span><br /><br /><div id="description-div">{% include 'parts/includes/long_description.html' %}</div>
+                       <span class="text-primary strong">{{ part.description|safe }}</span><br /><br /><p class="description-div">{% include 'parts/includes/long_description.html' %}</p>
                     </div>
                     {% if user.is_staff %}
                     <div class="separator bottom">
@@ -330,8 +328,11 @@
                 {% include 'parts/includes/xrefs_table.html' %}   
             </div>
             {% if user.is_staff %}
-            <a href="#xref-modal" data-toggle="modal" class="hidden-phone btn btn-toggle-code btn-mini btn-primary btn-icon outside">
+            <a href="#xref-modal" data-toggle="modal" class="hidden-phone btn btn-toggle-code btn-mini btn-primary btn-icon inside">
                 <i class="icon-plus-sign icon-white"></i> New Cross Reference
+            </a>
+            <a href="#redirect-modal" data-toggle="modal" class="hidden-phone btn btn-toggle-code btn-mini btn-primary btn-icon outside">
+                <i class="icon-plus-sign icon-white"></i> Manual Redirect
             </a>
             {% endif %}
         </div>
@@ -370,7 +371,7 @@
         </a>
     </div>
     
-    <p class="separator text-center">
+    <!--<p class="separator text-center">
             <i class="icon-ellipsis-horizontal icon-3x"></i>
         </p>
         
@@ -397,7 +398,7 @@
                     </tbody>
                 </table>
             </div>
-        </div>
+        </div>-->
         
         <p class="separator text-center">
         <i class="icon-ellipsis-horizontal icon-3x"></i>
@@ -424,6 +425,7 @@
         {% include 'parts/includes/modals/category_modal.html' %}
         {% include 'distributors/modals/new_sku.html' %}
         {% include 'parts/includes/modals/description_modal.html' %}
+        {% include 'parts/includes/modals/redirect_modal.html' %}
         {% endif %}
 
 {% endblock %}

@@ -2,19 +2,19 @@
 <div class="row-fluid">	
     <div class="span9">
         <span style="font-weight:bold; font-size:.7em">PART</span>
-        <h5 class="strong text-uppercase"><a class="glyphicons single chevron-right" href="{{ result.object.get_absolute_url }}"><i></i>{{ result.object.number }}
+        <h5 class="strong text-uppercase"><a class="glyphicons single chevron-right" href="{{ result.url }}"><i></i>{{ result.object.number }}
             by 
-                {{ result.object.company.name }}</a>
+                {{ result.brand }}</a>
         </h5>
         <strong>{{ result.object.description|safe }}</strong>
         {% if result.object.long_description %}
         <p>{{ result.object.long_description|safe|truncatewords_html:30|default:"No further description" }}</p>
         {% endif %}
         {% if result.low_price %}
-        <span class="pull-right"><h5>
-            <span class="text-primary strong">${{ result.low_price|floatformat:2 }}</span>
+        <span class="pull-right" style="clear:both"><h5>
+            <span class="strong" style="color:green;">${{ result.low_price|floatformat:2 }}</span>
             {% if result.num_distributors > 1 %}
-             - <span class="text-primary strong">${{ result.high_price|floatformat:2 }}</span>
+             - <span class="strong" style="color:green;">${{ result.high_price|floatformat:2 }}</span>
             {% endif %}
             from  
                 <strong>{{ result.num_distributors }}</strong>

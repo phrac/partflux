@@ -6,12 +6,12 @@
     </div>
     <div class="modal-body">
 
-        <form data-div-update="#description-div" data-gritter-title-success="Description Updated" data-gritter-msg-success="Thanks for contributing! Your reputation has been incremented" data-gritter-error-title="Something went wrong" id="description-form" class="modal-form form-horizontal" autocomplete="off" method="post">
+        <form data-div-update=".description-div" data-gritter-title-success="Description Updated" data-gritter-msg-success="Thanks for contributing! Your reputation has been incremented" data-gritter-error-title="Something went wrong" id="description-form" class="modal-form form-horizontal" autocomplete="off" method="post">
             {% csrf_token %}
             <div class="control-group">
                 <label class="control-label" for="id_part">Description</label>
 
-                    <textarea class="field span5" id="id_description" name="description" rows="15">{{ part.long_description }}</textarea>
+                    <textarea class="description-div field span5" id="id_description" name="description" rows="15">{{ part.long_description }}</textarea>
 
             </div>
         </div>

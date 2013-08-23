@@ -34,6 +34,10 @@ class Command(BaseCommand):
                 for a in p.attribute_set.all():
                     new_a, created = Attribute.objects.get_or_create(part=finalp,
                                                      key=a.key, value=a.value)
+                alts = Part.objects.filter(redirect_part=p)
+                for a in alts:
+                    a.redirect_part = finalp
+                    a.save()
                 p.delete()
                 finalp = None
         

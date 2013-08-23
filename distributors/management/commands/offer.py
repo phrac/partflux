@@ -82,7 +82,13 @@ class Offer:
             part = Part.objects.get(company=manufacturer,
                                     number=self.mpn)
             if part.redirect_part:
-                part = part.redirect_part
+                try:
+                    part = part.redirect_part
+                except:
+                    print 'REDIRECT doesnt exist'
+                    part = part
+                    part.redirect_part = None
+                    p.save()
             if not part.long_description:
                 part.long_description = self.long_description
                 part.save()

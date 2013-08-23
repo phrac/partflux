@@ -114,11 +114,18 @@ def set_redirect_part(request):
     from_part_object.redirect_part = to_part_object
     from_part_object.save()
     to_part_object.cross_references.remove(from_part_object)
+    if not to_part_object.upc and from_part_object.upc:
+        to_part_object.upc = from_part_object.upc
+    if not to_part_object.ean and from_part_object.ean:
+        to_part_object.ean = from_part_object.ean
+    if not to_part_object.asin and from_part_object.asin:
+        to_part_object.asin = from_part_object.asin
+    
     if not to_part_object.image_url and from_part_object.image_url:
         to_part_object.image_url = from_part_object.image_url
     for a in from_part_object.attribute_set.all():
-        new_a, created = Attribute.objects.get_or_create(part=to_part_object,
-                                                     key=a.key, value=a.value)
+        new_a, created = Attribute.objects.get_or_create(part=to_part_object, key=a.key, value=a.value)
+        
     distributors = DistributorSKU.objects.filter(part=from_part_object)
     for d in distributors:
         d.part = to_part_object
