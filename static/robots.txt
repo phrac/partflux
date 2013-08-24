@@ -4,4 +4,5 @@ Disallow: /users/
 Disallow: /parts/add/
 Disallow: /partgroups/add/
 Disallow: /parts/ajax/
+Disallow: /distributors/
 

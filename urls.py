@@ -35,9 +35,10 @@ urlpatterns = patterns('',
 
     # API URLs
     (r'^api/', include(v1_api.urls)),
+
+    # URLS for distributors
+    (r'^distributors/', include('distributors.urls')),
     
-    # CONTACT URLs
-    #(r'^contact/', include('contact_form.urls')),
     
     # SITEMAP URLs
     url(r'^sitemap.xml$', 'sitemap.index'),

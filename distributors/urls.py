@@ -2,5 +2,5 @@ from django.conf.urls import patterns, include, url
 
 urlpatterns = patterns('',
     url(r'^$', 'companies.views.index'),
-    url(r'^add/$', 'distributors.views.new_sku'),
+    url(r'^click/(?P<sku_id>\d+)/$', 'distributors.click.track_click'),
     )

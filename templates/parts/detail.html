@@ -248,7 +248,7 @@
                         {% for d in distributor_skus|slice:":5" %}
                         <tr>
                             {% if d.affiliate_url %}
-                            <td><a rel="nofollow" href="{{ d.affiliate_url }}">{{ d.distributor }}</a></td>
+                            <td><a rel="nofollow" href="{% url 'distributors.click.track_click' d.pk %}">{{ d.distributor }}</a></td>
                             {% else %}
                             <td><a rel="nofollow" href="{{ d.url }}">{{ d.distributor }}</a></td>
                             {% endif %}
@@ -356,7 +356,7 @@
                     {% for d in distributor_skus %}
                     <tr>
                         {% if d.affiliate_url %}
-                        <td><a rel="nofollow" href="{{ d.affiliate_url }}">{{ d.distributor }}</a></td>
+                        <td><a rel="nofollow" href="{% url 'distributors.click.track_click' d.pk %}">{{ d.distributor }}</a></td>
                         {% else %}
                         <td><a rel="nofollow" href="{{ d.url }}">{{ d.distributor }}</a></td>
                         {% endif %}

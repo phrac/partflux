@@ -77,6 +77,12 @@ class DistributorSKU(models.Model):
             except:
                 return "N/A"
 
+    @models.permalink
+    def get_absolute_url(self):
+        from django.core.urlresolvers import reverse
+        return reverse('distributors.click.track_click', args=[str(self.id)])
+
+
 class SKUHistoricalPrice(models.Model):
     part = models.ForeignKey(Part)
     sku = models.ForeignKey(DistributorSKU)
