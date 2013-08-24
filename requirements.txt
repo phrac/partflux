@@ -10,7 +10,6 @@ distribute==0.6.35
 django-appconf==0.6
 django-blogango==0.6.1
 django-classy-tags==0.4
-django-google-analytics==1
 django-haystack==2.0.0
 django-markupfield==1.0.2
 django-pingback==0.3
@@ -21,6 +20,7 @@ django-taggit==0.10
 django-tastypie==0.9.15
 django-xmlrpc==0.1.4
 feedparser==5.1.3
+google-analytics==0.2
 html5lib==1.0b3
 isodate==0.4.9
 lxml==3.2.1
