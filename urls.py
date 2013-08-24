@@ -31,7 +31,7 @@ urlpatterns = patterns('',
     (r'^users/', include('users.urls')),
 
     # blog urls
-    #url(r'^blog/', include('articles.urls')),
+    url(r'^blog/', include('blogango.urls')),
 
     # API URLs
     (r'^api/', include(v1_api.urls)),

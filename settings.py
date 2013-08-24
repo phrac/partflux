@@ -175,6 +175,7 @@ INSTALLED_APPS = (
     'pingback',
     'taggit',
     'django_xmlrpc',
+    'google_analytics',
     # partfindr apps    
     'main',
     'parts',

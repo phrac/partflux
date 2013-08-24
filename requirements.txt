@@ -10,6 +10,7 @@ distribute==0.6.35
 django-appconf==0.6
 django-blogango==0.6.1
 django-classy-tags==0.4
+django-google-analytics==1
 django-haystack==2.0.0
 django-markupfield==1.0.2
 django-pingback==0.3
