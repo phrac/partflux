@@ -40,6 +40,7 @@ class DistributorSKU(models.Model):
                                 null=True)
     url = models.URLField(max_length=256)
     affiliate_url = models.URLField(max_length=512, null=True)
+    impression_url = models.URLField(max_length=512, null=True)
     updated = models.DateTimeField(auto_now=True)
     xpath = models.CharField(max_length=1024, null=True)
 

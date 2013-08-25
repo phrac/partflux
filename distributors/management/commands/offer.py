@@ -13,7 +13,7 @@ class Offer:
                        'manufacturer': 'MANUFACTURER', 'sku': 'SKU',
                        'distributor': 'PROGRAMNAME', 'description': 'NAME',
                        'long_description': 'DESCRIPTION', 'price':'PRICE',
-                       'image_url': 'IMAGEURL', 'upc': 'UPC'}
+                       'image_url': 'IMAGEURL', 'upc': 'UPC', 'impression_url': 'IMPRESSIONURL'}
         elif network == 'pj':
             mapping = {'buylink': 'buy_url', 'mpn': 'mpn', 'upc': 'upc',
                        'manufacturer': 'manufacturer', 'sku': 'sku',
@@ -115,6 +115,7 @@ class Offer:
         
         distributor_sku.price = self.price
         distributor_sku.affiliate_url = self.buylink
+        distributor_sku.impression_url = self.impression_url
         
         try:
             distributor_sku.save()

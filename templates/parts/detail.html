@@ -356,7 +356,12 @@
                     {% for d in distributor_skus %}
                     <tr>
                         {% if d.affiliate_url %}
-                        <td><a rel="nofollow" href="{% url 'distributors.click.track_click' d.pk %}">{{ d.distributor }}</a></td>
+                        <td>
+                            <a rel="nofollow" href="{% url 'distributors.click.track_click' d.pk %}">{{ d.distributor }}</a>
+                            {% if d.impression_url %}
+                            <img src="{{ d.impression_url }}" />
+                            {% endif %}
+                        </td>
                         {% else %}
                         <td><a rel="nofollow" href="{{ d.url }}">{{ d.distributor }}</a></td>
                         {% endif %}
