@@ -85,13 +85,12 @@ def detail(request, part_id, company_slug, part_slug):
     pricing = DistributorSKU.objects.filter(part=p).aggregate(avg_price=Avg('price'), max_price=Max('price'), min_price=Min('price'))
     distributor_skus = DistributorSKU.objects.filter(part=p).order_by('price')
     current_site = get_current_site(request)
-    page_title = "%s %s - %s | %s" % (p.company.name, p.number,
+    page_title = "%s %s - %s" % (p.company.name, p.number,
                                     truncatesmart.truncatesmart(title(p.description),
                                     (settings.MAX_PAGE_TITLE_LENGTH
                                      - (len(p.number) +
                                      len(p.company.name)
-                                     + 12))),
-                                    current_site.name)
+                                     ))))
 
     metaform = MetadataForm(None)
     xrefform = XrefForm(None)
@@ -153,6 +152,17 @@ def detail(request, part_id, company_slug, part_slug):
             price = product.price_and_currency
             p.upc = product.upc
             p.ean = product.ean
+            try:
+                attrs = product.get_attributes(['ItemDimensions.Width', 'ItemDimensions.Height', 'ItemDimensions.Length', 'ItemDimensions.Weight'])
+                print attrs
+                weight = attrs['ItemDimensions.Weight']
+                if not weight:
+                    weight = product.get_attribute('Weight')
+                p.weight = float(weight)/100.0
+                print p.weight
+                
+            except:
+                pass
             
             if not p.image_url or request.POST.get('replace_image', False):
                 p.image_url = product.large_image_url

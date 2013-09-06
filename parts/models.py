@@ -48,6 +48,7 @@ class Part(models.Model):
     asin = models.CharField(max_length=10, null=True)
     upc = models.CharField(max_length=13, null=True)
     ean = models.CharField(max_length=13, null=True)
+    weight = models.DecimalField(max_digits=7, decimal_places=2, null=True)
     cross_references = models.ManyToManyField('Part', related_name='xrefs')
 
     def __unicode__(self):

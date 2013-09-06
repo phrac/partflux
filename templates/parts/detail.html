@@ -111,7 +111,7 @@
 {% include 'parts/includes/category.html' %}
 <div class="row-fluid" itemscope itemtype="http://data-vocabulary.org/Product">
     <div class="span12">
-        <h3><a itemprop="brand" href="{{ part.company.get_absolute_url }}">{{ part.company.name|safe }}</a> {{ part.number }}</h3>
+        <h2><a itemprop="brand" href="{{ part.company.get_absolute_url }}">{{ part.company.name|safe }}</a> {{ part.number }}</h2>
         <h4><span id="description" data-name="description" data-placeholder="No Description" data-type="text" data-inputclass="input input-large" data-pk="{{ part.pk }}" data-url="{% url 'parts.ajax.update_description' %}" itemprop="description" >{{ part.description|safe }}</span></h4>
     </div>
 </div>
@@ -156,15 +156,11 @@
                         </tr>
                          <tr>
                             <th>Weight</th>
-                            <td>{{ part.weight|default:"N/A" }}</td>
+                            <td>{{ part.weight|default:"N/A" }} lbs.</td>
                         </tr>
                          <tr>
                             <th>Dimensions</th>
                             <td>{{ part.dimensions|default:"N/A" }}</td>
-                        </tr>
-                        <tr>
-                            <th>Package Qty</th>
-                            <td>{{ part.package_qty|default:"N/A" }}</td>
                         </tr>
                         <tr>
                             <th>Cross Refs</th>
@@ -175,7 +171,7 @@
                             <td>{{ part.attribute_set.all|length }}</td>
                         </tr>
                         <tr>
-                            <th># Alternates</th>
+                            <th>Alternates</th>
                             <td>{{ part.get_alternates|length }}</td>
                         </tr>
                         <tr>

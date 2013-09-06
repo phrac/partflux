@@ -83,7 +83,14 @@ class DistributorSKU(models.Model):
         from django.core.urlresolvers import reverse
         return reverse('distributors.click.track_click', args=[str(self.id)])
 
-
+class SKUClick(models.Model):
+    sku = models.ForeignKey(DistributorSKU)
+    click_date = models.DateTimeField(auto_now_add=True)
+    ip = models.IPAddressField()
+    path = models.CharField(max_length=512, null=True)
+    referrer = models.CharField(max_length=512, null=True)
+    user_agent = models.CharField(max_length=512, null=True)
+    
 class SKUHistoricalPrice(models.Model):
     part = models.ForeignKey(Part)
     sku = models.ForeignKey(DistributorSKU)
