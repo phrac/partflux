@@ -40,7 +40,6 @@ class Part(models.Model):
     company = models.ForeignKey(Company)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    user = models.ForeignKey(User, null=True)
     hits = models.IntegerField(default=0, editable=False)
     approved = models.BooleanField(default=True)
     images = models.ManyToManyField('PartImage')
@@ -128,11 +127,6 @@ class Attribute(models.Model):
     part = models.ForeignKey('Part')
     key = models.CharField(max_length=64)
     value = models.CharField(max_length=128)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    user = models.ForeignKey(User, null=True)
-    upvotes = models.IntegerField(null=True, default=0)
-    downvotes = models.IntegerField(null=True, default=0)
 
     class Meta:
         unique_together = ('part', 'key', 'value')
@@ -148,7 +142,6 @@ class Attribute(models.Model):
         
 class PartImage(models.Model):
     image = ImageField(upload_to='part_images')
-    user = models.ForeignKey(User, null=False)
     #hash = models.CharField(max_length=1000, unique=True)
     approved = models.BooleanField(default=True)
     album_cover = models.BooleanField(default=False)

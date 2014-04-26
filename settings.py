@@ -72,7 +72,7 @@ SITE_ID = 1
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
-USE_I18N = True
+USE_I18N = False
 
 # If you set this to False, Django will not format dates, numbers and
 # calendars according to the current locale
@@ -171,9 +171,8 @@ INSTALLED_APPS = (
     'sorl.thumbnail',
     'haystack',
     'storages',
-    'south',
-    'tastypie',
-    'blogango',
+    #'tastypie',
+    #'blogango',
     'pingback',
     'taggit',
     'django_xmlrpc',
@@ -183,7 +182,6 @@ INSTALLED_APPS = (
     'main',
     'parts',
     'companies',
-    'users',
     'distributors',
 )
 
@@ -196,7 +194,7 @@ PAGINATION_SETTINGS = {
 ACCOUNT_ACTIVATION_DAYS = 7
 
 # custom user profile module
-AUTH_PROFILE_MODULE = 'users.UserProfile'
+#AUTH_PROFILE_MODULE = 'users.UserProfile'
 
 # django-storages settings
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
@@ -208,6 +206,8 @@ DISQUS_FORUM_SHORTNAME = 'partengine'
 ABSOLUTE_URL_OVERRIDES = {
     'auth.user': lambda o: "/users/profile/%s/" % o.username,
 }
+
+AUTH_USER_MODEL = 'auth.User'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
