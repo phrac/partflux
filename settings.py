@@ -14,6 +14,7 @@ INTERNAL_IPS = {
 	'127.0.0.1',
 	'68.13.156.23',
 	'68.96.19.120',
+    '192.168.0.9',
 }
 
 MANAGERS = ADMINS
@@ -33,16 +34,16 @@ DATABASES = {
     }
 }
 
-#CACHES = {
-#    'default': {
-#        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-#        'LOCATION': '127.0.0.1:11211',
-#    }
-#}
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
 
-#CACHE_MIDDLEWARE_ALIAS = 'default'
-##CACHE_MIDDLEWARE_SECONDS = 600
-#CACHE_MIDDLEWARE_KEY_PREFIX = ''
+CACHE_MIDDLEWARE_ALIAS = 'default'
+CACHE_MIDDLEWARE_SECONDS = 600
+CACHE_MIDDLEWARE_KEY_PREFIX = ''
 
 
 ALLOWED_HOSTS = ['partflux.com',]
@@ -90,11 +91,11 @@ MEDIA_URL = '/media/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = '/home/derek/web/partengine/static/'
+STATIC_ROOT = '/home/derek/static/partflux/'
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
-STATIC_URL = 'http://static.partflux.com/'
+STATIC_URL = '/static/'
 
 # URL prefix for admin static files -- CSS, JavaScript and images.
 # Make sure to use a trailing slash.
@@ -137,7 +138,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     )
 
 MIDDLEWARE_CLASSES = (
-    #'django.middleware.cache.UpdateCacheMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+#    'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -175,7 +177,8 @@ INSTALLED_APPS = (
     'pingback',
     'taggit',
     'django_xmlrpc',
-    'google_analytics',
+    'debug_toolbar',
+    #'google_analytics',
     # partfindr apps    
     'main',
     'parts',

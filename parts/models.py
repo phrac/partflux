@@ -31,7 +31,7 @@ class Category(models.Model):
             
     
 class Part(models.Model):
-    redirect_part = models.ForeignKey('Part', null=True)
+    redirect_part = models.ForeignKey('Part', null=True, db_index=True)
     number = models.CharField(max_length=48)
     categories = models.ManyToManyField(Category, related_name='part_category')
     slug = models.CharField(max_length=64)
