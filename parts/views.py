@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect, HttpResponse
 from django.template import RequestContext
 from django.template.defaultfilters import slugify, truncatechars, title
-from main.templatetags import truncatesmart
+from partflux.templatetags import truncatesmart
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User

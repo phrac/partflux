@@ -1,3 +1,0 @@
-#!/bin/sh
-hg id > templates/version.txt
-hg push

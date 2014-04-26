@@ -1,6 +1,7 @@
 # Django settings for Part Engine project.
 import os
 DIRNAME = os.path.dirname(__file__)
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
@@ -107,7 +108,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join(DIRNAME, 'static'),
+    os.path.join(DIRNAME, '../static'),
 )
 
 # List of finder classes that know how to find static files in
@@ -148,7 +149,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.cache.FetchFromCacheMiddleware',
 )
 
-ROOT_URLCONF = 'partengine.urls'
+ROOT_URLCONF = 'partflux.urls'
+
+WSGI_APPLICATION = 'partflux.wsgi.application'
 
 TEMPLATE_DIRS = (
     os.path.join(DIRNAME, 'templates')
@@ -166,20 +169,20 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     'django.contrib.sitemaps',
+    
     # external apps
     'pure_pagination',
     'sorl.thumbnail',
     'haystack',
     'storages',
     #'tastypie',
-    #'blogango',
     'pingback',
     'taggit',
     'django_xmlrpc',
     'debug_toolbar',
     #'google_analytics',
+    
     # partfindr apps    
-    'main',
     'parts',
     'companies',
     'distributors',

@@ -1,6 +1,5 @@
 from django import forms
 from parts.models import Part
-from search.widgets import JQueryAutoComplete
 
 class MetadataForm(forms.Form):
     key = forms.CharField(max_length=48)
