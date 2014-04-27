@@ -7,6 +7,8 @@ from sorl.thumbnail import ImageField
 from amazon.api import AmazonAPI
 from django_hstore import hstore
 
+import itertools
+
 from companies.models import Company
 
 class Category(models.Model):
@@ -24,10 +26,7 @@ class Category(models.Model):
         if not self.slug:
             self.slug = slugify(self.name)
 
-        super(Part, self).save(*args, **kwargs)
-
-
-
+        super(Category, self).save(*args, **kwargs)
 
     def get_taxonomy(self):
         parents = []
@@ -43,7 +42,7 @@ class Category(models.Model):
 
     def get_required_keys(self):
         keys = []
-        parents = self.get_taxonomy
+        parents = self.get_taxonomy()
         for p in parents:
             props = CategoryProperty.objects.filter(category=p)
             for k in props:
@@ -101,10 +100,7 @@ class Part(models.Model):
             self.slug = slugify(self.number)
 
         if not self.properties:
-            keys = self.category.get_required_keys()
-            for k in keys:
-                if k.required_key is True:
-                    self.properties[k.key_name] = None
+            self.properties = dict(itertools.izip_longest(*[iter(self.category.get_required_keys())] * 2, fillvalue=""))
 
         super(Part, self).save(*args, **kwargs)
 
