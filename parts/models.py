@@ -37,22 +37,23 @@ class CategoryProperty(models.Model):
     category = models.ForeignKey(Category)
     key_name = models.CharField(max_length=16)
     required_key = models.BooleanField(default=False)
+
     
 class Part(models.Model):
     number = models.CharField(max_length=48)
     category = models.ForeignKey(Category, null=True)
     slug = models.CharField(max_length=64)
     description = models.TextField(null=False)
-    long_description = models.TextField(null=True)
+    long_description = models.TextField(null=True, blank=True)
     company = models.ForeignKey(Company)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     images = models.ManyToManyField('PartImage')
     image_url = models.URLField(max_length=512, null=True)
-    asin = models.CharField(max_length=10, null=True)
-    upc = models.CharField(max_length=13, null=True)
-    ean = models.CharField(max_length=13, null=True)
-    properties = hstore.DictionaryField(null=True)
+    asin = models.CharField(max_length=10, null=True, blank=True)
+    upc = models.CharField(max_length=13, null=True, blank=True)
+    ean = models.CharField(max_length=13, null=True, blank=True)
+    properties = hstore.DictionaryField(null=True, blank=True)
     cross_references = models.ManyToManyField('Part', related_name='xrefs')
 
     objects = hstore.HStoreManager()
@@ -154,6 +155,7 @@ class Attribute(models.Model):
         self.key = self.key.strip().upper()
         self.value = self.value.strip().upper()
         super(Attribute, self).save(*args, **kwargs)
+
         
 class PartImage(models.Model):
     image = ImageField(upload_to='part_images')

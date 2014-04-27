@@ -5,7 +5,7 @@ from parts.feeds import LatestPartsFeed
 urlpatterns = patterns('',
     url(r'^$', 'parts.views.index'),
     
-    url(r'^add/$', 'parts.views.addpartform'),
+    url(r'^new/$', 'parts.views.new_part'),
     url(r'^spree/$', 'parts.views.empty_category'),
 
     url(r'^ajax/description/$', 'parts.ajax.update_description'),

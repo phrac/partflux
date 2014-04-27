@@ -1,5 +1,10 @@
 from django import forms
-from parts.models import Part
+from django_select2 import *
+from parts.models import Part, Category
+
+class CategoryChoice(AutoModelSelect2Field):
+    queryset = Category.objects
+    search_fields = ['name__istartswith',]
 
 class MetadataForm(forms.Form):
     key = forms.CharField(max_length=48)
@@ -23,3 +28,11 @@ class XrefForm(forms.Form):
     
 class ImageUploadForm(forms.Form):
     file = forms.FileField(required=True)
+
+class NewPartForm(forms.ModelForm):
+    class Meta:
+        model = Part
+        fields = ('number', 'category', 'description', 'company',)
+
+    category = CategoryChoice()
+        

@@ -181,6 +181,8 @@ INSTALLED_APPS = (
     'taggit',
     'django_xmlrpc',
     'debug_toolbar',
+    'django_select2',
+    'widget_tweaks',
     #'google_analytics',
     
     # partfindr apps    
