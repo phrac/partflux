@@ -49,6 +49,9 @@ class CategoryProperty(models.Model):
     key_name = models.CharField(max_length=16)
     required_key = models.BooleanField(default=False)
 
+    class Meta:
+        unique_together = ('category', 'key_name',)
+
     def __unicode__(self):
         return self.key_name
 
