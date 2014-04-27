@@ -14,6 +14,9 @@ class Category(models.Model):
     slug = models.CharField(max_length=128)
     parent = models.ForeignKey('Category', null=True)
 
+    class Meta:
+        verbose_name_plural = 'Categories'
+
     def __unicode__(self):
         return self.name
 
@@ -51,6 +54,7 @@ class CategoryProperty(models.Model):
 
     class Meta:
         unique_together = ('category', 'key_name',)
+        verbose_name_plural = 'Category Properties'
 
     def __unicode__(self):
         return self.key_name

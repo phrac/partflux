@@ -26,6 +26,7 @@ class Company(models.Model):
     
     class Meta:
         ordering = ('name',)
+        verbose_name_plural = 'Companies'
 
     def save(self, *args, **kwargs):
         self.name = self.name.strip().upper()
@@ -46,6 +47,7 @@ class CompanyAltName(models.Model):
     
     class Meta:
         ordering = ('company',)
+        verbose_name = 'Alternate Company Name'
 
     def __unicode__(self):
         return "%s : Real Name: %s" % (self.name, self.company.name)
