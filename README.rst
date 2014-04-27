@@ -1,7 +1,7 @@
 ========
 Overview
 ========
-Part Engine is a web application that helps users find information about any part
+Part Flux is a web application that helps users find information about any part
 number. The application is written in Python using the Django framework. Search
 is provided by Haystack with an Elastic Search backend, and data is stored in 
 PostgreSQL.
@@ -10,25 +10,16 @@ PostgreSQL.
 Dependencies
 ============
 
-Django Applications
+Django
 ------
-    * Django 1.4+
-    * django-orm 2.0+ (https://github.com/niwibe/django-orm)
-    * django-registration 0.8+: (http://bitbucket.org/ubernostrum/django-registration/)
-    * pure pagination (http://pypi.python.org/pypi/django-pure-pagination/)
-    * sorl-thumbnail https://github.com/sorl/sorl-thumbnail
-    * django-storages http://django-storages.readthedocs.org/en/latest/index.html
-    * django-gravatar (user avatars): https://github.com/twaddington/django-gravatar
-    * django-markdown-deux for notes: https://github.com/trentm/django-markdown-deux                
-
-Python
-------
-    * virtualenv
+    * Django 1.7+
+    * virtualenv __HIGHLY RECOMMENDED__
     * All other Python modules: see requirements.txt (pip install -r requirements.txt)
 
 Database
 --------
     * PostgreSQL 9.0+
+    * hstore extension (CREATE EXTENSION hstore)
 
 Search
 ------

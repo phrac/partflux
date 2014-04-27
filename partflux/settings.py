@@ -171,6 +171,7 @@ INSTALLED_APPS = (
     'django.contrib.sitemaps',
     
     # external apps
+    'django_hstore',
     'pure_pagination',
     'sorl.thumbnail',
     'haystack',

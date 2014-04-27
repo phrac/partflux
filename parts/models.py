@@ -1,11 +1,11 @@
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save
 from django.template.defaultfilters import slugify
 from django.utils.encoding import smart_str
 from sorl.thumbnail import ImageField
 from amazon.api import AmazonAPI
+from django_hstore import hstore
 
 from companies.models import Company
 
@@ -28,27 +28,35 @@ class Category(models.Model):
 
     def get_children(self):
         return Category.objects.filter(parent=self).order_by(name)
-            
+    
+
+class CategoryProperty(models.Model):
+    """
+    This is a model that will define the properties stored for each part.
+    """
+    category = models.ForeignKey(Category)
+    key_name = models.CharField(max_length=16)
+    required_key = models.BooleanField(default=False)
     
 class Part(models.Model):
-    redirect_part = models.ForeignKey('Part', null=True, db_index=True)
     number = models.CharField(max_length=48)
-    categories = models.ManyToManyField(Category, related_name='part_category')
+    category = models.ForeignKey(Category, null=True)
     slug = models.CharField(max_length=64)
     description = models.TextField(null=False)
     long_description = models.TextField(null=True)
     company = models.ForeignKey(Company)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    hits = models.IntegerField(default=0, editable=False)
-    approved = models.BooleanField(default=True)
     images = models.ManyToManyField('PartImage')
     image_url = models.URLField(max_length=512, null=True)
     asin = models.CharField(max_length=10, null=True)
     upc = models.CharField(max_length=13, null=True)
     ean = models.CharField(max_length=13, null=True)
-    weight = models.DecimalField(max_digits=7, decimal_places=2, null=True)
+    properties = hstore.DictionaryField(null=True)
     cross_references = models.ManyToManyField('Part', related_name='xrefs')
+
+    objects = hstore.HStoreManager()
+    
 
     def __unicode__(self):
         return self.number
@@ -142,7 +150,6 @@ class Attribute(models.Model):
         
 class PartImage(models.Model):
     image = ImageField(upload_to='part_images')
-    #hash = models.CharField(max_length=1000, unique=True)
     approved = models.BooleanField(default=True)
     album_cover = models.BooleanField(default=False)
 
