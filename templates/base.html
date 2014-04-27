@@ -41,6 +41,7 @@
         {% endblock %}
 
 	<!-- LESS.js Library -->
+        <script src="{{ STATIC_URL }}js/jquery.min.js"></script>
         <script src="{{ STATIC_URL }}theme/scripts/plugins/system/less.min.js"></script>
 
 </head>
@@ -100,7 +101,6 @@
                         <li><a href="/">Home</a></li>
                         <li><a href="{% url 'parts.views.index' %}">Parts</a></li>
                         <li><a href="{% url 'companies.views.index' %}">Manufacturers</a></li>
-                        <li><a href="/blog/">Blog</a></li>
                         <li><a href="">Contact</a></li>
 
                     </ul>
@@ -187,7 +187,7 @@
         <!-- // Main Container Fluid END -->
         
         <!-- JQuery -->
-        <script src="{{ STATIC_URL }}js/jquery.min.js"></script>
+        
         <script src="{{ STATIC_URL }}js/bootstrap-typeahead.js"></script>
         <script src="{{ STATIC_URL }}js/jquery.easing.1.3.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-jkit/1.1.8/jquery.jkit.min.js"></script>

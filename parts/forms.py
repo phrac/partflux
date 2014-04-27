@@ -4,7 +4,7 @@ from parts.models import Part, Category
 
 class CategoryChoice(AutoModelSelect2Field):
     queryset = Category.objects
-    search_fields = ['name__istartswith',]
+    search_fields = ['name__icontains',]
 
 class MetadataForm(forms.Form):
     key = forms.CharField(max_length=48)

@@ -1,7 +1,6 @@
 <div id="category-taxonomy">
 <ul class="inline">                                                                                                                              
-    {% for c in part.categories.all %}                                                                                                
-    {% for s in c.get_taxonomy %}                                                                                                     
+    {% for s in part.category.get_taxonomy %}                                                                                                     
     <li>{{ s }}</li>                                                                                                                           
     {% if forloop.last %}                                                                                                             
     {% else %}                                                                                                                        
@@ -10,7 +9,6 @@
 </li>                                                                                                                                
     {% endif %}                                                                                                                       
     {% endfor %}                                                                                                                     
-    {% endfor %}                                                                                                                      
     {% if user.is_staff %}
     <li><a title="New Attribute" href="#category-modal" data-toggle="modal"><i class="icon-plus-sign"></i></a></li>             
     {% endif %}
