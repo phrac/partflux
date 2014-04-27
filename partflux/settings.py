@@ -139,7 +139,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     )
 
 MIDDLEWARE_CLASSES = (
-#    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 #    'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -180,7 +180,7 @@ INSTALLED_APPS = (
     'pingback',
     'taggit',
     'django_xmlrpc',
-    #'debug_toolbar',
+    'debug_toolbar',
     'django_select2',
     'widget_tweaks',
     #'google_analytics',
