@@ -198,9 +198,11 @@
                 </div>
             </div>
         </div>
-        <p class="separator text-center"><i class="icon-bar-chart icon-3x"></i></p>
-        <div class="separator bottom"></div>
-        <!-- statistics box -->            
+
+        <hr>
+        <!-- statistics box -->
+
+        <!-- end statistics -->
 
     </div>
     <!-- // Product Gallery END -->
@@ -288,30 +290,34 @@
         <div class="widget">
             <div class="widget-head">
                 <h4 class="heading glyphicons history"><i></i>Possible ASIN Matches</h4>
+                {% if user.is_staff %}
+                <div class="pull-right buttons btn-group">
+                    <a href="#add-asin" data-toggle="modal" title="Add Attribute" class="btn btn-primary btn-icon btn-mini">
+                        <i class="icon-plus-sign icon-white"></i>
+                    </a>
+                </div>
+                {% endif %}
             </div>
             <div id="asin_search" class="widget-body list">
                 <i class="icon-spinner icon-spin icon-xlarge"></i> Loading Amazon matches ...       
             </div>
-            {% if user.is_staff %}
-            <a href="#add-asin" data-toggle="modal" class="hidden-phone btn btn-toggle-code btn-mini btn-primary btn-icon inside">
-                <i class="icon-plus-sign icon-white"></i> Manual ASIN
-            </a>
-            {% endif %}
         </div>
         {% endif %}
 
         <div class="widget">
             <div class="widget-head">
                 <h4 class="heading glyphicons nameplate"><i></i><strong>Attributes / Properties</strong></h4>
+                {% if user.is_staff %}
+                <div class="pull-right buttons btn-group">
+                    <a href="#attribute-modal" data-toggle="modal" title="Add Attribute" class="btn btn-primary btn-icon btn-mini">
+                        <i class="icon-plus-sign icon-white"></i>
+                    </a>
+                </div>
+                {% endif %}
             </div>
             <div class="widget-body list">
                 {% include 'parts/includes/attribute_table.html' %}   
             </div>
-            {% if user.is_staff %}
-            <a href="#attribute-modal" data-toggle="modal" class="hidden-phone btn btn-toggle-code btn-mini btn-primary btn-icon outside">
-                <i class="icon-plus-sign icon-white"></i> New Attribute
-            </a>
-            {% endif %}
         </div>
 
         <hr> 
@@ -319,18 +325,21 @@
         <div class="widget">
             <div class="widget-head">
                 <h4 class="heading glyphicons random"><i></i> <strong>Cross References / Interchange</strong></h4>
+                {% if user.is_staff %}
+                <div class="pull-right buttons btn-group">
+                    <a href="#xref-modal" data-toggle="modal" title="Add Cross Reference" class="btn btn-primary btn-icon btn-mini">
+                        <i class="icon-plus-sign icon-white"></i>
+                    </a>
+                    <a href="#redirect-modal" data-toggle="modal" title="Add Redirect" class="btn btn-primary btn-icon btn-mini">
+                        <i class="icon-random icon-white"></i>
+                    </a>
+                </div>
+
+                {% endif %}
             </div>
             <div class="widget-body list">
                 {% include 'parts/includes/xrefs_table.html' %}   
             </div>
-            {% if user.is_staff %}
-            <a href="#xref-modal" data-toggle="modal" class="hidden-phone btn btn-toggle-code btn-mini btn-primary btn-icon inside">
-                <i class="icon-plus-sign icon-white"></i> New Cross Reference
-            </a>
-            <a href="#redirect-modal" data-toggle="modal" class="hidden-phone btn btn-toggle-code btn-mini btn-primary btn-icon outside">
-                <i class="icon-plus-sign icon-white"></i> Manual Redirect
-            </a>
-            {% endif %}
         </div>
         
         <hr>
