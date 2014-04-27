@@ -11,14 +11,23 @@ from companies.models import Company
 
 class Category(models.Model):
     name = models.CharField(max_length=64, unique=True)
-    slug = models.CharField(max_length=128)
-    parent = models.ForeignKey('Category', null=True)
+    slug = models.CharField(max_length=128, unique=True, null=True, blank=True)
+    parent = models.ForeignKey('Category', null=True, blank=True)
 
     class Meta:
         verbose_name_plural = 'Categories'
 
     def __unicode__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+
+        super(Part, self).save(*args, **kwargs)
+
+
+
 
     def get_taxonomy(self):
         parents = []
