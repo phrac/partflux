@@ -69,6 +69,13 @@ class Part(models.Model):
         self.description = self.description.strip().upper()
         if not self.slug:
             self.slug = slugify(self.number)
+
+        if not self.properties:
+            keys = CategoryProperty.objects.filter(category=self.category)
+            for k in keys:
+                if k.required_key is True:
+                    self.properties[k.key_name] = None
+
         super(Part, self).save(*args, **kwargs)
 
     def get_alternates(self):
