@@ -28,7 +28,18 @@ class Category(models.Model):
 
     def get_children(self):
         return Category.objects.filter(parent=self).order_by(name)
-    
+
+    def get_required_keys(self):
+        keys = []
+        parents = self.get_taxonomy
+        for p in parents:
+            props = CategoryProperty.objects.filter(category=p)
+            for k in props:
+                if k.required_key is True:
+                    keys.append(k.key_name)
+        return keys
+
+
 
 class CategoryProperty(models.Model):
     """
@@ -38,7 +49,10 @@ class CategoryProperty(models.Model):
     key_name = models.CharField(max_length=16)
     required_key = models.BooleanField(default=False)
 
-    
+    def __unicode__(self):
+        return self.key_name
+
+
 class Part(models.Model):
     number = models.CharField(max_length=48)
     category = models.ForeignKey(Category, null=True)
@@ -57,13 +71,12 @@ class Part(models.Model):
     cross_references = models.ManyToManyField('Part', related_name='xrefs')
 
     objects = hstore.HStoreManager()
-    
-
-    def __unicode__(self):
-        return self.number
 
     class Meta:
         unique_together = ('number', 'company',)
+    
+    def __unicode__(self):
+        return self.number
 
     def save(self, *args, **kwargs):
         self.number = self.number.strip().upper()
@@ -72,7 +85,7 @@ class Part(models.Model):
             self.slug = slugify(self.number)
 
         if not self.properties:
-            keys = CategoryProperty.objects.filter(category=self.category)
+            keys = self.category.get_required_keys()
             for k in keys:
                 if k.required_key is True:
                     self.properties[k.key_name] = None

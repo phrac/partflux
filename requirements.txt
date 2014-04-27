@@ -1,5 +1,6 @@
 BeautifulSoup==3.2.1
 Django==1.7b2
+Django-Select2==4.2.2
 Pillow==2.4.0
 SPARQLWrapper==1.5.2
 boto==2.27.0
@@ -9,11 +10,12 @@ django-blogango==0.6.2
 django-classy-tags==0.5.1
 django-debug-toolbar==1.2
 django-haystack==2.1.0
+django-hstore==1.2.3
 django-pingback==0.3
 -e git://github.com/partengine/django-pure-pagination@9265315c7c27bc4d870547a419d99ef7f009ccff#egg=django_pure_pagination-master
 django-storages==1.1.8
 django-taggit==0.10
-django-tastypie==0.11.0
+django-widget-tweaks==1.3
 django-xmlrpc==0.1.4
 feedparser==5.1.3
 html5lib==1.0b3
