@@ -195,6 +195,13 @@
                         </tr>
                         {% endif %}
                     </table>
+                    {% if user.is_staff %}
+                    <div class="buttons btn-group">
+                    <a href="{% url 'parts.views.new_part' %}?copy={{ part.pk }}" title="Copy to new" class="btn btn-primary btn-icon btn-mini">
+                        <i class="icon-random icon-white"></i>
+                    </a>
+                    {% endif %}
+                </div>
                 </div>
             </div>
         </div>

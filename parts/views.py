@@ -249,7 +249,12 @@ def new_part(request):
             part = partform.save()
             return HttpResponseRedirect(part.get_absolute_url())
     else:
-        partform = NewPartForm()
+        copy = request.GET.get('copy', None)
+        if copy:
+            part = Part.objects.get(id=copy)
+            partform = NewPartForm(instance=part)
+        else:
+            partform = NewPartForm()
     return render_to_response('parts/add.html',
                               {'partform': partform,},
                               context_instance=RequestContext(request))

@@ -13,7 +13,7 @@ from companies.models import Company
 
 class Category(models.Model):
     name = models.CharField(max_length=64, unique=True)
-    slug = models.CharField(max_length=128, unique=True, null=True, blank=True)
+    slug = models.CharField(max_length=128, null=True, blank=True)
     parent = models.ForeignKey('Category', null=True, blank=True)
 
     class Meta:
