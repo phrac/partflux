@@ -16,18 +16,15 @@
         </div>
     </div>
     <div class="container-960 innerT">
-        <div class="widget widget-heading-simple widget-body-gray">
-            <div class="widget-body"><p class="margin-none">
-                <form class="input-append search" method="get" action="{% url 'search.views.results' %}">
-                    <div class="offset2">
-                    <input style="font-size:25px; height:40px;" class="span7" autocomplete="off" name="q" type="text" id="appdendedInputButton" >
-                    <button style="height:49px; width:50px;" class="btn btn-primary" type="submit">
-                        <i style="font-size:25px;" class="icon-search icon-white"></i>
-                    </button>
-                </div>
-                </form>
+        <form class="input-append search" method="get" action="{% url 'search.views.results' %}">
+            <div class="offset2">
+                <input style="font-size:25px; height:40px;" class="span7" autocomplete="off" name="q" type="text" id="appdendedInputButton" >
+                <button style="height:49px; width:50px;" class="btn btn-primary" type="submit">
+                    <i style="font-size:25px;" class="icon-search icon-white"></i>
+                </button>
             </div>
-        </div>
+        </form>
+
         <div class="mosaic-line mosaic-line-2">
             <div class="container-960 center">
                 <h3><strong class="text-primary">PART</strong> FLUX is a part number search engine.</h3>

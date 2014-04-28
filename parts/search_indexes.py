@@ -38,10 +38,6 @@ class PartIndex(indexes.SearchIndex, indexes.Indexable):
             return True
         else:
             return False
-    
-    def prepare_category(self, obj):
-        for c in obj.categories.all():
-            return c.name
 
     def prepare_url(self, obj):
         return "http://partflux.com%s" % obj.get_absolute_url()

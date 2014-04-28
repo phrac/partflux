@@ -100,7 +100,11 @@ class Part(models.Model):
             self.slug = slugify(self.number)
 
         if not self.properties:
-            self.properties = dict(itertools.izip_longest(*[iter(self.category.get_required_keys())] * 2, fillvalue=""))
+            props = {}
+            keys = self.category.get_required_keys()
+            for k in keys:
+                props[k] = ""
+            self.properties = props
 
         super(Part, self).save(*args, **kwargs)
 
