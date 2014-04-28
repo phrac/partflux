@@ -108,13 +108,6 @@ class Part(models.Model):
 
         super(Part, self).save(*args, **kwargs)
 
-    def get_alternates(self):
-        alternates = []
-        parts = Part.objects.filter(redirect_part=self)
-        for p in parts:
-            alternates.append(p.number)
-        return alternates
-        
     @property
     def amazon_keywords(self):
         term = self.number
@@ -167,6 +160,11 @@ class Part(models.Model):
         from django.core.urlresolvers import reverse
         return reverse('parts.views.detail', args=[str(self.id), str(self.company.slug),
                                                str(self.slug)])
+
+    def update_all_xrefs(self):
+        for p in self.cross_references:
+            p.cross_references.add(self)
+            p.update_all_xrefs()
 
 class Attribute(models.Model):
     part = models.ForeignKey('Part')
