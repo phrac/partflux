@@ -7,9 +7,9 @@ from sorl.thumbnail import ImageField
 from amazon.api import AmazonAPI
 from django_hstore import hstore
 
-import itertools
-
 from companies.models import Company
+
+from parts.listeners import xrefs_handler
 
 class Category(models.Model):
     name = models.CharField(max_length=64, unique=True)
@@ -161,11 +161,6 @@ class Part(models.Model):
         return reverse('parts.views.detail', args=[str(self.id), str(self.company.slug),
                                                str(self.slug)])
 
-    def update_all_xrefs(self):
-        for p in self.cross_references:
-            p.cross_references.add(self)
-            p.update_all_xrefs()
-
 class Attribute(models.Model):
     part = models.ForeignKey('Part')
     key = models.CharField(max_length=64)
@@ -189,4 +184,6 @@ class PartImage(models.Model):
     approved = models.BooleanField(default=True)
     album_cover = models.BooleanField(default=False)
 
+
+post_save.connect(xrefs_handler, sender=Part)
 
