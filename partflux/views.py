@@ -6,7 +6,7 @@ from distributors.models import DistributorSKU
 def index(request):
     part_updates = Part.objects.all().order_by('-updated_at')[:7]
     dist_updates = DistributorSKU.objects.all().order_by('-updated')[:7]
-    return render_to_response('main/index.html',
+    return render_to_response('partflux/index.html',
                               {
                                   'parts': part_updates,
                                   'skus': dist_updates,

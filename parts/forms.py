@@ -1,10 +1,15 @@
 from django import forms
 from django_select2 import *
 from parts.models import Part, Category
+from companies.models import Company
 
 class CategoryChoice(AutoModelSelect2Field):
     queryset = Category.objects
     search_fields = ['name__icontains',]
+
+class CompanyChoice(AutoModelSelect2Field):
+    queryset = Company.objects
+    search_fields = ['name__istartswith',]
 
 class MetadataForm(forms.Form):
     key = forms.CharField(max_length=48)
@@ -35,4 +40,5 @@ class NewPartForm(forms.ModelForm):
         fields = ('number', 'category', 'description', 'company',)
 
     category = CategoryChoice()
+    company = CompanyChoice()
         
