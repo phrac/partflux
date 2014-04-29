@@ -10,7 +10,7 @@
         </thead>
         <tbody>
             {% for x in part.cross_references.all %}
-            {% if x.number != part.number %}
+            {% if x.pk != part.pk %}
             <tr>
                 <td><a href="{{ x.get_absolute_url }}">{{ x.number }}</a> 
                     {% if user.is_staff %}

@@ -91,7 +91,7 @@ class Part(models.Model):
         unique_together = ('number', 'company',)
     
     def __unicode__(self):
-        return self.number
+        return "%s - %s" % (self.company, self.number)
 
     def save(self, *args, **kwargs):
         self.number = self.number.strip().upper()
