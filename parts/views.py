@@ -268,7 +268,9 @@ def addxref(request, part_id):
         copy_attrs = xrefform.cleaned_data['copy_attrs']
 
         form_part.cross_references.add(p)
+        form_part.save()
         p.cross_references.add(form_part)
+        p.save()
 
         return True
     else:
