@@ -10,26 +10,32 @@ def update_all_xrefs(part_id):
             x.cross_references.add(p)
 
 
-def get_xrefs(part_id):
+def get_xrefs(part_id, exclude=[]):
     xrefs = []
     part = Part.objects.get(id=part_id)
+    exclude.append(part)
     xrefs.append(part)
     
     for p in part.cross_references.all():
-        if p in xrefs:
+        if p in xrefs or p in exclude:
             pass
         else:
             xrefs.append(p)
+            subs = get_xrefs(p.id, exclude)
+            for s in subs:
+                if s in xrefs:
+                    pass
+                else:
+                    xrefs.append(s)
     
-    for p in xrefs:
-        xr = p.cross_references.all()
-        for x in xr:
-            if x in xrefs:
-                pass
-            else:
-                xrefs.append(p)
-
     return xrefs
+
+        
+        
+        
+        
+        
+    
 
 
 
