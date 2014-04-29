@@ -10,6 +10,10 @@ class CategoryChoice(AutoModelSelect2Field):
 class CompanyChoice(AutoModelSelect2Field):
     queryset = Company.objects
     search_fields = ['name__istartswith',]
+    
+class PartChoice(AutoModelSelect2Field):
+    queryset = Part.objects
+    search_fields = ['number__istartswith', ]
 
 class MetadataForm(forms.Form):
     key = forms.CharField(max_length=48)
@@ -24,12 +28,10 @@ class ASINForm(forms.Form):
    asin = forms.CharField(max_length=10)
    
 class XrefForm(forms.Form):
-    part = forms.CharField(max_length=48)
-    company = forms.CharField(max_length=48)
+    part = PartChoice()
 
     desc = forms.CharField(max_length=256, required=False)
     copy_attrs = forms.BooleanField(required=False)
-    update_all_xrefs = forms.BooleanField(required=False)
     
 class ImageUploadForm(forms.Form):
     file = forms.FileField(required=True)

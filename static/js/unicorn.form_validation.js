@@ -107,16 +107,6 @@ $(document).ready(function(){
                 minlength: "2",
                 maxlength: 64
             },
-            company:{
-                required: true,
-                minlength: 2,
-                maxlength: 64
-            },
-            desc:{
-                required: true,
-                minlength: 10,
-                maxlength: 256
-            }
         },
         errorClass: "help-inline",
         errorElement: "div",

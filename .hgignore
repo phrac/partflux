@@ -11,3 +11,5 @@ templates/version.txt
 settings_local.py
 *.xml
 *.csv
+*.log
+*.pid

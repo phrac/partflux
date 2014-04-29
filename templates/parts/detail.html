@@ -146,11 +146,9 @@
                             <td>{{ part.company.name }}</td>
                         </tr>
                         <tr>
-                            <th>Part Type</th>
+                            <th>Type</th>
                             <td>
-                                {% for c in part.categories.all %}
-                                {{ c }}
-                                {% endfor %}
+                                {{ part.category }}
                             </td>
                         </tr>
                         <tr>

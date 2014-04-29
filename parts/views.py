@@ -264,38 +264,13 @@ def addxref(request, part_id):
     p = get_object_or_404(Part, pk=part_id)
     xrefform = XrefForm(request.POST)
     if xrefform.is_valid():
-        part_number = xrefform.cleaned_data['part'].strip().upper()
-        company = xrefform.cleaned_data['company'].strip().upper()
-        description = xrefform.cleaned_data['desc'].strip().upper()
+        form_part = xrefform.cleaned_data['part']
         copy_attrs = xrefform.cleaned_data['copy_attrs']
-        update_all_xrefs = xrefform.cleaned_data['update_all_xrefs']
-        
-        """Check if the company exists and create it if it does not"""
-        try:
-            c = Company.objects.get(slug=slugify(company))
-        except ObjectDoesNotExist:
-            c = Company(name=company, slug=slugify(company))
-            c.save() 
-        
-        """Check if the cross referenced part exists and create it if it does not"""
-        newpart, _created = Part.objects.get_or_create(number=part_number, company=c)
-        if _created == True:
-            newpart.user = request.user
-            newpart.description = description
-            newpart.hits = 0
-            if copy_attrs == True:
-                attributes = Attribute.objects.filter(part=part_id)
-                for a in attributes:
-                    new_attr = Attribute(key=a.key, value=a.value, part=newpart, upvotes=0, downvotes=0, user=request.user)
-                    new_attr.save()
-            newpart.save()
 
-        newpart.cross_references.add(p)
-        p.cross_references.add(newpart)
-
-        if update_all_xrefs == True:
-            for x in p.cross_references.all():
-                x.cross_references.add(newpart)
+        form_part.cross_references.add(p)
+        p.cross_references.add(form_part)
 
         return True
+    else:
+        return "Error"
             
