@@ -98,7 +98,7 @@ def detail(request, part_id, company_slug, part_slug):
 
         if request.is_ajax():
             return render_to_response('parts/includes/attribute_table.html',
-                                          {'part': p,},
+                                          {'part': Part.objects.get(id=p.id),},
                                           context_instance=RequestContext(request))
         else:
             return HttpResponseRedirect(reverse('parts.views.detail',
@@ -215,15 +215,14 @@ def detail(request, part_id, company_slug, part_slug):
 @login_required
 def update_properties(request, part_id):
     p = get_object_or_404(Part, pk=part_id)
-    PropertyFormSet = formset_factory(PropertyForm)
+    PropertyFormSet = formset_factory(PropertyForm, can_delete=True)
     formset = PropertyFormSet(request.POST)
     new_properties = {}
     if formset.is_valid():
-        for form in formset:
-            if form.is_valid() and not form.empty_permitted:
-                new_properties[form.cleaned_data['key']] = form.cleaned_data['value']
+        for form in [form for form in formset if form not in formset.deleted_forms]:
+            if form.is_valid() and form.has_changed():
+                new_properties[form.cleaned_data['key'].capitalize()] = form.cleaned_data['value'].capitalize()
                 
-        print new_properties
         p.properties = new_properties
         p.save()
         return True

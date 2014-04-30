@@ -13,6 +13,7 @@ $(document).ready(function() {
             type: $(this).attr('method'), // GET or POST
             url: $(this).attr('action'), // the file to call
             success: function(response) { // on success..
+                console.log(response);
                 $('.modal').modal('hide');
                 if(!formReset) {
                     $('.modal-form').each(function() {
@@ -25,7 +26,6 @@ $(document).ready(function() {
                 $('button').button('reset');
                 $('.control-group').removeClass('success');
                 $('.control-group').removeClass('error');
-                $.getScript('/static/js/unicorn.tables.js');
             },
             error: function(xhr, textStatus, error) {
                 $('.modal').modal('hide');
