@@ -11,6 +11,9 @@ def update_all_xrefs(part_id):
 
 
 def get_xrefs(part_id, exclude=[]):
+    """
+    Recursively get all cross references associated with a part.
+    """
     xrefs = []
     part = Part.objects.get(id=part_id)
     exclude.append(part)

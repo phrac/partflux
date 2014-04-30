@@ -243,6 +243,8 @@ def addbuylink(request, part_id):
 
 @login_required
 def new_part(request):
+    """Create a new part either by copying or from a blank form."""
+
     if request.method == 'POST':
         partform = NewPartForm(request.POST)
         if partform.is_valid():
@@ -261,6 +263,9 @@ def new_part(request):
 
 @login_required
 def addxref(request, part_id):
+    """Add a cross reference to a part, also adding the part as a cross
+    reference."""
+
     p = get_object_or_404(Part, pk=part_id)
     xrefform = XrefForm(request.POST)
     if xrefform.is_valid():
