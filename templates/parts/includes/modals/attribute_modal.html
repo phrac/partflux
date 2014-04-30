@@ -2,41 +2,39 @@
     {% if user.is_authenticated %}
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
-        <h3>Add a new attribute</h3>
+        <h3>Add/Edit Properties</h3>
     </div>
     <div class="modal-body">
-        <p>Attributes are pieces of information that describe a part in greater detail.</p>
+        <p>Properties are pieces of information that describe a part in greater detail.</p>
 
-        <form data-div-update="#attribute-table" data-gritter-title-success="Attribute Added" data-gritter-msg-success="Thanks for contributing! Your reputation has been incremented" data-gritter-error-title="Something went wrong" id="attribute-form" class="modal-form form-horizontal" autocomplete="off" method="post">
+        <form data-div-update="#attribute-table" data-gritter-title-success="Attribute Added" data-gritter-msg-success="Thanks for contributing! Your reputation has been incremented" data-gritter-error-title="Something went wrong" id="attribute-form" class="modal-form" autocomplete="off" method="post">
 
             {% csrf_token %}
-
-            <div class="control-group">
-                <label class="control-label" for="id_part">Attribute Key</label>
-                <div class="controls">
-                    <input id="id_key" name="key" type="text" class="input-large" placeholder="Key">
-                    <p>The attribute <strong><i>key</i></strong> holds the type of attribute. 
-                    Examples of attribute keys are: <strong>weight</strong>,
-                    <strong>finish</strong>, <strong>color</strong>, etc.
-                    </p>
-                </div>
-            </div>
-
-            <div class="control-group">
-                <label class="control-label" for="id_part">Attribute Value</label>
-                <div class="controls">
-                    <input id="id_value" name="value" type="text" class="input-large" placeholder="Value">
-                    <p>The attribute <strong><i>value</i></strong> holds the attribute data. Examples of values:
-                    <strong>10 LBS</strong>, <strong>RED</strong>, etc.
-                    </p>
-                </div>
-            </div>
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th>Key</th>
+                        <th>Value</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for form in property_formset %}
+                <tr>
+                    {% for field in form %}
+                    <td>{{ field }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
 
         </div>
         <div class="modal-footer">
             <input type="hidden" name="metadata_button" value="1" />
-            <button id="save-attribute" disabled="disabled" data-loading-text="Saving..." class="modal-form-submit btn btn-inverse">Save Attribute</button>
+            <button id="save-attribute" disabled="disabled" data-loading-text="Saving..." class="modal-form-submit btn btn-inverse">Update Properties</button>
             <button id="cancel-attribute" class="btn" data-dismiss="modal">Cancel</button>
+            {{ property_formset.management_form }}
         </form>
     </div>
     {% else %}

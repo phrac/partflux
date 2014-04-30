@@ -15,7 +15,7 @@ class PartChoice(AutoModelSelect2Field):
     queryset = Part.objects
     search_fields = ['number__istartswith', ]
 
-class MetadataForm(forms.Form):
+class PropertyForm(forms.Form):
     key = forms.CharField(max_length=48)
     value = forms.CharField(max_length=128)
 

@@ -14,12 +14,13 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.storage import default_storage
 from django.contrib.sites.models import get_current_site
 from django.db.models import Avg, Max, Min
+from django.forms.formsets import formset_factory
 from haystack.query import SearchQuerySet
 import json
 from pure_pagination import Paginator, PageNotAnInteger, EmptyPage
 
 from companies.models import Company
-from parts.forms import NewPartForm, MetadataForm, XrefForm, ImageUploadForm, BuyLinkForm, ASINForm
+from parts.forms import NewPartForm, PropertyForm, XrefForm, ImageUploadForm, BuyLinkForm, ASINForm
 from parts.models import Part, Attribute, Category
 from distributors.models import Distributor, DistributorSKU
 from distributors.forms import DistributorSKUForm
@@ -80,24 +81,29 @@ def detail(request, part_id, company_slug, part_slug):
                                      len(p.company.name)
                                      ))))
 
-    metaform = MetadataForm(None)
+    PropertyFormSet = formset_factory(PropertyForm, extra=2, can_delete=True)
+    forms = []
+    tdict = {}
+    for k, v in p.properties.items():
+        forms.append({ 'key': k, 'value': v })
+    property_formset = PropertyFormSet(initial=forms)
+
     xrefform = XrefForm(None)
     imageuploadform = ImageUploadForm(None)
     newskuform = DistributorSKUForm(None)
     asinform = ASINForm(None)
 
     if 'metadata_button' in request.POST:
-        metaform = MetadataForm(request.POST)
-        if metaform.is_valid:
-            status, new_id = addmeta(request, p.pk)
-                
-            if request.is_ajax():
-                return render_to_response('parts/includes/attribute_table.html',
+        update_properties(request, p.id)
+
+        if request.is_ajax():
+            return render_to_response('parts/includes/attribute_table.html',
                                           {'part': p,},
                                           context_instance=RequestContext(request))
-            else:
-                return HttpResponseRedirect(reverse('parts.views.detail',
+        else:
+            return HttpResponseRedirect(reverse('parts.views.detail',
                                                     args=[part_id, p.company.slug, p.slug]))
+
     if 'sku_button' in request.POST:
         newskuform = DistributorSKUForm(request.POST)
         if newskuform.is_valid():
@@ -195,7 +201,7 @@ def detail(request, part_id, company_slug, part_slug):
                                                 args=[part_id, p.company.slug, p.slug]))
             
     return render(request, 'parts/detail.html', {'part': p, 
-            'metadata_form': metaform, 
+            'property_formset': property_formset, 
             'xref_form' : xrefform,
             'imageuploadform' : imageuploadform,
             'newskuform' : newskuform,
@@ -207,19 +213,24 @@ def detail(request, part_id, company_slug, part_slug):
 
 
 @login_required
-def addmeta(request, part_id):
+def update_properties(request, part_id):
     p = get_object_or_404(Part, pk=part_id)
-    metaform = MetadataForm(request.POST)
-    if metaform.is_valid():
-        key = metaform.cleaned_data['key'].strip().upper()
-        value = metaform.cleaned_data['value'].strip().upper()
-        attr = Attribute(key=key, value=value, user=request.user, part=p)
-        try:
-            attr.save()
-            return True, attr.pk
-        except IntegrityError:
-            return 'Attribute already exists'
+    PropertyFormSet = formset_factory(PropertyForm)
+    formset = PropertyFormSet(request.POST)
+    new_properties = {}
+    if formset.is_valid():
+        for form in formset:
+            if form.is_valid() and not form.empty_permitted:
+                new_properties[form.cleaned_data['key']] = form.cleaned_data['value']
+                
+        print new_properties
+        p.properties = new_properties
+        p.save()
+        return True
+    else:
+        return False
 
+    
 @login_required
 def addbuylink(request, part_id):
     p = get_object_or_404(Part, pk=part_id)
