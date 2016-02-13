@@ -1,13 +1,7 @@
-SITE_DIR = '/usr/home/derek/partflux/partengine'
-import site
-site.addsitedir(SITE_DIR)
 import os
 import sys
 
-sys.path.append(SITE_DIR)
+from django.core.wsgi import get_wsgi_application
 
-os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
-
-import django.core.handlers.wsgi
-
-application = django.core.handlers.wsgi.WSGIHandler()
+os.environ['DJANGO_SETTINGS_MODULE'] = 'partflux.settings'
+application = get_wsgi_application()

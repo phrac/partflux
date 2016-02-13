@@ -86,7 +86,7 @@ class DistributorSKU(models.Model):
 class SKUClick(models.Model):
     sku = models.ForeignKey(DistributorSKU)
     click_date = models.DateTimeField(auto_now_add=True)
-    ip = models.IPAddressField()
+    ip = models.GenericIPAddressField()
     path = models.CharField(max_length=512, null=True)
     referrer = models.CharField(max_length=512, null=True)
     user_agent = models.CharField(max_length=512, null=True)
@@ -95,7 +95,7 @@ class SKUHistoricalPrice(models.Model):
     part = models.ForeignKey(Part)
     sku = models.ForeignKey(DistributorSKU)
     date = models.DateTimeField(auto_now_add=True)
-    price = models.IntegerField(max_length=16)
+    price = models.IntegerField()
     price_UOM = models.CharField(max_length=9)
 
 

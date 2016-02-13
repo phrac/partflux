@@ -12,7 +12,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.storage import default_storage
-from django.contrib.sites.models import get_current_site
+#from django.contrib.sites.models import get_current_site
 from django.db.models import Avg, Max, Min
 from django.forms.formsets import formset_factory
 from haystack.query import SearchQuerySet

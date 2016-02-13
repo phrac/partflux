@@ -29,7 +29,6 @@ DATABASES = {
             'HOST': 'localhost',                      	        # Set to empty string for localhost. Not used with sqlite3.
             'PORT': '',                      					# Set to empty string for default. Not used with sqlite3.
             'OPTIONS': {
-                'POOL_ENABLED': True,
                 'autocommit': True,
             }
     }
@@ -154,7 +153,7 @@ ROOT_URLCONF = 'partflux.urls'
 WSGI_APPLICATION = 'partflux.wsgi.application'
 
 TEMPLATE_DIRS = (
-    os.path.join(DIRNAME, 'templates')
+    os.path.join(DIRNAME, '../templates'),
 )
 
 INSTALLED_APPS = (
@@ -175,7 +174,7 @@ INSTALLED_APPS = (
     'sorl.thumbnail',
     'haystack',
     'storages',
-    'pingback',
+#    'pingback',
     'taggit',
     'django_xmlrpc',
     'debug_toolbar',
@@ -187,6 +186,7 @@ INSTALLED_APPS = (
     'parts',
     'companies',
     'distributors',
+    'users',
 )
 
 # django-registration settings

@@ -1,17 +1,22 @@
 from django import forms
-from django_select2 import *
 from parts.models import Part, Category
 from companies.models import Company
 
-class CategoryChoice(AutoModelSelect2Field):
+from django_select2.forms import (
+    HeavySelect2MultipleWidget, HeavySelect2Widget, ModelSelect2MultipleWidget,
+    ModelSelect2TagWidget, ModelSelect2Widget, Select2MultipleWidget,
+    Select2Widget
+)
+
+class CategoryChoice(ModelSelect2Widget):
     queryset = Category.objects
     search_fields = ['name__icontains',]
 
-class CompanyChoice(AutoModelSelect2Field):
+class CompanyChoice(ModelSelect2Widget):
     queryset = Company.objects
     search_fields = ['name__istartswith',]
     
-class PartChoice(AutoModelSelect2Field):
+class PartChoice(ModelSelect2Widget):
     queryset = Part.objects
     search_fields = ['number__istartswith', ]
 
