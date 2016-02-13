@@ -1,0 +1,15 @@
+syntax: glob
+
+templates/version.txt
+.nfs*
+*.swp
+*.lock
+*.out
+*.pyc
+*~
+*.swo
+settings_local.py
+*.xml
+*.csv
+*.log
+*.pid
