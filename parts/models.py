@@ -77,19 +77,19 @@ class Part(models.Model):
     company = models.ForeignKey(Company)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    images = models.ManyToManyField('PartImage')
-    image_url = models.URLField(max_length=512, null=True)
+    images = models.ManyToManyField('PartImage', blank=True)
+    image_url = models.URLField(max_length=512, null=True, blank=True)
     asin = models.CharField(max_length=10, null=True, blank=True)
     upc = models.CharField(max_length=13, null=True, blank=True)
     ean = models.CharField(max_length=13, null=True, blank=True)
     properties = hstore.DictionaryField(null=True, blank=True)
-    cross_references = models.ManyToManyField('Part', related_name='xrefs')
+    cross_references = models.ManyToManyField('Part', related_name='xrefs', null=True, blank=True)
 
     objects = hstore.HStoreManager()
 
     class Meta:
         unique_together = ('number', 'company',)
-    
+
     def __unicode__(self):
         return "%s - %s" % (self.company, self.number)
 
@@ -114,7 +114,7 @@ class Part(models.Model):
         for x in self.cross_references.all():
             term += " %s" % x.number
         return term
-    
+
     def amazon_price(self):
         amazon = AmazonAPI(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY, settings.AWS_ASSOCIATE_TAG)
         try:
@@ -134,11 +134,11 @@ class Part(models.Model):
         except:
             return None
 
-    def asin_image(self): 
+    def asin_image(self):
         amazon = AmazonAPI(settings.AWS_ACCESS_KEY_ID,
                            settings.AWS_SECRET_ACCESS_KEY,
                            settings.AWS_ASSOCIATE_TAG)
-        try: 
+        try:
             product = amazon.lookup(ItemId=self.asin)
             return product.large_image_url
         except:
@@ -169,7 +169,7 @@ class Attribute(models.Model):
     class Meta:
         unique_together = ('part', 'key', 'value')
         ordering = ('value',)
-        
+
     def get_attr_string(self):
         return u"%s: %s" % (smart_str(self.key), smart_str(self.value))
 
@@ -178,7 +178,7 @@ class Attribute(models.Model):
         self.value = self.value.strip().upper()
         super(Attribute, self).save(*args, **kwargs)
 
-        
+
 class PartImage(models.Model):
     image = ImageField(upload_to='part_images')
     approved = models.BooleanField(default=True)
@@ -186,4 +186,3 @@ class PartImage(models.Model):
 
 
 post_save.connect(xrefs_handler, sender=Part)
-

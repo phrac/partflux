@@ -5,8 +5,8 @@ from django.contrib import admin
 
 urlpatterns = patterns('',
                        url(r'^$', 'partflux.views.index'),
-                       url(r'^ajax/status/$', 'partflux.views.status_messages'), 
-                       url(r'^privacy/$', TemplateView.as_view(template_name="main/privacy.html")),
+                       url(r'^ajax/status/$', 'partflux.views.status_messages'),
+                       url(r'^privacy/$', TemplateView.as_view(template_name="partflux/privacy.html")),
                        url(r'^parts/', include('parts.urls')),
                        url(r'^search/', include('search.urls')),
                        url(r'^companies/', include('companies.urls')),

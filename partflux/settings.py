@@ -1,4 +1,4 @@
-# Django settings for Part Engine project.
+# Django settings for Partflux project.
 import os
 DIRNAME = os.path.dirname(__file__)
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -80,7 +80,7 @@ USE_L10N = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = '/home/derek/web/media/'
+MEDIA_ROOT = ''
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -91,7 +91,7 @@ MEDIA_URL = '/media/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = '/home/derek/static/partflux/static/'
+STATIC_ROOT = ''
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -100,7 +100,7 @@ STATIC_URL = '/static/'
 # URL prefix for admin static files -- CSS, JavaScript and images.
 # Make sure to use a trailing slash.
 # Examples: "http://foo.com/static/admin/", "/static/admin/".
-ADMIN_MEDIA_PREFIX = 'http://partfindr.net/static/admin/'
+ADMIN_MEDIA_PREFIX = 'http://partflux.com/static/admin/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
@@ -167,7 +167,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     'django.contrib.sitemaps',
-    
+
     # external apps
     'django_hstore',
     'pure_pagination',
@@ -181,8 +181,8 @@ INSTALLED_APPS = (
     'django_select2',
     'widget_tweaks',
     'djcelery',
-    
-    # partfindr apps    
+
+    # partfindr apps
     'parts',
     'companies',
     'distributors',
@@ -203,9 +203,6 @@ ACCOUNT_ACTIVATION_DAYS = 7
 # django-storages settings
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 AWS_IS_GZIPPED = True
-
-DISQUS_USER_API_KEY = 'Rk3o4gvtTyx8EspHIrcRm235o2Nn00Cki7CnRMERZGiG14RGiWJmNY3vTT0c4H57'
-DISQUS_FORUM_SHORTNAME = 'partengine'
 
 ABSOLUTE_URL_OVERRIDES = {
     'auth.user': lambda o: "/users/profile/%s/" % o.username,
