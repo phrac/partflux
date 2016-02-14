@@ -83,7 +83,7 @@ class Part(models.Model):
     upc = models.CharField(max_length=13, null=True, blank=True)
     ean = models.CharField(max_length=13, null=True, blank=True)
     properties = hstore.DictionaryField(null=True, blank=True)
-    cross_references = models.ManyToManyField('Part', related_name='xrefs', null=True, blank=True)
+    cross_references = models.ManyToManyField('Part', related_name='xrefs', blank=True)
 
     objects = hstore.HStoreManager()
 
