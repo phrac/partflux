@@ -30,7 +30,7 @@ html5lib==1.0b3
 isodate==0.4.9
 keepalive==0.5
 kombu==3.0.33
-lxml==3.2.1
+lxml==4.6.3
 markdown2==2.1.0
 microdata==0.4.0
 mimeparse==0.1.3
