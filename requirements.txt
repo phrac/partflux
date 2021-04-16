@@ -11,7 +11,7 @@ django-appconf==1.0.1
 django-blogango==0.6.2
 django-celery==3.1.17
 django-classy-tags==0.5.1
-django-debug-toolbar==1.4
+django-debug-toolbar==1.11.1
 django-haystack==2.4.1
 django-hstore==1.4.1
 django-orm==2.0.5
