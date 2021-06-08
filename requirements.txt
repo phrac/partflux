@@ -35,7 +35,7 @@ markdown2==2.1.0
 microdata==0.4.0
 mimeparse==0.1.3
 pefile==1.2.10.post114
-Pillow==2.4.0
+Pillow==8.2.0
 psycopg2==2.4.6
 pyelasticsearch==0.6
 pyparsing==1.5.7
