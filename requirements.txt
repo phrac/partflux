@@ -5,7 +5,7 @@ billiard==3.3.0.22
 boto==2.39.0
 bottlenose==0.6.0
 celery==3.1.20
-certifi==2015.11.20.1
+certifi==2022.12.7
 Django==1.9.2
 django-appconf==1.0.1
 django-blogango==0.6.2
