@@ -53,4 +53,4 @@ sorl-thumbnail==12.3
 SPARQLWrapper==1.5.2
 sqlparse==0.1.18
 urllib3==1.14
-wheel==0.26.0
+wheel==0.38.1
